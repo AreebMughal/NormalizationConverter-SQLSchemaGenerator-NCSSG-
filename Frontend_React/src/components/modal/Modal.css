@@ -1,0 +1,18 @@
+.my-modal-header {
+    height: 50px;
+    font-size: 12px;
+}
+
+.modal-danger {
+    background-color: #9C1A1C;
+    color: white;
+}
+
+.my-modal-title {
+    font-size: 18px;
+}
+
+.modal-info {
+    background-color: #9C1A1C;
+    color: white;
+}

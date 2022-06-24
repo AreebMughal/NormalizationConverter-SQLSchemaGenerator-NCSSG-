@@ -1,0 +1,6 @@
+.my-border {
+    border-bottom: 2px solid grey !important;
+    padding-bottom: 2px !important;
+    padding-top: .50rem !important;
+    width: auto !important;
+}

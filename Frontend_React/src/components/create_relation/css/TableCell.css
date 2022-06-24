@@ -1,0 +1,79 @@
+
+.outerBox{
+    border: 1px solid #db4d4d;
+    height: 300px;
+    margin: 10px;
+    padding: 20px;
+}
+
+.inputBox{
+    border-radius: 0;
+    border: 1px solid black;
+    height: 35px;
+    font-size: 16px;
+    outline: none;
+    padding: 5px;
+    text-underline-offset: 2px;
+}
+
+.inputBox:focus {
+    border-color: #3b90e5;
+    border-width: .13rem;
+}
+
+.ib-underline{
+    text-decoration: underline;
+}
+
+.ib-dash{
+    border-style: dashed;
+}
+
+.btn-style {
+    width: 30px;
+    font-weight: bolder;
+    outline: 0;
+}
+
+.btn-style:focus {
+    outline: 0;
+}
+
+.attribute-multi-select{
+    width: 50%;
+}
+
+.btn-no-outline {
+    outline: none;
+}
+
+/*.red-border {*/
+/*    border-color: red;*/
+/*}*/
+
+.m-bg-info {
+    background-color: #adfdff;
+}
+
+.m-bg-primary {
+    /*background-color: rgba(30, 127, 255, 0.49);*/
+    background-color:#09F1E9FF;
+}
+
+.border-focus {
+    border-color: #3b90e5;
+}
+
+.my-fields > .my-border-danger {
+    border-color: #ff0000;
+    border-width: .13rem;
+}
+
+/*.my-border-focused {*/
+/*    border: .13rem solid #3b90e5;*/
+/*}*/
+
+.box-shadow {
+    border: 3px;
+}
+

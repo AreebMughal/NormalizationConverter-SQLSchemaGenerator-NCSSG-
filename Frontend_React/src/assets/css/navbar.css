@@ -1,0 +1,46 @@
+
+.navbar .navbar-nav .nav-link:hover {
+    color: #fafcfc;
+}
+.navbar .navbar-nav .nav-link {
+    color: #cbcaca;
+}
+@media only screen and (min-width: 992px) {
+    .navbar {
+        padding: 0;
+    }
+    .navbar .navbar-brand {
+        padding: 0 0.7em;
+    }
+    .navbar .navbar-nav .nav-link {
+        padding: 1em 0;
+    }
+    .navbar .navbar-nav .nav-item {
+        margin: 0 1em;
+    }
+}
+.navbar .navbar-nav .nav-item {
+    position: relative;
+}
+.navbar .navbar-nav .nav-item::after {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    background-color: #3b90e5;
+    width: 0%;
+    content: "";
+    height: 4px;
+}
+.navbar .navbar-nav .nav-item:hover::after {
+    width: 100%;
+}
+
+.navbar .navbar-nav .nav-item::after {
+    transition: all 0.5s;
+}
+
+.circled-number {
+    font-size: 18px;
+}

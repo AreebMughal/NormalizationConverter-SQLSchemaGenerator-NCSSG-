@@ -1,0 +1,25 @@
+
+
+.alert-dismissible {
+    margin: 0;
+    padding: 0;
+}
+
+.dismissible-button {
+    padding-left: 5px;
+    padding-right: 3px;
+    background-color: transparent;
+    margin-left: 8px;
+    margin-right: 2px;
+    color: #cb9494;
+    font-weight: bolder;
+}
+.alert {
+    padding: 0 5px 0 5px;
+    margin: 0;
+    width: 360px
+}
+.dismissible-button:hover {
+    cursor: pointer;
+    color: #7f7f7f;
+}

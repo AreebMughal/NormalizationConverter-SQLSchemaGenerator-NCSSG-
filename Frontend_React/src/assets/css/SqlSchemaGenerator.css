@@ -1,0 +1,116 @@
+.my-form {
+    margin-left: 20px;
+    margin-right: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 25px 10px 10px 10px;
+}
+.floating-input {
+    height: 40px;
+    margin-bottom: 10px;
+}
+/* --------------------------Input Fields & Labels---------------------------- */
+
+.inputFields {
+    border-style: none;
+    border-bottom: 1px solid grey;
+    padding: 0 0 2px 2px;
+    margin-bottom: 15px;
+}
+
+.fields {
+    display: flex;
+    flex-flow: column-reverse;
+}
+
+::placeholder {
+    opacity: 0;
+    transition: inherit;
+}
+
+
+/*label {*/
+/*    float: left;*/
+/*    margin-bottom: -25px;*/
+/*    opacity: .8;*/
+/*    transition: all .4s;*/
+/*    cursor: auto;*/
+/*    font-size: 16px;*/
+/*    height: 20px;*/
+/*    margin-left: 2%;*/
+/*    width: 100%;*/
+/*}*/
+
+/*input:not(:placeholder-shown)+label,*/
+/*input:focus+label {*/
+/*    transform: translate(0, -24px) scale(1.1);*/
+/*    transition: all .4s;*/
+/*    cursor: default;*/
+/*    opacity: 1;*/
+/*    font-size: 13px;*/
+/*}*/
+
+.form-check-input:focus {
+    outline: none;
+    box-shadow: none;
+}
+
+.input-box{
+
+}
+
+.btn:focus {
+    outline: none;
+    box-shadow: none;
+}
+
+.floating-label > .floating-fields {
+    width: auto;
+    border: none;
+    border-bottom: 1px solid black;
+    height: auto;
+    border-radius: 0;
+    padding-right: 0.5rem;
+    padding-left: 0.5rem;
+    padding-bottom: 0.1rem;
+}
+
+.floating-fields:focus {
+    border: none;
+    box-shadow: none;
+    border-bottom: 1px solid black;
+}
+
+.floating-label > label {
+    padding-left: 0.2rem;;
+}
+
+
+/* ---------------------------SQL PAGE HEADER ----*/
+
+.sql-page-header {
+    margin-left: 20px;
+    margin-right: 20px;
+    border: 1px solid #3B666B;
+    border-radius: 5px;
+    padding: 20px 10px 10px 25px;  /* top, right, bottom, left */
+    background-color: rgba(59, 102, 107, 0.15);
+}
+
+.generate_btn {
+    margin-top: -5px;
+    background-color: white;
+}
+
+.alert_border {
+    /*padding-top: 0.25rem;*/
+    /*padding-bottom: 0.25rem;*/
+    /*padding-left: 0.5rem;*/
+    /*font-size: 0.875rem;*/
+    border-radius: 0.2rem;
+    border-width: 1px;
+    border-color: #9C1A1C;
+    padding-bottom: 3px;
+    /*border-bottom-color: #9C1A1C;*/
+    background-color: rgba(225, 46, 48, 0.16);
+}

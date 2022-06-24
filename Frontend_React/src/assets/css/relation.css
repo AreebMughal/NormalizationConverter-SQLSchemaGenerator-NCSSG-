@@ -1,0 +1,30 @@
+.card-relation {
+    background-color: #d0d0d0;
+}
+
+.card-1NF-result {
+
+}
+
+.card-1NF-reason {
+
+}
+
+.vertical-line {
+    position: relative;
+    height: 300px;
+    top: 50px;
+    width: 2px;
+    border: 1px solid #877c7c;
+}
+.horizontal-line {
+    border: 1px solid #877c7c;
+}
+
+.relation_type {
+    background-color: #d0d0d0;
+    border-radius: 5px;
+    margin-top: .85rem;
+    margin-bottom: .30rem;
+    font-weight: 500;
+}
