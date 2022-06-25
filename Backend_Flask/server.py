@@ -15,6 +15,7 @@ from source.Sql_Form_Methods import get_foreign_keys
 from source.Sql_Form_Methods import get_all_relations
 from source.Sql_Form_Methods import create_relations
 from source.StaticMethods import get_dummy_nf_result
+from source.SqlScript import SqlScript
 
 app = Flask(__name__)
 CORS(app)
@@ -120,7 +121,15 @@ def getSqlSchemaData():
 
 @app.route("/sqlSchemaGenerator", methods=['GET', 'POST'])
 def sqlSchemaGenerator():
-   pass
+    try:
+        data = json.loads(request.data.decode('utf-8'))
+        script = SqlScript(data['data'])
+        res = script.write_sql_script()
+        print('=> ', res)
+    except Exception as e:
+        my_exception(e)
+
+    return res
 
 
 if __name__ == '__main__':

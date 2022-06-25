@@ -66,7 +66,7 @@ const SqlForm = (props) => {
                 }
             }
         }
-
+        return true;
     }
 
     function isValidData(formData) {
@@ -77,8 +77,8 @@ const SqlForm = (props) => {
 
     const formSubmit = (e) => {
         e.preventDefault();
-        console.log(props)
         if (isValidData(e.target)) {
+            console.log('data ',props.data)
             axios.post('http://127.0.0.1:5000/sqlSchemaGenerator', {data: props.data })
                 .then(res => {
                     console.log(res.data)
