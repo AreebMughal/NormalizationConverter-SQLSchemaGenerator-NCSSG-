@@ -6,6 +6,7 @@ import React from 'react';
 
 function NF_2() {
     const inputBoxes = my_data.getRawState().inputBoxes
+
     const relationName = my_data.getRawState().relationName
     const [data, setData] = useState({})
     const [relationNames, setRelationNames] = useState(null);

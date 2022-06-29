@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import styles from './css/mainTool.module.css'
-import CreateRelation from "./CreateRelation";
+import CreateRelation from "./relation/CreateRelation";
 import DependencyNConstraint from "./dependency_constraint/DependencyNConstraint";
 import FdsList from "./fds_list/FdsList";
 import {inputBoxes_data} from "../../store/inputBoxes_dataStore";
@@ -60,18 +60,26 @@ const MainTool = () => {
     return (
         <section className={`${styles.main}`}>
             <div className="m row col-12">
-                <CreateRelation
-                    relationName={relationName}
-                    inputBoxes={inputBoxes}
-                    setRelationName={setRelation}
-                    updateInputBoxes={updateInputBoxes}
-                    resetAll={resetAll}
-                    removeAttribute={removeAttribute}
-                    updateCurrentIndex={updateCurrentIndex}
-                    setDisableBox={setDisableConstraintBox}
-                    setCurrentCell={setCurrentCell}
-                    currentCell={currentCell}
-                />
+                <div className="col-lg-8 col-md-8 col-sm-12">
+
+                    <CreateRelation
+                        relationName={relationName}
+                        inputBoxes={inputBoxes}
+                        setRelationName={setRelation}
+                        updateInputBoxes={updateInputBoxes}
+                        resetAll={resetAll}
+                        removeAttribute={removeAttribute}
+                        updateCurrentIndex={updateCurrentIndex}
+                        setDisableBox={setDisableConstraintBox}
+                        setCurrentCell={setCurrentCell}
+                        currentCell={currentCell}
+                    />
+                    <hr className='ms-5 me-5'/>
+
+                    <FdsList
+                        inputBoxes={inputBoxes}
+                    />
+                </div>
                 <DependencyNConstraint
                     inputBoxes={inputBoxes}
                     currentIndex={currentIndex}
@@ -81,7 +89,6 @@ const MainTool = () => {
                     setCurrentCell={setCurrentCell}
                 />
             </div>
-            <hr className='ms-5 me-5'/>
             {/*
                 <div className="Fds-list ms-3">
                     <FdList
@@ -90,9 +97,7 @@ const MainTool = () => {
                     />
                 </div>
                 */}
-            <FdsList
-                inputBoxes={inputBoxes}
-            />
+
 
         </section>
     );

@@ -1,4 +1,4 @@
-import RelationName from "../relation_name/RelationName";
+import RelationName from "../../relation_name/RelationName";
 import React, {useEffect, useState} from "react";
 import TableCell from "./TableCell";
 import RelationButtons from "./RelationButtons";
@@ -64,7 +64,6 @@ const CreateRelation = (props) => {
     }
 
     return (
-        <div className="col-lg-8 col-md-8 col-sm-12">
             <div className="card ms-3 mt-3">
                 <div className='card-header'>
                     <span>Step-1: Create Relation</span>
@@ -90,7 +89,7 @@ const CreateRelation = (props) => {
                     />
                 </div>
             </div>
-        </div>
+
     );
 }
 

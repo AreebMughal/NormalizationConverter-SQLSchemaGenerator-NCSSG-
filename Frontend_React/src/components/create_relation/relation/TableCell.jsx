@@ -1,5 +1,5 @@
 import {useState, useEffect} from "react";
-import './css/TableCell.css';
+import '../css/TableCell.css';
 
 const TableCell = (props) => {
     const [width, setWidth] = useState(90);
