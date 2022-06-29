@@ -27,7 +27,7 @@ const Dependency = (props) => {
             </div>
             <div className="attribute-name mt-1">
                 <FontAwesomeIcon icon={faArrowRight} className="me-1"/>
-                <span className="me-2">{props.attributeName}</span>
+                <span className="me-2 mb-5">{props.attributeName}</span>
                 <button
                     className='btn btn-sm btn-danger text-white btn-style'
                     id={props.depIndex}

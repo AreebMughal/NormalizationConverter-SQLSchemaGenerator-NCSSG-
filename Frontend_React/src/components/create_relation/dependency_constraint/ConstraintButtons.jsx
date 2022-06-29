@@ -9,6 +9,7 @@ const ConstraintButtons = (props) => {
         } else {
             e.target.classList.replace(`btn-${bgColor}`, `btn-outline-${bgColor}`)
         }
+        console.log(bgColor)
     }
 
     function primaryBtnClickHandler(e) {
@@ -32,19 +33,25 @@ const ConstraintButtons = (props) => {
     function deleteCellBtnClickHandler(e) {
         if (props.inputBoxes.length > 1) {
             props.removeAttribute(props.inputBoxes.indexOf(props.inputBox));
+            props.setCurrentCell(true);
         }
+    }
+
+    function getButtonClass(type) {
+        const bgColor = type === 'primary' ? 'primary' : 'info';
+        return props.inputBox !== undefined && props.inputBox[type] ? `btn-${bgColor}` : `btn-outline-${bgColor}`
     }
 
     return (
         <div className="buttons mt-3">
             <div
-                className="btn btn-sm ms-3 mb-3 btn-outline-primary"
+                className={`btn btn-sm ms-3 mb-3 ${getButtonClass('primary')}`}
                 onClick={primaryBtnClickHandler}
             >
                 Set Primary
             </div>
             <div
-                className="btn btn-sm ms-3 mb-3 btn-outline-info"
+                className={`btn btn-sm ms-3 mb-3 ${getButtonClass('multiValue')}`}
                 onClick={multiValueBtnClickHandler}
             >
                 Set Multi-value

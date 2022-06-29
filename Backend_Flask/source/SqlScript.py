@@ -164,11 +164,5 @@ class SqlScript:
         constraints = self.add_constraints()
         string += get_dumped_table_header('Constraints') + constraints if len(constraints) != 0 else ''
         string += 'COMMIT;' + '\n'
-        print(string)
-        try:
-            file = open('dump_schema.sql', 'w+')
-            file.write(string)
-            return string
-        except Exception as e:
-            print('Exception =>', e)
-            return 'False'
+
+        return string

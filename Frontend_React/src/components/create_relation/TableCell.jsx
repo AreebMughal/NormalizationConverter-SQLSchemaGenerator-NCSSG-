@@ -1,8 +1,14 @@
-import {useState} from "react";
+import {useState, useEffect} from "react";
 import './css/TableCell.css';
 
 const TableCell = (props) => {
     const [width, setWidth] = useState(90);
+    useEffect(() => {
+        if (props.currentCell) {
+            document.getElementById('0').focus();
+            props.setCurrentCell(false);
+        }
+    }, [props.currentCell]);
 
     const getClassName = (inputBox) => {
         // let classname = 'inputBox red-border alert-danger mt-3 '
@@ -31,11 +37,15 @@ const TableCell = (props) => {
     const setCellBorder = (target, id) => {
         const res = props.inputBoxes.map((input, index) =>
             index !== parseInt(id) && input.value.trim().length !==0 && input.value === target.value.trim()
-        )
+        );
         if (res.includes(true)) {
-            target.classList.add('my-border-danger')
+            target.classList.add('my-border-danger');
+            props.setDisableBox(true);
+            props.ref_alert_msg.current.classList.remove('visually-hidden')
         } else {
-            target.classList.remove('my-border-danger')
+            target.classList.remove('my-border-danger');
+            props.setDisableBox(false);
+            props.ref_alert_msg.current.classList.add('visually-hidden')
         }
     }
     const cellKeyDownHandler = (event) => {
@@ -53,7 +63,7 @@ const TableCell = (props) => {
     const cellFocusOutHandler = (e) => {
         e.target.classList.remove('my-border-danger')
     }
-
+    // console.log('render cell')
     return (
         <div className='my-fields'>
             <input

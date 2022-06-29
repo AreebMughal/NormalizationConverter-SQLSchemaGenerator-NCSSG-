@@ -90,7 +90,7 @@ const AttributeRow = (props) => {
             </td>
 
             <td width='10%'>
-                <input type="text" className='input-box input_length' onChange={lengthChangeHandler} id={indexes} value={length}/>
+                <input type="text" className='input-box input_length ' onChange={lengthChangeHandler} id={indexes} value={length}/>
                 <PopupModal index={indexes} dataType={dataType}/>
 
             </td>

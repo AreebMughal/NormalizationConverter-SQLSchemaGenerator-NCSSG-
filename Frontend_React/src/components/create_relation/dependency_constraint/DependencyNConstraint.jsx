@@ -2,6 +2,7 @@ import React, {useEffect, useState} from "react";
 import ConstraintButtons from "./ConstraintButtons";
 import AddDependency from "./AddDependency";
 import Dependency from "./Dependency";
+import './dependency_n_constraint.css';
 
 const DependencyNConstraint = (props) => {
     const [inputBoxes, setInputBoxes] = useState([]);
@@ -28,10 +29,12 @@ const DependencyNConstraint = (props) => {
         newInputBoxes[inputBoxIndex] = newInputBox;
         updateState(newInputBoxes);
     }
-
+    const getCardDisableClass = () => {
+        return props.disableBox ? '__disabled-card' : '';
+    }
     return (
         <div className=" col-lg-4 col-md-8 col-sm-12">
-            <div className="card mycard mt-3 ms-2">
+            <div className={`card mycard mt-3 ms-2 ${getCardDisableClass()}`} >
                 <div className="card-header">
                     Step-2: Define Attribute Constraint and Dependency
                 </div>
@@ -43,6 +46,7 @@ const DependencyNConstraint = (props) => {
                         updateState={updateState}
                         updateCurrentInputBox={updateCurrentInputBox}
                         removeAttribute={props.removeAttribute}
+                        setCurrentCell={props.setCurrentCell}
                     />
                     <span className="">Set Dependency:</span> <br/>
                     {(inputBox !== undefined) ? inputBox.dependency.map((dep, i) =>

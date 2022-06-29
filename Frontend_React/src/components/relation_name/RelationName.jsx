@@ -21,6 +21,10 @@ const RelationName = (props) => {
             event.preventDefault()
         }
     }
+    const relationNameFocusHandler = (e) => {
+        props.setDisableBox(true);
+    }
+
 
     return (
         <div className="col-6">
@@ -38,6 +42,7 @@ const RelationName = (props) => {
                 onKeyDown={relationKeyDownHandler}
                 className="ms-1"
                 value={props.name}
+                onFocus={relationNameFocusHandler}
             />
         </div>
     );

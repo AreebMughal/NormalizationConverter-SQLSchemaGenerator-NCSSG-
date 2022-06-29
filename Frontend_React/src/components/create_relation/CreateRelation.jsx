@@ -5,19 +5,11 @@ import RelationButtons from "./RelationButtons";
 
 const CreateRelation = (props) => {
     const [inputBoxes, setInputBoxes] = useState([]);
-    // const cell_ref = React.createRef;
+    const ref_alert_msg = React.createRef();
 
     useEffect(() => {
         setInputBoxes(props.inputBoxes)
     }, [props.inputBoxes]);
-
-    /*  useEffect(() => {
-          return () => {
-              console.log(cell_ref)
-          };
-      }, [inputBoxes, cell_ref]);
-
-  */
 
     function updateCellFocus(index) {
 
@@ -42,6 +34,7 @@ const CreateRelation = (props) => {
     const removeCell = () => {
         if (inputBoxes.length > 1) {
             props.removeAttribute(inputBoxes.length - 1);
+            props.setCurrentCell(true);
         }
     }
 
@@ -60,6 +53,10 @@ const CreateRelation = (props) => {
                         value={inputBox.value}
                         updateCellValue={updateCellValue}
                         updateCurrentIndex={props.updateCurrentIndex}
+                        setDisableBox={props.setDisableBox}
+                        currentCell={props.currentCell}
+                        setCurrentCell={props.setCurrentCell}
+                        ref_alert_msg={ref_alert_msg}
                     />
                 })}
             </div>
@@ -77,9 +74,10 @@ const CreateRelation = (props) => {
                         <RelationName
                             setRelationName={props.setRelationName}
                             name={props.relationName}
+                            setDisableBox={props.setDisableBox}
                         />
                         <div className="col-6">
-                            <span className='float-end text-danger'>Cannot store same attribute names</span>
+                            <span ref={ref_alert_msg} className='float-end text-danger visually-hidden'>Cannot store same attribute names</span>
                         </div>
                     </div>
                     {renderInputBoxes()}
@@ -88,6 +86,7 @@ const CreateRelation = (props) => {
                         addCell={addCell}
                         removeCell={removeCell}
                         resetAll={resetAll}
+                        setCurrentCell={props.setCurrentCell}
                     />
                 </div>
             </div>

@@ -1,15 +1,19 @@
 import React, {useEffect, useState} from "react";
-import my_data from "../../store/data";
 import styles from './css/mainTool.module.css'
 import CreateRelation from "./CreateRelation";
 import DependencyNConstraint from "./dependency_constraint/DependencyNConstraint";
+import FdsList from "./fds_list/FdsList";
+import {inputBoxes_data} from "../../store/inputBoxes_dataStore";
+import CollapseDiv from "../div_collapse/CollapseDiv";
 
 const MainTool = () => {
     const [inputBoxes, setInputBoxes] = useState([]);
     const [relationName, setRelationName] = useState('');
     const [currentIndex, setCurrentIndex] = useState(0);
+    const [disableConstraintBox, setDisableConstraintBox] = useState(false);
+    const [currentCell, setCurrentCell] = useState(false);
 
-    const data = my_data.getRawState()
+    const data = inputBoxes_data.getRawState()
 
     useEffect(() => {
         setInputBoxes(data.inputBoxes)
@@ -17,7 +21,7 @@ const MainTool = () => {
     }, []);
 
     useEffect(() => {
-        my_data.update(s => {
+        inputBoxes_data.update(s => {
             s.inputBoxes = inputBoxes
             s.relationName = relationName
         })
@@ -64,12 +68,17 @@ const MainTool = () => {
                     resetAll={resetAll}
                     removeAttribute={removeAttribute}
                     updateCurrentIndex={updateCurrentIndex}
+                    setDisableBox={setDisableConstraintBox}
+                    setCurrentCell={setCurrentCell}
+                    currentCell={currentCell}
                 />
                 <DependencyNConstraint
                     inputBoxes={inputBoxes}
                     currentIndex={currentIndex}
                     updateInputBoxes={updateInputBoxes}
                     removeAttribute={removeAttribute}
+                    disableBox={disableConstraintBox}
+                    setCurrentCell={setCurrentCell}
                 />
             </div>
             <hr className='ms-5 me-5'/>
@@ -81,6 +90,9 @@ const MainTool = () => {
                     />
                 </div>
                 */}
+            <FdsList
+                inputBoxes={inputBoxes}
+            />
 
         </section>
     );

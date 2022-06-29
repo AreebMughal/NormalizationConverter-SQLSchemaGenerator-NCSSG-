@@ -1,6 +1,7 @@
 import json
 import sys
 import traceback
+import os
 
 from flask import Flask, request
 from flask_cors import CORS
@@ -121,11 +122,15 @@ def getSqlSchemaData():
 
 @app.route("/sqlSchemaGenerator", methods=['GET', 'POST'])
 def sqlSchemaGenerator():
+    flag = 'false'
     try:
         data = json.loads(request.data.decode('utf-8'))
         script = SqlScript(data['data'])
         res = script.write_sql_script()
-        print('=> ', res)
+        file = open('dump_schema.sql', 'w+')
+        file.write(res)
+        flag = 'true'
+        # path = os.path.abspath('./dump_schema.sql')
     except Exception as e:
         my_exception(e)
 
@@ -134,3 +139,47 @@ def sqlSchemaGenerator():
 
 if __name__ == '__main__':
     app.run(debug=True)
+
+    # res = get_dummy_nf_result()
+    #
+    # rel_names = create_relation_names(res, 'Organization')
+    # # names_dictionary = {}
+    # # for key, value in rel_names.items():
+    # #     names_dictionary[value[1]] = value[0]
+    # #
+    # # print('=>', names_dictionary)
+    #
+    # fk = {}
+    # all_relation = get_all_relations(nf_result=res, relation_name='Organization')
+    #
+    # for key, value in res.items():
+    #     index = 0
+    #     if len(value) > 0:
+    #         for rel in value:
+    #             if key.lower() != 'full':
+    #                 name = rel_names[key][index][0]
+    #                 fk[name] = get_foreign_keys(rel, all_relation, rel_names[key][index][1])
+    #                 index += 1
+    #
+    # print(fk)
+
+    # fk = {
+    #     'Org_ssn': [
+    #         {'attribute': ['ssn'], 'relationName': 'Fully_dependent'}
+    #     ],
+    #     'Org_pnum': [
+    #         {'attribute': ['pnum'], 'relationName': 'Fully_dependent'}
+    #     ],
+    #     'Org_email': [
+    #         {'attribute': ['pnum', 'ssn'], 'relationName': 'Fully_dependent'}
+    #     ],
+    #     'Org_address': [
+    #         {'attribute': ['ssn'], 'relationName': 'Fully_dependent'}
+    #     ],
+    #     'Org_id': [
+    #         {'attribute': ['id'], 'relationName': 'partial_1'}
+    #     ],
+    #     'Org_dnum': [
+    #         {'attribute': ['dnum'], 'relationName': 'transitive_1'}
+    #     ]
+    # }

@@ -1,7 +1,7 @@
 import React from "react";
 
 const RelationButtons = (props) => {
-    function addCellClickHandler(e) {
+    const addCellClickHandler = (e) => {
         props.addCell({
             id: props.inputBoxes[props.inputBoxes.length - 1].id + 1,
             value: '',
@@ -12,14 +12,18 @@ const RelationButtons = (props) => {
         });
     }
 
-    function deleteCellClickHandler(e) {
+    const deleteCellClickHandler = (e) => {
         props.removeCell();
+        // props.setCurrentCell(0);
     }
 
-    function resetAllClickHandler(e) {
+    const resetAllClickHandler = (e) => {
         props.resetAll();
     }
 
+    const relationalMappingClickHandler = (e) => {
+
+    }
     return (
         <div className="buttons ms-2 mt-1">
             <button
@@ -39,6 +43,12 @@ const RelationButtons = (props) => {
                 onClick={resetAllClickHandler}
             >
                 Reset
+            </button>
+            <button
+                className='btn btn-sm btn-info ms-2 float-end text-white fw-bold'
+                onClick={relationalMappingClickHandler}
+            >
+                View Relational Mapping
             </button>
         </div>
     );

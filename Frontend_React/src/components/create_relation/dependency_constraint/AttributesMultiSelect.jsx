@@ -6,7 +6,7 @@ const AttributesMultiSelect = (props) => {
     let selectedDependencies = inputBox.dependency[depIndex];
 
     let options = inputBoxes.map(i => {
-        return {value: i.value, label: i.value}
+        return {value: i.id, label: i.value}
     });
     options = options.filter(opt => opt.value !== '')
     let selectedValues = options.map(i => selectedDependencies.includes(i.value) ? i : null);
@@ -16,6 +16,8 @@ const AttributesMultiSelect = (props) => {
         selectedValues = []
 
     const multiSelectChangeHandler = (elements) => {
+        console.log(elements)
+
         const values = elements.map(opt => opt.value);
         if (inputBox !== undefined && inputBox.value.toString().trim() !== '') {
             let newInputBox = {...inputBox};

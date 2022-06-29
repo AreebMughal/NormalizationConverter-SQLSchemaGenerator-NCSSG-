@@ -2,11 +2,16 @@ import ErrorModal from "../modal/ErrorModal";
 import React, {useState} from "react";
 import {validRange} from "../../store/validTypeRange";
 import axios from "axios";
+import DownloadModal from "../modal/DownloadModal";
+// const fs = require('fs');
 
 const SqlForm = (props) => {
     const [showModal, setShowModal] = useState(false);
+    const [showDownloadModal, setShowDownloadModal] = useState(false);
     const [errorMsg, setErrorMsg] = useState('');
-    const setShow = () => setShowModal(false)
+
+    const setShowFalse = () => setShowModal(false)
+    const [path, setPath] = useState(null);
 
     const requiredLength = ['BIT', 'CHAR', 'VARCHAR']
 
@@ -81,7 +86,16 @@ const SqlForm = (props) => {
             console.log('data ',props.data)
             axios.post('http://127.0.0.1:5000/sqlSchemaGenerator', {data: props.data })
                 .then(res => {
-                    console.log(res.data)
+                    // console.log(res.data)
+                    const element = document.createElement("a");
+                    const file = new Blob([res.data], {
+                        type: "text/plain"
+                    });
+                    element.href = URL.createObjectURL(file);
+                    console.log(' URL ', element.href)
+                    element.download = "dump_schema.sql";
+                    document.body.appendChild(element);
+                    element.click();
                 })
         }
     }
@@ -91,12 +105,18 @@ const SqlForm = (props) => {
             {showModal ?
                 <ErrorModal
                     show={showModal}
-                    setShow={setShow}
+                    setShow={setShowFalse}
                     message={errorMsg}
                 /> : ''}
             <form onSubmit={formSubmit}>
                 {props.children}
             </form>
+            {/*{(showDownloadModal) &&
+                <DownloadModal
+                    show={showDownloadModal}
+                    setShow={setShowDownloadModal}
+                />
+            }*/}
         </React.Fragment>
     );
 }
