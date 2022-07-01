@@ -3,8 +3,8 @@ import styles from './css/mainTool.module.css'
 import CreateRelation from "./relation/CreateRelation";
 import DependencyNConstraint from "./dependency_constraint/DependencyNConstraint";
 import FdsList from "./fds_list/FdsList";
-import {inputBoxes_data} from "../../store/inputBoxes_dataStore";
-import CollapseDiv from "../div_collapse/CollapseDiv";
+import {get_inputBoxes, inputBoxes_data} from "../../store/inputBoxes_dataStore";
+import Suggestion from "./fds_list/Suggestion";
 
 const MainTool = () => {
     const [inputBoxes, setInputBoxes] = useState([]);
@@ -25,6 +25,8 @@ const MainTool = () => {
             s.inputBoxes = inputBoxes
             s.relationName = relationName
         })
+        get_inputBoxes()
+
     }, [inputBoxes, relationName]);
 
 
@@ -75,10 +77,19 @@ const MainTool = () => {
                         currentCell={currentCell}
                     />
                     <hr className='ms-5 me-5'/>
-
-                    <FdsList
-                        inputBoxes={inputBoxes}
-                    />
+                    <div className="row col-12">
+                        <div className={`col-lg-8 col-md-8 col-sm-12 ${styles['fd-list']}`}>
+                            <FdsList
+                                inputBoxes={inputBoxes}
+                                isOpen={true}
+                            />
+                        </div>
+                        <div className={`col-lg-4 col-md-8 col-sm-12 me-0 ${styles.suggestion}`}>
+                            <Suggestion
+                                isOpen={false}
+                            />
+                        </div>
+                    </div>
                 </div>
                 <DependencyNConstraint
                     inputBoxes={inputBoxes}
@@ -89,16 +100,6 @@ const MainTool = () => {
                     setCurrentCell={setCurrentCell}
                 />
             </div>
-            {/*
-                <div className="Fds-list ms-3">
-                    <FdList
-                        key={1}
-                        inputBoxes={this.state.inputBoxes}
-                    />
-                </div>
-                */}
-
-
         </section>
     );
 }

@@ -1,9 +1,10 @@
 import CollapseDiv from "../../div_collapse/CollapseDiv";
 
-const Suggestion = () => {
+const Suggestion = (props) => {
     return (
         <CollapseDiv
             cardTitle={'Suggestions:'}
+            isOpen={props.isOpen}
         >
             <>
             </>

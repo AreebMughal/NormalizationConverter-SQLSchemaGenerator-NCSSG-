@@ -5,10 +5,11 @@ const FdsList = (props) => {
 
     const {inputBoxes} = props;
     return (
-        <div className="mb-5 mt-2 ms-2">
+        <div className="mb-5 ms-2">
             {/*<h5></h5>*/}
             <CollapseDiv
                 cardTitle={'Current Functional Dependencies:'}
+                isOpen={props.isOpen}
             >
             <ol>
                 {inputBoxes.map(input => {

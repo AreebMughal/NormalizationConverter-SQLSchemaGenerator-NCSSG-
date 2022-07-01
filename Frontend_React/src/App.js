@@ -10,6 +10,7 @@ import NF_3 from "./components/normal_forms/NF_3";
 import Home from "./components/home";
 import SqlSchemaGenerator from "./components/sql_schema_generator/sqlSchemaGenerator";
 import MainTool from "./components/create_relation/MainTool";
+import {inputBoxes_data} from "./store/inputBoxes_dataStore";
 
 function App() {
 
@@ -35,7 +36,7 @@ function App() {
 
     function click(e) {
         setVisible(false)
-        const inputBoxes = my_data.getRawState().inputBoxes;
+        const inputBoxes = inputBoxes_data.getRawState().inputBoxes;
         if (inputBoxes.length > 0) {
             if (checkPrimary(inputBoxes)) {
                 let res = inputBoxes.map((input) => {
@@ -80,14 +81,14 @@ function App() {
                 <Routes so={list}>
                     <Route path="/" element={<Home some={list}
                     />}/>
-                    <Route path="/NC-SSG/DrawingTool" element={<Main some={list}
+                    <Route path="/NC-SSG/DrawingTool" element={<MainTool some={list}
                     />}/>
                     <Route path="/NC-SSG/MinimalCover" element={<MinimalCover/>}/>
                     <Route path="/NC-SSG/1NF" element={<NF_1/>}/>
                     <Route path="/NC-SSG/2NF" element={<NF_2/>}/>
                     <Route path="/NC-SSG/3NF" element={<NF_3/>}/>
                     <Route path="/NC-SSG/SQLSchema" element={<SqlSchemaGenerator/>}/>
-                    <Route path="/NC-SSG/" element={<MainTool/>}/>
+                    {/*<Route path="/NC-SSG/" element={<MainTool/>}/>*/}
                 </Routes>
             </BrowserRouter>
         </div>

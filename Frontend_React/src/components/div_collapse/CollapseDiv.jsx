@@ -1,4 +1,4 @@
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {Button, Fade} from "react-bootstrap";
 import './collapseDiv.css';
 import {faAngleDown} from "@fortawesome/free-solid-svg-icons";
@@ -8,9 +8,14 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 const CollapseDiv = (props) => {
     const [open, setOpen] = useState(false);
 
+    useEffect(() => {
+        setOpen(props.isOpen);
+    }, [props.isOpen]);
+
+    console.log(props.isOpen)
     return (
         <>
-            <div className="__card-collapse-header col-6">
+            <div className="__card-collapse-header">
                 <Button
                     onClick={() => setOpen(!open)}
                     aria-controls="example-fade-text"
@@ -25,12 +30,8 @@ const CollapseDiv = (props) => {
             </div>
 
             <Fade in={open}>
-                <div className="__my-card col-6">
-
+                <div className="__my-card">
                     <div id="example-fade-text">
-                        {/*Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus*/}
-                        {/*terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer*/}
-                        {/*labore wes anderson cred nesciunt sapiente ea proident.*/}
                         {props.children}
                     </div>
                 </div>

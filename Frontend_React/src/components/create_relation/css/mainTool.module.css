@@ -2,3 +2,13 @@
     background-color: #dcdbd9;
     min-height: 93.7vh;
 }
+
+.suggestion {
+    padding-left: 0px;
+    padding-right: 0px;
+}
+
+.fd-list {
+    /*padding-left: 0px;*/
+    padding-right: 0;
+}

@@ -8,7 +8,7 @@ const AttributesMultiSelect = (props) => {
     let options = inputBoxes.map(i => {
         return {value: i.id, label: i.value}
     });
-    options = options.filter(opt => opt.value !== '')
+    options = options.filter(opt => opt.label !== '')
     let selectedValues = options.map(i => selectedDependencies.includes(i.value) ? i : null);
 
     selectedValues = selectedValues.filter(i => i !== null)

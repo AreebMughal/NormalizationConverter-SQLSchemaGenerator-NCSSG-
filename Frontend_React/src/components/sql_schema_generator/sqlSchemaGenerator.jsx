@@ -25,7 +25,9 @@ const SqlSchemaGenerator = () => {
             .then(res => {
                 console.log(res.data.Data)
                 setRelationList(res.data.Data)
-            })
+            }).catch(error => {
+            alert('Server is not running')
+        })
     }, [inputBoxes, normalForm, relationName])
 
     useEffect(() => {

@@ -1,6 +1,6 @@
 import React from "react";
 import my_data from "../../../store/data";
-import {inputBoxes_data} from "../../../store/inputBoxes_dataStore";
+import {get_inputBoxes, inputBoxes_data} from "../../../store/inputBoxes_dataStore";
 
 const RelationButtons = (props) => {
     const addCellClickHandler = (e) => {
@@ -24,19 +24,9 @@ const RelationButtons = (props) => {
     }
 
     const relationalMappingClickHandler = (e) => {
-        let inputBoxes = inputBoxes_data.getRawState().inputBoxes;
-        console.log(inputBoxes)
-
-        const  newInputBoxes = inputBoxes.map((input, index) => input.dependency.map((dep, i) => {
-                const list = dep.map(id => inputBoxes.filter(inputBox => id === inputBox.id)[0].value);
-                const newInputBox = {...inputBoxes[index]}
-                newInputBox.dependency = [...newInputBox.dependency];
-                newInputBox.dependency[i] = list;
-                return newInputBox;
-            })[0]
-        );
-        console.log(newInputBoxes)
+        console.log(get_inputBoxes())
     }
+
     return (
         <div className="buttons ms-2 mt-1">
             <button
