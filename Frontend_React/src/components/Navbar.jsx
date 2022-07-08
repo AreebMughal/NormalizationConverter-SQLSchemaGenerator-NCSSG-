@@ -2,12 +2,13 @@ import React from 'react';
 import {NavLink} from "react-router-dom";
 import 'bootstrap'
 import "../assets/css/navbar.css"
-import AlertDismissible from "./AlertDismissible";
 
 function Navbar(props) {
+    const {showNavbarContent} = props;
+
     return (
         <React.Fragment>
-            <nav className="navbar sticky-top navbar-expand-lg navbar-dark bg-dark">
+            <nav className="navbar sticky-top navbar-expand-lg navbar-dark bg-dark m-0">
                 <div className="container-fluid">
                     <button className="navbar-toggler" type="button" data-bs-toggle="collapse"
                             data-bs-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01"
@@ -23,50 +24,44 @@ function Navbar(props) {
                                     Drawing Tool
                                 </NavLink>
                             </li>
-                            <li className="nav-item me-0">
-                                <NavLink className="nav-link" to="/NC-SSG/MinimalCover" onClick={props.onClick}>
-                                    <span className='me-1 circled-number'>&#9313;</span>
-                                    Minimal Cover
-                                </NavLink>
-                            </li>
-                            <li className="nav-item me-0">
-                                <NavLink className="nav-link" to="/NC-SSG/1NF" onClick={props.onClick}>
-                                    <span className='me-1 circled-number'>&#9314;</span>
-                                    Show 1-NF
-                                </NavLink>
-                            </li>
-                            <li className="nav-item me-0">
-                                <NavLink className="nav-link" to="/NC-SSG/2NF" onClick={props.onClick}>
-                                    <span className='me-1 ms-0 p-0 circled-number'>&#9315;</span>
-                                    Show 2-NF
-                                </NavLink>
-                            </li>
-                            <li className="nav-item me-0">
-                                <NavLink className="nav-link" to="/NC-SSG/3NF" onClick={props.onClick}>
-                                    <span className='me-1 circled-number'>&#9316;</span>
-                                    Show 3-NF
-                                </NavLink>
-                            </li>
-                            <li className="nav-item me-0">
-                                <NavLink className="nav-link" to="/NC-SSG/SQLSchema" >
-                                    <span className='me-1 circled-number'>&#9316;</span>
-                                    SQL Schema
-                                </NavLink>
-                            </li>
-                            <li className="nav-item me-0">
-                                <NavLink className="nav-link" to="/NC-SSG/" >
-                                    <span className='me-1 circled-number'>&#9316;</span>
-                                    Main Tool
-                                </NavLink>
-                            </li>
+                            {showNavbarContent &&
+                            <React.Fragment>
+                                <li className="nav-item me-0">
+                                    <NavLink className="nav-link" to="/NC-SSG/MinimalCover" onClick={props.onClick}>
+                                        <span className='me-1 circled-number'>&#9313;</span>
+                                        Minimal Cover
+                                    </NavLink>
+                                </li>
+                                <li className="nav-item me-0">
+                                    <NavLink className="nav-link" to="/NC-SSG/1NF" onClick={props.onClick}>
+                                        <span className='me-1 circled-number'>&#9314;</span>
+                                        Show 1-NF
+                                    </NavLink>
+                                </li>
+                                <li className="nav-item me-0">
+                                    <NavLink className="nav-link" to="/NC-SSG/2NF" onClick={props.onClick}>
+                                        <span className='me-1 ms-0 p-0 circled-number'>&#9315;</span>
+                                        Show 2-NF
+                                    </NavLink>
+                                </li>
+                                <li className="nav-item me-0">
+                                    <NavLink className="nav-link" to="/NC-SSG/3NF" onClick={props.onClick}>
+                                        <span className='me-1 circled-number'>&#9316;</span>
+                                        Show 3-NF
+                                    </NavLink>
+                                </li>
+                                <li className="nav-item me-0">
+                                    <NavLink className="nav-link" to="/NC-SSG/SQLSchema">
+                                        <span className='me-1 circled-number'>&#9316;</span>
+                                        SQL Schema
+                                    </NavLink>
+                                </li>
+                            </React.Fragment>
+                            }
                         </ul>
                     </div>
                 </div>
             </nav>
-            <AlertDismissible
-                visibility={props.visible}
-                alertMsg={props.alertMsg}
-            />
         </React.Fragment>
     )
 }

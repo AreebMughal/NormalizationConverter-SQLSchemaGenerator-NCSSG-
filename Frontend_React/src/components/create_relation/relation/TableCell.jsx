@@ -1,14 +1,28 @@
-import {useState, useEffect} from "react";
+import {useEffect, useState} from "react";
 import '../css/TableCell.css';
 
 const TableCell = (props) => {
     const [width, setWidth] = useState(90);
+    useEffect(() => {
+        if (props.list.length === 0)
+        props.inputBoxes.map((input, i) =>
+            document.getElementById(i.toString()).classList.remove('my-border-danger'));
+    });
+
     useEffect(() => {
         if (props.currentCell) {
             document.getElementById('0').focus();
             props.setCurrentCell(false);
         }
     }, [props.currentCell]);
+    useEffect(() => {
+
+        if (props.list.length > 0) {
+            const target = document.getElementById(props.list[0].toString());
+            target.classList.add('my-border-danger');
+            target.focus();
+        }
+    }, [props.list]);
 
     const getClassName = (inputBox) => {
         // let classname = 'inputBox red-border alert-danger mt-3 '
@@ -43,10 +57,12 @@ const TableCell = (props) => {
             props.setDisableBox(true);
             props.ref_alert_msg.current.classList.remove('visually-hidden')
         } else {
-            target.classList.remove('my-border-danger');
             props.setDisableBox(false);
             props.ref_alert_msg.current.classList.add('visually-hidden')
         }
+        if (res.includes(true) && props.list.length === 0)
+            target.classList.remove('my-border-danger');
+
     }
     const cellKeyDownHandler = (event) => {
         if (event.key === ' ') {
@@ -61,7 +77,9 @@ const TableCell = (props) => {
     }
 
     const cellFocusOutHandler = (e) => {
-        e.target.classList.remove('my-border-danger')
+        if (!(props.list.length !== 0 && e.target.id === props.list[0].toString())) {
+            e.target.classList.remove('my-border-danger')
+        }
     }
     // console.log('render cell')
     return (

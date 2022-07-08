@@ -16,7 +16,7 @@ const AttributesMultiSelect = (props) => {
         selectedValues = []
 
     const multiSelectChangeHandler = (elements) => {
-        console.log(elements)
+        // console.log(elements)
 
         const values = elements.map(opt => opt.value);
         if (inputBox !== undefined && inputBox.value.toString().trim() !== '') {

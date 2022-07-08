@@ -1,14 +1,20 @@
+/*For example, to convert 120 pixel to vh if the viewport height is 720:*/
+/*vh =100 * (120/720) = 16.666666666667*/
 .main {
     background-color: #dcdbd9;
-    min-height: 93.7vh;
+    min-height: 90.5vh;
 }
-
+.__create-relation {
+    padding-right: 0;
+}
 .suggestion {
-    padding-left: 0px;
-    padding-right: 0px;
+    /*margin-left: .90rem;*/
+    /*padding-left: 0;*/
+    /*padding-right: 0;*/
 }
 
 .fd-list {
-    /*padding-left: 0px;*/
-    padding-right: 0;
+    /*margin-left: .90rem;*/
+    /*padding-left: 0;*/
+    /*padding-right: 0;*/
 }

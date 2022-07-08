@@ -51,7 +51,8 @@ def get_result(object_type, input_boxes_dic):
     try:
         data = json.loads(input_boxes_dic)
         input_boxes = data['inputBoxes']
-        my_relation = Relation(rel_name='Something', input_boxes=input_boxes)
+        relation_name = data['relationName']
+        my_relation = Relation(rel_name=relation_name, input_boxes=input_boxes)
         if object_type == 'minimal_cover':
             normalized_relation = NormalizedRelation(my_relation)
             result = normalized_relation.get_minimal_cover_JSON()
@@ -73,14 +74,9 @@ def get_result(object_type, input_boxes_dic):
     return {"result": result, "relation_names": relation_names}
 
 
-def get_foreign_key(result, current, value):
-    for key, value in result.items():
-        if key.lower() != 'full':
-            pass
 
-
-@app.route("/members", methods=['GET', 'POST'])
-def members():
+@app.route("/minimalCover", methods=['GET', 'POST'])
+def minimalCover():
     return get_result(object_type='minimal_cover', input_boxes_dic=request.data.decode('utf-8'))
 
 
@@ -100,11 +96,8 @@ def getSqlSchemaData():
     json_data = {"Data": []}
     try:
         data = json.loads(request.data.decode('utf-8'))
-        print(data)
         normal_form = data['normalForm']
         relation_name = data['relationName']
-        # res = ''
-        print('relname: ', relation_name)
         if normal_form == 'BCNF':
             res = get_dummy_nf_result()
             all_relations = get_all_relations(res, 'Practice')
@@ -135,6 +128,24 @@ def sqlSchemaGenerator():
         my_exception(e)
 
     return res
+
+
+@app.route("/preliminaryCheck", methods=['GET', 'POST'])
+def preliminaryCheck():
+    try:
+        data = json.loads(request.data.decode('utf-8'))
+        input_boxes = data['inputBoxes']
+        relation_name = data['relationName']
+        my_relation = Relation(rel_name=relation_name, input_boxes=input_boxes)
+
+    except Exception as e:
+        my_exception(e)
+    return ''
+
+
+@app.route("/relationalMapping", methods=['GET', 'POST'])
+def relationalMapping():
+    pass
 
 
 if __name__ == '__main__':

@@ -1,4 +1,6 @@
-
+.__alert {
+    background-color: #dcdbd9;
+}
 
 .alert-dismissible {
     margin: 0;
@@ -17,7 +19,7 @@
 .alert {
     padding: 0 5px 0 5px;
     margin: 0;
-    width: 360px
+    width: 390px
 }
 .dismissible-button:hover {
     cursor: pointer;

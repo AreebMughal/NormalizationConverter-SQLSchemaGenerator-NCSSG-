@@ -1,15 +1,14 @@
 import my_data from "../../store/data";
-import {useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import axios from "axios";
 import PrintRelations from "./printRelations";
-import React from 'react';
-import {get_inputBoxes, inputBoxes_data} from "../../store/inputBoxes_dataStore";
+import {inputBoxes_data} from "../../store/inputBoxes_dataStore";
 
 function NF_2() {
     // const s = get_inputBoxes(inputBoxes_data.getRawState().inputBoxes)
     // console.log('==as', s)
     const inputBoxes = my_data.getRawState().inputBoxes
-    console.log(inputBoxes)
+    // console.log(inputBoxes)
 
     const relationName = inputBoxes_data.getRawState().relationName
     const [data, setData] = useState({})
@@ -17,14 +16,13 @@ function NF_2() {
 
 
     useEffect(() => {
-        console.log('asdfasdf')
         axios.post('http://127.0.0.1:5000/NF2', {inputBoxes, relationName})
             .then(res => {
-                console.log(res.data)
+                // console.log(res.data)
                 setData(res.data['result'])
                 setRelationNames(res.data['relation_names'])
             })
-    }, [relationName])
+    }, [inputBoxes, relationName])
 
     function checkMultiValueAttr() {
         return inputBoxes.map(inputBox => {

@@ -1,8 +1,7 @@
 import {useEffect, useState} from "react";
 import {Button, Fade} from "react-bootstrap";
 import './collapseDiv.css';
-import {faAngleDown} from "@fortawesome/free-solid-svg-icons";
-import {faAngleUp} from "@fortawesome/free-solid-svg-icons";
+import {faAngleDown, faAngleUp} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
 const CollapseDiv = (props) => {
@@ -12,7 +11,6 @@ const CollapseDiv = (props) => {
         setOpen(props.isOpen);
     }, [props.isOpen]);
 
-    console.log(props.isOpen)
     return (
         <>
             <div className="__card-collapse-header">

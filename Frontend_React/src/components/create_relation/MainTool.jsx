@@ -6,7 +6,7 @@ import FdsList from "./fds_list/FdsList";
 import {get_inputBoxes, inputBoxes_data} from "../../store/inputBoxes_dataStore";
 import Suggestion from "./fds_list/Suggestion";
 
-const MainTool = () => {
+const MainTool = (props) => {
     const [inputBoxes, setInputBoxes] = useState([]);
     const [relationName, setRelationName] = useState('');
     const [currentIndex, setCurrentIndex] = useState(0);
@@ -26,9 +26,7 @@ const MainTool = () => {
             s.relationName = relationName
         })
         get_inputBoxes()
-
     }, [inputBoxes, relationName]);
-
 
     const setRelation = (value) => {
         setRelationName(value)
@@ -40,7 +38,7 @@ const MainTool = () => {
 
     const removeAttribute = (index) => {
         let newInputBoxes = [...inputBoxes];
-        let val = newInputBoxes[index].value;
+        let val = newInputBoxes[index].id;
         newInputBoxes.splice(index, 1)
         for (let i = 0; i < newInputBoxes.length; i++) {
             newInputBoxes[i] = {...newInputBoxes[i]}
@@ -49,42 +47,38 @@ const MainTool = () => {
         }
         updateInputBoxes(newInputBoxes);
     }
-    const resetAll = () => setInputBoxes([{
-        id: 1,
-        value: '',
-        dependency: [[]],
-        primary: false,
-        multiValue: false,
-    }]);
+
+
     const updateCurrentIndex = (index) => {
         setCurrentIndex(index);
     }
     return (
         <section className={`${styles.main}`}>
             <div className="m row col-12">
-                <div className="col-lg-8 col-md-8 col-sm-12">
-
+                <div className={`col-lg-8 col-md-10 col-sm-12 ${styles['__create-relation']}`}>
                     <CreateRelation
                         relationName={relationName}
                         inputBoxes={inputBoxes}
                         setRelationName={setRelation}
                         updateInputBoxes={updateInputBoxes}
-                        resetAll={resetAll}
                         removeAttribute={removeAttribute}
                         updateCurrentIndex={updateCurrentIndex}
                         setDisableBox={setDisableConstraintBox}
                         setCurrentCell={setCurrentCell}
                         currentCell={currentCell}
+                        props_data={props.props_data}
+                        onPreliminaryCheckClick={props.onPreliminaryCheckClick}
+                        setShowNavbarContent={props.setShowNavbarContent}
                     />
                     <hr className='ms-5 me-5'/>
-                    <div className="row col-12">
-                        <div className={`col-lg-8 col-md-8 col-sm-12 ${styles['fd-list']}`}>
+                    <div className="row ms-2 ">
+                        <div className={`col-lg-8 col-md-12 col-sm-12 m-0 p-0 ${styles['fd-list']}`}>
                             <FdsList
                                 inputBoxes={inputBoxes}
                                 isOpen={true}
                             />
                         </div>
-                        <div className={`col-lg-4 col-md-8 col-sm-12 me-0 ${styles.suggestion}`}>
+                        <div className={`col-lg-4 col-md-12 col-sm-12 m-0 p-0 ${styles.suggestion}`}>
                             <Suggestion
                                 isOpen={false}
                             />

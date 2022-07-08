@@ -27,6 +27,7 @@ export const get_inputBoxes = () => {
     );
     my_data.update(s => {
         s.inputBoxes = newInputBoxes
+        s.relationName = inputBoxes_data.getRawState().relationName
     })
     return newInputBoxes;
 }

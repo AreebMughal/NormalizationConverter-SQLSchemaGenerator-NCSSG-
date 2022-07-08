@@ -5,16 +5,17 @@ import Dependency from "./Dependency";
 import './dependency_n_constraint.css';
 
 const DependencyNConstraint = (props) => {
-    const [inputBoxes, setInputBoxes] = useState([]);
+    // const [inputBoxes, setInputBoxes] = useState([]);
+    const inputBoxes = props.inputBoxes;
     const inputBoxIndex = props.currentIndex;
     const inputBox = inputBoxes[inputBoxIndex];
 
-    useEffect(() => {
+    /*useEffect(() => {
         setInputBoxes(props.inputBoxes);
-    }, [props.inputBoxes])
+    }, [props.inputBoxes])*/
 
     function updateState(newInputBoxes) {
-        setInputBoxes(newInputBoxes);
+        // setInputBoxes(newInputBoxes);
         props.updateInputBoxes(newInputBoxes);
     }
 
@@ -33,7 +34,7 @@ const DependencyNConstraint = (props) => {
         return props.disableBox ? '__disabled-card' : '';
     }
     return (
-        <div className=" col-lg-4 col-md-8 col-sm-12">
+        <div className=" col-lg-4 col-md-8 col-sm-12 pe-0 __dependency-constraint">
             <div className={`card mycard mt-3 ms-2 ${getCardDisableClass()}`} >
                 <div className="card-header">
                     Step-2: Define Attribute Constraint and Dependency
