@@ -1,8 +1,9 @@
 import React from "react";
-import my_data from "../../../store/data";
-import {get_inputBoxes, inputBoxes_data} from "../../../store/inputBoxes_dataStore";
+import {get_inputBoxes} from "../../../store/inputBoxes_dataStore";
+import PreliminaryCheck from "./PreliminaryCheck";
 
 const RelationButtons = (props) => {
+
     const addCellClickHandler = (e) => {
         props.addCell({
             id: props.inputBoxes[props.inputBoxes.length - 1].id + 1,
@@ -16,7 +17,6 @@ const RelationButtons = (props) => {
 
     const deleteCellClickHandler = (e) => {
         props.removeCell();
-        // props.setCurrentCell(0);
     }
 
     const resetAllClickHandler = (e) => {
@@ -47,12 +47,20 @@ const RelationButtons = (props) => {
             >
                 Reset
             </button>
-            <button
-                className='btn btn-sm btn-info ms-2 float-end text-white fw-bold'
-                onClick={relationalMappingClickHandler}
-            >
-                View Relational Mapping
-            </button>
+            <div className="float-end">
+                <PreliminaryCheck
+                    setVisible={props.setVisible}
+                    setList={props.setList}
+                    setMsg={props.setMsg}
+                    setShowNavbarContent={props.setShowNavbarContent}
+                />
+                <button
+                    className='btn btn-sm btn-info ms-2 text-white'
+                    onClick={relationalMappingClickHandler}
+                >
+                    View Diagram
+                </button>
+            </div>
         </div>
     );
 }

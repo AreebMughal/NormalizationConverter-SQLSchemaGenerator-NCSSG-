@@ -1,5 +1,5 @@
 import my_data from "../../store/data";
-import {checkRelation, handleSizeChange} from "../../assets/js/relationScript";
+import {checkRelation, handleSizeChange, isRelationsEmpty} from "../../assets/js/relationScript";
 import {useEffect, useState} from "react";
 import Relation from "./relation";
 
@@ -20,40 +20,42 @@ function PrintRelations(props) {
                 <div className={`${props.normalFormNumber[0]}NF`}>
                     {
                         Object.keys(data).map((key, key_index) => {
-                            const rel =  (key === 'multi' ? '-VALUED' : ' Dependent') + ' Relations';
-                                return (
-                                    <div>
-                                        <div className='text-center relation_type'>{key.toUpperCase() + rel}</div>
-                                        {
-                                            Object.keys(data[key]).map((list, index) => {
-                                                    const len = data[key][list][0].length;
-                                                    const name = props.names[key][list][0]
-                                                    let num = 0;
-                                                    let check = 0;
-                                                    return (
-                                                        <div className="d-flex flex-wrap">
-                                                            {/*<span>Relation-{count++}: </span>*/}
-                                                            <span className='mt-3' style={{width: 120}}>{name}: </span>
-                                                            {
-                                                                (data[key][list].toString().split(',')).map((value, ind) => {
-                                                                        const bool = (++check <= len);
-                                                                        return (
-                                                                            <input key={num++}
-                                                                                   className={get2NFClassName(value, key, bool)}
-                                                                                   type="text" readOnly autoFocus
-                                                                                   value={value}
-                                                                                   id={`${props.normalFormNumber[0]}nf-${key}-${num}-${ind}-${index}`}
-                                                                                   onFocus={handleSizeChange}
-                                                                            />);
-                                                                    }
-                                                                )
-                                                            }
-                                                        </div>
-                                                    );
-                                                }
-                                            )}
-                                    </div>
-                                );
+                                if (data[key].length !== 0) {
+                                    const rel = (key === 'multi' ? '-VALUED' : ' Dependent') + ' Relations';
+                                    return (
+                                        <div>
+                                            <div className='text-center relation_type'>{key.toUpperCase() + rel}</div>
+                                            {
+                                                Object.keys(data[key]).map((list, index) => {
+                                                        const len = data[key][list][0].length;
+                                                        const name = props.names[key][list][0]
+                                                        let num = 0;
+                                                        let check = 0;
+                                                        return (
+                                                            <div className="d-flex flex-wrap">
+                                                                {/*<span>Relation-{count++}: </span>*/}
+                                                                <span className='mt-3' style={{width: 120}}>{name}: </span>
+                                                                {
+                                                                    (data[key][list].toString().split(',')).map((value, ind) => {
+                                                                            const bool = (++check <= len);
+                                                                            return (
+                                                                                <input key={num++}
+                                                                                       className={get2NFClassName(value, key, bool)}
+                                                                                       type="text" readOnly autoFocus
+                                                                                       value={value}
+                                                                                       id={`${props.normalFormNumber[0]}nf-${key}-${num}-${ind}-${index}`}
+                                                                                       onFocus={handleSizeChange}
+                                                                                />);
+                                                                        }
+                                                                    )
+                                                                }
+                                                            </div>
+                                                        );
+                                                    }
+                                                )}
+                                        </div>
+                                    );
+                                } else return '';
                             }
                         )
                     }
@@ -76,9 +78,9 @@ function PrintRelations(props) {
     return (
         <div className="m-3">
             <Relation/>
-            {checkRelation(inputBoxes) ?
+            <hr className='ms-5 me-5'/>
+            {!isRelationsEmpty(props.data) ?
                 <div className="main">
-                    <hr className='ms-5 me-5'/>
                     <h4>{props.normalFormNumber} Normal Form:</h4>
                     <div className="d-flex flex-wrap">
                         <div className=" mt-3 me-3">
@@ -93,7 +95,7 @@ function PrintRelations(props) {
                             </div>
                         </div>
                     </div>
-                </div> : ""
+                </div> : "No relation found in normalized result    "
             }
         </div>
     );

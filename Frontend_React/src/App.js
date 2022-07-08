@@ -1,5 +1,4 @@
 import React, {useEffect, useState} from "react";
-import Main from "./components/drawing_tool/main";
 import {BrowserRouter, Route, Routes} from "react-router-dom";
 import NF_1 from "./components/normal_forms/NF_1";
 import Navbar from "./components/Navbar";
@@ -10,78 +9,81 @@ import NF_3 from "./components/normal_forms/NF_3";
 import Home from "./components/home";
 import SqlSchemaGenerator from "./components/sql_schema_generator/sqlSchemaGenerator";
 import MainTool from "./components/create_relation/MainTool";
-import {inputBoxes_data} from "./store/inputBoxes_dataStore";
 
 function App() {
 
+    const [showNavbarContent, setShowNavbarContent] = useState(false);
     const [visible, setVisible] = useState(false);
     const [list, setList] = useState(null);
     const [msg, setMsg] = useState('');
 
-    useEffect(() => {
-        const timer = setTimeout(() => setVisible(false), 3000);
-        return () => clearTimeout(timer);
-    })
-
-    function checkPrimary(inputBoxes) {
-        let bool = true;
-        const isHavePrimary = inputBoxes.map(input => input.primary).includes(true)
-        if (!isHavePrimary) {
-            setMsg('Please define at least one primary key.')
-            setVisible(true);
-            bool = false;
+    const checkRelationName = (relationName) => {
+        if (relationName.trim().length === 0) {
+            setMsg('Please enter relation name!');
+            return false;
         }
-        return bool;
+        return true;
     }
 
-    function click(e) {
-        setVisible(false)
-        const inputBoxes = inputBoxes_data.getRawState().inputBoxes;
-        if (inputBoxes.length > 0) {
-            if (checkPrimary(inputBoxes)) {
-                let res = inputBoxes.map((input) => {
-                    let val = ''
-                    if (input.value.trim().length > 0) {
-                        if (!input.primary) {
-                            val += input.dependency.map(dep => dep.length > 0)
-                        } else {
-                            val += true
-                        }
-                    }
-                    return val;
-                })
-                // console.log(res)
-                res = res.map(r => {
-                    return r.includes('true') ? 'true' : 'false'
-                })
-                // console.log(res)
-                if (res.includes( 'false')) {
-                    setVisible(true)
-                    const r = res.map((r, i) => r === 'false' ? i : -1)
-                    // console.log(r)
-                    setList(r)
-                    setMsg('Please define each attribute\'s dependency.')
-                    e.preventDefault()
+
+    function checkPrimary(inputBoxes) {
+        const isHavePrimary = inputBoxes.map(input => input.value.trim().length !== 0 && input.primary).includes(true)
+        if (!isHavePrimary) {
+            setMsg('Please define at least one primary key!')
+        }
+        return isHavePrimary;
+    }
+
+    function checkDependency(inputBoxes) {
+        let res = inputBoxes.map((input) => {
+            let val = ''
+            if (input.value.trim().length > 0) {
+                if (!input.primary) {
+                    val += input.dependency.map(dep => dep.length > 0)
+                } else {
+                    val += true
                 }
+            }
+            return val;
+        }).map(r => r.includes('true'));
+        // console.log(res);
+        if (res.includes(false)) {
+            const indices = res.map((r, i) => !r ? i : '').filter(r => r.toString().length !== 0);
+            // console.log(indices);
+            setList(indices);
+            setMsg('Please define each attribute\'s dependency.');
+            return false;
+        }
+        return true;
+    }
+
+    const preliminaryCheckClickHandler = (e) => {
+        setVisible(false)
+        setList([]);
+        const inputBoxes = my_data.getRawState().inputBoxes;
+        const relationName = my_data.getRawState().relationName;
+        if (inputBoxes.length > 0) {
+            if (checkRelationName(relationName) && checkPrimary(inputBoxes) && checkDependency(inputBoxes)) {
+                setShowNavbarContent(true);
             } else {
+                setVisible(true);
+                setShowNavbarContent(false);
                 e.preventDefault();
             }
         }
     }
-
-
     return (
         <div>
             <BrowserRouter>
                 <Navbar
-                    onClick={click}
-                    visible={visible}
-                    alertMsg={msg}
+                    showNavbarContent={showNavbarContent}
+                    onClick={preliminaryCheckClickHandler}
                 />
-                <Routes so={list}>
-                    <Route path="/" element={<Home some={list}
-                    />}/>
-                    <Route path="/NC-SSG/DrawingTool" element={<MainTool some={list}
+                <Routes>
+                    <Route path="/" element={<Home />}/>
+                    <Route path="/NC-SSG/DrawingTool" element={<MainTool
+                        setShowNavbarContent={setShowNavbarContent}
+                        props_data={{errorMsg:msg, visible, setVisible, list: list}}
                     />}/>
                     <Route path="/NC-SSG/MinimalCover" element={<MinimalCover/>}/>
                     <Route path="/NC-SSG/1NF" element={<NF_1/>}/>

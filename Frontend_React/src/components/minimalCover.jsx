@@ -3,6 +3,7 @@ import axios from "axios";
 import my_data from "../store/data";
 import FdList from "./drawing_tool/fdList";
 import '../assets/css/relation.css'
+import {inputBoxes_data} from "../store/inputBoxes_dataStore";
 
 
 function useWindowSize() {
@@ -19,10 +20,10 @@ function useWindowSize() {
     return size;
 }
 
-function MinimalCover() {
+const MinimalCover = () => {
     const [width, height] = useWindowSize();
     const inputBoxes = my_data.getRawState().inputBoxes
-    const relationName = my_data.getRawState().relationName
+    const relationName = inputBoxes_data.getRawState().relationName
     const [data, setData] = useState([{}])
 
 

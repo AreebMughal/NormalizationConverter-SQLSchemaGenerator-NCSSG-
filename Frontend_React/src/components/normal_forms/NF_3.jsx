@@ -18,6 +18,7 @@ function NF_3() {
             })
     }, [inputBoxes, relationName])
 
+
     function get3NFreason() {
         let reason1 = ''
         if (Object.keys(data).length > 0) {
@@ -40,7 +41,6 @@ function NF_3() {
             </p>
         )
     }
-
     return (
         <PrintRelations
             data={data}
