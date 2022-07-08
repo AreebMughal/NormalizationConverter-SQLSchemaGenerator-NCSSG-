@@ -1,20 +1,25 @@
 import React, {useEffect} from "react";
 import my_data from "../../../store/data";
+import axios from "axios";
 
 const PreliminaryCheck = (props) => {
-    const {setVisible, setList, setMsg, setShowNavbarContent} = props;
-
-    useEffect(() => {
-        // const timer = setTimeout(() => setVisible(false), 5000);
-        // return () => clearTimeout(timer);
-    })
 
 
-
+    const preliminaryCheckClickHandler = (e) => {
+        if (props.onPreliminaryCheckClick(e)) {
+            axios.post('http://127.0.0.1:5000/preliminaryCheck', my_data.getRawState().inputBoxes)
+                .then(res => {
+                    console.log(res);
+                }).catch(error => {
+                alert('Server is not running => ' + error)
+            });
+            props.setShowNavbarContent(true);
+        }
+    }
     return (
         <button
             className='btn btn-sm btn-primary ms-2'
-            // onClick={preliminaryCheckClickHandler}
+            onClick={preliminaryCheckClickHandler}
         >
             Preliminary Check to Proceed
         </button>

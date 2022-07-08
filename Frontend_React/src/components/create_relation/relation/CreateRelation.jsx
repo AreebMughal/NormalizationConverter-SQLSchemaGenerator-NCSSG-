@@ -1,5 +1,5 @@
 import RelationName from "../../relation_name/RelationName";
-import React, {useEffect, useState} from "react";
+import React from "react";
 import TableCell from "./TableCell";
 import RelationButtons from "./RelationButtons";
 import AlertDismissible from "../../AlertDismissible";
@@ -7,9 +7,6 @@ import AlertDismissible from "../../AlertDismissible";
 const CreateRelation = (props) => {
     const ref_alert_msg = React.createRef();
     const inputBoxes = props.inputBoxes;
-    // const [visible, setVisible] = useState(false);
-    // const [list, setList] = useState([]);
-    // const [msg, setMsg] = useState('');
 
     function updateState(newInputBoxes) {
         props.updateInputBoxes(newInputBoxes);
@@ -73,12 +70,9 @@ const CreateRelation = (props) => {
                         <span>Step-1: Create Relation</span>
                     </div>
                     <AlertDismissible
-                        // visibility={props.props_data.visible}
-                        // alertMsg={props.props_data.errorMsg}
-                        // setVisible={props.props_data.setVisible}
-                        visibility={visible}
-                        alertMsg={msg}
-                        setVisible={setVisible}
+                        visibility={props.props_data.visible}
+                        alertMsg={props.props_data.errorMsg}
+                        setVisible={props.props_data.setVisible}
                     />
                 </div>
             </div>
@@ -100,9 +94,7 @@ const CreateRelation = (props) => {
                     removeCell={removeCell}
                     resetAll={resetAllCells}
                     setCurrentCell={props.setCurrentCell}
-                    setVisible={setVisible}
-                    setList={setList}
-                    setMsg={setMsg}
+                    onPreliminaryCheckClick={props.onPreliminaryCheckClick}
                     setShowNavbarContent={props.setShowNavbarContent}
                 />
             </div>

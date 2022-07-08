@@ -17,6 +17,11 @@ function App() {
     const [list, setList] = useState(null);
     const [msg, setMsg] = useState('');
 
+    /*useEffect(() => {
+        const timer = setTimeout(() => setVisible(false), 5000);
+        return () => clearTimeout(timer);
+    })*/
+
     const checkRelationName = (relationName) => {
         if (relationName.trim().length === 0) {
             setMsg('Please enter relation name!');
@@ -46,10 +51,8 @@ function App() {
             }
             return val;
         }).map(r => r.includes('true'));
-        // console.log(res);
         if (res.includes(false)) {
             const indices = res.map((r, i) => !r ? i : '').filter(r => r.toString().length !== 0);
-            // console.log(indices);
             setList(indices);
             setMsg('Please define each attribute\'s dependency.');
             return false;
@@ -64,11 +67,12 @@ function App() {
         const relationName = my_data.getRawState().relationName;
         if (inputBoxes.length > 0) {
             if (checkRelationName(relationName) && checkPrimary(inputBoxes) && checkDependency(inputBoxes)) {
-                setShowNavbarContent(true);
+                return true;
             } else {
                 setVisible(true);
                 setShowNavbarContent(false);
                 e.preventDefault();
+                return false;
             }
         }
     }
@@ -80,17 +84,17 @@ function App() {
                     onClick={preliminaryCheckClickHandler}
                 />
                 <Routes>
-                    <Route path="/" element={<Home />}/>
+                    <Route path="/" element={<Home/>}/>
                     <Route path="/NC-SSG/DrawingTool" element={<MainTool
                         setShowNavbarContent={setShowNavbarContent}
-                        props_data={{errorMsg:msg, visible, setVisible, list: list}}
+                        props_data={{errorMsg: msg, visible, setVisible, list: list}}
+                        onPreliminaryCheckClick={preliminaryCheckClickHandler}
                     />}/>
                     <Route path="/NC-SSG/MinimalCover" element={<MinimalCover/>}/>
                     <Route path="/NC-SSG/1NF" element={<NF_1/>}/>
                     <Route path="/NC-SSG/2NF" element={<NF_2/>}/>
                     <Route path="/NC-SSG/3NF" element={<NF_3/>}/>
                     <Route path="/NC-SSG/SQLSchema" element={<SqlSchemaGenerator/>}/>
-                    {/*<Route path="/NC-SSG/" element={<MainTool/>}/>*/}
                 </Routes>
             </BrowserRouter>
         </div>

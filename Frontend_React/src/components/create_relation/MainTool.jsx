@@ -67,6 +67,7 @@ const MainTool = (props) => {
                         setCurrentCell={setCurrentCell}
                         currentCell={currentCell}
                         props_data={props.props_data}
+                        onPreliminaryCheckClick={props.onPreliminaryCheckClick}
                         setShowNavbarContent={props.setShowNavbarContent}
                     />
                     <hr className='ms-5 me-5'/>

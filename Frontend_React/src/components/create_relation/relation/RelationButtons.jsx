@@ -1,6 +1,7 @@
 import React from "react";
-import {get_inputBoxes} from "../../../store/inputBoxes_dataStore";
 import PreliminaryCheck from "./PreliminaryCheck";
+import axios from "axios";
+import my_data from "../../../store/data";
 
 const RelationButtons = (props) => {
 
@@ -24,7 +25,12 @@ const RelationButtons = (props) => {
     }
 
     const relationalMappingClickHandler = (e) => {
-        console.log(get_inputBoxes())
+        axios.post('http://127.0.0.1:5000/relationalMapping', my_data.getRawState().inputBoxes)
+            .then(res => {
+                console.log(res);
+            }).catch(error => {
+            alert('Server is not running => ' + error)
+        });
     }
 
     return (
@@ -49,9 +55,7 @@ const RelationButtons = (props) => {
             </button>
             <div className="float-end">
                 <PreliminaryCheck
-                    setVisible={props.setVisible}
-                    setList={props.setList}
-                    setMsg={props.setMsg}
+                    onPreliminaryCheckClick={props.onPreliminaryCheckClick}
                     setShowNavbarContent={props.setShowNavbarContent}
                 />
                 <button

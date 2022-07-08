@@ -28,7 +28,7 @@ const MinimalCover = () => {
 
 
     useEffect(() => {
-        axios.post('http://127.0.0.1:5000/members', {inputBoxes, relationName})
+        axios.post('http://127.0.0.1:5000/minimalCover', {inputBoxes, relationName})
             .then(res => {
                 console.log(res.data)
                 setData(res.data['result'])
