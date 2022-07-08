@@ -13,7 +13,6 @@ const my_data = new Store({
             multiValue: false,
         }
     ],
-    currentAttribute: '',
 })
 
 export default my_data

@@ -41,7 +41,7 @@ function Home() {
 
             <div className='drawing-tool text-center'>
                 {/*<button className='btn btn-lg btn-primary'>*/}
-                    <NavLink className="btn btn-outline-secondary p-2" to="/DrawingTool">
+                    <NavLink className="btn btn-outline-secondary p-2" to="/NC-SSG/DrawingTool">
                        Proceed to Drawing Tool
                     </NavLink>
                 {/*</button>*/}

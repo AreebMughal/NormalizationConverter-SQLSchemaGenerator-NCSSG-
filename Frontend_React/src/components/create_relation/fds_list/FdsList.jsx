@@ -4,6 +4,7 @@ import CollapseDiv from "../../div_collapse/CollapseDiv";
 const FdsList = (props) => {
 
     const {inputBoxes} = props;
+
     return (
         <div className="mb-5 ms-2">
             {/*<h5></h5>*/}

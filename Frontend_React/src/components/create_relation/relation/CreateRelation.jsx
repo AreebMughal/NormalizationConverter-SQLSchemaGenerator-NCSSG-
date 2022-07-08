@@ -1,22 +1,14 @@
 import RelationName from "../../relation_name/RelationName";
-import React, {useEffect, useState} from "react";
+import React from "react";
 import TableCell from "./TableCell";
 import RelationButtons from "./RelationButtons";
+import AlertDismissible from "../../AlertDismissible";
 
 const CreateRelation = (props) => {
-    const [inputBoxes, setInputBoxes] = useState([]);
     const ref_alert_msg = React.createRef();
-
-    useEffect(() => {
-        setInputBoxes(props.inputBoxes)
-    }, [props.inputBoxes]);
-
-    function updateCellFocus(index) {
-
-    }
+    const inputBoxes = props.inputBoxes;
 
     function updateState(newInputBoxes) {
-        setInputBoxes(newInputBoxes);
         props.updateInputBoxes(newInputBoxes);
     }
 
@@ -38,7 +30,13 @@ const CreateRelation = (props) => {
         }
     }
 
-    const resetAll = () => props.resetAll();
+    const resetAllCells = () => props.updateInputBoxes([{
+        id: 1,
+        value: '',
+        dependency: [[]],
+        primary: false,
+        multiValue: false,
+    }]);
 
     const renderInputBoxes = () => {
         return (
@@ -57,6 +55,7 @@ const CreateRelation = (props) => {
                         currentCell={props.currentCell}
                         setCurrentCell={props.setCurrentCell}
                         ref_alert_msg={ref_alert_msg}
+                        list={props.props_data.list}
                     />
                 })}
             </div>
@@ -64,31 +63,42 @@ const CreateRelation = (props) => {
     }
 
     return (
-            <div className="card ms-3 mt-3">
-                <div className='card-header'>
-                    <span>Step-1: Create Relation</span>
-                </div>
-                <div className="card-body">
-                    <div className='col-12 d-flex flex-wrap'>
-                        <RelationName
-                            setRelationName={props.setRelationName}
-                            name={props.relationName}
-                            setDisableBox={props.setDisableBox}
-                        />
-                        <div className="col-6">
-                            <span ref={ref_alert_msg} className='float-end text-danger visually-hidden'>Cannot store same attribute names</span>
-                        </div>
+        <div className="card ms-3 mt-3">
+            <div className='card-header'>
+                <div className="d-flex flex-wrap">
+                    <div className="col-lg-6 col-md-6 col-sm-6">
+                        <span>Step-1: Create Relation</span>
                     </div>
-                    {renderInputBoxes()}
-                    <RelationButtons
-                        inputBoxes={inputBoxes}
-                        addCell={addCell}
-                        removeCell={removeCell}
-                        resetAll={resetAll}
-                        setCurrentCell={props.setCurrentCell}
+                    <AlertDismissible
+                        visibility={props.props_data.visible}
+                        alertMsg={props.props_data.errorMsg}
+                        setVisible={props.props_data.setVisible}
                     />
                 </div>
             </div>
+            <div className="card-body">
+                <div className='col-12 d-flex flex-wrap'>
+                    <RelationName
+                        setRelationName={props.setRelationName}
+                        name={props.relationName}
+                        setDisableBox={props.setDisableBox}
+                    />
+                    <div className="col-6">
+                        <span ref={ref_alert_msg} className='float-end text-danger visually-hidden'>Cannot store same attribute names</span>
+                    </div>
+                </div>
+                {renderInputBoxes()}
+                <RelationButtons
+                    inputBoxes={inputBoxes}
+                    addCell={addCell}
+                    removeCell={removeCell}
+                    resetAll={resetAllCells}
+                    setCurrentCell={props.setCurrentCell}
+                    onPreliminaryCheckClick={props.onPreliminaryCheckClick}
+                    setShowNavbarContent={props.setShowNavbarContent}
+                />
+            </div>
+        </div>
 
     );
 }
