@@ -3,6 +3,7 @@ import React, {useEffect, useState} from "react";
 import axios from "axios";
 import PrintRelations from "./printRelations";
 import {inputBoxes_data} from "../../store/inputBoxes_dataStore";
+import DetailReason from "../DetailReason";
 
 function NF_2() {
     // const s = get_inputBoxes(inputBoxes_data.getRawState().inputBoxes)
@@ -68,12 +69,15 @@ function NF_2() {
     }
 
     return (
-        <PrintRelations
-            data={data}
-            normalFormNumber='2nd'
-            names={relationNames}
-            reason={get2NFreason()}
-        />
+        <>
+            <PrintRelations
+                data={data}
+                normalFormNumber='2nd'
+                names={relationNames}
+                reason={get2NFreason()}
+            />
+            <DetailReason/>
+        </>
     );
 
 }
