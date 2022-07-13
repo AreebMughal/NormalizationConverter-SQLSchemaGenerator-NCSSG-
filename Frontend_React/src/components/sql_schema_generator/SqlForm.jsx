@@ -2,7 +2,6 @@ import ErrorModal from "../modal/ErrorModal";
 import React, {useState} from "react";
 import {validRange} from "../../store/validTypeRange";
 import axios from "axios";
-import DownloadModal from "../modal/DownloadModal";
 // const fs = require('fs');
 
 const SqlForm = (props) => {
@@ -22,8 +21,7 @@ const SqlForm = (props) => {
             if (input_field.className !== undefined && input_field.className.includes('input_')) {
                 if (input_field.className.includes('input_rel_name')) {
                     relationNames.push(input_field)
-                }
-                else if (Object.keys(inputFields).includes(input_field.id))
+                } else if (Object.keys(inputFields).includes(input_field.id))
                     inputFields[input_field.id].push(input_field)
                 else
                     inputFields[input_field.id] = [input_field]
@@ -80,11 +78,25 @@ const SqlForm = (props) => {
         return checkRelationNames(relationNames) && checkInputFields(inputFields)
     }
 
+    function getURL() {
+        let url = ''
+        axios({
+            url: 'https://source.unsplash.com/random/500x500',
+            method: 'GET',
+            responseType: 'blob'
+        })
+            .then((response) => {
+                url = window.URL
+                    .createObjectURL(new Blob([response.data]));
+            })
+        return url;
+    }
+
     const formSubmit = (e) => {
         e.preventDefault();
         if (isValidData(e.target)) {
-            console.log('data ',props.data)
-            axios.post('http://127.0.0.1:5000/sqlSchemaGenerator', {data: props.data })
+            console.log('data ', props.data)
+            axios.post('http://127.0.0.1:5000/sqlSchemaGenerator', {data: props.data})
                 .then(res => {
                     // console.log(res.data)
                     const element = document.createElement("a");
@@ -94,9 +106,13 @@ const SqlForm = (props) => {
                     element.href = URL.createObjectURL(file);
                     console.log(' URL ', element.href)
                     element.download = "dump_schema.sql";
+
+                    const f = new File([res.data], 'as.sql')
+
                     document.body.appendChild(element);
                     element.click();
                 })
+
         }
     }
 
@@ -111,6 +127,7 @@ const SqlForm = (props) => {
             <form onSubmit={formSubmit}>
                 {props.children}
             </form>
+            {/*<a href={`http://localhost:3000/df6eda5c-abe7-4dcb-9599-f06420c9f536`} download='as.sql'>Download</a>*/}
             {/*{(showDownloadModal) &&
                 <DownloadModal
                     show={showDownloadModal}

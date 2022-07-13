@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 import {BrowserRouter, Route, Routes} from "react-router-dom";
 import NF_1 from "./components/normal_forms/NF_1";
 import Navbar from "./components/Navbar";
@@ -14,7 +14,7 @@ function App() {
 
     const [showNavbarContent, setShowNavbarContent] = useState(false);
     const [visible, setVisible] = useState(false);
-    const [list, setList] = useState(null);
+    const [list, setList] = useState([]);
     const [msg, setMsg] = useState('');
 
     /*useEffect(() => {
@@ -29,8 +29,6 @@ function App() {
         }
         return true;
     }
-
-
     function checkPrimary(inputBoxes) {
         const isHavePrimary = inputBoxes.map(input => input.value.trim().length !== 0 && input.primary).includes(true)
         if (!isHavePrimary) {
@@ -42,13 +40,9 @@ function App() {
     function checkDependency(inputBoxes) {
         let res = inputBoxes.map((input) => {
             let val = ''
-            if (input.value.trim().length > 0) {
-                if (!input.primary) {
-                    val += input.dependency.map(dep => dep.length > 0)
-                } else {
-                    val += true
-                }
-            }
+            if (input.value.trim().length > 0 && !input.primary) {
+                val += input.dependency.map(dep => dep.length > 0)
+            } else val += true
             return val;
         }).map(r => r.includes('true'));
         if (res.includes(false)) {
@@ -60,13 +54,26 @@ function App() {
         return true;
     }
 
+    const checkSameName = (inputBoxes) => {
+        for (let i = 0; i < inputBoxes.length; i++) {
+            const inputBox = inputBoxes[i]
+            const res = inputBoxes.map((input, index) =>
+                index !== i && input.value.trim().length !== 0 && input.value === inputBox.value.trim()
+            );
+            if (res.includes(true)) {
+                setMsg("Cannot store same attribute name.");
+                return false
+            }
+        }
+        return true;
+    }
     const preliminaryCheckClickHandler = (e) => {
         setVisible(false)
         setList([]);
         const inputBoxes = my_data.getRawState().inputBoxes;
         const relationName = my_data.getRawState().relationName;
         if (inputBoxes.length > 0) {
-            if (checkRelationName(relationName) && checkPrimary(inputBoxes) && checkDependency(inputBoxes)) {
+            if (checkRelationName(relationName) && checkSameName(inputBoxes) && checkPrimary(inputBoxes) && checkDependency(inputBoxes)) {
                 return true;
             } else {
                 setVisible(true);

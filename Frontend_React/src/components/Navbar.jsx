@@ -50,14 +50,15 @@ function Navbar(props) {
                                         Show 3-NF
                                     </NavLink>
                                 </li>
-                                <li className="nav-item me-0">
-                                    <NavLink className="nav-link" to="/NC-SSG/SQLSchema">
-                                        <span className='me-1 circled-number'>&#9316;</span>
-                                        SQL Schema
-                                    </NavLink>
-                                </li>
+
                             </React.Fragment>
                             }
+                            <li className="nav-item me-0">
+                                <NavLink className="nav-link" to="/NC-SSG/SQLSchema">
+                                    <span className='me-1 circled-number'>&#9316;</span>
+                                    SQL Schema
+                                </NavLink>
+                            </li>
                         </ul>
                     </div>
                 </div>

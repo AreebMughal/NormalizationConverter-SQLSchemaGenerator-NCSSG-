@@ -72,13 +72,13 @@ const MainTool = (props) => {
                     />
                     <hr className='ms-5 me-5'/>
                     <div className="row ms-2 ">
-                        <div className={`col-lg-8 col-md-12 col-sm-12 m-0 p-0 ${styles['fd-list']}`}>
+                        <div className={`col-lg-6 col-md-12 col-sm-12 m-0 p-0 ${styles['fd-list']}`}>
                             <FdsList
                                 inputBoxes={inputBoxes}
                                 isOpen={true}
                             />
                         </div>
-                        <div className={`col-lg-4 col-md-12 col-sm-12 m-0 p-0 ${styles.suggestion}`}>
+                        <div className={`col-lg-6 col-md-12 col-sm-12 m-0 p-0 ${styles.suggestion}`}>
                             <Suggestion
                                 isOpen={false}
                             />

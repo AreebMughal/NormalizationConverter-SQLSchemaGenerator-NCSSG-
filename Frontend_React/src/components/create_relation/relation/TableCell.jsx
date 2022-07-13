@@ -4,10 +4,8 @@ import '../css/TableCell.css';
 const TableCell = (props) => {
     const [width, setWidth] = useState(90);
     useEffect(() => {
-        if (props.list.length === 0)
-        props.inputBoxes.map((input, i) =>
-            document.getElementById(i.toString()).classList.remove('my-border-danger'));
-    });
+        removeCellBorder();
+    }, []);
 
     useEffect(() => {
         if (props.currentCell) {
@@ -15,8 +13,9 @@ const TableCell = (props) => {
             props.setCurrentCell(false);
         }
     }, [props.currentCell]);
-    useEffect(() => {
 
+    useEffect(() => {
+        removeCellBorder();
         if (props.list.length > 0) {
             const target = document.getElementById(props.list[0].toString());
             target.classList.add('my-border-danger');
@@ -24,6 +23,11 @@ const TableCell = (props) => {
         }
     }, [props.list]);
 
+    const removeCellBorder = () => {
+        // if (props.list.length === 0)
+            props.inputBoxes.map((input, i) =>
+                document.getElementById(i.toString()).classList.remove('my-border-danger'));
+    }
     const getClassName = (inputBox) => {
         // let classname = 'inputBox red-border alert-danger mt-3 '
         let classname = 'inputBox mt-3 '
@@ -60,7 +64,7 @@ const TableCell = (props) => {
             props.setDisableBox(false);
             props.ref_alert_msg.current.classList.add('visually-hidden')
         }
-        if (res.includes(true) && props.list.length === 0)
+        if (!res.includes(true) && props.list.length === 0)
             target.classList.remove('my-border-danger');
 
     }

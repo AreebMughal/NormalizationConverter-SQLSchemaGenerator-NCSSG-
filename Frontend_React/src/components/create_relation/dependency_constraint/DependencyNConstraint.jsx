@@ -34,12 +34,12 @@ const DependencyNConstraint = (props) => {
         return props.disableBox ? '__disabled-card' : '';
     }
     return (
-        <div className=" col-lg-4 col-md-8 col-sm-12 pe-0 __dependency-constraint">
-            <div className={`card mycard mt-3 ms-2 ${getCardDisableClass()}`} >
-                <div className="card-header">
+        <div className=" col-lg-4 col-md-8 col-sm-12 pe-0 ">
+            <div className={`card mt-3 __dependency-constraint ms-2 ${getCardDisableClass()}`} >
+                <div className="card-header __dependency-constraint__header">
                     Step-2: Define Attribute Constraint and Dependency
                 </div>
-                <div className="card-body drawing-tool-bg-color">
+                <div className="card-body __dependency-constraint__body">
                     <h5 className="card-title text-center attr">{getAttribute()}</h5>
                     <ConstraintButtons
                         inputBox={inputBox}

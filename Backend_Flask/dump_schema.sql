@@ -6,10 +6,10 @@ SET time_zone = "+00:00";
 
 
 -- 
--- Table structure for table `Practice` 
+-- Table structure for table `practice` 
 -- 
 
-CREATE TABLE `Practice` ( 
+CREATE TABLE `practice` ( 
 	`pnum` int(11) NOT NULL, 
 	`ssn` int(11) NOT NULL, 
 	`name` int(11) NOT NULL 
@@ -18,10 +18,10 @@ CREATE TABLE `Practice` (
 -- --------------------------------------------------------
 
 -- 
--- Table structure for table `Pra_ssn` 
+-- Table structure for table `pra_ssn` 
 -- 
 
-CREATE TABLE `Pra_ssn` ( 
+CREATE TABLE `pra_ssn` ( 
 	`ssn` int(11) NOT NULL, 
 	`id` int(11) NOT NULL 
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -29,10 +29,10 @@ CREATE TABLE `Pra_ssn` (
 -- --------------------------------------------------------
 
 -- 
--- Table structure for table `Pra_pnum` 
+-- Table structure for table `pra_pnum` 
 -- 
 
-CREATE TABLE `Pra_pnum` ( 
+CREATE TABLE `pra_pnum` ( 
 	`pnum` int(11) NOT NULL, 
 	`ploc` int(11) NOT NULL, 
 	`pname` int(11) NOT NULL 
@@ -41,10 +41,10 @@ CREATE TABLE `Pra_pnum` (
 -- --------------------------------------------------------
 
 -- 
--- Table structure for table `Pra_email` 
+-- Table structure for table `pra_email` 
 -- 
 
-CREATE TABLE `Pra_email` ( 
+CREATE TABLE `pra_email` ( 
 	`pnum` int(11) NOT NULL, 
 	`ssn` int(11) NOT NULL, 
 	`email` int(11) NOT NULL 
@@ -53,10 +53,10 @@ CREATE TABLE `Pra_email` (
 -- --------------------------------------------------------
 
 -- 
--- Table structure for table `Pra_address` 
+-- Table structure for table `pra_address` 
 -- 
 
-CREATE TABLE `Pra_address` ( 
+CREATE TABLE `pra_address` ( 
 	`ssn` int(11) NOT NULL, 
 	`address` int(11) NOT NULL 
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -64,10 +64,10 @@ CREATE TABLE `Pra_address` (
 -- --------------------------------------------------------
 
 -- 
--- Table structure for table `Pra_id` 
+-- Table structure for table `pra_id` 
 -- 
 
-CREATE TABLE `Pra_id` ( 
+CREATE TABLE `pra_id` ( 
 	`id` int(11) NOT NULL, 
 	`dnum` int(11) NOT NULL 
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -75,10 +75,10 @@ CREATE TABLE `Pra_id` (
 -- --------------------------------------------------------
 
 -- 
--- Table structure for table `Pra_dnum` 
+-- Table structure for table `pra_dnum` 
 -- 
 
-CREATE TABLE `Pra_dnum` ( 
+CREATE TABLE `pra_dnum` ( 
 	`dnum` int(11) NOT NULL, 
 	`dloc` int(11) NOT NULL, 
 	`dname` int(11) NOT NULL 
@@ -91,90 +91,96 @@ CREATE TABLE `Pra_dnum` (
 
 
 -- 
--- Indexes for table `Practice` 
+-- Indexes for table `practice` 
 -- 
-ALTER TABLE `Practice`
-	ADD PRIMARY KEY (`pnum`,`ssn`)
+ALTER TABLE `practice`
+	ADD PRIMARY KEY (`pnum`,`ssn`);
 
 -- 
--- Indexes for table `Pra_ssn` 
+-- Indexes for table `pra_ssn` 
 -- 
-ALTER TABLE `Pra_ssn`
-	ADD PRIMARY KEY (`ssn`)
+ALTER TABLE `pra_ssn`
+	ADD PRIMARY KEY (`ssn`);
 
 -- 
--- Indexes for table `Pra_pnum` 
+-- Indexes for table `pra_pnum` 
 -- 
-ALTER TABLE `Pra_pnum`
-	ADD PRIMARY KEY (`pnum`)
+ALTER TABLE `pra_pnum`
+	ADD PRIMARY KEY (`pnum`);
 
 -- 
--- Indexes for table `Pra_email` 
+-- Indexes for table `pra_email` 
 -- 
-ALTER TABLE `Pra_email`
-	ADD PRIMARY KEY (`pnum`,`ssn`,`email`)
+ALTER TABLE `pra_email`
+	ADD PRIMARY KEY (`pnum`,`ssn`,`email`);
 
 -- 
--- Indexes for table `Pra_address` 
+-- Indexes for table `pra_address` 
 -- 
-ALTER TABLE `Pra_address`
-	ADD PRIMARY KEY (`ssn`,`address`)
+ALTER TABLE `pra_address`
+	ADD PRIMARY KEY (`ssn`,`address`);
 
 -- 
--- Indexes for table `Pra_id` 
+-- Indexes for table `pra_id` 
 -- 
-ALTER TABLE `Pra_id`
-	ADD PRIMARY KEY (`id`)
+ALTER TABLE `pra_id`
+	ADD PRIMARY KEY (`id`);
 
 -- 
--- Indexes for table `Pra_dnum` 
+-- Indexes for table `pra_dnum` 
 -- 
-ALTER TABLE `Pra_dnum`
-	ADD PRIMARY KEY (`dnum`)
+ALTER TABLE `pra_dnum`
+	ADD PRIMARY KEY (`dnum`);
 -- 
 -- Constraints for dumped tables 
 -- 
 
 
 -- 
--- Constraint for table `Pra_ssn` 
+-- Constraint for table `pra_ssn` 
 -- 
-ALTER TABLE `Pra_ssn`
-	ADD CONSTRAINT `Pra_ssn_ibfk_1` FOREIGN KEY (`ssn`) REFERENCES `Practice` (`ssn`) 
-	ON DELETE CASCADE ON UPDATE CASCADE; 
+ALTER TABLE `pra_ssn`
+	ADD CONSTRAINT `pra_ssn_ibfk_1` 
+	FOREIGN KEY (`ssn`) 	REFERENCES `practice` (`ssn`) 
+	ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- 
--- Constraint for table `Pra_pnum` 
+-- Constraint for table `pra_pnum` 
 -- 
-ALTER TABLE `Pra_pnum`
-	ADD CONSTRAINT `Pra_pnum_ibfk_1` FOREIGN KEY (`pnum`) REFERENCES `Practice` (`pnum`) 
-	ON DELETE CASCADE ON UPDATE CASCADE; 
+ALTER TABLE `pra_pnum`
+	ADD CONSTRAINT `pra_pnum_ibfk_1` 
+	FOREIGN KEY (`pnum`) 	REFERENCES `practice` (`pnum`) 
+	ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- 
--- Constraint for table `Pra_email` 
+-- Constraint for table `pra_email` 
 -- 
-ALTER TABLE `Pra_email`
-	ADD CONSTRAINT `Pra_email_ibfk_1` FOREIGN KEY (`pnum`, `ssn`) REFERENCES `Practice` (`pnum`, `ssn`) 
-	ON DELETE CASCADE ON UPDATE CASCADE; 
+ALTER TABLE `pra_email`
+	ADD CONSTRAINT `pra_email_ibfk_1` 
+	FOREIGN KEY (`pnum`, `ssn`) 	REFERENCES `practice` (`pnum`, `ssn`) 
+	ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- 
--- Constraint for table `Pra_address` 
+-- Constraint for table `pra_address` 
 -- 
-ALTER TABLE `Pra_address`
-	ADD CONSTRAINT `Pra_address_ibfk_1` FOREIGN KEY (`ssn`) REFERENCES `Practice` (`ssn`) 
-	ON DELETE CASCADE ON UPDATE CASCADE; 
+ALTER TABLE `pra_address`
+	ADD CONSTRAINT `pra_address_ibfk_1` 
+	FOREIGN KEY (`ssn`) 	REFERENCES `practice` (`ssn`) 
+	ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- 
--- Constraint for table `Pra_id` 
+-- Constraint for table `pra_id` 
 -- 
-ALTER TABLE `Pra_id`
-	ADD CONSTRAINT `Pra_id_ibfk_1` FOREIGN KEY (`id`) REFERENCES `Pra_ssn` (`id`) 
-	ON DELETE CASCADE ON UPDATE CASCADE; 
+ALTER TABLE `pra_id`
+	ADD CONSTRAINT `pra_id_ibfk_1` 
+	FOREIGN KEY (`id`) 	REFERENCES `pra_ssn` (`id`) 
+	ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- 
--- Constraint for table `Pra_dnum` 
+-- Constraint for table `pra_dnum` 
 -- 
-ALTER TABLE `Pra_dnum`
-	ADD CONSTRAINT `Pra_dnum_ibfk_1` FOREIGN KEY (`dnum`) REFERENCES `Pra_id` (`dnum`) 
-	ON DELETE CASCADE ON UPDATE CASCADE; 
+ALTER TABLE `pra_dnum`
+	ADD CONSTRAINT `pra_dnum_ibfk_1` 
+	FOREIGN KEY (`dnum`) 	REFERENCES `pra_id` (`dnum`) 
+	ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;

@@ -17,7 +17,7 @@ def check_fk_in_relation(all_foreign_keys, attribute):
     index = -1
     for i in range(len(all_foreign_keys)):
         # print(attribute, all_foreign_keys[i]['attribute'])
-        if attribute.issubset(all_foreign_keys[i]['attribute']):
+        if set(attribute).issubset(all_foreign_keys[i]['attribute']):
             index = i
     return index
 
@@ -41,13 +41,13 @@ def get_foreign_keys(relation, all_relations, current):
             relation_lhs = set(relation[0])
             if 'partial' in current:
                 if relation_lhs.issubset(rel[0]) and key == 'Fully_dependent':
-                    append_foreign_key(foreign_keys, key, relation_lhs)
+                    append_foreign_key(foreign_keys, key, relation[0])
             elif relation_lhs.issubset(rel[0]) or relation_lhs.issubset(rel[1]):
-                append_foreign_key(foreign_keys, key, relation_lhs)
+                append_foreign_key(foreign_keys, key, relation[0])
             elif not ('partial' in current and 'Fully_dependent' in current):
-                for attr in relation_lhs:
+                for attr in relation[0]:
                     if {attr}.issubset(rel[0]) or {attr}.issubset(rel[1]):
-                        append_foreign_key(foreign_keys, key, {attr})
+                        append_foreign_key(foreign_keys, key, [attr])
 
     primary_keys = all_relations['Fully_dependent'][0]
 
@@ -67,8 +67,9 @@ def get_foreign_keys(relation, all_relations, current):
         elif 'multi' in relations:
             index = relations.index('multi')
             element['relationName'] = element['relationName'][index]
+        # element['attribute'] = list(element['attribute'])
+        # print('.... ', element['attribute'])
 
-        element['attribute'] = list(element['attribute'])
     return foreign_keys
 
 
@@ -122,6 +123,7 @@ def create_relations(nf_result, relation_names, all_relations):
                         for attr in arr:
                             relation["attributes"].append(get_attribute_detail(attr, "primary"))
                 if key.lower() != 'full':
+                    # print('--- >>> ',  rel)
                     relation['foreignKeys'] = get_foreign_keys(rel, all_relations, relation_names[key][index][1])
                 index += 1
                 json_data['Data'].append(relation)

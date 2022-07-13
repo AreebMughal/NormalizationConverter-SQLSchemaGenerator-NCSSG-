@@ -38,8 +38,8 @@ class SqlScript:
         table = ''
         for relation in self.data:
             attributes = relation['attributes']
-            table += comment_table_header(relation["relationName"][0])
-            table += f'CREATE TABLE `{relation["relationName"][0]}` ( \n'
+            table += comment_table_header(relation["relationName"][0].lower())
+            table += f'CREATE TABLE `{relation["relationName"][0].lower()}` ( \n'
             for attr in relation['attributes']:
                 condition = (attr == attributes[len(attributes) - 1])
                 line_terminator = get_line_terminator(other=',', last='', condition=condition)
@@ -85,23 +85,23 @@ class SqlScript:
             self.set_attributes(relation['attributes'])
             flag, total = self.is_contain_indexes()
             if flag:
-                indexes += comment_index_header(relation["relationName"][0])
-                indexes += 'ALTER TABLE ' + f'`{relation["relationName"][0]}`' + '\n'
-                indexes += f'\tADD PRIMARY KEY ({self.get_primary_keys_of_rel()})'
+                indexes += comment_index_header(relation["relationName"][0].lower())
+                indexes += 'ALTER TABLE ' + f'`{relation["relationName"][0].lower()}`' + '\n'
+                indexes += f'\tADD PRIMARY KEY ({self.get_primary_keys_of_rel()}),' + '\n'
 
                 for attr in attributes:
                     if attr['index'].lower() != 'primary':
                         name = attr['value']
                         index = attr['index'].upper() if attr['type'].lower() != 'serial' else 'UNIQUE'
-                        key_name = name if index != 'PRIMARY' else ''
+                        key_name = f'`{name}`' if index != 'PRIMARY' else ''
                         condition = (count == total - 1)
-                        line_terminator = get_line_terminator(other=',', last=';', condition=condition)
+                        # line_terminator = get_line_terminator(other=',', last=';', condition=condition)
 
                         if index != 'NONE' or attr['type'].lower() == 'serial':
-                            indexes += '\t' + f'ADD {index} KEY {key_name} (`{name}`){line_terminator}' + '\n'
+                            indexes += '\t' + f'ADD {index} KEY {key_name} (`{name}`),' + '\n'
                             count += 1
-            indexes += '\n'
 
+                indexes = indexes.rstrip('\n,') + ';' + '\n'
         return indexes
 
     def add_auto_increment(self):
@@ -112,8 +112,8 @@ class SqlScript:
             flag, total = self.is_contain_auto_increment()
             count = 0
             if flag:
-                auto_increment += comment_index_header(relation["relationName"][0])
-                auto_increment += 'ALTER TABLE ' + f'`{relation["relationName"][0]}`' + '\n'
+                auto_increment += comment_index_header(relation["relationName"][0].lower())
+                auto_increment += 'ALTER TABLE ' + f'`{relation["relationName"][0].lower()}`' + '\n'
                 for attr in attributes:
                     name = attr['value']
                     condition = (count == total - 1)
@@ -142,16 +142,17 @@ class SqlScript:
         count = 1
         for relation in self.data:
             if len(relation['foreignKeys']) != 0:
-                relation_name = relation["relationName"][0]
+                relation_name = relation["relationName"][0].lower()
                 constraints += comment_constraint_header(relation_name)
                 constraints += f'ALTER TABLE `{relation_name}`' + '\n'
                 for fk in relation['foreignKeys']:
+                    print('>>>',  fk['attribute'])
                     all_attr = (' '.join(['`' + str(elem) + '`,' for elem in fk['attribute']])).rstrip(',')
-                    constraints += f'\tADD CONSTRAINT `{self.get_fk_constraint_name(relation_name, count)}` FOREIGN KEY ({all_attr}) ' \
-                                   f'REFERENCES `{all_relation_names[fk["relationName"]]}` ({all_attr}) \n\tON DELETE ' \
-                                   'CASCADE ON UPDATE CASCADE; '
-                    constraints += '\n'
-
+                    constraints += f'\tADD CONSTRAINT `{self.get_fk_constraint_name(relation_name, count)}` \n' \
+                                   f'\tFOREIGN KEY ({all_attr}) ' \
+                                   f'\tREFERENCES `{all_relation_names[fk["relationName"]].lower()}` ({all_attr}) \n' \
+                                   f'\tON DELETE CASCADE ON UPDATE CASCADE,' + '\n'
+                constraints = constraints.rstrip('\n,') + ';' + '\n'
         return constraints
 
     def write_sql_script(self):

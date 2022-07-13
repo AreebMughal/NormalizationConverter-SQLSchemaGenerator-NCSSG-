@@ -28,6 +28,7 @@ const RelationButtons = (props) => {
         axios.post('http://127.0.0.1:5000/relationalMapping', my_data.getRawState().inputBoxes)
             .then(res => {
                 console.log(res);
+
             }).catch(error => {
             alert('Server is not running => ' + error)
         });
