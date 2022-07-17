@@ -80,6 +80,11 @@ def minimalCover():
     return get_result(object_type='minimal_cover', input_boxes_dic=request.data.decode('utf-8'))
 
 
+@app.route("/NF1", methods=['GET', 'POST'])
+def NF1():
+    return get_result(object_type='NF1', input_boxes_dic=request.data.decode('utf-8'))
+
+
 @app.route("/NF2", methods=['GET', 'POST'])
 def NF2():
     res = get_result(object_type='NF2', input_boxes_dic=request.data.decode('utf-8'))
@@ -155,9 +160,7 @@ def relationalMapping():
     return ''
 
 
-
 if __name__ == '__main__':
-
     app.run(debug=True)
 
     # res = get_dummy_nf_result()

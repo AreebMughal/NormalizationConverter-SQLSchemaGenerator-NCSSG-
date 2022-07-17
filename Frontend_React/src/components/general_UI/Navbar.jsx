@@ -1,7 +1,7 @@
 import React from 'react';
 import {NavLink} from "react-router-dom";
 import 'bootstrap'
-import "../assets/css/navbar.css"
+import "../../assets/css/navbar.css"
 
 function Navbar(props) {
     const {showNavbarContent} = props;
