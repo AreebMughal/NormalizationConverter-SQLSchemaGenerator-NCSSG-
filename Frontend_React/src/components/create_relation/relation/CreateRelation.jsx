@@ -2,7 +2,7 @@ import RelationName from "../../relation_name/RelationName";
 import React from "react";
 import TableCell from "./TableCell";
 import RelationButtons from "./RelationButtons";
-import AlertDismissible from "../../AlertDismissible";
+import AlertDismissible from "../../general_UI/AlertDismissible";
 
 const CreateRelation = (props) => {
     const ref_alert_msg = React.createRef();
