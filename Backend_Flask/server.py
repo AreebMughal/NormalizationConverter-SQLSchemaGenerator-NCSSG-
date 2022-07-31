@@ -7,6 +7,7 @@ import numpy as np
 from flask import Flask, request
 from flask_cors import CORS
 
+from source.DrawingImage.relationalMapping import RelationalMapping
 from source.NF_1 import Nf1st
 from source.NF_2 import Nf2nd
 from source.NF_3 import Nf3rd
@@ -139,7 +140,8 @@ def preliminaryCheck():
     try:
         data = json.loads(request.data.decode('utf-8'))
         input_boxes = data['inputBoxes']
-        relation_name = data['relationName']
+        # relation_name = data['relationName']
+        relation_name = 'Something'
         my_relation = Relation(rel_name=relation_name, input_boxes=input_boxes)
 
     except Exception as e:
@@ -152,8 +154,12 @@ def relationalMapping():
     try:
         data = json.loads(request.data.decode('utf-8'))
         input_boxes = data['inputBoxes']
-        relation_name = data['relationName']
+        # relation_name = data['relationName']
+        relation_name = 'Something'
         my_relation = Relation(rel_name=relation_name, input_boxes=input_boxes)
+        dic = my_relation.extract_data(input_boxes)
+        print(dic)
+        rl = RelationalMapping(dic)
 
     except Exception as e:
         my_exception(e)

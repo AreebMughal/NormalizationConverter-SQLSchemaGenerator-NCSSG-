@@ -2,7 +2,7 @@
 const AttributeTableHeader = (props) => {
     return (
         <div className="table-responsive">
-            <table className='table table-responsive-lg caption-top table-bordered'>
+            <table className='table table-responsive-lg caption-top table-bordered align-middle'>
                 <caption>List of attributes</caption>
                 <thead>
                 <tr>

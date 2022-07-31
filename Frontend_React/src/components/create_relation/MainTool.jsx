@@ -5,6 +5,7 @@ import DependencyNConstraint from "./dependency_constraint/DependencyNConstraint
 import FdsList from "./fds_list/FdsList";
 import {get_inputBoxes, inputBoxes_data} from "../../store/inputBoxes_dataStore";
 import Suggestion from "./fds_list/Suggestion";
+import UploadFile from "./UploadFile";
 
 const MainTool = (props) => {
     const [inputBoxes, setInputBoxes] = useState([]);
@@ -54,6 +55,7 @@ const MainTool = (props) => {
     }
     return (
         <section className={`${styles.main}`}>
+            {/*<UploadFile />*/}
             <div className="m row col-12">
                 <div className={`col-lg-8 col-md-10 col-sm-12 ${styles['__create-relation']}`}>
                     <CreateRelation

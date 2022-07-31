@@ -1,12 +1,13 @@
 from copy import deepcopy
-from source.StaticMethods import convert_to_json
-from source.StaticMethods import convert_to_array
+from StaticMethods import convert_to_json
+from StaticMethods import convert_to_array
 
 
 class NormalizedRelation:
-    def __init__(self, relation):
+    def __init__(self, relation=None, fd=None):
         self.__relation = relation
-        self.fds = (relation.get_attribute_dependency()).get_func_dep()
+        # self.fds = (relation.get_attribute_dependency()).get_func_dep()
+        self.fds = fd
         self.minimal_cover = self.get_minimal_cover()
 
     def get_fd(self):
