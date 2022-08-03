@@ -172,3 +172,6 @@ Equivalences:
 {L, F, G, M, B, I} <-> {F, H, G, M, B, I}
 
 Keys: 
+
+
+pnum,ssn,Name,Email1,Email2,Address1,Address2,DId,ploc,pname,dnum,dname

@@ -1,4 +1,9 @@
-file = open('FD_Info.txt', 'r')
+from source.normalizedRelation import NormalizedRelation
+
+
+csv = 
+
+file = open('fdtool/FD_Info.txt', 'r')
 
 table_name = file.readline().split(' : ')[1].replace('\n', '')
 print(table_name)
@@ -20,3 +25,8 @@ if "Functional Dependencies" in file.readline():
 
 print(fds)
 
+n = NormalizedRelation(fd=fds)
+d = n.get_minimal_cover_result()
+for i in d:
+    if len(i) != 0:
+        print(i)

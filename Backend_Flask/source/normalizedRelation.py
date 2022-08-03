@@ -1,6 +1,6 @@
 from copy import deepcopy
-from StaticMethods import convert_to_json
-from StaticMethods import convert_to_array
+from source.StaticMethods import convert_to_json
+from source.StaticMethods import convert_to_array
 
 
 class NormalizedRelation:
