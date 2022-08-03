@@ -1,4 +1,4 @@
-﻿pnum,ssn,Name,Email1,Email2,Address1,Address2,DId,ploc,pname,dnum,dname
+A,B,C,D,E,F,G,H,I,J,K,L
 1,1814,Ali Raza,AliRaza@gmail.com,,"Street#8, henry villa, Washington","18,HillSide Avenue, Barlin",10,Barlin,SnackBar making,1,Manufacturing
 1,1813,Ahmed Raza,AhmedRaza@gmail.com,Ahmed123@gmail.com,"23 Rosemary Land, Tokyo",,20,Barlin,SnackBar making,2,HR
 8,1815,Seniorita,sen_53@yahoo.com,pashaSen2@gmail.com,"21 Street Colly, Canada","2 Flower Street, Pakistan",10,Canada,RC Solar Lake Pool Cleaner Drone,1,Manufacturing
@@ -19,3 +19,5 @@
 12,1300,Sonia,sonakaka78@yahoo.com,prettyDoll@gmail.com,"US, MD, ","IL, , Tel Aviv, Israel",90,Sri Lanka,ProductCT-3,9,Equipments
 6,1310,Zain,zain23@gmail.com,,"DE, BE, Berlin","GB, SOS, Southend-on-Sea",40,Keyseria,ProductQE-2,4,Accounting
 32,1320,Zulekha,Zulekha@gmail.com,183432@gift.edu.pk,"US, CA, San Francisco","US, NY, New York",30,Oman,ProductOM,3,Sales
+,,,,,,,,,,,
+,,,,,,,,,,,
