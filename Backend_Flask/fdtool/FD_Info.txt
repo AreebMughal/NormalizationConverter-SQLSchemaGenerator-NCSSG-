@@ -2,17 +2,17 @@ Table : Dataset
 Columns : A, B, C, D, E, F, G, H, I, J, K, L
 
 Functional Dependencies: 
-{B} -> {A}
-{B} -> {I}
-{B} -> {G}
-{B} -> {L}
-{B} -> {E}
 {B} -> {F}
-{B} -> {H}
+{B} -> {D}
 {B} -> {J}
+{B} -> {H}
+{B} -> {E}
+{B} -> {I}
 {B} -> {K}
 {B} -> {C}
-{B} -> {D}
+{B} -> {L}
+{B} -> {G}
+{B} -> {A}
 {D} -> {C}
 {C} -> {D}
 {C} -> {E}
@@ -40,84 +40,84 @@ Functional Dependencies:
 {J} -> {I}
 {I} -> {J}
 {K} -> {L}
-{A, C} -> {B}
 {A, C} -> {H}
 {A, C} -> {K}
-{A, D} -> {B}
+{A, C} -> {B}
 {A, D} -> {H}
 {A, D} -> {K}
-{A, F} -> {B}
+{A, D} -> {B}
 {A, F} -> {H}
 {A, F} -> {K}
-{A, G} -> {I}
-{A, G} -> {L}
-{A, G} -> {B}
-{A, G} -> {E}
+{A, F} -> {B}
 {A, G} -> {F}
-{A, G} -> {H}
 {A, G} -> {J}
+{A, G} -> {D}
+{A, G} -> {H}
+{A, G} -> {E}
+{A, G} -> {I}
 {A, G} -> {K}
 {A, G} -> {C}
-{A, G} -> {D}
-{A, H} -> {I}
-{A, H} -> {G}
-{A, H} -> {B}
-{A, H} -> {E}
+{A, G} -> {L}
+{A, G} -> {B}
 {A, H} -> {F}
 {A, H} -> {J}
-{A, H} -> {C}
 {A, H} -> {D}
-{A, K} -> {I}
-{A, K} -> {G}
-{A, K} -> {B}
-{A, K} -> {E}
+{A, H} -> {E}
+{A, H} -> {I}
+{A, H} -> {C}
+{A, H} -> {G}
+{A, H} -> {B}
 {A, K} -> {F}
 {A, K} -> {J}
-{A, K} -> {C}
 {A, K} -> {D}
-{A, L} -> {I}
-{A, L} -> {G}
-{A, L} -> {B}
-{A, L} -> {E}
+{A, K} -> {E}
+{A, K} -> {I}
+{A, K} -> {C}
+{A, K} -> {G}
+{A, K} -> {B}
 {A, L} -> {F}
-{A, L} -> {H}
 {A, L} -> {J}
+{A, L} -> {D}
+{A, L} -> {H}
+{A, L} -> {E}
+{A, L} -> {I}
 {A, L} -> {K}
 {A, L} -> {C}
-{A, L} -> {D}
-{C, H} -> {A}
+{A, L} -> {G}
+{A, L} -> {B}
 {C, H} -> {B}
-{C, K} -> {A}
+{C, H} -> {A}
 {C, K} -> {B}
-{D, H} -> {A}
+{C, K} -> {A}
 {D, H} -> {B}
-{D, K} -> {A}
+{D, H} -> {A}
 {D, K} -> {B}
-{F, H} -> {A}
+{D, K} -> {A}
 {F, H} -> {B}
-{F, K} -> {A}
+{F, H} -> {A}
 {F, K} -> {B}
-{H, I} -> {A}
+{F, K} -> {A}
+{H, I} -> {F}
+{H, I} -> {D}
+{H, I} -> {E}
+{H, I} -> {C}
 {H, I} -> {G}
 {H, I} -> {B}
-{H, I} -> {E}
-{H, I} -> {F}
-{H, I} -> {C}
-{H, I} -> {D}
-{H, J} -> {A}
+{H, I} -> {A}
+{H, J} -> {F}
+{H, J} -> {D}
+{H, J} -> {E}
+{H, J} -> {C}
 {H, J} -> {G}
 {H, J} -> {B}
-{H, J} -> {E}
-{H, J} -> {F}
-{H, J} -> {C}
-{H, J} -> {D}
-{J, K} -> {A}
+{H, J} -> {A}
+{J, K} -> {F}
+{J, K} -> {D}
+{J, K} -> {E}
+{J, K} -> {C}
 {J, K} -> {G}
 {J, K} -> {B}
-{J, K} -> {E}
-{J, K} -> {F}
-{J, K} -> {C}
-{J, K} -> {D}
+{J, K} -> {A}
 {A, E} -> {I}
 {A, E} -> {J}
 {G, I} -> {C}
@@ -142,20 +142,20 @@ Functional Dependencies:
 {G, I} -> {L}
 {J, L} -> {G}
 {G, J} -> {L}
-{E, G, H} -> {A}
-{E, G, H} -> {I}
-{E, G, H} -> {B}
 {E, G, H} -> {F}
 {E, G, H} -> {J}
-{E, G, H} -> {C}
 {E, G, H} -> {D}
-{E, G, K} -> {A}
-{E, G, K} -> {I}
-{E, G, K} -> {B}
+{E, G, H} -> {I}
+{E, G, H} -> {C}
+{E, G, H} -> {B}
+{E, G, H} -> {A}
 {E, G, K} -> {F}
 {E, G, K} -> {J}
-{E, G, K} -> {C}
 {E, G, K} -> {D}
+{E, G, K} -> {I}
+{E, G, K} -> {C}
+{E, G, K} -> {B}
+{E, G, K} -> {A}
 {E, G, L} -> {C}
 {E, G, L} -> {D}
 {E, G, L} -> {F}

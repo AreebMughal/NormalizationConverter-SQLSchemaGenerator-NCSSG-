@@ -46,7 +46,27 @@ def find_fds_by_fdtool():
     pass
 
 
-def minimal_cover_filter():
+def print_data(data):
+    for i in data:
+        if len(i) != 0:
+            print(i)
+
+
+def revert_fields_name(minimal_cover_result):
+    new_result = []
+    for fd in minimal_cover_result:
+        if len(fd) != 0:
+            lhs = []
+            rhs = []
+            for el in fd[0]:
+                lhs.append(new_fields[el])
+            for el in fd[1]:
+                rhs.append(new_fields[el])
+            new_result.append([lhs, rhs])
+    return new_result
+
+
+def minimal_cover_filter(algo_type=''):
     file = open('fdtool/FD_Info.txt', 'r')
     table_name = file.readline().split(' : ')[1].replace('\n', '')
     attribute_names = tuple(file.readline().rsplit(' : ')[1].replace('\n', '').split(', '))
@@ -63,17 +83,19 @@ def minimal_cover_filter():
 
     n = NormalizedRelation(fd=fds)
     d = n.get_minimal_cover_result()
-    for i in d:
-        if len(i) != 0:
-            print(i)
+    if algo_type == 'tane':
+        d = revert_fields_name(d[:])
+    print_data(d)
 
 
 data = []
 fields = []
 new_fields = {}
 
+algo_type = ''
 if len(sys.argv) > 1:
     if sys.argv[1] == 'tane':
+        algo_type = 'tane'
         find_fds_by_tane()
     elif sys.argv[1] == 'fdtool':
         find_fds_by_fdtool()
@@ -82,4 +104,4 @@ if len(sys.argv) > 1:
 else:
     find_fds_by_fdtool()
 
-minimal_cover_filter()
+minimal_cover_filter(algo_type)
