@@ -234,3 +234,6 @@ for fd in finallistofFDs:
     lhs = ', '.join(fd[0])
     rhs = fd[1]
     file.write('{' + lhs + '} -> {' + rhs + '}\n')
+
+file.write('\n')
+file.write('#by tane')
