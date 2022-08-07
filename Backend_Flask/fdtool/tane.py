@@ -14,10 +14,10 @@ import sys
 
 class Tane:
 
-    def __init__(self, file_name, table_name):
+    def __init__(self, file_path, table_name):
         self.file = open('fdtool/FD_Info.txt', 'w+')
         self.file.write('Table : ' + table_name + '\n')
-        self.data_2D = read_csv('fdtool/'+file_name)
+        self.data_2D = read_csv(file_path)
         self.total_tuples = len(self.data_2D.index)
         self.list_of_columns = list(self.data_2D.columns.values)  # returns ['A', 'B', 'C', 'D', .....]
         self.table_t = ['NULL'] * self.total_tuples  # this is for the table T used in the function stripped_product

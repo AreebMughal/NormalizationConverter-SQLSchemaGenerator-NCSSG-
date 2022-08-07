@@ -2,11 +2,14 @@ import json
 import sys
 import traceback
 import os
-import numpy as np
+from io import BytesIO
 
-from flask import Flask, request
+import numpy as np
+from werkzeug.utils import secure_filename
+from flask import Flask, request, jsonify
 from flask_cors import CORS
 
+from Fd_Miner import FdsMiner
 from source.DrawingImage.relationalMapping import RelationalMapping
 from source.NF_1 import Nf1st
 from source.NF_2 import Nf2nd
@@ -164,6 +167,29 @@ def relationalMapping():
     except Exception as e:
         my_exception(e)
     return ''
+
+
+@app.route('/fdMining', methods=['GET', 'POST'])
+def fdMining():
+    data = '0'
+    try:
+        print(len(request.files))
+        if len(request.files) > 0:
+            print('--'*30)
+            file = request.files['file']
+            file.save(os.path.join('./datasets/', secure_filename(file.filename)))
+            fd_miner = FdsMiner('./datasets/'+file.filename, 'tane')
+            data = fd_miner.fd_mining()
+            print('adsf', len(data['inputBoxes']))
+        # filename = file.filename
+        # print(f"Uploading file {filename}")
+        # file_bytes = file.read()
+        # file_content = BytesIO(file_bytes).readlines()
+        # print(file_content)
+    except Exception as e:
+        my_exception(e)
+
+    return data
 
 
 if __name__ == '__main__':

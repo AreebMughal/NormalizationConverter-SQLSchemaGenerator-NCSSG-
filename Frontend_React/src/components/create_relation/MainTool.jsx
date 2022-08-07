@@ -13,6 +13,7 @@ const MainTool = (props) => {
     const [currentIndex, setCurrentIndex] = useState(0);
     const [disableConstraintBox, setDisableConstraintBox] = useState(false);
     const [currentCell, setCurrentCell] = useState(false);
+    const [isFdMine, setIsFdMine] = useState(false);
 
     const data = inputBoxes_data.getRawState()
 
@@ -20,6 +21,15 @@ const MainTool = (props) => {
         setInputBoxes(data.inputBoxes)
         setRelationName(data.relationName)
     }, []);
+
+    useEffect(() => {
+        if (isFdMine) {
+            const data = inputBoxes_data.getRawState();
+            setInputBoxes(data.inputBoxes);
+            setRelationName(data.relationName);
+            setIsFdMine(false);
+        }
+    }, [isFdMine]);
 
     useEffect(() => {
         inputBoxes_data.update(s => {
@@ -55,7 +65,9 @@ const MainTool = (props) => {
     }
     return (
         <section className={`${styles.main}`}>
-            {/*<UploadFile />*/}
+            <UploadFile
+                setIsFdMine={setIsFdMine}
+            />
             <div className="m row col-12">
                 <div className={`col-lg-8 col-md-10 col-sm-12 ${styles['__create-relation']}`}>
                     <CreateRelation
