@@ -10,6 +10,7 @@ function UploadFile(props) {
 
     useEffect(() => {
         if (file !== null) {
+            props.setLoader(true);
             const data = new FormData();
             data.append('file', file);
             console.log(data)

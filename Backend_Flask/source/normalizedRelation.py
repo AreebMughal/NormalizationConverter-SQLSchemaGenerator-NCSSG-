@@ -6,7 +6,8 @@ from source.StaticMethods import convert_to_array
 class NormalizedRelation:
     def __init__(self, relation=None, fd=None):
         self.__relation = relation
-        # self.fds = (relation.get_attribute_dependency()).get_func_dep()
+        if fd is None:
+            fd = (relation.get_attribute_dependency()).get_func_dep()
         self.fds = fd
         self.minimal_cover = self.get_minimal_cover()
 

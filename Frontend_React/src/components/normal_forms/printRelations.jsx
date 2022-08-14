@@ -23,7 +23,7 @@ function PrintRelations(props) {
                                 if (data[key].length !== 0) {
                                     const rel = (key === 'multi' ? '-VALUED' : ' Dependent') + ' Relations';
                                     return (
-                                        <div>
+                                        <div key={key_index}>
                                             <div className='text-center relation_type'>{key.toUpperCase() + rel}</div>
                                             {
                                                 Object.keys(data[key]).map((list, index) => {

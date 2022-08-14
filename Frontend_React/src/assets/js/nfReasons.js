@@ -72,7 +72,7 @@ function get3nfTransitive(transitive) {
 }
 
 export const get3nfReason = (data) => {
-    let reason = ''
+    let reason = []
     if (Object.keys(data).length > 0) {
         if (data['transitive'].length > 0) {
             for (let i = 0; i < data['transitive'].length; i++) {

@@ -1,165 +1,174 @@
-Table : Dataset
-Columns : A, B, C, D, E, F, G, H, I, J, K, L
+Table : bridges
+Columns : A, B, C, D, E, F, G, H, I, J, K, L, M
 
 Functional Dependencies: 
-{B} -> {F}
-{B} -> {G}
-{B} -> {J}
-{B} -> {I}
-{B} -> {E}
-{B} -> {D}
-{B} -> {C}
-{B} -> {L}
-{B} -> {K}
-{B} -> {H}
-{B} -> {A}
-{D} -> {C}
-{C} -> {D}
-{C} -> {E}
-{F} -> {C}
-{C} -> {F}
-{C} -> {G}
-{C} -> {I}
-{C} -> {J}
-{C} -> {L}
-{D} -> {E}
-{F} -> {D}
-{D} -> {F}
-{D} -> {G}
-{D} -> {I}
-{D} -> {J}
-{D} -> {L}
-{F} -> {E}
-{F} -> {G}
-{F} -> {I}
-{F} -> {J}
-{F} -> {L}
-{K} -> {H}
-{H} -> {K}
-{H} -> {L}
-{J} -> {I}
-{I} -> {J}
-{K} -> {L}
-{A, C} -> {B}
-{A, C} -> {K}
-{A, C} -> {H}
-{A, D} -> {B}
-{A, D} -> {K}
-{A, D} -> {H}
-{A, F} -> {B}
-{A, F} -> {K}
-{A, F} -> {H}
-{A, G} -> {F}
-{A, G} -> {J}
-{A, G} -> {I}
-{A, G} -> {E}
-{A, G} -> {B}
-{A, G} -> {D}
-{A, G} -> {C}
-{A, G} -> {L}
-{A, G} -> {K}
-{A, G} -> {H}
-{A, H} -> {F}
-{A, H} -> {G}
-{A, H} -> {J}
-{A, H} -> {I}
-{A, H} -> {E}
-{A, H} -> {B}
-{A, H} -> {D}
-{A, H} -> {C}
-{A, K} -> {F}
-{A, K} -> {G}
-{A, K} -> {J}
-{A, K} -> {I}
-{A, K} -> {E}
-{A, K} -> {B}
-{A, K} -> {D}
-{A, K} -> {C}
-{A, L} -> {F}
-{A, L} -> {G}
-{A, L} -> {J}
-{A, L} -> {I}
-{A, L} -> {E}
-{A, L} -> {B}
-{A, L} -> {D}
-{A, L} -> {C}
-{A, L} -> {K}
-{A, L} -> {H}
-{C, H} -> {B}
-{C, H} -> {A}
-{C, K} -> {B}
-{C, K} -> {A}
-{D, H} -> {B}
-{D, H} -> {A}
-{D, K} -> {B}
-{D, K} -> {A}
-{F, H} -> {B}
-{F, H} -> {A}
-{F, K} -> {B}
-{F, K} -> {A}
-{H, I} -> {F}
-{H, I} -> {G}
-{H, I} -> {E}
-{H, I} -> {B}
-{H, I} -> {D}
-{H, I} -> {C}
-{H, I} -> {A}
-{H, J} -> {F}
-{H, J} -> {G}
-{H, J} -> {E}
-{H, J} -> {B}
-{H, J} -> {D}
-{H, J} -> {C}
-{H, J} -> {A}
-{J, K} -> {F}
-{J, K} -> {G}
-{J, K} -> {E}
-{J, K} -> {B}
-{J, K} -> {D}
-{J, K} -> {C}
-{J, K} -> {A}
-{A, E} -> {I}
-{A, E} -> {J}
-{G, I} -> {C}
-{G, J} -> {C}
-{I, L} -> {C}
-{J, L} -> {C}
-{G, I} -> {D}
-{G, J} -> {D}
-{I, L} -> {D}
-{J, L} -> {D}
-{G, I} -> {E}
-{G, J} -> {E}
-{I, K} -> {E}
-{I, L} -> {E}
-{J, L} -> {E}
-{G, I} -> {F}
-{G, J} -> {F}
-{I, L} -> {F}
-{J, L} -> {F}
-{I, K} -> {G}
-{I, L} -> {G}
-{G, I} -> {L}
-{J, L} -> {G}
-{G, J} -> {L}
-{E, G, H} -> {F}
-{E, G, H} -> {J}
-{E, G, H} -> {I}
-{E, G, H} -> {B}
-{E, G, H} -> {D}
-{E, G, H} -> {C}
-{E, G, H} -> {A}
-{E, G, K} -> {F}
-{E, G, K} -> {J}
-{E, G, K} -> {I}
-{E, G, K} -> {B}
-{E, G, K} -> {D}
-{E, G, K} -> {C}
-{E, G, K} -> {A}
-{E, G, L} -> {C}
-{E, G, L} -> {D}
-{E, G, L} -> {F}
-{E, G, L} -> {I}
-{E, G, L} -> {J}
+{A} -> {L}
+{A} -> {D}
+{A} -> {M}
+{A} -> {F}
+{A} -> {E}
+{A} -> {G}
+{A} -> {C}
+{A} -> {H}
+{A} -> {B}
+{A} -> {K}
+{A} -> {I}
+{A} -> {J}
+{C} -> {B}
+{D, F} -> {G}
+{D, F} -> {H}
+{D, F} -> {B}
+{D, F} -> {K}
+{D, F} -> {I}
+{D, F} -> {J}
+{D, C} -> {L}
+{D, C} -> {M}
+{D, C} -> {F}
+{D, C} -> {E}
+{D, C} -> {G}
+{D, C} -> {A}
+{D, C} -> {H}
+{D, C} -> {J}
+{D, C} -> {I}
+{D, C} -> {K}
+{L, D, F} -> {E}
+{L, D, F} -> {C}
+{L, D, F} -> {M}
+{L, D, F} -> {A}
+{D, M, F} -> {E}
+{D, M, F} -> {L}
+{D, M, F} -> {C}
+{D, M, F} -> {A}
+{D, F, E} -> {A}
+{D, F, E} -> {L}
+{D, F, E} -> {M}
+{D, F, E} -> {C}
+{L, F, C} -> {H}
+{M, F, C} -> {H}
+{L, G, C} -> {E}
+{M, C, J} -> {H}
+{F, C, J} -> {L}
+{F, C, J} -> {H}
+{G, C, J} -> {L}
+{G, C, J} -> {E}
+{L, D, B} -> {J}
+{D, E, B} -> {J}
+{L, D, K} -> {J}
+{D, M, K} -> {I}
+{D, E, K} -> {J}
+{F, J, K} -> {H}
+{L, D, M, G} -> {E}
+{L, M, F, C} -> {J}
+{L, F, E, C} -> {J}
+{M, F, E, C} -> {L}
+{M, F, E, C} -> {G}
+{M, F, E, C} -> {J}
+{L, M, G, C} -> {H}
+{L, M, G, C} -> {J}
+{L, F, G, C} -> {M}
+{L, F, G, C} -> {J}
+{L, D, G, H} -> {E}
+{L, M, C, H} -> {J}
+{F, E, C, H} -> {L}
+{F, E, C, H} -> {J}
+{F, G, C, H} -> {M}
+{L, D, M, B} -> {E}
+{L, F, C, K} -> {J}
+{M, F, C, K} -> {L}
+{M, F, C, K} -> {J}
+{M, G, C, K} -> {E}
+{F, G, C, K} -> {E}
+{F, C, H, K} -> {L}
+{F, C, H, K} -> {J}
+{G, C, H, K} -> {E}
+{M, F, B, K} -> {L}
+{L, D, G, I} -> {E}
+{M, F, C, I} -> {L}
+{M, F, C, I} -> {J}
+{M, G, C, I} -> {E}
+{F, G, C, I} -> {L}
+{F, G, C, I} -> {M}
+{F, G, C, I} -> {E}
+{F, G, C, I} -> {H}
+{F, G, C, I} -> {J}
+{F, C, H, I} -> {L}
+{G, C, H, I} -> {E}
+{L, D, B, I} -> {E}
+{D, M, G, J} -> {E}
+{L, F, G, J} -> {H}
+{F, E, G, J} -> {H}
+{F, G, C, J} -> {M}
+{D, M, B, J} -> {E}
+{L, F, B, J} -> {H}
+{F, E, B, J} -> {H}
+{F, C, I, J} -> {M}
+{F, E, G, J, B} -> {M}
+{L, M, F, G, I} -> {H}
+{L, M, F, B, I} -> {H}
+{L, F, E, B, I} -> {H}
+{D, M, G, B, I} -> {K}
+{L, F, G, B, I} -> {H}
+{F, E, J, B, I} -> {M}
+{D, M, H, B, K} -> {G}
+{D, E, H, B, K} -> {G}
+{F, E, H, B, K} -> {L}
+{F, E, J, B, K} -> {L}
+{L, M, F, I, K} -> {H}
+{F, E, C, I, K} -> {L}
+{F, E, C, I, K} -> {M}
+{F, E, C, I, K} -> {G}
+{F, E, C, I, K} -> {H}
+{F, E, C, I, K} -> {J}
+{L, D, B, I, K} -> {M}
+{M, F, B, I, K} -> {H}
+{D, E, B, I, K} -> {M}
+{D, H, B, I, K} -> {G}
+{L, F, E, G, H, K} -> {M}
+{L, F, E, G, B, K} -> {M}
+{F, E, G, H, B, K} -> {M}
+{M, F, E, G, H, I} -> {L}
+{M, F, G, H, B, I} -> {L}
+{F, E, G, H, B, I} -> {L}
+{M, F, E, H, K, I} -> {L}
+{L, F, E, B, K, I} -> {M}
+{F, E, H, B, K, I} -> {M}
+{L, F, E, G, K, J} -> {M}
+{M, F, E, G, I, J} -> {L}
+{L, F, G, B, I, J} -> {M}
+{F, E, G, B, I, J} -> {L}
+{M, F, E, K, I, J} -> {L}
 
-#by tane
+Equivalences: 
+{L, D, F} <-> {D, M, F}
+{L, D, F} <-> {D, F, E}
+{D, M, F} <-> {D, F, E}
+{L, F, E, C} <-> {F, E, C, H}
+{M, F, E, C} <-> {L, F, G, C}
+{M, F, E, C} <-> {F, G, C, J}
+{L, F, G, C} <-> {F, G, C, J}
+{M, F, G, C} <-> {F, G, C, H}
+{D, M, E, B} <-> {D, M, B, J}
+{L, F, C, K} <-> {F, C, H, K}
+{L, F, C, I} <-> {F, C, H, I}
+{M, F, C, I} <-> {F, C, I, J}
+{L, M, C, J} <-> {L, M, C, H}
+{M, F, C, J} <-> {L, M, F, C}
+{F, E, C, J} <-> {L, F, E, C}
+{F, E, C, J} <-> {F, E, C, H}
+{M, G, C, J} <-> {L, M, G, C}
+{F, C, K, J} <-> {L, F, C, K}
+{F, C, K, J} <-> {F, C, H, K}
+{L, D, M, B, K} <-> {L, D, B, I, K}
+{D, M, E, B, K} <-> {D, E, B, I, K}
+{D, M, G, B, K} <-> {D, M, G, B, I}
+{F, G, C, I, K} <-> {F, E, C, I, K}
+{M, F, E, G, B, K} <-> {L, F, E, G, B, K}
+{L, M, F, E, G, I} <-> {M, F, E, G, H, I}
+{L, M, F, G, B, I} <-> {M, F, G, H, B, I}
+{L, F, E, G, B, I} <-> {F, E, G, H, B, I}
+{L, M, F, E, K, I} <-> {M, F, E, H, K, I}
+{L, F, E, B, K, I} <-> {F, E, H, B, K, I}
+{M, F, E, B, K, I} <-> {L, F, E, B, K, I}
+{M, F, E, B, K, I} <-> {F, E, H, B, K, I}
+
+Keys: 

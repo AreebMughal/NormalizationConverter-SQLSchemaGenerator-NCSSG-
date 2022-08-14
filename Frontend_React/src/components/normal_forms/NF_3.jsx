@@ -24,7 +24,7 @@ function NF_3() {
             data={data}
             normalFormNumber='3rd'
             names={relationNames}
-            reason={get3nfReason()}
+            reason={get3nfReason(data)}
         />
     );
 }

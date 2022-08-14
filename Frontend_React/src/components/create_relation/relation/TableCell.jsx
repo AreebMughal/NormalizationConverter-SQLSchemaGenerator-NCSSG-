@@ -3,6 +3,9 @@ import '../css/TableCell.css';
 
 const TableCell = (props) => {
     const [width, setWidth] = useState(90);
+    const [value, setValue] = useState(90);
+
+
     useEffect(() => {
         removeCellBorder();
     }, []);
@@ -13,6 +16,10 @@ const TableCell = (props) => {
             props.setCurrentCell(false);
         }
     }, [props.currentCell]);
+
+    useEffect(() => {
+        setValue(props.value);
+    }, [props.value]);
 
     useEffect(() => {
         removeCellBorder();
@@ -41,17 +48,21 @@ const TableCell = (props) => {
     }
 
     const cellValueChangeHandler = (event) => {
-        const target = event.target
-        const len = target.value.length
-        let width = (len * 10) - (len * .2) + 2;
-        if (width < 90)
-            width = 90
-        setWidth(width);
+        const target = event.target;
+        setCellWidth(target);
         // setValue(target.value)
         setCellBorder(target, target.id)
         props.updateCellValue(target.id, target.value)
     }
 
+    const setCellWidth = (target) => {
+        const len = target.value.length;
+        let width = (len * 10) - (len * .2) + 2;
+        if (width < 90)
+            width = 90;
+        setWidth(width);
+        console.log(target.value, 'width: ', width);
+    }
     const setCellBorder = (target, id) => {
         const res = props.inputBoxes.map((input, index) =>
             index !== parseInt(id) && input.value.trim().length !==0 && input.value === target.value.trim()
@@ -84,13 +95,15 @@ const TableCell = (props) => {
         if (!(props.list.length !== 0 && e.target.id === props.list[0].toString())) {
             e.target.classList.remove('my-border-danger')
         }
+        const target = e.target;
+        setCellWidth(target);
     }
     // console.log('render cell')
     return (
         <div className='my-fields'>
             <input
                 type="text"
-                value={props.value}
+                value={value}
                 placeholder='Attribute'
                 style={{width: width}}
                 maxLength={20}

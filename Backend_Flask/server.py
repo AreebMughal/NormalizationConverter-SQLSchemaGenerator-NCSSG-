@@ -59,7 +59,7 @@ def get_result(object_type, input_boxes_dic):
         relation_name = data['relationName']
         my_relation = Relation(rel_name=relation_name, input_boxes=input_boxes)
         if object_type == 'minimal_cover':
-            normalized_relation = NormalizedRelation(my_relation)
+            normalized_relation = NormalizedRelation(relation=my_relation)
             result = normalized_relation.get_minimal_cover_JSON()
         elif object_type == 'NF1':
             nf_1 = Nf1st(my_rel=my_relation)
@@ -178,7 +178,7 @@ def fdMining():
             print('--'*30)
             file = request.files['file']
             file.save(os.path.join('./datasets/', secure_filename(file.filename)))
-            fd_miner = FdsMiner('./datasets/'+file.filename, 'tane')
+            fd_miner = FdsMiner('./datasets/'+file.filename, 'fdtool')
             data = fd_miner.fd_mining()
             print('adsf', len(data['inputBoxes']))
         # filename = file.filename
