@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from "react";
 import {FileUploader} from "react-drag-drop-files";
 import axios from "axios";
+import './css/uploadFile.css'
 import {inputBoxes_data} from "../../store/inputBoxes_dataStore";
 
 const fileTypes = ["CSV"];
@@ -40,8 +41,13 @@ function UploadFile(props) {
         setFile(file);
     };
     return (
-        <div className="container">
-            <FileUploader handleChange={handleChange} onClick={fileUploaderClickHandler} name="file" types={fileTypes} className="w-100"/>
+        <div className="container pt-2">
+            <FileUploader handleChange={handleChange} onClick={fileUploaderClickHandler} name="file"
+                          types={fileTypes}
+                          classes='upload-file col-lg-12'
+                          label={'Upload or drag a file right here - Dataset to Extract Functional Dependencies'}
+                          hoverTitle='Drop here'
+            />
             {/*<button className='btn btn-primary btn-sm' onClick={fdMiningClickHandler}>FD Mining</button>*/}
         </div>
     );

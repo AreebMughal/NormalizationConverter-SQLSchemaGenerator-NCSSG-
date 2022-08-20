@@ -14,6 +14,7 @@ from source.DrawingImage.relationalMapping import RelationalMapping
 from source.NF_1 import Nf1st
 from source.NF_2 import Nf2nd
 from source.NF_3 import Nf3rd
+from source.BCNF import BCNF
 from source.Relation import Relation
 from source.normalizedRelation import NormalizedRelation
 from source.Sql_Form_Methods import create_relation_names
@@ -71,7 +72,8 @@ def get_result(object_type, input_boxes_dic):
             nf_3 = Nf3rd(my_rel=my_relation)
             result = nf_3.find_nf_3()
         elif object_type == 'BCNF':
-            pass
+            bcnf = BCNF(my_rel=my_relation)
+            result = bcnf.find_bcnf()
         relation_names = create_relation_names(result, data['relationName']) if object_type != 'minimal_cover' else ''
     except Exception as e:
         my_exception(e)

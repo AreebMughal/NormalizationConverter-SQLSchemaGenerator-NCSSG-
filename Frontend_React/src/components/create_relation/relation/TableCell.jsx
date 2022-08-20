@@ -1,10 +1,9 @@
-import {useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import '../css/TableCell.css';
 
 const TableCell = (props) => {
     const [width, setWidth] = useState(90);
-    const [value, setValue] = useState(90);
-
+    const [value, setValue] = useState('');
 
     useEffect(() => {
         removeCellBorder();
@@ -19,6 +18,7 @@ const TableCell = (props) => {
 
     useEffect(() => {
         setValue(props.value);
+        setCellWidth(props.value)
     }, [props.value]);
 
     useEffect(() => {
@@ -49,19 +49,17 @@ const TableCell = (props) => {
 
     const cellValueChangeHandler = (event) => {
         const target = event.target;
-        setCellWidth(target);
-        // setValue(target.value)
+        setValue(target.value)
         setCellBorder(target, target.id)
         props.updateCellValue(target.id, target.value)
     }
 
-    const setCellWidth = (target) => {
-        const len = target.value.length;
+    const setCellWidth = (value) => {
+        const len = value.length;
         let width = (len * 10) - (len * .2) + 2;
         if (width < 90)
             width = 90;
         setWidth(width);
-        console.log(target.value, 'width: ', width);
     }
     const setCellBorder = (target, id) => {
         const res = props.inputBoxes.map((input, index) =>
@@ -95,10 +93,8 @@ const TableCell = (props) => {
         if (!(props.list.length !== 0 && e.target.id === props.list[0].toString())) {
             e.target.classList.remove('my-border-danger')
         }
-        const target = e.target;
-        setCellWidth(target);
     }
-    // console.log('render cell')
+
     return (
         <div className='my-fields'>
             <input
