@@ -6,8 +6,7 @@ const Suggestion = (props) => {
             cardTitle={'Suggestions:'}
             isOpen={props.isOpen}
         >
-            <>
-            </>
+            {props.suggestion}
         </CollapseDiv>
     );
 }

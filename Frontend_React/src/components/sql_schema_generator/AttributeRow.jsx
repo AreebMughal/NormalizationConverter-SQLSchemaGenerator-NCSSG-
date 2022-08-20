@@ -55,10 +55,42 @@ const AttributeRow = (props) => {
     }
 
     const lengthChangeHandler = event => {
-        setLength(event.target.value)
-        if (event.target.value.length > 0)
-            event.target.classList.remove('alert_border')
-        props.onChangeHandler('length', event.target.value, event.target.id)
+        const inputField = event.target.value;
+        const checkINT = /^\d+$/.test(inputField);
+        const checkFLOAT = /^[0-9,]+$/.test(inputField);
+        if (
+            dataType === "INT" ||
+            dataType ==="SMALLINT" ||
+            dataType === "BIGINT"
+        ) {
+            if (checkINT === true) {
+                event.target.classList.remove("alert_border");
+                props.onChangeHandler("length", event.target.value, event.target.id);
+            } else {
+                event.preventDefault();
+            }
+        }
+        if (
+            dataType === "FLOAT" ||
+            dataType === "DECIMAL" ||
+            dataType === "DOUBLE"
+        ) {
+            if (checkFLOAT === true) {
+                if (inputField.split(",").length-1 == 1) {
+                    console.log("TRUE")
+                    event.target.classList.remove("alert_border");
+                    props.onChangeHandler("length", event.target.value, event.target.id);
+                }else {
+                    event.preventDefault();
+                }
+            } else {
+                event.preventDefault();
+                console.log("FLASE")
+            }
+        }
+        console.log(checkFLOAT);
+
+// event.preventDefault();
     }
 
     const autoIncrementChangeHandler = event => {
