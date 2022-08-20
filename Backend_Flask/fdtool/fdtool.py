@@ -21,24 +21,28 @@
 
 __version__ = "0.1.7"
 
-import pandas as pd
-import sys, time, argparse, ntpath, pickle, csv
+import ntpath
+import sys
+import time
 # from modules import *
 from string import ascii_lowercase
-from config import MAX_K_LEVEL
-from modules import Apriori_Gen, binaryRepr, ObtainEquivalences, GetFDs, Prune, keyRun
+
+import pandas as pd
+
+from .config import MAX_K_LEVEL
+from .modules import Apriori_Gen, binaryRepr, ObtainEquivalences, GetFDs, Prune, keyRun
 
 
-def main():
+def find_fdtool(file_path):
     # Define filePath
-    filePath = sys.argv[1]
+    # filePath = sys.argv[1]
 
     # Print reading file
-    print("\n" + "Reading file: \n" + str(filePath) + "\n");
+    print("\n" + "Reading file: \n" + str(file_path) + "\n");
     sys.stdout.flush();
     # Define file extension from path
-    fileExtension = ntpath.basename(filePath).split('.')[-1]
-    df = pd.read_csv(filePath)
+    # fileExtension = ntpath.basename(filePath).split('.')[-1]
+    df = pd.read_csv(file_path)
 
     #
     # if not fileExtension == "pkl":
@@ -87,13 +91,13 @@ def main():
     start_time = time.time()
 
     # Create default name for outFile if one is not chosen on command
-    if len(sys.argv) > 2:
-        file = open(sys.argv[2], 'w+')
-    else:
-        file = open('FD_Info.txt', 'w+')
+    # if len(sys.argv) > 2:
+    #     file = open(sys.argv[2], 'w+')
+    # else:
+    file = open('fdtool/FD_Info.txt', 'w+')
 
     # Add name of file , row count, columns to info string
-    file.write(str("Table : " + str(ntpath.basename(filePath)).split('.')[0] + "\n" + "Columns : "
+    file.write(str("Table : " + str(ntpath.basename(file_path)).split('.')[0] + "\n" + "Columns : "
                    + str(", ".join(list(df.head(0)))) + "\n\n" + "Functional Dependencies: \n"))
 
     # Print line
@@ -179,43 +183,48 @@ def main():
     print("\n" + "Equivalences: ");
     sys.stdout.flush();
     # Iterate through equivalences returned
+
     for Equivalence in E_Set:
-        # Create string for functional dependency
-        String = "{" + ", ".join(Equivalence[0]) + "} <-> {" + ", ".join(Equivalence[1]) + "}"
-        # Print equivalence string
-        print(String);
-        sys.stdout.flush();
-        # Write string to TXT file
-        file.write(String + "\n")
+            # Create string for functional dependency
+            String = "{" + ", ".join(Equivalence[0]) + "} <-> {" + ", ".join(Equivalence[1]) + "}"
+            # Print equivalence string
+            print(String);
+            sys.stdout.flush();
+            # Write string to TXT file
+            file.write(String + "\n")
 
+    try:
     # Print out keys 
-    file.write("\n" + "Keys: " + "\n")
-    print("\n" + "Keys: ");
-    sys.stdout.flush();
-    # Get string of column names sorted to alphabetical characters
-    SortedAlphaString = "".join(sorted([Alpha_Dict[item] for item in Alpha_Dict]))
-    # Run required inputs through keyList module to determine keys with
-    keyList = keyRun.f(U, SortedAlphaString, FD_Store);
-    # Iterate through keys returned
-    for key in keyList:
-        # Write keys to file
-        file.write(str(key) + "\n")
-        # Print keys
-        print(str(key));
+        file.write("\n" + "Keys: " + "\n")
+        print("\n" + "Keys: ");
         sys.stdout.flush();
-
+        # Get string of column names sorted to alphabetical characters
+        SortedAlphaString = "".join(sorted([Alpha_Dict[item] for item in Alpha_Dict]))
+        # Run required inputs through keyList module to determine keys with
+        keyList = keyRun.f(U, SortedAlphaString, FD_Store);
+        # Iterate through keys returned
+        for key in keyList:
+            # Write keys to file
+            file.write(str(key) + "\n")
+            # Print keys
+            print(str(key));
+            sys.stdout.flush();
+    except Exception as e:
+        print(e)
     # Create string to give user info of script
-    checkInfoString = str("\n" + "Time (s): " + str(round(time.time() - start_time, 4)) + "\n"
-                          + "Row count: " + str(df.count()[0]) + "\n" + "Attribute count: " + str(len(U)) + "\n"
-                          + "Number of Equivalences: " + str(Counter[0]) + "\n" + "Number of FDs: " + str(
-        Counter[1]) + "\n"
-                      "Number of FDs checked: " + str(GetFDs.CardOfPartition.calls))
+    # checkInfoString = str("\n" + "Time (s): " + str(round(time.time() - start_time, 4)) + "\n"
+    #                       + "Row count: " + str(df.count()[0]) + "\n" + "Attribute count: " + str(len(U)) + "\n"
+    #                       + "Number of Equivalences: " + str(Counter[0]) + "\n" + "Number of FDs: " + str(
+    #     Counter[1]) + "\n"
+    #                   "Number of FDs checked: " + str(GetFDs.CardOfPartition.calls))
 
     # Write info at bottom
-    file.write(checkInfoString)
-    # Print elapsed time
-    print(checkInfoString);
+    # file.write(checkInfoString)
+    # # Print elapsed time
+    # print(checkInfoString);
     sys.stdout.flush();
     # Close file
     file.close()
-main()
+
+
+# find_fdtool()

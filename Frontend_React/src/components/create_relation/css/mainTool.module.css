@@ -2,7 +2,7 @@
 /*vh =100 * (120/720) = 16.666666666667*/
 .main {
     background-color: #dcdbd9;
-    min-height: 91vh;
+    min-height: 90.5vh;
 }
 .__create-relation {
     padding-right: 0;
@@ -18,3 +18,4 @@
     /*padding-left: 0;*/
     /*padding-right: 0;*/
 }
+

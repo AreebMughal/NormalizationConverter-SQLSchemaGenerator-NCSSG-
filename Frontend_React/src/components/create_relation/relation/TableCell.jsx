@@ -1,8 +1,10 @@
-import {useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import '../css/TableCell.css';
 
 const TableCell = (props) => {
     const [width, setWidth] = useState(90);
+    const [value, setValue] = useState('');
+
     useEffect(() => {
         removeCellBorder();
     }, []);
@@ -13,6 +15,11 @@ const TableCell = (props) => {
             props.setCurrentCell(false);
         }
     }, [props.currentCell]);
+
+    useEffect(() => {
+        setValue(props.value);
+        setCellWidth(props.value)
+    }, [props.value]);
 
     useEffect(() => {
         removeCellBorder();
@@ -41,17 +48,19 @@ const TableCell = (props) => {
     }
 
     const cellValueChangeHandler = (event) => {
-        const target = event.target
-        const len = target.value.length
-        let width = (len * 10) - (len * .2) + 2;
-        if (width < 90)
-            width = 90
-        setWidth(width);
-        // setValue(target.value)
+        const target = event.target;
+        setValue(target.value)
         setCellBorder(target, target.id)
         props.updateCellValue(target.id, target.value)
     }
 
+    const setCellWidth = (value) => {
+        const len = value.length;
+        let width = (len * 10) - (len * .2) + 2;
+        if (width < 90)
+            width = 90;
+        setWidth(width);
+    }
     const setCellBorder = (target, id) => {
         const res = props.inputBoxes.map((input, index) =>
             index !== parseInt(id) && input.value.trim().length !==0 && input.value === target.value.trim()
@@ -85,12 +94,12 @@ const TableCell = (props) => {
             e.target.classList.remove('my-border-danger')
         }
     }
-    // console.log('render cell')
+
     return (
         <div className='my-fields'>
             <input
                 type="text"
-                value={props.value}
+                value={value}
                 placeholder='Attribute'
                 style={{width: width}}
                 maxLength={20}

@@ -30,13 +30,16 @@ const CreateRelation = (props) => {
         }
     }
 
-    const resetAllCells = () => props.updateInputBoxes([{
-        id: 1,
-        value: '',
-        dependency: [[]],
-        primary: false,
-        multiValue: false,
-    }]);
+    const resetAllCells = () => {
+        props.updateInputBoxes([{
+            id: 1,
+            value: '',
+            dependency: [[]],
+            primary: false,
+            multiValue: false,
+        }]);
+        props.setRelationName('');
+    }
 
     const renderInputBoxes = () => {
         return (
