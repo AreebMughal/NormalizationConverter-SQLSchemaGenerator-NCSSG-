@@ -1,7 +1,7 @@
 from source.normalizedRelation import NormalizedRelation
 
-
-csv = 
+import pandas as pd
+csv = pd.read_csv('fdtool/Dataset.csv')
 
 file = open('fdtool/FD_Info.txt', 'r')
 
@@ -30,3 +30,4 @@ d = n.get_minimal_cover_result()
 for i in d:
     if len(i) != 0:
         print(i)
+
