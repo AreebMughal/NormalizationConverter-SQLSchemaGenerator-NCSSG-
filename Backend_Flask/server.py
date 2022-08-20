@@ -180,7 +180,9 @@ def fdMining():
             file.save(os.path.join('./datasets/', secure_filename(file.filename)))
             fd_miner = FdsMiner('./datasets/'+file.filename, 'fdtool')
             data = fd_miner.fd_mining()
-            print('adsf', len(data['inputBoxes']))
+            print(data)
+            # print('adsf', len(data['inputBoxes']))
+
         # filename = file.filename
         # print(f"Uploading file {filename}")
         # file_bytes = file.read()
@@ -194,6 +196,9 @@ def fdMining():
 
 if __name__ == '__main__':
     app.run(debug=True)
+    # fd_miner = FdsMiner('./datasets/abalone.csv', 'tane')
+    # data = fd_miner.fd_mining()
+
 
     # res = get_dummy_nf_result()
     #
