@@ -1,3 +1,7 @@
+import math
+import random
+import string
+
 from source.StaticSqlScriptMethods import script_header
 from source.StaticSqlScriptMethods import comment_index_header
 from source.StaticSqlScriptMethods import comment_table_header
@@ -13,6 +17,7 @@ class SqlScript:
     def __init__(self, data):
         self.data = data
         self.attributes = None
+        self.database = ''
 
     def set_attributes(self, attributes):
         self.attributes = attributes
@@ -39,11 +44,11 @@ class SqlScript:
         for relation in self.data:
             attributes = relation['attributes']
             table += comment_table_header(relation["relationName"][0].lower())
-            table += f'CREATE TABLE `{relation["relationName"][0].lower()}` ( \n'
+            table += f'CREATE TABLE `{self.database}`.`{relation["relationName"][0].lower()}` ( \n'
             for attr in relation['attributes']:
                 condition = (attr == attributes[len(attributes) - 1])
                 line_terminator = get_line_terminator(other=',', last='', condition=condition)
-                table += f'\t`{attr["value"]}` {self.get_type_n_length(attr)} {self.get_null_value(attr)}{line_terminator} \n'
+                table += f'\t`{attr["value"]}` {self.get_type_n_length(attr)} {self.get_null_value(attr)}{line_terminator} \n '
 
             table += ') ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;' + '\n\n'
             table += comment_line()
@@ -81,28 +86,44 @@ class SqlScript:
         indexes = ''
         for relation in self.data:
             attributes = relation['attributes']
-            count = 0
             self.set_attributes(relation['attributes'])
             flag, total = self.is_contain_indexes()
             if flag:
                 indexes += comment_index_header(relation["relationName"][0].lower())
-                indexes += 'ALTER TABLE ' + f'`{relation["relationName"][0].lower()}`' + '\n'
+                indexes += 'ALTER TABLE ' + f'`{self.database}`.`{relation["relationName"][0].lower()}`' + '\n'
                 indexes += f'\tADD PRIMARY KEY ({self.get_primary_keys_of_rel()}),' + '\n'
-
                 for attr in attributes:
                     if attr['index'].lower() != 'primary':
                         name = attr['value']
                         index = attr['index'].upper() if attr['type'].lower() != 'serial' else 'UNIQUE'
                         key_name = f'`{name}`' if index != 'PRIMARY' else ''
-                        condition = (count == total - 1)
-                        # line_terminator = get_line_terminator(other=',', last=';', condition=condition)
-
                         if index != 'NONE' or attr['type'].lower() == 'serial':
                             indexes += '\t' + f'ADD {index} KEY {key_name} (`{name}`),' + '\n'
-                            count += 1
-
+                        elif self.is_fk_in_other(attr['value'], relation["relationName"][0]):
+                            indexes += '\t' + f'ADD {"UNIQUE"} KEY {key_name} (`{name}`),' + '\n'
                 indexes = indexes.rstrip('\n,') + ';' + '\n'
         return indexes
+
+
+    def is_fk_in_other(self, attr, relation_name):
+        for relation in self.data:
+            for fk in relation['foreignKeys']:
+                # print('>>>', fk['attribute'], ' attr ', attr)
+                if attr in fk['attribute'] and relation_name.lower != relation["relationName"][0].lower():
+                    # print(';;; ', attr)
+                    return True
+
+        return False
+
+    @staticmethod
+    def id_generator(size=4):
+        rand_number = ''.join(random.choice(string.ascii_lowercase) for _ in range(math.ceil(size/2)))
+        rand_number += ''.join(random.choice(string.digits) for _ in range(math.floor(size/2)))
+        return rand_number
+
+    def create_database(self):
+        self.database = 'NCSSG_dumped_db_' + self.id_generator()
+        return self.database
 
     def add_auto_increment(self):
         auto_increment = ''
@@ -113,7 +134,7 @@ class SqlScript:
             count = 0
             if flag:
                 auto_increment += comment_index_header(relation["relationName"][0].lower())
-                auto_increment += 'ALTER TABLE ' + f'`{relation["relationName"][0].lower()}`' + '\n'
+                auto_increment += 'ALTER TABLE ' + f'`{self.database}`.`{relation["relationName"][0].lower()}`' + '\n'
                 for attr in attributes:
                     name = attr['value']
                     condition = (count == total - 1)
@@ -139,31 +160,32 @@ class SqlScript:
     def add_constraints(self):
         all_relation_names = self.get_relation_names()
         constraints = ''
-        count = 1
         for relation in self.data:
             if len(relation['foreignKeys']) != 0:
                 relation_name = relation["relationName"][0].lower()
                 constraints += comment_constraint_header(relation_name)
-                constraints += f'ALTER TABLE `{relation_name}`' + '\n'
+                constraints += 'ALTER TABLE ' + f'`{self.database}`.`{relation["relationName"][0].lower()}`' + '\n'
+                count = 1
                 for fk in relation['foreignKeys']:
-                    print('>>>',  fk['attribute'])
                     all_attr = (' '.join(['`' + str(elem) + '`,' for elem in fk['attribute']])).rstrip(',')
                     constraints += f'\tADD CONSTRAINT `{self.get_fk_constraint_name(relation_name, count)}` \n' \
                                    f'\tFOREIGN KEY ({all_attr}) ' \
-                                   f'\tREFERENCES `{all_relation_names[fk["relationName"]].lower()}` ({all_attr}) \n' \
+                                   f'REFERENCES `{all_relation_names[fk["relationName"]].lower()}` ({all_attr}) \n' \
                                    f'\tON DELETE CASCADE ON UPDATE CASCADE,' + '\n'
+                    count += 1
                 constraints = constraints.rstrip('\n,') + ';' + '\n'
         return constraints
 
     def write_sql_script(self):
-        string = script_header()
-        string += self.create_table()
-        string += get_dumped_table_header('Indexes')
-        string += self.add_indexes()
+        sql_script = script_header()
+        sql_script += 'CREATE DATABASE ' + f'`{self.create_database()}`;' + '\n'
+        sql_script += self.create_table()
+        sql_script += get_dumped_table_header('Indexes')
+        sql_script += self.add_indexes()
         auto_increment = self.add_auto_increment()
-        string += get_dumped_table_header('AUTO_INCREMENT') + auto_increment if len(auto_increment) != 0 else ''
+        sql_script += get_dumped_table_header('AUTO_INCREMENT') + auto_increment if len(auto_increment) != 0 else ''
         constraints = self.add_constraints()
-        string += get_dumped_table_header('Constraints') + constraints if len(constraints) != 0 else ''
-        string += 'COMMIT;' + '\n'
+        sql_script += get_dumped_table_header('Constraints') + constraints if len(constraints) != 0 else ''
+        sql_script += 'COMMIT;' + '\n'
 
-        return string
+        return sql_script

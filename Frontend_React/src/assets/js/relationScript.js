@@ -20,8 +20,6 @@
  }
 
  export const isRelationsEmpty = (data) => {
-     // console.log('data', data)
      let len = Object.keys(data).map(rel => data[rel].length).filter(l => l !== 0);
-     console.log(len);
      return len.length === 0;
  }

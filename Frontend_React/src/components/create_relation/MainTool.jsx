@@ -1,10 +1,13 @@
 import React, {useEffect, useState} from "react";
 import styles from './css/mainTool.module.css'
+import './css/hr.css';
 import CreateRelation from "./relation/CreateRelation";
 import DependencyNConstraint from "./dependency_constraint/DependencyNConstraint";
 import FdsList from "./fds_list/FdsList";
 import {get_inputBoxes, inputBoxes_data} from "../../store/inputBoxes_dataStore";
 import Suggestion from "./fds_list/Suggestion";
+import UploadFile from "./UploadFile";
+import Loader from "../full_page_loader/loader";
 
 const MainTool = (props) => {
     const [inputBoxes, setInputBoxes] = useState([]);
@@ -12,6 +15,8 @@ const MainTool = (props) => {
     const [currentIndex, setCurrentIndex] = useState(0);
     const [disableConstraintBox, setDisableConstraintBox] = useState(false);
     const [currentCell, setCurrentCell] = useState(false);
+    const [isFdMine, setIsFdMine] = useState(false);
+    const [loading, setLoading] = useState(false);
 
     const data = inputBoxes_data.getRawState()
 
@@ -19,6 +24,16 @@ const MainTool = (props) => {
         setInputBoxes(data.inputBoxes)
         setRelationName(data.relationName)
     }, []);
+
+    useEffect(() => {
+        if (isFdMine) {
+            const data = inputBoxes_data.getRawState();
+            setInputBoxes(data.inputBoxes);
+            setRelationName(data.relationName);
+            setIsFdMine(false);
+            setLoading(false);
+        }
+    }, [isFdMine]);
 
     useEffect(() => {
         inputBoxes_data.update(s => {
@@ -48,12 +63,35 @@ const MainTool = (props) => {
         updateInputBoxes(newInputBoxes);
     }
 
-
     const updateCurrentIndex = (index) => {
         setCurrentIndex(index);
     }
     return (
         <section className={`${styles.main}`}>
+            {loading &&
+            <Loader
+                loading={loading}
+            />
+            }
+            <UploadFile
+                setIsFdMine={setIsFdMine}
+                setLoader={setLoading}
+            />
+            {/*<div className="my-hr container mt-2 mb-0">*/}
+            {/*<div className="col-12 d-inline-flex">*/}
+
+            {/*</div>*/}
+            {/*</div>*/}
+            <div className="col-12 mt-2">
+                <div className="container">
+                    <div className="d-inline-flex col-12">
+                        <hr className='my-hr-or me-1'/>
+                        <span className='hr-content'>OR</span>
+                        <hr className='my-hr-or ms-1 me-2'/>
+                    </div>
+                </div>
+            </div>
+
             <div className="m row col-12">
                 <div className={`col-lg-8 col-md-10 col-sm-12 ${styles['__create-relation']}`}>
                     <CreateRelation

@@ -7,7 +7,7 @@ function PrintRelations(props) {
     const inputBoxes = my_data.getRawState().inputBoxes;
     const [data, setData] = useState([{}]);
     const [relationNames, setRelationNames] = useState({});
-    let count = 1;
+    // let count = 1;
 
     useEffect(() => {
         setData(props.data)
@@ -23,7 +23,7 @@ function PrintRelations(props) {
                                 if (data[key].length !== 0) {
                                     const rel = (key === 'multi' ? '-VALUED' : ' Dependent') + ' Relations';
                                     return (
-                                        <div>
+                                        <div key={key_index}>
                                             <div className='text-center relation_type'>{key.toUpperCase() + rel}</div>
                                             {
                                                 Object.keys(data[key]).map((list, index) => {
@@ -86,7 +86,7 @@ function PrintRelations(props) {
                         <div className=" mt-3 me-3">
                             {returnNFRelations()}
                         </div>
-                        <div className="1NF-reason mt-3 col-lg-4 col-md-12 col-sm-12">
+                        <div className="NF-reason mt-3 col-lg-4 col-md-12 col-sm-12">
                             <div className="card">
                                 <div className="card-header">Reason</div>
                                 <div className="card-body">
@@ -105,8 +105,16 @@ function PrintRelations(props) {
         for (let i = 0; i < data[key].length; i++) {
             if ((flag && data[key][i][0].includes(value)) || key.toLowerCase() === 'multi')
                 underline = 'ib-underline';
+            if (props.normalFormNumber[0] === '1')
+                underline = get1nfClass(value);
         }
         return 'inputBox mt-2 ' + underline;
+    }
+
+    function get1nfClass(value) {
+        const isMulti = inputBoxes.filter(inputBox =>
+            inputBox.value === value && (inputBox.multiValue || inputBox.primary)).length
+        return isMulti !== 0 ? 'ib-underline' : '';
     }
 }
 

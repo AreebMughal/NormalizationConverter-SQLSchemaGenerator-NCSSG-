@@ -17,12 +17,12 @@ const IndexOptions = (props) => {
             <option value="index" title="Index" disabled={isPrimary}>
                 INDEX
             </option>
-            <option value="fulltext" title="Fulltext" disabled={isPrimary}>
+            {/*<option value="fulltext" title="Fulltext" disabled={isPrimary}>
                 FULLTEXT
             </option>
             <option value="spatial" title="Spatial" disabled={isPrimary}>
                 SPATIAL
-            </option>
+            </option>*/}
         </select>
     );
 }

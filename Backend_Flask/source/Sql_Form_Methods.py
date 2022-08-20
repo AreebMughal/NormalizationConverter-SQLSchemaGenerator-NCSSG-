@@ -36,28 +36,33 @@ def get_foreign_relation_of(relations):
 
 def get_foreign_keys(relation, all_relations, current):
     foreign_keys = []
+    primary_keys = all_relations['Fully_dependent'][0]
+    print(current, ':')
     for key, rel in all_relations.items():
         if key != current:
             relation_lhs = set(relation[0])
-            if 'partial' in current:
-                if relation_lhs.issubset(rel[0]) and key == 'Fully_dependent':
-                    append_foreign_key(foreign_keys, key, relation[0])
-            elif relation_lhs.issubset(rel[0]) or relation_lhs.issubset(rel[1]):
-                append_foreign_key(foreign_keys, key, relation[0])
-            elif not ('partial' in current and 'Fully_dependent' in current):
-                for attr in relation[0]:
-                    if {attr}.issubset(rel[0]) or {attr}.issubset(rel[1]):
-                        append_foreign_key(foreign_keys, key, [attr])
-
-    primary_keys = all_relations['Fully_dependent'][0]
+            if len(primary_keys) > 1 and (current == 'multi' or current == 'Fully_dependent'):
+                if relation_lhs == rel[0]:
+                    pass
+                    # print('*', current, rel[0])
+            # if 'partial' in current:
+            #     if relation_lhs.issubset(rel[0]) and key == 'Fully_dependent':
+            #         append_foreign_key(foreign_keys, key, relation[0])
+            # if relation_lhs.issubset(rel[0]) or relation_lhs.issubset(rel[1]):
+            #     append_foreign_key(foreign_keys, key, relation[0])
+            # elif not('Fully_dependent' in current):
+            #     print(' in - current', current)
+            for attr in relation[0]:
+                if {attr}.issubset(rel[0]) or {attr}.issubset(rel[1]):
+                    append_foreign_key(foreign_keys, key, [attr])
 
     for element in foreign_keys:
         relations = get_foreign_relation_of(element['relationName'])
-
-        if 'fully' in relations and element['attribute'] == primary_keys:
+        print('Relations:', relations)
+        if 'fully' in relations and len(primary_keys) == 1:
             element['relationName'] = 'Fully_dependent'
-        elif 'fully' in relations:
-            element['relationName'] = 'Fully_dependent'
+        # elif 'fully' in relations:
+        #     element['relationName'] = 'Fully_dependent'
         elif 'partial' in relations:
             index = relations.index('partial')
             element['relationName'] = element['relationName'][index]
@@ -69,6 +74,7 @@ def get_foreign_keys(relation, all_relations, current):
             element['relationName'] = element['relationName'][index]
         # element['attribute'] = list(element['attribute'])
         # print('.... ', element['attribute'])
+    print('-->', foreign_keys)
 
     return foreign_keys
 
@@ -122,13 +128,12 @@ def create_relations(nf_result, relation_names, all_relations):
                     for arr in rel:
                         for attr in arr:
                             relation["attributes"].append(get_attribute_detail(attr, "primary"))
-                if key.lower() != 'full':
-                    # print('--- >>> ',  rel)
+                if key.lower() != 'partial':
                     relation['foreignKeys'] = get_foreign_keys(rel, all_relations, relation_names[key][index][1])
                 index += 1
                 json_data['Data'].append(relation)
 
-    print_data(json_data, all_relations)
+    # print_data(json_data, all_relations)
     return json_data
     # print(json_data)
 

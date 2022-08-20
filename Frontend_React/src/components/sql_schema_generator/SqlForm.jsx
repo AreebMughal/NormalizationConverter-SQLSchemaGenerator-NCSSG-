@@ -127,13 +127,6 @@ const SqlForm = (props) => {
             <form onSubmit={formSubmit}>
                 {props.children}
             </form>
-            {/*<a href={`http://localhost:3000/df6eda5c-abe7-4dcb-9599-f06420c9f536`} download='as.sql'>Download</a>*/}
-            {/*{(showDownloadModal) &&
-                <DownloadModal
-                    show={showDownloadModal}
-                    setShow={setShowDownloadModal}
-                />
-            }*/}
         </React.Fragment>
     );
 }

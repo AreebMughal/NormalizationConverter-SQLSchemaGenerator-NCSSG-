@@ -3,7 +3,7 @@ from source.normalizedRelation import NormalizedRelation
 
 class Nf2nd(NormalizedRelation):
     def __init__(self, my_rel) -> None:
-        super().__init__(my_rel)
+        super().__init__(relation=my_rel)
         self.__nf_2_result = None
 
     def get_nf_2_result(self):
