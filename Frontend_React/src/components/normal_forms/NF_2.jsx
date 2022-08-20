@@ -4,8 +4,10 @@ import axios from "axios";
 import PrintRelations from "./printRelations";
 import {inputBoxes_data} from "../../store/inputBoxes_dataStore";
 import {get2nfReason} from "../../assets/js/nfReasons";
+import DetailReason from "../DetailReason";
 
 function NF_2() {
+
     const inputBoxes = my_data.getRawState().inputBoxes
     const relationName = inputBoxes_data.getRawState().relationName
     const [data, setData] = useState({})
@@ -21,12 +23,19 @@ function NF_2() {
     }, [inputBoxes, relationName])
 
     return (
+        <>
         <PrintRelations
             data={data}
             normalFormNumber='2nd'
             names={relationNames}
             reason={get2nfReason(data, inputBoxes)}
+
         />
+            <DetailReason
+            type = '2nd'
+
+            />
+        </>
     );
 }
 
