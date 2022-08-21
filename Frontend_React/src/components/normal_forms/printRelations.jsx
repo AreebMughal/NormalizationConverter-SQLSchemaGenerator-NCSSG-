@@ -32,9 +32,11 @@ function PrintRelations(props) {
                                                         let num = 0;
                                                         let check = 0;
                                                         return (
-                                                            <div className="d-flex flex-wrap" key={key_index+'-'+index}>
+                                                            <div className="d-flex flex-wrap"
+                                                                 key={key_index + '-' + index}>
                                                                 {/*<span>Relation-{count++}: </span>*/}
-                                                                <span className='mt-3' style={{width: 120}}>{name}: </span>
+                                                                <span className='mt-3'
+                                                                      style={{width: 120}}>{name}: </span>
                                                                 {
                                                                     (data[key][list].toString().split(',')).map((value, ind) => {
                                                                             const bool = (++check <= len);
