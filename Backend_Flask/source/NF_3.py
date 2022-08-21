@@ -4,7 +4,7 @@ from source.normalizedRelation import NormalizedRelation
 
 class Nf3rd(NormalizedRelation):
     def __init__(self, my_rel) -> None:
-        super().__init__(my_rel)
+        super().__init__(relation=my_rel)
         self.__nf_3_result = None
 
     def get_nf_3_result(self):
@@ -61,6 +61,7 @@ class Nf3rd(NormalizedRelation):
 
     @staticmethod
     def __get_fully_dependent_relation(fully_dependent):
+        my_relation = super().get_relation()
         if len(fully_dependent) == 0:
-            fully_dependent = []
+            fully_dependent = [[my_relation.get_attr_info()['primary'], []]]
         return fully_dependent

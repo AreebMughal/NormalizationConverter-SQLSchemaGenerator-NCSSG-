@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import '../assets/css/alert.css';
+import '../../assets/css/alert.css';
 
 function AlertDismissible(props) {
     const [show, setShow] = useState(null);

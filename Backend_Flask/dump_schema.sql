@@ -4,85 +4,100 @@ SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION; 
 SET time_zone = "+00:00"; 
 
+CREATE DATABASE `NCSSG_dumped_db_fm28`;
 
 -- 
--- Table structure for table `Practice` 
+-- Table structure for table `abalone` 
 -- 
 
-CREATE TABLE `Practice` ( 
-	`pnum` int(11) NOT NULL, 
-	`ssn` int(11) NOT NULL, 
-	`name` int(11) NOT NULL 
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+CREATE TABLE `NCSSG_dumped_db_fm28`.`abalone` ( 
+	`Shell_weight` int(11) NOT NULL, 
+ 	`Viscera_weight` int(11) NOT NULL, 
+ 	`Whole_Weight` int(11) NOT NULL, 
+ 	`Length` int(11) NOT NULL, 
+ 	`Height` int(11) NOT NULL, 
+ 	`Shucked_Weight` int(11) NOT NULL 
+ ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
 -- 
--- Table structure for table `Pra_ssn` 
+-- Table structure for table `aba_diameter` 
 -- 
 
-CREATE TABLE `Pra_ssn` ( 
-	`ssn` int(11) NOT NULL, 
-	`id` int(11) NOT NULL 
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+CREATE TABLE `NCSSG_dumped_db_fm28`.`aba_diameter` ( 
+	`Diameter` int(11) NOT NULL, 
+ 	`Viscera_weight` int(11) NOT NULL, 
+ 	`Whole_Weight` int(11) NOT NULL, 
+ 	`Sex` int(11) NOT NULL 
+ ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
 -- 
--- Table structure for table `Pra_pnum` 
+-- Table structure for table `aba_shucked_weight` 
 -- 
 
-CREATE TABLE `Pra_pnum` ( 
-	`pnum` int(11) NOT NULL, 
-	`ploc` int(11) NOT NULL, 
-	`pname` int(11) NOT NULL 
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+CREATE TABLE `NCSSG_dumped_db_fm28`.`aba_shucked_weight` ( 
+	`Shucked_Weight` int(11) NOT NULL, 
+ 	`Viscera_weight` int(11) NOT NULL, 
+ 	`Whole_Weight` int(11) NOT NULL, 
+ 	`Diameter` int(11) NOT NULL 
+ ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
 -- 
--- Table structure for table `Pra_email` 
+-- Table structure for table `aba_length` 
 -- 
 
-CREATE TABLE `Pra_email` ( 
-	`pnum` int(11) NOT NULL, 
-	`ssn` int(11) NOT NULL, 
-	`email` int(11) NOT NULL 
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+CREATE TABLE `NCSSG_dumped_db_fm28`.`aba_length` ( 
+	`Length` int(11) NOT NULL, 
+ 	`Rings` int(11) NOT NULL, 
+ 	`Shucked_Weight` int(11) NOT NULL, 
+ 	`Viscera_weight` int(11) NOT NULL, 
+ 	`Whole_Weight` int(11) NOT NULL 
+ ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
 -- 
--- Table structure for table `Pra_address` 
+-- Table structure for table `aba_diameter` 
 -- 
 
-CREATE TABLE `Pra_address` ( 
-	`ssn` int(11) NOT NULL, 
-	`address` int(11) NOT NULL 
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+CREATE TABLE `NCSSG_dumped_db_fm28`.`aba_diameter` ( 
+	`Diameter` int(11) NOT NULL, 
+ 	`Shucked_Weight` int(11) NOT NULL, 
+ 	`Whole_Weight` int(11) NOT NULL, 
+ 	`Viscera_weight` int(11) NOT NULL 
+ ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
 -- 
--- Table structure for table `Pra_id` 
+-- Table structure for table `aba_rings` 
 -- 
 
-CREATE TABLE `Pra_id` ( 
-	`id` int(11) NOT NULL, 
-	`dnum` int(11) NOT NULL 
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+CREATE TABLE `NCSSG_dumped_db_fm28`.`aba_rings` ( 
+	`Rings` int(11) NOT NULL, 
+ 	`Sex` int(11) NOT NULL, 
+ 	`Viscera_weight` int(11) NOT NULL, 
+ 	`Whole_Weight` int(11) NOT NULL, 
+ 	`Shell_weight` int(11) NOT NULL 
+ ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
 -- 
--- Table structure for table `Pra_dnum` 
+-- Table structure for table `aba_length` 
 -- 
 
-CREATE TABLE `Pra_dnum` ( 
-	`dnum` int(11) NOT NULL, 
-	`dloc` int(11) NOT NULL, 
-	`dname` int(11) NOT NULL 
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+CREATE TABLE `NCSSG_dumped_db_fm28`.`aba_length` ( 
+	`Length` int(11) NOT NULL, 
+ 	`Shucked_Weight` int(11) NOT NULL, 
+ 	`Whole_Weight` int(11) NOT NULL, 
+ 	`Rings` int(11) NOT NULL 
+ ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 -- 
@@ -91,90 +106,160 @@ CREATE TABLE `Pra_dnum` (
 
 
 -- 
--- Indexes for table `Practice` 
+-- Indexes for table `abalone` 
 -- 
-ALTER TABLE `Practice`
-	ADD PRIMARY KEY (`pnum`,`ssn`)
+ALTER TABLE `NCSSG_dumped_db_fm28`.`abalone`
+	ADD PRIMARY KEY (`Shell_weight`,`Viscera_weight`,`Whole_Weight`),
+	ADD UNIQUE KEY `Length` (`Length`),
+	ADD UNIQUE KEY `Shucked_Weight` (`Shucked_Weight`);
 
 -- 
--- Indexes for table `Pra_ssn` 
+-- Indexes for table `aba_diameter` 
 -- 
-ALTER TABLE `Pra_ssn`
-	ADD PRIMARY KEY (`ssn`)
+ALTER TABLE `NCSSG_dumped_db_fm28`.`aba_diameter`
+	ADD PRIMARY KEY (`Diameter`,`Viscera_weight`,`Whole_Weight`),
+	ADD UNIQUE KEY `Sex` (`Sex`);
 
 -- 
--- Indexes for table `Pra_pnum` 
+-- Indexes for table `aba_shucked_weight` 
 -- 
-ALTER TABLE `Pra_pnum`
-	ADD PRIMARY KEY (`pnum`)
+ALTER TABLE `NCSSG_dumped_db_fm28`.`aba_shucked_weight`
+	ADD PRIMARY KEY (`Shucked_Weight`,`Viscera_weight`,`Whole_Weight`),
+	ADD UNIQUE KEY `Diameter` (`Diameter`);
 
 -- 
--- Indexes for table `Pra_email` 
+-- Indexes for table `aba_length` 
 -- 
-ALTER TABLE `Pra_email`
-	ADD PRIMARY KEY (`pnum`,`ssn`,`email`)
+ALTER TABLE `NCSSG_dumped_db_fm28`.`aba_length`
+	ADD PRIMARY KEY (`Length`,`Rings`,`Shucked_Weight`,`Viscera_weight`),
+	ADD UNIQUE KEY `Whole_Weight` (`Whole_Weight`);
 
 -- 
--- Indexes for table `Pra_address` 
+-- Indexes for table `aba_diameter` 
 -- 
-ALTER TABLE `Pra_address`
-	ADD PRIMARY KEY (`ssn`,`address`)
+ALTER TABLE `NCSSG_dumped_db_fm28`.`aba_diameter`
+	ADD PRIMARY KEY (`Diameter`,`Shucked_Weight`,`Whole_Weight`),
+	ADD UNIQUE KEY `Viscera_weight` (`Viscera_weight`);
 
 -- 
--- Indexes for table `Pra_id` 
+-- Indexes for table `aba_rings` 
 -- 
-ALTER TABLE `Pra_id`
-	ADD PRIMARY KEY (`id`)
+ALTER TABLE `NCSSG_dumped_db_fm28`.`aba_rings`
+	ADD PRIMARY KEY (`Rings`,`Sex`,`Viscera_weight`,`Whole_Weight`),
+	ADD UNIQUE KEY `Shell_weight` (`Shell_weight`);
 
 -- 
--- Indexes for table `Pra_dnum` 
+-- Indexes for table `aba_length` 
 -- 
-ALTER TABLE `Pra_dnum`
-	ADD PRIMARY KEY (`dnum`)
+ALTER TABLE `NCSSG_dumped_db_fm28`.`aba_length`
+	ADD PRIMARY KEY (`Length`,`Shucked_Weight`,`Whole_Weight`),
+	ADD UNIQUE KEY `Rings` (`Rings`);
 -- 
 -- Constraints for dumped tables 
 -- 
 
 
 -- 
--- Constraint for table `Pra_ssn` 
+-- Constraint for table `abalone` 
 -- 
-ALTER TABLE `Pra_ssn`
-	ADD CONSTRAINT `Pra_ssn_ibfk_1` FOREIGN KEY (`ssn`) REFERENCES `Practice` (`ssn`) 
-	ON DELETE CASCADE ON UPDATE CASCADE; 
+ALTER TABLE `NCSSG_dumped_db_fm28`.`abalone`
+	ADD CONSTRAINT `abalone_ibfk_1` 
+	FOREIGN KEY (`Viscera_weight`) REFERENCES `aba_diameter` (`Viscera_weight`) 
+	ON DELETE CASCADE ON UPDATE CASCADE,
+	ADD CONSTRAINT `abalone_ibfk_2` 
+	FOREIGN KEY (`Whole_Weight`) REFERENCES `aba_diameter` (`Whole_Weight`) 
+	ON DELETE CASCADE ON UPDATE CASCADE,
+	ADD CONSTRAINT `abalone_ibfk_3` 
+	FOREIGN KEY (`Shell_weight`) REFERENCES `aba_rings` (`Shell_weight`) 
+	ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- 
--- Constraint for table `Pra_pnum` 
+-- Constraint for table `aba_diameter` 
 -- 
-ALTER TABLE `Pra_pnum`
-	ADD CONSTRAINT `Pra_pnum_ibfk_1` FOREIGN KEY (`pnum`) REFERENCES `Practice` (`pnum`) 
-	ON DELETE CASCADE ON UPDATE CASCADE; 
+ALTER TABLE `NCSSG_dumped_db_fm28`.`aba_diameter`
+	ADD CONSTRAINT `aba_diameter_ibfk_1` 
+	FOREIGN KEY (`Viscera_weight`) REFERENCES `aba_shucked_weight` (`Viscera_weight`) 
+	ON DELETE CASCADE ON UPDATE CASCADE,
+	ADD CONSTRAINT `aba_diameter_ibfk_2` 
+	FOREIGN KEY (`Whole_Weight`) REFERENCES `aba_shucked_weight` (`Whole_Weight`) 
+	ON DELETE CASCADE ON UPDATE CASCADE,
+	ADD CONSTRAINT `aba_diameter_ibfk_3` 
+	FOREIGN KEY (`Diameter`) REFERENCES `aba_shucked_weight` (`Diameter`) 
+	ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- 
--- Constraint for table `Pra_email` 
+-- Constraint for table `aba_shucked_weight` 
 -- 
-ALTER TABLE `Pra_email`
-	ADD CONSTRAINT `Pra_email_ibfk_1` FOREIGN KEY (`pnum`, `ssn`) REFERENCES `Practice` (`pnum`, `ssn`) 
-	ON DELETE CASCADE ON UPDATE CASCADE; 
+ALTER TABLE `NCSSG_dumped_db_fm28`.`aba_shucked_weight`
+	ADD CONSTRAINT `aba_shucked_weight_ibfk_1` 
+	FOREIGN KEY (`Shucked_Weight`) REFERENCES `aba_length` (`Shucked_Weight`) 
+	ON DELETE CASCADE ON UPDATE CASCADE,
+	ADD CONSTRAINT `aba_shucked_weight_ibfk_2` 
+	FOREIGN KEY (`Viscera_weight`) REFERENCES `aba_diameter` (`Viscera_weight`) 
+	ON DELETE CASCADE ON UPDATE CASCADE,
+	ADD CONSTRAINT `aba_shucked_weight_ibfk_3` 
+	FOREIGN KEY (`Whole_Weight`) REFERENCES `aba_diameter` (`Whole_Weight`) 
+	ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- 
--- Constraint for table `Pra_address` 
+-- Constraint for table `aba_length` 
 -- 
-ALTER TABLE `Pra_address`
-	ADD CONSTRAINT `Pra_address_ibfk_1` FOREIGN KEY (`ssn`) REFERENCES `Practice` (`ssn`) 
-	ON DELETE CASCADE ON UPDATE CASCADE; 
+ALTER TABLE `NCSSG_dumped_db_fm28`.`aba_length`
+	ADD CONSTRAINT `aba_length_ibfk_1` 
+	FOREIGN KEY (`Length`) REFERENCES `aba_length` (`Length`) 
+	ON DELETE CASCADE ON UPDATE CASCADE,
+	ADD CONSTRAINT `aba_length_ibfk_2` 
+	FOREIGN KEY (`Shucked_Weight`) REFERENCES `aba_shucked_weight` (`Shucked_Weight`) 
+	ON DELETE CASCADE ON UPDATE CASCADE,
+	ADD CONSTRAINT `aba_length_ibfk_3` 
+	FOREIGN KEY (`Viscera_weight`) REFERENCES `aba_diameter` (`Viscera_weight`) 
+	ON DELETE CASCADE ON UPDATE CASCADE,
+	ADD CONSTRAINT `aba_length_ibfk_4` 
+	FOREIGN KEY (`Rings`) REFERENCES `aba_rings` (`Rings`) 
+	ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- 
--- Constraint for table `Pra_id` 
+-- Constraint for table `aba_diameter` 
 -- 
-ALTER TABLE `Pra_id`
-	ADD CONSTRAINT `Pra_id_ibfk_1` FOREIGN KEY (`id`) REFERENCES `Pra_ssn` (`id`) 
-	ON DELETE CASCADE ON UPDATE CASCADE; 
+ALTER TABLE `NCSSG_dumped_db_fm28`.`aba_diameter`
+	ADD CONSTRAINT `aba_diameter_ibfk_1` 
+	FOREIGN KEY (`Shucked_Weight`) REFERENCES `aba_shucked_weight` (`Shucked_Weight`) 
+	ON DELETE CASCADE ON UPDATE CASCADE,
+	ADD CONSTRAINT `aba_diameter_ibfk_2` 
+	FOREIGN KEY (`Whole_Weight`) REFERENCES `aba_diameter` (`Whole_Weight`) 
+	ON DELETE CASCADE ON UPDATE CASCADE,
+	ADD CONSTRAINT `aba_diameter_ibfk_3` 
+	FOREIGN KEY (`Diameter`) REFERENCES `aba_diameter` (`Diameter`) 
+	ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- 
--- Constraint for table `Pra_dnum` 
+-- Constraint for table `aba_rings` 
 -- 
-ALTER TABLE `Pra_dnum`
-	ADD CONSTRAINT `Pra_dnum_ibfk_1` FOREIGN KEY (`dnum`) REFERENCES `Pra_id` (`dnum`) 
-	ON DELETE CASCADE ON UPDATE CASCADE; 
+ALTER TABLE `NCSSG_dumped_db_fm28`.`aba_rings`
+	ADD CONSTRAINT `aba_rings_ibfk_1` 
+	FOREIGN KEY (`Viscera_weight`) REFERENCES `aba_diameter` (`Viscera_weight`) 
+	ON DELETE CASCADE ON UPDATE CASCADE,
+	ADD CONSTRAINT `aba_rings_ibfk_2` 
+	FOREIGN KEY (`Whole_Weight`) REFERENCES `aba_diameter` (`Whole_Weight`) 
+	ON DELETE CASCADE ON UPDATE CASCADE,
+	ADD CONSTRAINT `aba_rings_ibfk_3` 
+	FOREIGN KEY (`Sex`) REFERENCES `aba_diameter` (`Sex`) 
+	ON DELETE CASCADE ON UPDATE CASCADE,
+	ADD CONSTRAINT `aba_rings_ibfk_4` 
+	FOREIGN KEY (`Rings`) REFERENCES `aba_length` (`Rings`) 
+	ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- 
+-- Constraint for table `aba_length` 
+-- 
+ALTER TABLE `NCSSG_dumped_db_fm28`.`aba_length`
+	ADD CONSTRAINT `aba_length_ibfk_1` 
+	FOREIGN KEY (`Length`) REFERENCES `aba_length` (`Length`) 
+	ON DELETE CASCADE ON UPDATE CASCADE,
+	ADD CONSTRAINT `aba_length_ibfk_2` 
+	FOREIGN KEY (`Shucked_Weight`) REFERENCES `aba_shucked_weight` (`Shucked_Weight`) 
+	ON DELETE CASCADE ON UPDATE CASCADE,
+	ADD CONSTRAINT `aba_length_ibfk_3` 
+	FOREIGN KEY (`Whole_Weight`) REFERENCES `aba_diameter` (`Whole_Weight`) 
+	ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;

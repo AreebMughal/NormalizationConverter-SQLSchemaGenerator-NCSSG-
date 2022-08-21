@@ -21,7 +21,11 @@ const SqlSchemaGenerator = () => {
 
     useEffect(() => {
         console.log('UseEffect - NormalForm')
-        axios.post('http://127.0.0.1:5000/getSqlSchemaData', {inputBoxes, normalForm: normalForm, relationName: relationName})
+        axios.post('http://127.0.0.1:5000/getSqlSchemaData', {
+            inputBoxes,
+            normalForm: normalForm,
+            relationName: relationName
+        })
             .then(res => {
                 console.log(res.data.Data)
                 setRelationList(res.data.Data)
@@ -36,29 +40,30 @@ const SqlSchemaGenerator = () => {
     }, [inputBoxes])
 
     const getNewAttributeObj = (obj, property, value) => {
-        if (property === 'type')
-            obj.type = value;
-        else if (property === 'length')
-            obj.length = value;
-        else if (property === 'default')
-            obj.default = value;
-        else if (property === 'index')
-            obj.index = value;
-        else if (property === 'autoIncrement')
-            obj.autoIncrement = value;
-        else if (property === 'null')
-            obj.null = value;
-        else if (property === 'value')
-            obj.value = value;
+        obj[property] = value;
         return obj;
     }
 
     const stateChangeHandler = (property, value, indexes) => {
-        const [relIndex, attributeIndex] = indexes.split('+')
+        const [relationIndex, attributeIndex] = indexes.split('+')
         const newRelationList = [...relationList]
-        // newRelationList[relIndex] = {...relationList[relIndex]}
-        // newRelationList[relIndex].attributes[attributeIndex] = {...relationList[relIndex].attributes[attributeIndex]}
-        newRelationList[relIndex].attributes[attributeIndex] = getNewAttributeObj({...newRelationList[relIndex].attributes[attributeIndex]}, property, value)
+        // newRelationList[relationIndex] = {...relationList[relationIndex]}
+        // newRelationList[relationIndex].attributes[attributeIndex] = {...relationList[relationIndex].attributes[attributeIndex]}
+        newRelationList[relationIndex].attributes[attributeIndex] =
+            getNewAttributeObj({...newRelationList[relationIndex].attributes[attributeIndex]}, property, value)
+        relationList.map((rel, relIndex) => {
+            if (relIndex !== relationIndex)
+                rel.attributes.map((attr, attrIndex) => {
+                    if (attributeIndex !== attrIndex &&
+                        attr.value === relationList[relationIndex].attributes[attributeIndex].value &&
+                        property !== 'index') {
+                        newRelationList[relIndex].attributes[attrIndex] =
+                            getNewAttributeObj({...newRelationList[relIndex].attributes[attrIndex]}, property, value)
+                    }
+                    return null;
+                })
+            return null;
+        })
         setRelationList(newRelationList)
     }
 

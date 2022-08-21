@@ -4,9 +4,11 @@ from source.StaticMethods import convert_to_array
 
 
 class NormalizedRelation:
-    def __init__(self, relation):
+    def __init__(self, relation=None, fd=None):
         self.__relation = relation
-        self.fds = (relation.get_attribute_dependency()).get_func_dep()
+        if fd is None:
+            fd = (relation.get_attribute_dependency()).get_func_dep()
+        self.fds = fd
         self.minimal_cover = self.get_minimal_cover()
 
     def get_fd(self):
@@ -30,9 +32,10 @@ class NormalizedRelation:
                     result = result.union(rhs)
         return result
 
-    def find_candidate_key(self):
-        attributes_set = set(self.get_relation().get_attr_info()['attributes'])
-        rhs = {list(fd[1])[0] for fd in self.fds}
+    def find_candidate_key(self, attributes_set=None):
+        if attributes_set is None:
+            attributes_set = set(self.get_relation().get_attr_info()['attributes'])
+        rhs = {list(fd[1])[0] for fd in self.fds if len(fd) != 0}
         candidate_key = attributes_set.difference(rhs)
         print('Candidate Key: ', candidate_key)
 

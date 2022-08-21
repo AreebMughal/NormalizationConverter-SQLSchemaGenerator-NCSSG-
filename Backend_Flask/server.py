@@ -2,13 +2,19 @@ import json
 import sys
 import traceback
 import os
+from io import BytesIO
 
-from flask import Flask, request
+import numpy as np
+from werkzeug.utils import secure_filename
+from flask import Flask, request, jsonify
 from flask_cors import CORS
 
+from Fd_Miner import FdsMiner
+from source.DrawingImage.relationalMapping import RelationalMapping
 from source.NF_1 import Nf1st
 from source.NF_2 import Nf2nd
 from source.NF_3 import Nf3rd
+from source.BCNF import BCNF
 from source.Relation import Relation
 from source.normalizedRelation import NormalizedRelation
 from source.Sql_Form_Methods import create_relation_names
@@ -54,7 +60,7 @@ def get_result(object_type, input_boxes_dic):
         relation_name = data['relationName']
         my_relation = Relation(rel_name=relation_name, input_boxes=input_boxes)
         if object_type == 'minimal_cover':
-            normalized_relation = NormalizedRelation(my_relation)
+            normalized_relation = NormalizedRelation(relation=my_relation)
             result = normalized_relation.get_minimal_cover_JSON()
         elif object_type == 'NF1':
             nf_1 = Nf1st(my_rel=my_relation)
@@ -66,7 +72,8 @@ def get_result(object_type, input_boxes_dic):
             nf_3 = Nf3rd(my_rel=my_relation)
             result = nf_3.find_nf_3()
         elif object_type == 'BCNF':
-            pass
+            bcnf = BCNF(my_rel=my_relation)
+            result = bcnf.find_bcnf()
         relation_names = create_relation_names(result, data['relationName']) if object_type != 'minimal_cover' else ''
     except Exception as e:
         my_exception(e)
@@ -74,10 +81,14 @@ def get_result(object_type, input_boxes_dic):
     return {"result": result, "relation_names": relation_names}
 
 
-
 @app.route("/minimalCover", methods=['GET', 'POST'])
 def minimalCover():
     return get_result(object_type='minimal_cover', input_boxes_dic=request.data.decode('utf-8'))
+
+
+@app.route("/NF1", methods=['GET', 'POST'])
+def NF1():
+    return get_result(object_type='NF1', input_boxes_dic=request.data.decode('utf-8'))
 
 
 @app.route("/NF2", methods=['GET', 'POST'])
@@ -115,19 +126,18 @@ def getSqlSchemaData():
 
 @app.route("/sqlSchemaGenerator", methods=['GET', 'POST'])
 def sqlSchemaGenerator():
-    flag = 'false'
+    script_string = ''
     try:
         data = json.loads(request.data.decode('utf-8'))
         script = SqlScript(data['data'])
-        res = script.write_sql_script()
+        script_string = script.write_sql_script()
         file = open('dump_schema.sql', 'w+')
-        file.write(res)
-        flag = 'true'
+        file.write(script_string)
         # path = os.path.abspath('./dump_schema.sql')
     except Exception as e:
         my_exception(e)
 
-    return res
+    return script_string
 
 
 @app.route("/preliminaryCheck", methods=['GET', 'POST'])
@@ -135,7 +145,8 @@ def preliminaryCheck():
     try:
         data = json.loads(request.data.decode('utf-8'))
         input_boxes = data['inputBoxes']
-        relation_name = data['relationName']
+        # relation_name = data['relationName']
+        relation_name = 'Something'
         my_relation = Relation(rel_name=relation_name, input_boxes=input_boxes)
 
     except Exception as e:
@@ -145,11 +156,51 @@ def preliminaryCheck():
 
 @app.route("/relationalMapping", methods=['GET', 'POST'])
 def relationalMapping():
-    pass
+    try:
+        data = json.loads(request.data.decode('utf-8'))
+        input_boxes = data['inputBoxes']
+        # relation_name = data['relationName']
+        relation_name = 'Something'
+        my_relation = Relation(rel_name=relation_name, input_boxes=input_boxes)
+        dic = my_relation.extract_data(input_boxes)
+        print(dic)
+        rl = RelationalMapping(dic)
+
+    except Exception as e:
+        my_exception(e)
+    return ''
+
+
+@app.route('/fdMining', methods=['GET', 'POST'])
+def fdMining():
+    data = '0'
+    try:
+        print(len(request.files))
+        if len(request.files) > 0:
+            print('--'*30)
+            file = request.files['file']
+            file.save(os.path.join('./datasets/', secure_filename(file.filename)))
+            fd_miner = FdsMiner('./datasets/'+file.filename, 'fdtool')
+            data = fd_miner.fd_mining()
+            print(data)
+            # print('adsf', len(data['inputBoxes']))
+
+        # filename = file.filename
+        # print(f"Uploading file {filename}")
+        # file_bytes = file.read()
+        # file_content = BytesIO(file_bytes).readlines()
+        # print(file_content)
+    except Exception as e:
+        my_exception(e)
+
+    return data
 
 
 if __name__ == '__main__':
     app.run(debug=True)
+    # fd_miner = FdsMiner('./datasets/abalone.csv', 'tane')
+    # data = fd_miner.fd_mining()
+
 
     # res = get_dummy_nf_result()
     #

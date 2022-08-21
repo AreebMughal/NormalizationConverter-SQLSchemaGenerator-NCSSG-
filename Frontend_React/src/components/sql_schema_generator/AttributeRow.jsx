@@ -13,12 +13,26 @@ const AttributeRow = (props) => {
     const [autoIncrement, setAutoIncrement] = useState(false);
     const [nullValue, setNullValue] = useState(false);
     const [disableType, setDisableType] = useState(false);
+
+    useEffect(() => {
+        setDataType(props.attribute['type']);
+        setLength(props.attribute['length']);
+        setAutoIncrement(props.attribute['autoIncrement']);
+        setDefaultValue(props.attribute['default']);
+        setNullValue(props.attribute['null']);
+        setAttributeName(props.attribute.value)
+        setIndex(props.attribute.index)
+        ref.current.checked = props.attribute['null'];
+        ref2.current.checked = props.attribute['autoIncrement'];
+
+    }, [props.attribute])
     let ref = React.createRef();
     const ref2 = React.createRef();
-    const attributeNameChangeHandler = event => {
-        setAttributeName(event.target.value)
-        props.onChangeHandler('value', event.target.value, event.target.id)
-    }
+
+    // const attributeNameChangeHandler = event => {
+    //     setAttributeName(event.target.value)
+    //     props.onChangeHandler('value', event.target.value, event.target.id)
+    // }
 
     const dataTypeChangeHandler = (property, selectedDataType, id) => {
         setDataType(selectedDataType)
@@ -34,7 +48,6 @@ const AttributeRow = (props) => {
         setDefaultValue(selectedDefaultValue)
         props.onChangeHandler(property, selectedDefaultValue, id)
         if (selectedDefaultValue === 'NULL') {
-            console.log(ref.current)
             ref.current.click()
             setNullValue(true)
             props.onChangeHandler('null', 'NULL', id)
@@ -42,10 +55,42 @@ const AttributeRow = (props) => {
     }
 
     const lengthChangeHandler = event => {
-        setLength(event.target.value)
-        if (event.target.value.length > 0)
-            event.target.classList.remove('alert_border')
-        props.onChangeHandler('length', event.target.value, event.target.id)
+        const inputField = event.target.value;
+        const checkINT = /^\d+$/.test(inputField);
+        const checkFLOAT = /^[0-9,]+$/.test(inputField);
+        if (
+            dataType === "INT" ||
+            dataType ==="SMALLINT" ||
+            dataType === "BIGINT"
+        ) {
+            if (checkINT === true) {
+                event.target.classList.remove("alert_border");
+                props.onChangeHandler("length", event.target.value, event.target.id);
+            } else {
+                event.preventDefault();
+            }
+        }
+        if (
+            dataType === "FLOAT" ||
+            dataType === "DECIMAL" ||
+            dataType === "DOUBLE"
+        ) {
+            if (checkFLOAT === true) {
+                if (inputField.split(",").length-1 == 1) {
+                    console.log("TRUE")
+                    event.target.classList.remove("alert_border");
+                    props.onChangeHandler("length", event.target.value, event.target.id);
+                }else {
+                    event.preventDefault();
+                }
+            } else {
+                event.preventDefault();
+                console.log("FLASE")
+            }
+        }
+        console.log(checkFLOAT);
+
+// event.preventDefault();
     }
 
     const autoIncrementChangeHandler = event => {
@@ -60,15 +105,11 @@ const AttributeRow = (props) => {
     }
 
     const nullValueChangeHandler = event => {
-        console.log(event)
+        // console.log(event)
         setNullValue(event.target.checked)
         props.onChangeHandler('null', event.target.checked, event.target.id)
     }
 
-    useEffect(() => {
-        setAttributeName(props.attribute.value)
-        setIndex(props.attribute.index)
-    }, [props]);
 
     const indexes = `${props.relIndex}+${props.index}`
     return (
@@ -116,6 +157,7 @@ const AttributeRow = (props) => {
                         value={autoIncrement}
                         id={indexes}
                         onChange={autoIncrementChangeHandler}
+                        ref={ref2}
                     />
                 </div>
             </td>

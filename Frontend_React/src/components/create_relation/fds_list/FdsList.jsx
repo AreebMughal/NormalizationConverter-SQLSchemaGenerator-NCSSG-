@@ -12,7 +12,7 @@ const FdsList = (props) => {
                 cardTitle={'Current Functional Dependencies:'}
                 isOpen={props.isOpen}
             >
-            <ol>
+            <ol className='ps-3'>
                 {inputBoxes.map(input => {
                     const dep = input.dependency
                     if (dep !== undefined) {
