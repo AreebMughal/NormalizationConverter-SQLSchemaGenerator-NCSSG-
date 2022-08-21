@@ -20,6 +20,10 @@ function Loader(props) {
     return (
         <div id="cover" className='m-0 p-0'>
             <div className="sweet-loading loader m-0 p-0">
+                <span className='text-white loader-text'>
+                    Extracting Functional Dependencies <br/>
+                    Please wait...
+                </span>
                 <ScaleLoader color={color} loading={loading} cssOverride={override} size={150}/>
             </div>
         </div>
