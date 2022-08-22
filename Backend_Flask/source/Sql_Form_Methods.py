@@ -133,12 +133,13 @@ def create_relations(nf_result, relation_names, all_relations):
                 index += 1
                 json_data['Data'].append(relation)
 
-    # print_data(json_data, all_relations)
+    print_data(json_data, all_relations)
     return json_data
     # print(json_data)
 
 
 def print_data(Data, all_relations):
+    fk = []
     c = 0
     for data in Data['Data']:
         for key, value in data.items():

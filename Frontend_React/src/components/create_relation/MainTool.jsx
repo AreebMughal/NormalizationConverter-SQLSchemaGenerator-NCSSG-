@@ -76,6 +76,7 @@ const MainTool = (props) => {
     const updateCurrentIndex = (index) => {
         setCurrentIndex(index);
     }
+
     return (
         <section className={`${styles.main}`}>
             { loading && <Loader loading={loading} /> }

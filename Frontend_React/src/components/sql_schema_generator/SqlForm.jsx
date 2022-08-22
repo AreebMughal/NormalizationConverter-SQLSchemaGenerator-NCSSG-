@@ -106,9 +106,6 @@ const SqlForm = (props) => {
                     element.href = URL.createObjectURL(file);
                     console.log(' URL ', element.href)
                     element.download = "dump_schema.sql";
-
-                    const f = new File([res.data], 'as.sql')
-
                     document.body.appendChild(element);
                     element.click();
                 })

@@ -117,6 +117,7 @@ def getSqlSchemaData():
             res = get_result(object_type=normal_form, input_boxes_dic=request.data.decode('utf-8'))['result']
             all_relations = get_all_relations(res, relation_name)
             json_data = create_relations(res, create_relation_names(res, relation_name), all_relations)
+
         # print(res)
     except Exception as e:
         my_exception(e)
@@ -159,16 +160,35 @@ def relationalMapping():
     try:
         data = json.loads(request.data.decode('utf-8'))
         input_boxes = data['inputBoxes']
-        # relation_name = data['relationName']
-        relation_name = 'Something'
+        relation_name = data['relationName']
+        # relation_name = 'Something'
         my_relation = Relation(rel_name=relation_name, input_boxes=input_boxes)
         dic = my_relation.extract_data(input_boxes)
-        print(dic)
-        rl = RelationalMapping(dic)
+        # print(dic)
+        # rl = RelationalMapping(dic)
+        nf_result = get_result(object_type='NF3', input_boxes_dic=request.data.decode('utf-8'))['result']
+        print(nf_result)
+        all_relations = get_all_relations(nf_result, relation_name)
+        print('All Relation:\n', all_relations)
+        relation_names = create_relation_names(nf_result, relation_name)
+        print('All Relation Names:\n', relation_names)
+        create_relations(nf_result, relation_names, all_relations)
+        fk = []
+        for key, value in nf_result.items():
+            index = 0
+            if len(value) > 0:
+                for rel in value:
+                    get_foreign_keys(rel, all_relations, relation_names[key][index][1])
+
 
     except Exception as e:
         my_exception(e)
     return ''
+
+@app.route("/RM3", methods=['GET', 'POST'])
+def RM3():
+    pass
+
 
 
 @app.route('/fdMining', methods=['GET', 'POST'])
@@ -177,10 +197,10 @@ def fdMining():
     try:
         print(len(request.files))
         if len(request.files) > 0:
-            print('--'*30)
+            print('--' * 30)
             file = request.files['file']
             file.save(os.path.join('./datasets/', secure_filename(file.filename)))
-            fd_miner = FdsMiner('./datasets/'+file.filename, 'fdtool')
+            fd_miner = FdsMiner('./datasets/' + file.filename, 'fdtool')
             data = fd_miner.fd_mining()
             print(data)
             # print('adsf', len(data['inputBoxes']))
@@ -196,11 +216,20 @@ def fdMining():
     return data
 
 
+@app.route('/loadData', methods=['GET', 'POST'])
+def loadData():
+    try:
+        data = json.loads(request.data.decode('utf-8'))
+        input_boxes = data['inputBoxes']
+        relation_name = data['relationName']
+    except Exception as e:
+        my_exception(e)
+
+
 if __name__ == '__main__':
     app.run(debug=True)
     # fd_miner = FdsMiner('./datasets/abalone.csv', 'tane')
     # data = fd_miner.fd_mining()
-
 
     # res = get_dummy_nf_result()
     #

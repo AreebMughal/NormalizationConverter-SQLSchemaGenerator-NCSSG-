@@ -2,6 +2,8 @@ import React from "react";
 import PreliminaryCheck from "./PreliminaryCheck";
 import axios from "axios";
 import my_data from "../../../store/data";
+import SaveData from "./SaveData";
+import LoadData from "./LoadData";
 
 const RelationButtons = (props) => {
 
@@ -25,7 +27,8 @@ const RelationButtons = (props) => {
     }
 
     const relationalMappingClickHandler = (e) => {
-        axios.post('http://127.0.0.1:5000/relationalMapping', {inputBoxes: my_data.getRawState().inputBoxes})
+        axios.post('http://127.0.0.1:5000/relationalMapping',
+            {inputBoxes: my_data.getRawState().inputBoxes, relationName: my_data.getRawState().relationName})
             .then(res => {
                 console.log(res);
 
@@ -65,6 +68,8 @@ const RelationButtons = (props) => {
                 >
                     View Diagram
                 </button>
+                {/*<SaveData />*/}
+                {/*<LoadData />*/}
             </div>
         </div>
     );
