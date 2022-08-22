@@ -15,6 +15,10 @@ export const inputBoxes_data = new Store({
     ],
 });
 
+export const suggestion_store = new Store({
+    value: null
+})
+
 export const get_inputBoxes = () => {
     let inputBoxes = inputBoxes_data.getRawState().inputBoxes;
     const newInputBoxes = inputBoxes.map((input, index) => input.dependency.map((dep, i) => {
