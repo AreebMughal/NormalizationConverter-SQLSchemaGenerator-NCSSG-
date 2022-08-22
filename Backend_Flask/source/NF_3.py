@@ -64,5 +64,5 @@ class Nf3rd(NormalizedRelation):
 
     def __get_fully_dependent_relation(self, fully_dependent):
         if len(fully_dependent) == 0:
-            fully_dependent = [[self.my_relation.get_attr_info()['primary'], []]]
+            fully_dependent = [[self.my_relation.get_attr_info()['primary']]]
         return fully_dependent

@@ -68,8 +68,8 @@ const RelationButtons = (props) => {
                 >
                     View Diagram
                 </button>
-                {/*<SaveData />*/}
-                {/*<LoadData />*/}
+                <SaveData />
+                <LoadData />
             </div>
         </div>
     );

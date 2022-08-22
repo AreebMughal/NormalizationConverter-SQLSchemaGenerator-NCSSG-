@@ -1,97 +1,236 @@
-Table : Dataset
-Columns : pnum, ssn, Name, Email1, Email2, Address1, Address2, DId, ploc, pname, dnum, dname
+Table : abalone
+Columns : Sex, Length, Diameter, Height, Whole_Weight, Shucked_Weight, Viscera_weight, Shell_weight, Rings
 
 Functional Dependencies: 
-{ssn} -> {ploc}
-{ssn} -> {DId}
-{ssn} -> {Name}
-{ssn} -> {dname}
-{ssn} -> {dnum}
-{ssn} -> {Address1}
-{ssn} -> {pname}
-{ssn} -> {Email2}
-{ssn} -> {Address2}
-{ssn} -> {Email1}
-{ssn} -> {pnum}
-{Name} -> {ploc}
-{Name} -> {DId}
-{Name} -> {dname}
-{Name} -> {dnum}
-{Name} -> {ssn}
-{Name} -> {Address1}
-{Name} -> {pname}
-{Name} -> {Email2}
-{Name} -> {Address2}
-{Name} -> {Email1}
-{Name} -> {pnum}
-{Email1} -> {ploc}
-{Email1} -> {DId}
-{Email1} -> {Name}
-{Email1} -> {dname}
-{Email1} -> {dnum}
-{Email1} -> {ssn}
-{Email1} -> {Address1}
-{Email1} -> {pname}
-{Email1} -> {Email2}
-{Email1} -> {Address2}
-{Email1} -> {pnum}
-{Address1} -> {ploc}
-{Address1} -> {DId}
-{Address1} -> {Name}
-{Address1} -> {dname}
-{Address1} -> {dnum}
-{Address1} -> {ssn}
-{Address1} -> {pname}
-{Address1} -> {Email2}
-{Address1} -> {Address2}
-{Address1} -> {Email1}
-{Address1} -> {pnum}
-{DId} -> {dname}
-{DId} -> {dnum}
-{ploc} -> {pname}
-{ploc} -> {pnum}
-{pname} -> {ploc}
-{pname} -> {pnum}
-{dnum} -> {DId}
-{dnum} -> {dname}
-{dname} -> {DId}
-{dname} -> {dnum}
-{ploc, DId} -> {Email2}
-{ploc, DId} -> {Address2}
-{ploc, DId} -> {ssn}
-{ploc, Address2} -> {Email2}
-{ploc, Address2} -> {DId}
-{ploc, Address2} -> {ssn}
-{DId, pnum} -> {Email2}
-{DId, pnum} -> {Address2}
-{DId, pnum} -> {ploc}
-{DId, pnum} -> {ssn}
-{Email2, pnum} -> {ploc}
-{Address2, pnum} -> {Email2}
-{Address2, pnum} -> {ploc}
-{Address2, pnum} -> {DId}
-{Address2, pnum} -> {ssn}
-{DId, Email2, Address2} -> {ploc}
-{DId, Email2, Address2} -> {ssn}
-{DId, Email2, Address2} -> {pnum}
+{Length, Whole_Weight, Shucked_Weight} -> {Rings}
+{Diameter, Whole_Weight, Shucked_Weight} -> {Sex}
+{Diameter, Whole_Weight, Shucked_Weight} -> {Viscera_weight}
+{Diameter, Whole_Weight, Viscera_weight} -> {Sex}
+{Whole_Weight, Shucked_Weight, Viscera_weight} -> {Diameter}
+{Whole_Weight, Shucked_Weight, Viscera_weight} -> {Sex}
+{Whole_Weight, Shucked_Weight, Shell_weight} -> {Length}
+{Whole_Weight, Shucked_Weight, Shell_weight} -> {Diameter}
+{Whole_Weight, Shucked_Weight, Shell_weight} -> {Rings}
+{Whole_Weight, Shucked_Weight, Shell_weight} -> {Sex}
+{Whole_Weight, Shucked_Weight, Shell_weight} -> {Height}
+{Whole_Weight, Shucked_Weight, Shell_weight} -> {Viscera_weight}
+{Whole_Weight, Viscera_weight, Shell_weight} -> {Length}
+{Whole_Weight, Viscera_weight, Shell_weight} -> {Diameter}
+{Whole_Weight, Viscera_weight, Shell_weight} -> {Rings}
+{Whole_Weight, Viscera_weight, Shell_weight} -> {Sex}
+{Whole_Weight, Viscera_weight, Shell_weight} -> {Height}
+{Whole_Weight, Viscera_weight, Shell_weight} -> {Shucked_Weight}
+{Length, Diameter, Whole_Weight, Height} -> {Sex}
+{Length, Whole_Weight, Rings, Height} -> {Sex}
+{Length, Diameter, Whole_Weight, Shucked_Weight} -> {Shell_weight}
+{Length, Diameter, Whole_Weight, Shucked_Weight} -> {Height}
+{Diameter, Whole_Weight, Rings, Shucked_Weight} -> {Shell_weight}
+{Diameter, Whole_Weight, Rings, Shucked_Weight} -> {Length}
+{Diameter, Whole_Weight, Rings, Shucked_Weight} -> {Height}
+{Length, Whole_Weight, Sex, Shucked_Weight} -> {Diameter}
+{Length, Whole_Weight, Sex, Shucked_Weight} -> {Shell_weight}
+{Length, Whole_Weight, Sex, Shucked_Weight} -> {Viscera_weight}
+{Length, Whole_Weight, Sex, Shucked_Weight} -> {Height}
+{Length, Whole_Weight, Height, Shucked_Weight} -> {Diameter}
+{Length, Whole_Weight, Height, Shucked_Weight} -> {Shell_weight}
+{Length, Whole_Weight, Height, Shucked_Weight} -> {Viscera_weight}
+{Length, Whole_Weight, Height, Shucked_Weight} -> {Sex}
+{Diameter, Whole_Weight, Height, Shucked_Weight} -> {Rings}
+{Diameter, Whole_Weight, Height, Shucked_Weight} -> {Shell_weight}
+{Diameter, Whole_Weight, Height, Shucked_Weight} -> {Length}
+{Length, Whole_Weight, Rings, Viscera_weight} -> {Diameter}
+{Length, Whole_Weight, Rings, Viscera_weight} -> {Sex}
+{Length, Whole_Weight, Rings, Viscera_weight} -> {Height}
+{Length, Whole_Weight, Rings, Viscera_weight} -> {Shucked_Weight}
+{Length, Whole_Weight, Rings, Viscera_weight} -> {Shell_weight}
+{Diameter, Whole_Weight, Rings, Viscera_weight} -> {Shucked_Weight}
+{Diameter, Whole_Weight, Rings, Viscera_weight} -> {Shell_weight}
+{Diameter, Whole_Weight, Rings, Viscera_weight} -> {Length}
+{Diameter, Whole_Weight, Rings, Viscera_weight} -> {Height}
+{Whole_Weight, Rings, Sex, Viscera_weight} -> {Length}
+{Whole_Weight, Rings, Sex, Viscera_weight} -> {Diameter}
+{Whole_Weight, Rings, Sex, Viscera_weight} -> {Height}
+{Whole_Weight, Rings, Sex, Viscera_weight} -> {Shucked_Weight}
+{Whole_Weight, Rings, Sex, Viscera_weight} -> {Shell_weight}
+{Length, Whole_Weight, Height, Viscera_weight} -> {Diameter}
+{Length, Whole_Weight, Height, Viscera_weight} -> {Rings}
+{Length, Whole_Weight, Height, Viscera_weight} -> {Sex}
+{Length, Whole_Weight, Height, Viscera_weight} -> {Shucked_Weight}
+{Length, Whole_Weight, Height, Viscera_weight} -> {Shell_weight}
+{Whole_Weight, Sex, Height, Viscera_weight} -> {Diameter}
+{Length, Rings, Shucked_Weight, Viscera_weight} -> {Diameter}
+{Length, Rings, Shucked_Weight, Viscera_weight} -> {Whole_Weight}
+{Length, Rings, Shucked_Weight, Viscera_weight} -> {Sex}
+{Length, Rings, Shucked_Weight, Viscera_weight} -> {Height}
+{Length, Rings, Shucked_Weight, Viscera_weight} -> {Shell_weight}
+{Diameter, Rings, Shucked_Weight, Viscera_weight} -> {Sex}
+{Diameter, Rings, Shucked_Weight, Viscera_weight} -> {Shell_weight}
+{Length, Sex, Shucked_Weight, Viscera_weight} -> {Diameter}
+{Length, Sex, Shucked_Weight, Viscera_weight} -> {Shell_weight}
+{Rings, Sex, Shucked_Weight, Viscera_weight} -> {Diameter}
+{Rings, Sex, Shucked_Weight, Viscera_weight} -> {Shell_weight}
+{Length, Height, Shucked_Weight, Viscera_weight} -> {Diameter}
+{Diameter, Height, Shucked_Weight, Viscera_weight} -> {Length}
+{Rings, Height, Shucked_Weight, Viscera_weight} -> {Length}
+{Rings, Height, Shucked_Weight, Viscera_weight} -> {Diameter}
+{Rings, Height, Shucked_Weight, Viscera_weight} -> {Whole_Weight}
+{Rings, Height, Shucked_Weight, Viscera_weight} -> {Sex}
+{Rings, Height, Shucked_Weight, Viscera_weight} -> {Shell_weight}
+{Length, Diameter, Whole_Weight, Shell_weight} -> {Rings}
+{Length, Diameter, Whole_Weight, Shell_weight} -> {Sex}
+{Length, Diameter, Whole_Weight, Shell_weight} -> {Height}
+{Length, Diameter, Whole_Weight, Shell_weight} -> {Shucked_Weight}
+{Length, Diameter, Whole_Weight, Shell_weight} -> {Viscera_weight}
+{Length, Whole_Weight, Rings, Shell_weight} -> {Sex}
+{Diameter, Whole_Weight, Height, Shell_weight} -> {Sex}
+{Length, Shucked_Weight, Viscera_weight, Shell_weight} -> {Diameter}
+{Length, Shucked_Weight, Viscera_weight, Shell_weight} -> {Sex}
+{Diameter, Shucked_Weight, Viscera_weight, Shell_weight} -> {Sex}
+{Height, Shucked_Weight, Viscera_weight, Shell_weight} -> {Length}
+{Height, Shucked_Weight, Viscera_weight, Shell_weight} -> {Diameter}
+{Height, Shucked_Weight, Viscera_weight, Shell_weight} -> {Whole_Weight}
+{Height, Shucked_Weight, Viscera_weight, Shell_weight} -> {Rings}
+{Height, Shucked_Weight, Viscera_weight, Shell_weight} -> {Sex}
+{Length, Diameter, Whole_Weight, Rings, Height} -> {Shucked_Weight}
+{Length, Diameter, Whole_Weight, Rings, Height} -> {Viscera_weight}
+{Length, Diameter, Whole_Weight, Rings, Height} -> {Shell_weight}
+{Length, Diameter, Rings, Height, Viscera_weight} -> {Whole_Weight}
+{Length, Diameter, Rings, Height, Viscera_weight} -> {Shucked_Weight}
+{Length, Diameter, Rings, Height, Viscera_weight} -> {Shell_weight}
+{Length, Diameter, Rings, Height, Viscera_weight} -> {Sex}
+{Length, Sex, Height, Shucked_Weight, Viscera_weight} -> {Whole_Weight}
+{Length, Sex, Height, Shucked_Weight, Viscera_weight} -> {Rings}
+{Diameter, Whole_Weight, Rings, Height, Shell_weight} -> {Shucked_Weight}
+{Diameter, Whole_Weight, Rings, Height, Shell_weight} -> {Viscera_weight}
+{Diameter, Whole_Weight, Rings, Height, Shell_weight} -> {Length}
+{Length, Whole_Weight, Sex, Height, Shell_weight} -> {Rings}
+{Whole_Weight, Rings, Sex, Height, Shell_weight} -> {Length}
+{Length, Diameter, Rings, Shucked_Weight, Shell_weight} -> {Sex}
+{Length, Rings, Height, Shucked_Weight, Shell_weight} -> {Sex}
+{Diameter, Rings, Height, Shucked_Weight, Shell_weight} -> {Sex}
+{Length, Sex, Height, Shucked_Weight, Shell_weight} -> {Rings}
+{Length, Diameter, Rings, Viscera_weight, Shell_weight} -> {Whole_Weight}
+{Length, Diameter, Rings, Viscera_weight, Shell_weight} -> {Shucked_Weight}
+{Length, Diameter, Rings, Viscera_weight, Shell_weight} -> {Sex}
+{Length, Diameter, Rings, Viscera_weight, Shell_weight} -> {Height}
+{Length, Diameter, Sex, Viscera_weight, Shell_weight} -> {Shucked_Weight}
+{Length, Rings, Sex, Viscera_weight, Shell_weight} -> {Diameter}
+{Length, Rings, Sex, Viscera_weight, Shell_weight} -> {Shucked_Weight}
+{Length, Rings, Sex, Viscera_weight, Shell_weight} -> {Whole_Weight}
+{Length, Rings, Sex, Viscera_weight, Shell_weight} -> {Height}
+{Diameter, Rings, Height, Viscera_weight, Shell_weight} -> {Sex}
+{Diameter, Sex, Height, Viscera_weight, Shell_weight} -> {Rings}
+{Length, Diameter, Rings, Sex, Height, Shucked_Weight} -> {Whole_Weight}
+{Length, Diameter, Rings, Sex, Height, Shucked_Weight} -> {Shell_weight}
+{Length, Diameter, Rings, Sex, Height, Shucked_Weight} -> {Viscera_weight}
+{Length, Diameter, Rings, Height, Shucked_Weight, Shell_weight} -> {Whole_Weight}
+{Length, Diameter, Rings, Height, Shucked_Weight, Shell_weight} -> {Viscera_weight}
 
 Equivalences: 
-{ssn} <-> {Name}
-{ssn} <-> {Email1}
-{ssn} <-> {Address1}
-{Name} <-> {Email1}
-{Name} <-> {Address1}
-{Email1} <-> {Address1}
-{DId} <-> {dnum}
-{DId} <-> {dname}
-{ploc} <-> {pname}
-{dnum} <-> {dname}
-{ploc, DId} <-> {ploc, Address2}
-{ploc, DId} <-> {DId, pnum}
-{ploc, DId} <-> {Address2, pnum}
-{ploc, Email2} <-> {Email2, pnum}
-{ploc, Address2} <-> {DId, pnum}
-{ploc, Address2} <-> {Address2, pnum}
-{DId, pnum} <-> {Address2, pnum}
+{Diameter, Whole_Weight, Shucked_Weight} <-> {Whole_Weight, Shucked_Weight, Viscera_weight}
+{Whole_Weight, Shucked_Weight, Shell_weight} <-> {Whole_Weight, Viscera_weight, Shell_weight}
+{Length, Diameter, Whole_Weight, Shucked_Weight} <-> {Diameter, Whole_Weight, Rings, Shucked_Weight}
+{Length, Diameter, Whole_Weight, Shucked_Weight} <-> {Length, Whole_Weight, Sex, Shucked_Weight}
+{Length, Diameter, Whole_Weight, Shucked_Weight} <-> {Length, Whole_Weight, Height, Shucked_Weight}
+{Length, Diameter, Whole_Weight, Shucked_Weight} <-> {Diameter, Whole_Weight, Height, Shucked_Weight}
+{Length, Diameter, Whole_Weight, Shucked_Weight} <-> {Length, Whole_Weight, Rings, Viscera_weight}
+{Length, Diameter, Whole_Weight, Shucked_Weight} <-> {Diameter, Whole_Weight, Rings, Viscera_weight}
+{Length, Diameter, Whole_Weight, Shucked_Weight} <-> {Whole_Weight, Rings, Sex, Viscera_weight}
+{Length, Diameter, Whole_Weight, Shucked_Weight} <-> {Length, Whole_Weight, Height, Viscera_weight}
+{Length, Diameter, Whole_Weight, Shucked_Weight} <-> {Length, Rings, Shucked_Weight, Viscera_weight}
+{Length, Diameter, Whole_Weight, Shucked_Weight} <-> {Rings, Height, Shucked_Weight, Viscera_weight}
+{Length, Diameter, Whole_Weight, Shucked_Weight} <-> {Length, Diameter, Whole_Weight, Shell_weight}
+{Length, Diameter, Whole_Weight, Shucked_Weight} <-> {Height, Shucked_Weight, Viscera_weight, Shell_weight}
+{Diameter, Whole_Weight, Rings, Shucked_Weight} <-> {Length, Whole_Weight, Sex, Shucked_Weight}
+{Diameter, Whole_Weight, Rings, Shucked_Weight} <-> {Length, Whole_Weight, Height, Shucked_Weight}
+{Diameter, Whole_Weight, Rings, Shucked_Weight} <-> {Diameter, Whole_Weight, Height, Shucked_Weight}
+{Diameter, Whole_Weight, Rings, Shucked_Weight} <-> {Length, Whole_Weight, Rings, Viscera_weight}
+{Diameter, Whole_Weight, Rings, Shucked_Weight} <-> {Diameter, Whole_Weight, Rings, Viscera_weight}
+{Diameter, Whole_Weight, Rings, Shucked_Weight} <-> {Whole_Weight, Rings, Sex, Viscera_weight}
+{Diameter, Whole_Weight, Rings, Shucked_Weight} <-> {Length, Whole_Weight, Height, Viscera_weight}
+{Diameter, Whole_Weight, Rings, Shucked_Weight} <-> {Length, Rings, Shucked_Weight, Viscera_weight}
+{Diameter, Whole_Weight, Rings, Shucked_Weight} <-> {Rings, Height, Shucked_Weight, Viscera_weight}
+{Diameter, Whole_Weight, Rings, Shucked_Weight} <-> {Length, Diameter, Whole_Weight, Shell_weight}
+{Diameter, Whole_Weight, Rings, Shucked_Weight} <-> {Height, Shucked_Weight, Viscera_weight, Shell_weight}
+{Length, Whole_Weight, Sex, Shucked_Weight} <-> {Length, Whole_Weight, Height, Shucked_Weight}
+{Length, Whole_Weight, Sex, Shucked_Weight} <-> {Diameter, Whole_Weight, Height, Shucked_Weight}
+{Length, Whole_Weight, Sex, Shucked_Weight} <-> {Length, Whole_Weight, Rings, Viscera_weight}
+{Length, Whole_Weight, Sex, Shucked_Weight} <-> {Diameter, Whole_Weight, Rings, Viscera_weight}
+{Length, Whole_Weight, Sex, Shucked_Weight} <-> {Whole_Weight, Rings, Sex, Viscera_weight}
+{Length, Whole_Weight, Sex, Shucked_Weight} <-> {Length, Whole_Weight, Height, Viscera_weight}
+{Length, Whole_Weight, Sex, Shucked_Weight} <-> {Length, Rings, Shucked_Weight, Viscera_weight}
+{Length, Whole_Weight, Sex, Shucked_Weight} <-> {Rings, Height, Shucked_Weight, Viscera_weight}
+{Length, Whole_Weight, Sex, Shucked_Weight} <-> {Length, Diameter, Whole_Weight, Shell_weight}
+{Length, Whole_Weight, Sex, Shucked_Weight} <-> {Height, Shucked_Weight, Viscera_weight, Shell_weight}
+{Length, Whole_Weight, Height, Shucked_Weight} <-> {Diameter, Whole_Weight, Height, Shucked_Weight}
+{Length, Whole_Weight, Height, Shucked_Weight} <-> {Length, Whole_Weight, Rings, Viscera_weight}
+{Length, Whole_Weight, Height, Shucked_Weight} <-> {Diameter, Whole_Weight, Rings, Viscera_weight}
+{Length, Whole_Weight, Height, Shucked_Weight} <-> {Whole_Weight, Rings, Sex, Viscera_weight}
+{Length, Whole_Weight, Height, Shucked_Weight} <-> {Length, Whole_Weight, Height, Viscera_weight}
+{Length, Whole_Weight, Height, Shucked_Weight} <-> {Length, Rings, Shucked_Weight, Viscera_weight}
+{Length, Whole_Weight, Height, Shucked_Weight} <-> {Rings, Height, Shucked_Weight, Viscera_weight}
+{Length, Whole_Weight, Height, Shucked_Weight} <-> {Length, Diameter, Whole_Weight, Shell_weight}
+{Length, Whole_Weight, Height, Shucked_Weight} <-> {Height, Shucked_Weight, Viscera_weight, Shell_weight}
+{Diameter, Whole_Weight, Height, Shucked_Weight} <-> {Length, Whole_Weight, Rings, Viscera_weight}
+{Diameter, Whole_Weight, Height, Shucked_Weight} <-> {Diameter, Whole_Weight, Rings, Viscera_weight}
+{Diameter, Whole_Weight, Height, Shucked_Weight} <-> {Whole_Weight, Rings, Sex, Viscera_weight}
+{Diameter, Whole_Weight, Height, Shucked_Weight} <-> {Length, Whole_Weight, Height, Viscera_weight}
+{Diameter, Whole_Weight, Height, Shucked_Weight} <-> {Length, Rings, Shucked_Weight, Viscera_weight}
+{Diameter, Whole_Weight, Height, Shucked_Weight} <-> {Rings, Height, Shucked_Weight, Viscera_weight}
+{Diameter, Whole_Weight, Height, Shucked_Weight} <-> {Length, Diameter, Whole_Weight, Shell_weight}
+{Diameter, Whole_Weight, Height, Shucked_Weight} <-> {Height, Shucked_Weight, Viscera_weight, Shell_weight}
+{Length, Whole_Weight, Rings, Viscera_weight} <-> {Diameter, Whole_Weight, Rings, Viscera_weight}
+{Length, Whole_Weight, Rings, Viscera_weight} <-> {Whole_Weight, Rings, Sex, Viscera_weight}
+{Length, Whole_Weight, Rings, Viscera_weight} <-> {Length, Whole_Weight, Height, Viscera_weight}
+{Length, Whole_Weight, Rings, Viscera_weight} <-> {Length, Rings, Shucked_Weight, Viscera_weight}
+{Length, Whole_Weight, Rings, Viscera_weight} <-> {Rings, Height, Shucked_Weight, Viscera_weight}
+{Length, Whole_Weight, Rings, Viscera_weight} <-> {Length, Diameter, Whole_Weight, Shell_weight}
+{Length, Whole_Weight, Rings, Viscera_weight} <-> {Height, Shucked_Weight, Viscera_weight, Shell_weight}
+{Diameter, Whole_Weight, Rings, Viscera_weight} <-> {Whole_Weight, Rings, Sex, Viscera_weight}
+{Diameter, Whole_Weight, Rings, Viscera_weight} <-> {Length, Whole_Weight, Height, Viscera_weight}
+{Diameter, Whole_Weight, Rings, Viscera_weight} <-> {Length, Rings, Shucked_Weight, Viscera_weight}
+{Diameter, Whole_Weight, Rings, Viscera_weight} <-> {Rings, Height, Shucked_Weight, Viscera_weight}
+{Diameter, Whole_Weight, Rings, Viscera_weight} <-> {Length, Diameter, Whole_Weight, Shell_weight}
+{Diameter, Whole_Weight, Rings, Viscera_weight} <-> {Height, Shucked_Weight, Viscera_weight, Shell_weight}
+{Whole_Weight, Rings, Sex, Viscera_weight} <-> {Length, Whole_Weight, Height, Viscera_weight}
+{Whole_Weight, Rings, Sex, Viscera_weight} <-> {Length, Rings, Shucked_Weight, Viscera_weight}
+{Whole_Weight, Rings, Sex, Viscera_weight} <-> {Rings, Height, Shucked_Weight, Viscera_weight}
+{Whole_Weight, Rings, Sex, Viscera_weight} <-> {Length, Diameter, Whole_Weight, Shell_weight}
+{Whole_Weight, Rings, Sex, Viscera_weight} <-> {Height, Shucked_Weight, Viscera_weight, Shell_weight}
+{Length, Whole_Weight, Height, Viscera_weight} <-> {Length, Rings, Shucked_Weight, Viscera_weight}
+{Length, Whole_Weight, Height, Viscera_weight} <-> {Rings, Height, Shucked_Weight, Viscera_weight}
+{Length, Whole_Weight, Height, Viscera_weight} <-> {Length, Diameter, Whole_Weight, Shell_weight}
+{Length, Whole_Weight, Height, Viscera_weight} <-> {Height, Shucked_Weight, Viscera_weight, Shell_weight}
+{Diameter, Whole_Weight, Height, Viscera_weight} <-> {Whole_Weight, Sex, Height, Viscera_weight}
+{Length, Rings, Shucked_Weight, Viscera_weight} <-> {Rings, Height, Shucked_Weight, Viscera_weight}
+{Length, Rings, Shucked_Weight, Viscera_weight} <-> {Length, Diameter, Whole_Weight, Shell_weight}
+{Length, Rings, Shucked_Weight, Viscera_weight} <-> {Height, Shucked_Weight, Viscera_weight, Shell_weight}
+{Diameter, Rings, Shucked_Weight, Viscera_weight} <-> {Rings, Sex, Shucked_Weight, Viscera_weight}
+{Length, Sex, Shucked_Weight, Viscera_weight} <-> {Length, Shucked_Weight, Viscera_weight, Shell_weight}
+{Length, Height, Shucked_Weight, Viscera_weight} <-> {Diameter, Height, Shucked_Weight, Viscera_weight}
+{Rings, Height, Shucked_Weight, Viscera_weight} <-> {Length, Diameter, Whole_Weight, Shell_weight}
+{Rings, Height, Shucked_Weight, Viscera_weight} <-> {Height, Shucked_Weight, Viscera_weight, Shell_weight}
+{Length, Diameter, Whole_Weight, Shell_weight} <-> {Height, Shucked_Weight, Viscera_weight, Shell_weight}
+{Length, Diameter, Whole_Weight, Rings, Height} <-> {Length, Diameter, Rings, Height, Viscera_weight}
+{Length, Diameter, Whole_Weight, Rings, Height} <-> {Length, Sex, Height, Shucked_Weight, Viscera_weight}
+{Length, Diameter, Whole_Weight, Rings, Height} <-> {Diameter, Whole_Weight, Rings, Height, Shell_weight}
+{Length, Diameter, Whole_Weight, Rings, Height} <-> {Length, Diameter, Rings, Viscera_weight, Shell_weight}
+{Length, Diameter, Whole_Weight, Rings, Height} <-> {Length, Rings, Sex, Viscera_weight, Shell_weight}
+{Length, Diameter, Rings, Height, Viscera_weight} <-> {Length, Sex, Height, Shucked_Weight, Viscera_weight}
+{Length, Diameter, Rings, Height, Viscera_weight} <-> {Diameter, Whole_Weight, Rings, Height, Shell_weight}
+{Length, Diameter, Rings, Height, Viscera_weight} <-> {Length, Diameter, Rings, Viscera_weight, Shell_weight}
+{Length, Diameter, Rings, Height, Viscera_weight} <-> {Length, Rings, Sex, Viscera_weight, Shell_weight}
+{Length, Sex, Height, Shucked_Weight, Viscera_weight} <-> {Diameter, Whole_Weight, Rings, Height, Shell_weight}
+{Length, Sex, Height, Shucked_Weight, Viscera_weight} <-> {Length, Diameter, Rings, Viscera_weight, Shell_weight}
+{Length, Sex, Height, Shucked_Weight, Viscera_weight} <-> {Length, Rings, Sex, Viscera_weight, Shell_weight}
+{Length, Whole_Weight, Rings, Height, Shell_weight} <-> {Length, Whole_Weight, Sex, Height, Shell_weight}
+{Length, Whole_Weight, Rings, Height, Shell_weight} <-> {Whole_Weight, Rings, Sex, Height, Shell_weight}
+{Diameter, Whole_Weight, Rings, Height, Shell_weight} <-> {Length, Diameter, Rings, Viscera_weight, Shell_weight}
+{Diameter, Whole_Weight, Rings, Height, Shell_weight} <-> {Length, Rings, Sex, Viscera_weight, Shell_weight}
+{Length, Whole_Weight, Sex, Height, Shell_weight} <-> {Whole_Weight, Rings, Sex, Height, Shell_weight}
+{Length, Rings, Height, Shucked_Weight, Shell_weight} <-> {Length, Sex, Height, Shucked_Weight, Shell_weight}
+{Length, Diameter, Rings, Viscera_weight, Shell_weight} <-> {Length, Rings, Sex, Viscera_weight, Shell_weight}
+{Diameter, Rings, Height, Viscera_weight, Shell_weight} <-> {Diameter, Sex, Height, Viscera_weight, Shell_weight}
+{Length, Diameter, Rings, Sex, Height, Shucked_Weight} <-> {Length, Diameter, Rings, Height, Shucked_Weight, Shell_weight}
 
 Keys: 
