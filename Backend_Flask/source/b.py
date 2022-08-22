@@ -3,7 +3,7 @@ from source.NF_3 import Nf3rd
 from source.normalizedRelation import NormalizedRelation
 
 
-class BcNf(NormalizedRelation):
+class BC(NormalizedRelation):
     def __init__(self, my_rel) -> None:
         super().__init__(relation=my_rel)
         self.__bcnf_result = None
@@ -28,8 +28,8 @@ class BcNf(NormalizedRelation):
         primeDep = []
         for fd in super().get_minimal_cover_result():
             print()
-            self.checkPrimaryKeyDependency(fd, primary,primeDep)
-            self.checkNonPrimaryKeyDependency(fd, primary, NotprimeDep)
+            self.__checkPrimaryKeyDependency(fd, primary,primeDep)
+            self.__checkNonPrimaryKeyDependency(fd, primary, NotprimeDep)
 
         result['primeDependency'] = self.__get_prime_relation(primeDep)
         result['noPrimeDependency'] = self.__get_NotPrime_dependent_relation(NotprimeDep)
