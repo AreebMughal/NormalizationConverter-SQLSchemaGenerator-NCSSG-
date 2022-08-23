@@ -1,5 +1,6 @@
 .navbar {
     min-height: 9vh;
+    /*max-height: 9vh;*/
 }
 .navbar .navbar-nav .nav-link:hover {
     color: #fafcfc;
