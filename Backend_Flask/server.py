@@ -157,8 +157,8 @@ def relationalMapping():
     try:
         data = json.loads(request.data.decode('utf-8'))
         input_boxes = data['inputBoxes']
-        # relation_name = data['relationName']
-        relation_name = 'Something'
+        relation_name = data['relationName']
+        # relation_name = 'Something'
         my_relation = Relation(rel_name=relation_name, input_boxes=input_boxes)
         dic = my_relation.extract_data(input_boxes)
         print(dic)
