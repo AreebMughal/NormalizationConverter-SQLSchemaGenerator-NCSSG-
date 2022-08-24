@@ -32,10 +32,9 @@ class NormalizedRelation:
                     result = result.union(rhs)
         return result
 
-    def find_candidate_key(self, attributes_set=None):
-        if attributes_set is None:
-            attributes_set = set(self.get_relation().get_attr_info()['attributes'])
-        rhs = {list(fd[1])[0] for fd in self.fds if len(fd) != 0}
+    def find_candidate_key(self):
+        attributes_set = set(self.get_relation().get_attr_info()['attributes'])
+        rhs = {list(fd[1])[0] for fd in self.fds}
         candidate_key = attributes_set.difference(rhs)
         print('Candidate Key: ', candidate_key)
 

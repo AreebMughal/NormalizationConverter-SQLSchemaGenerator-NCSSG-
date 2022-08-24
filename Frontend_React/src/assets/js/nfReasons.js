@@ -90,3 +90,33 @@ export const get3nfReason = (data) => {
         <p>{reason}</p>
     );
 }
+
+function getBcNFDependency(primeDep) {
+    return (
+        <span>
+            BC-NF works on Primary key dependency. As attribute set => <Bold>{'{'}{primeDep[1].toString().replaceAll(',', ', ')}{'}'}</Bold> is <Bold>dependent</Bold> on
+            set => <Bold>{'{'}{primeDep[0].toString().replaceAll(',', ', ')}{'}'}</Bold>. So, it would be separated as new relation.
+        </span>
+    );
+}
+
+export const getBcnfReason = (data) => {
+    let reason = []
+    if (Object.keys(data).length > 0) {
+        if (data['primeDep'].length > 0) {
+            for (let i = 0; i < data['primeDep'].length; i++) {
+                reason.push(getBcNFDependency(data['primeDep'][i]))
+                reason.push(<br/>)
+            }
+        } else {
+            reason = <span>
+                    As Primary key does not depend on any other attribute, so the BC-NF will be the same as the result of 3rd-NF.
+                </span>
+        }
+    }
+
+
+    return (
+        <p>{reason}</p>
+    );
+}

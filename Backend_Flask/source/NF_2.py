@@ -31,6 +31,8 @@ class Nf2nd(NormalizedRelation):
         for fd in minimal_cover_res:
             if len(fd) > 0:
                 if fd[1][0] in multi_value:
+                    # print('fd=>', fd)
+                    # multi_value_rel.append([[fd[0][0], fd[1][0]], []])
                     multi_value_rel.append(fd)
                 if fd[1][0] not in multi_value:
                     if set(fd[0]) == primary:
@@ -49,7 +51,7 @@ class Nf2nd(NormalizedRelation):
 
         fully_dependent_rel = [[fully_dependent_rel[0], full_dependent_rhs]]
         if len(fully_dependent_rel[0][0]) == 0:
-            fully_dependent_rel = [[my_relation.get_attr_info()['primary']]]
+            fully_dependent_rel = []
         result['full'] = fully_dependent_rel
         result['partial'] = partially_dependent_rel
         result['multi'] = multi_value_rel

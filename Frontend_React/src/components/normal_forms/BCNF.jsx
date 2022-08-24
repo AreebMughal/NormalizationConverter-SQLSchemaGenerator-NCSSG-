@@ -2,7 +2,7 @@ import my_data from "../../store/data";
 import React, {useEffect, useState} from "react";
 import axios from "axios";
 import PrintRelations from "./printRelations";
-import {get3nfReason} from "../../assets/js/nfReasons";
+import {get3nfReason, getBcnfReason} from "../../assets/js/nfReasons";
 
 function BCNF() {
     const inputBoxes = my_data.getRawState().inputBoxes
@@ -24,7 +24,7 @@ function BCNF() {
             data={data}
             normalFormNumber='BCNF'
             names={relationNames}
-            reason={get3nfReason(data)}
+            reason={getBcnfReason(data)}
         />
     );
 }
