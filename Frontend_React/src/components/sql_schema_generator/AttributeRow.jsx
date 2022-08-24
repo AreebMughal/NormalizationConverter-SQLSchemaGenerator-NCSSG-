@@ -50,6 +50,7 @@ const AttributeRow = (props) => {
       ref.current.click();
       setNullValue(true);
       props.onChangeHandler("null", "NULL", id);
+<<<<<<< HEAD
     }
   };
 
@@ -66,6 +67,157 @@ const AttributeRow = (props) => {
       "autoIncrement",
       event.target.checked,
       event.target.id
+=======
+    }
+  };
+
+  const lengthChangeHandler = (event) => {
+    setLength(event.target.value);
+    if (event.target.value.length > 0)
+      event.target.classList.remove("alert_border");
+    props.onChangeHandler("length", event.target.value, event.target.id);
+  };
+
+<<<<<<< HEAD
+  const autoIncrementChangeHandler = (event) => {
+    setAutoIncrement(event.target.checked);
+    props.onChangeHandler(
+      "autoIncrement",
+      event.target.checked,
+      event.target.id
+=======
+    const defaultValueChangeHandler = (property, selectedDefaultValue, id) => {
+        setDefaultValue(selectedDefaultValue)
+        props.onChangeHandler(property, selectedDefaultValue, id)
+        if (selectedDefaultValue === 'NULL') {
+            ref.current.click()
+            setNullValue(true)
+            props.onChangeHandler('null', 'NULL', id)
+        }
+    }
+
+    const lengthChangeHandler = event => {
+        const inputField = event.target.value;
+        const checkINT = /^\d+$/.test(inputField);
+        const checkFLOAT = /^[0-9,]+$/.test(inputField);
+        if (
+            dataType === "INT" ||
+            dataType ==="SMALLINT" ||
+            dataType === "BIGINT"
+        ) {
+            if (checkINT === true) {
+                event.target.classList.remove("alert_border");
+                props.onChangeHandler("length", event.target.value, event.target.id);
+            } else {
+                event.preventDefault();
+            }
+        }
+        if (
+            dataType === "FLOAT" ||
+            dataType === "DECIMAL" ||
+            dataType === "DOUBLE"
+        ) {
+            if (checkFLOAT === true) {
+                if (inputField.split(",").length-1 == 1) {
+                    console.log("TRUE")
+                    event.target.classList.remove("alert_border");
+                    props.onChangeHandler("length", event.target.value, event.target.id);
+                }else {
+                    event.preventDefault();
+                }
+            } else {
+                event.preventDefault();
+                console.log("FLASE")
+            }
+        }
+        console.log(checkFLOAT);
+
+// event.preventDefault();
+    }
+
+    const autoIncrementChangeHandler = event => {
+        setAutoIncrement(event.target.checked)
+        props.onChangeHandler('autoIncrement', event.target.checked, event.target.id)
+        // indexChangeHandler('index', 'primary', event.target.id) //to auto select the primary index
+        setDisableType(event.target.checked)
+        if (!(dataType === 'INT' && dataType === 'TINYINT' && dataType === 'SMALLINT'
+            && dataType === 'MEDIUMINT' && dataType === 'BIGINT')) {
+            setDataType('INT')
+        }
+    }
+
+    const nullValueChangeHandler = event => {
+        // console.log(event)
+        setNullValue(event.target.checked)
+        props.onChangeHandler('null', event.target.checked, event.target.id)
+    }
+
+
+    const indexes = `${props.relIndex}+${props.index}`
+    return (
+        <tr key={props.index}>
+            <th scope="row" width='2%'>{props.index + 1}.</th>
+            <td width='10%' className='font-weight-bold'>
+                <input type="text" className='input-box' id={indexes} placeholder='Attribute Name' value={attributeName}
+                       // onChange={attributeNameChangeHandler}
+                    readOnly={true}
+                />
+            </td>
+            <td width='10%'>
+                <DataTypeOptions
+                    selectedType={dataType}
+                    onChangeDataType={dataTypeChangeHandler}
+                    id={indexes}
+                    disable={disableType}
+                />
+            </td>
+
+            <td width='10%'>
+                <input type="text" className='input-box input_length ' onChange={lengthChangeHandler} id={indexes} value={length}/>
+                <PopupModal index={indexes} dataType={dataType}/>
+
+            </td>
+            <td width='10%'>
+                <DefaultOptions
+                    selectedDefaultValue={defaultValue}
+                    onChangeDefaultValue={defaultValueChangeHandler}
+                    id={indexes}
+                />
+            </td>
+            <td width='5%'>
+                <IndexOptions
+                    selectedIndex={index}
+                    onChangeIndex={indexChangeHandler}
+                    id={indexes}
+                />
+            </td>
+            <td width='4%' className=''>
+                <div className="text-center">
+                    <input
+                        type="checkbox"
+                        className="form-check-input text-center"
+                        value={autoIncrement}
+                        id={indexes}
+                        onChange={autoIncrementChangeHandler}
+                        ref={ref2}
+                    />
+                </div>
+            </td>
+            <td width='4%' className=''>
+                <div className="text-center">
+                    <input
+                        type="checkbox"
+                        className="form-check-input text-center"
+                        value={nullValue}
+                        id={indexes}
+                        ref={ref}
+                        onChange={nullValueChangeHandler}
+                    />
+                </div>
+            </td>
+        </tr>
+>>>>>>> 983bfe770aff4492217ee00d25256efe7160b47d
+>>>>>>> a05eedfcda1c9118c43012cf0ddbefc96006cb0b
     );
     // indexChangeHandler('index', 'primary', event.target.id) //to auto select the primary index
     setDisableType(event.target.checked);

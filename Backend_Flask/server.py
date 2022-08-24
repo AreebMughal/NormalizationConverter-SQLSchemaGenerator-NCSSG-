@@ -178,6 +178,10 @@ def preliminaryCheck():
     return ''
 
 
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> a05eedfcda1c9118c43012cf0ddbefc96006cb0b
 @app.route("/relationalMapping", methods=['GET', 'POST'])
 def relationalMapping():
     try:
@@ -187,6 +191,7 @@ def relationalMapping():
         # relation_name = 'Something'
         my_relation = Relation(rel_name=relation_name, input_boxes=input_boxes)
         dic = my_relation.extract_data(input_boxes)
+<<<<<<< HEAD
         # print(dic)
         # rl = RelationalMapping(dic)
         nf_result = get_result(object_type='NF3', input_boxes_dic=request.data.decode('utf-8'))['result']
@@ -203,17 +208,27 @@ def relationalMapping():
                 for rel in value:
                     get_foreign_keys(rel, all_relations, relation_names[key][index][1])
 
+=======
+        print(dic)
+        rl = RelationalMapping(dic)
+>>>>>>> a05eedfcda1c9118c43012cf0ddbefc96006cb0b
 
     except Exception as e:
         my_exception(e)
     return ''
 
+<<<<<<< HEAD
 @app.route("/RM3", methods=['GET', 'POST'])
 def RM3():
     pass
 
 
 
+=======
+
+=======
+>>>>>>> 983bfe770aff4492217ee00d25256efe7160b47d
+>>>>>>> a05eedfcda1c9118c43012cf0ddbefc96006cb0b
 @app.route('/fdMining', methods=['GET', 'POST'])
 def fdMining():
     data = '0'

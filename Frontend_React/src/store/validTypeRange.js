@@ -1,4 +1,8 @@
 export const validRange = {
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> a05eedfcda1c9118c43012cf0ddbefc96006cb0b
   SMALLINT: [0, 255],
   INT: [0, 255],
   BIGINT: [0, 255],
@@ -46,3 +50,50 @@ export const validRange = {
   // 'GEOMETRYCOLLECTION': ,
   // 'JSON': ,
 };
+<<<<<<< HEAD
+=======
+=======
+    'TINYINT': 4,
+    'SMALLINT': 5,
+    'MEDIUMINT': 9,
+    'INT': [0, 255],
+    'BIGINT': 20,
+    'DECIMAL': {'before': [0, 255], 'after': [0, 12]},
+    'FLOAT': 7,
+    'DOUBLE': 20,
+    'REAL': '-',
+    'BIT': 64,
+    'CHAR': [0, 255],
+    // 'BOOLEAN': ,
+    // 'SERIAL': ,
+    // 'DATE': ,
+    // 'DATETIME': ,
+    // 'TIMESTAMP': ,
+    // 'TIME': ,
+    // 'YEAR': ,
+    // 'CHAR': ,
+    // 'VARCHAR': ,
+    // 'TINYTEXT': ,
+    // 'TEXT': ,
+    // 'MEDIUMTEXT': ,
+    // 'LONGTEXT': ,
+    // 'BINARY': ,
+    // 'VARBINARY': ,
+    // 'TINYBLOB': ,
+    // 'BLOB': ,
+    // 'MEDIUMBLOB': ,
+    // 'LONGBLOB': ,
+    // 'ENUM': ,
+    // 'SET': ,
+    // 'GEOMETRY': ,
+    // 'POINT': ,
+    // 'LINESTRING': ,
+    // 'POLYGON': ,
+    // 'MULTIPOINT': ,
+    // 'MULTILINESTRING': ,
+    // 'MULTIPOLYGON': ,
+    // 'GEOMETRYCOLLECTION': ,
+    // 'JSON': ,
+}
+>>>>>>> 983bfe770aff4492217ee00d25256efe7160b47d
+>>>>>>> a05eedfcda1c9118c43012cf0ddbefc96006cb0b
