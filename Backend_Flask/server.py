@@ -128,17 +128,22 @@ def NF3():
 
 @app.route("/relationalMapping", methods=['GET', 'POST'])
 def relationalMapping():
-    return get_relationalMapping('NF3', request.data.decode('utf-8'))
-
-
-@app.route("/relationalMapping_nf3", methods=['GET', 'POST'])
-def relationalMapping_nf3():
-    pass
+    return get_relationalMapping('NF1', request.data.decode('utf-8'))
 
 
 @app.route("/relationalMapping_nf2", methods=['GET', 'POST'])
 def relationalMapping_nf2():
-    pass
+    return get_relationalMapping('NF2', request.data.decode('utf-8'))
+
+
+@app.route("/relationalMapping_nf3", methods=['GET', 'POST'])
+def relationalMapping_nf3():
+    return get_relationalMapping('NF3', request.data.decode('utf-8'))
+
+
+@app.route("/relationalMapping_bcnf", methods=['GET', 'POST'])
+def relationalMapping_bcnf():
+    return get_relationalMapping('BCNF', request.data.decode('utf-8'))
 
 
 @app.route("/getSqlSchemaData", methods=['GET', 'POST'])
