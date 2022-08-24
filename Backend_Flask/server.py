@@ -199,6 +199,26 @@ def preliminaryCheck():
     return ''
 
 
+<<<<<<< HEAD
+@app.route("/relationalMapping", methods=['GET', 'POST'])
+def relationalMapping():
+    try:
+        data = json.loads(request.data.decode('utf-8'))
+        input_boxes = data['inputBoxes']
+        relation_name = data['relationName']
+        # relation_name = 'Something'
+        my_relation = Relation(rel_name=relation_name, input_boxes=input_boxes)
+        dic = my_relation.extract_data(input_boxes)
+        print(dic)
+        rl = RelationalMapping(dic)
+
+    except Exception as e:
+        my_exception(e)
+    return ''
+
+
+=======
+>>>>>>> 983bfe770aff4492217ee00d25256efe7160b47d
 @app.route('/fdMining', methods=['GET', 'POST'])
 def fdMining():
     data = '0'
