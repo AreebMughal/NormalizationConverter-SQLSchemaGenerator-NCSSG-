@@ -10,8 +10,8 @@ const PreliminaryCheck = (props) => {
             axios.post('http://127.0.0.1:5000/preliminaryCheck', my_data.getRawState().inputBoxes)
                 .then(res => {
                     console.log(res);
+                    props.setShowNavbarContent(true);
                 })
-            props.setShowNavbarContent(true);
         }
     }
     return (

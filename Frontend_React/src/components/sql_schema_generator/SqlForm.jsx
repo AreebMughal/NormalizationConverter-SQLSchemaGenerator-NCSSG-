@@ -79,6 +79,7 @@ const SqlForm = (props) => {
           openAlertPopup(inp_length, msg);
           return false;
         }
+<<<<<<< HEAD
       } else {
         if (singleLenght.includes(inp_dataType)) {
           if (
@@ -119,6 +120,29 @@ const SqlForm = (props) => {
             openAlertPopup(inp_length, msg);
             return false;
           }
+=======
+        return true;
+    }
+
+    function checkInputFields(inputFields) {
+        for (let key in inputFields) {
+            const input_fields = inputFields[key]
+            const inp_dataType = input_fields[0].value;
+            const inp_length = input_fields[1];
+            if (inp_length.value.length === 0) {
+                if (requiredLength.includes(inp_dataType)) {
+                    const msg = `Please enter the length of Data Type: ${inp_dataType}`;
+                    openAlertPopup(inp_length, msg);
+                    return false
+                }
+            } else {
+                if (!(parseInt(inp_length.value) > 0 && !(parseInt(inp_length.value) > parseInt(validRange[inp_dataType][0] && parseInt(inp_length.value) <= parseInt(validRange[inp_dataType][1]))))) {
+                    const msg = 'Please enter valid range: ' + inp_dataType + '\nValid Range is ' + validRange[inp_dataType];
+                    openAlertPopup(inp_length, msg);
+                    return false
+                }
+            }
+>>>>>>> 983bfe770aff4492217ee00d25256efe7160b47d
         }
       }
       // if (!(parseInt(inp_length.value) > 0 && parseInt(inp_length.value) <= parseInt(validRange[inp_dataType]))) {
@@ -187,4 +211,44 @@ const SqlForm = (props) => {
   );
 };
 
+<<<<<<< HEAD
 export default SqlForm;
+=======
+    const formSubmit = (e) => {
+        e.preventDefault();
+        if (isValidData(e.target)) {
+            console.log('data ', props.data)
+            axios.post('http://127.0.0.1:5000/sqlSchemaGenerator', {data: props.data})
+                .then(res => {
+                    // console.log(res.data)
+                    const element = document.createElement("a");
+                    const file = new Blob([res.data], {
+                        type: "text/plain"
+                    });
+                    element.href = URL.createObjectURL(file);
+                    console.log(' URL ', element.href)
+                    element.download = "dump_schema.sql";
+                    document.body.appendChild(element);
+                    element.click();
+                })
+
+        }
+    }
+
+    return (
+        <React.Fragment>
+            {showModal ?
+                <ErrorModal
+                    show={showModal}
+                    setShow={setShowFalse}
+                    message={errorMsg}
+                /> : ''}
+            <form onSubmit={formSubmit}>
+                {props.children}
+            </form>
+        </React.Fragment>
+    );
+}
+
+export default SqlForm;
+>>>>>>> 983bfe770aff4492217ee00d25256efe7160b47d

@@ -4,12 +4,17 @@ SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION; 
 SET time_zone = "+00:00"; 
 
+<<<<<<< HEAD
 CREATE DATABASE `NCSSG_dumped_db_jn85`;
+=======
+CREATE DATABASE `NCSSG_dumped_db_as36`;
+>>>>>>> 983bfe770aff4492217ee00d25256efe7160b47d
 
 -- 
--- Table structure for table `practice` 
+-- Table structure for table `organization` 
 -- 
 
+<<<<<<< HEAD
 CREATE TABLE `NCSSG_dumped_db_jn85`.`practice` ( 
 	`pnum` int(11) NOT NULL, 
  	`ssn` int(11) NOT NULL, 
@@ -23,23 +28,43 @@ CREATE TABLE `NCSSG_dumped_db_jn85`.`practice` (
 -- 
 
 CREATE TABLE `NCSSG_dumped_db_jn85`.`pra_ssn` ( 
+=======
+CREATE TABLE `NCSSG_dumped_db_as36`.`organization` ( 
+>>>>>>> 983bfe770aff4492217ee00d25256efe7160b47d
 	`ssn` int(11) NOT NULL, 
- 	`id` int(11) NOT NULL 
+ 	`pnum` int(11) NOT NULL 
  ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
 -- 
--- Table structure for table `pra_pnum` 
+-- Table structure for table `org_ssn` 
 -- 
 
+<<<<<<< HEAD
 CREATE TABLE `NCSSG_dumped_db_jn85`.`pra_pnum` ( 
+=======
+CREATE TABLE `NCSSG_dumped_db_as36`.`org_ssn` ( 
+	`ssn` int(11) NOT NULL, 
+ 	`email` int(11) NOT NULL, 
+ 	`ename` int(11) NOT NULL 
+ ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+-- 
+-- Table structure for table `org_pnum` 
+-- 
+
+CREATE TABLE `NCSSG_dumped_db_as36`.`org_pnum` ( 
+>>>>>>> 983bfe770aff4492217ee00d25256efe7160b47d
 	`pnum` int(11) NOT NULL, 
  	`ploc` int(11) NOT NULL, 
  	`pname` int(11) NOT NULL 
  ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
+<<<<<<< HEAD
 
 -- 
 -- Table structure for table `pra_email` 
@@ -86,27 +111,40 @@ CREATE TABLE `NCSSG_dumped_db_jn85`.`pra_dnum` (
  ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
+=======
+>>>>>>> 983bfe770aff4492217ee00d25256efe7160b47d
 -- 
 -- Indexes for dumped tables 
 -- 
 
 
 -- 
--- Indexes for table `practice` 
+-- Indexes for table `organization` 
 -- 
+<<<<<<< HEAD
 ALTER TABLE `NCSSG_dumped_db_jn85`.`practice`
 	ADD PRIMARY KEY (`pnum`,`ssn`);
+=======
+ALTER TABLE `NCSSG_dumped_db_as36`.`organization`
+	ADD PRIMARY KEY (`ssn`,`pnum`);
+>>>>>>> 983bfe770aff4492217ee00d25256efe7160b47d
 
 -- 
--- Indexes for table `pra_ssn` 
+-- Indexes for table `org_ssn` 
 -- 
+<<<<<<< HEAD
 ALTER TABLE `NCSSG_dumped_db_jn85`.`pra_ssn`
 	ADD PRIMARY KEY (`ssn`),
 	ADD UNIQUE KEY `id` (`id`);
+=======
+ALTER TABLE `NCSSG_dumped_db_as36`.`org_ssn`
+	ADD PRIMARY KEY (`ssn`);
+>>>>>>> 983bfe770aff4492217ee00d25256efe7160b47d
 
 -- 
--- Indexes for table `pra_pnum` 
+-- Indexes for table `org_pnum` 
 -- 
+<<<<<<< HEAD
 ALTER TABLE `NCSSG_dumped_db_jn85`.`pra_pnum`
 	ADD PRIMARY KEY (`pnum`);
 
@@ -134,14 +172,19 @@ ALTER TABLE `NCSSG_dumped_db_jn85`.`pra_id`
 -- 
 ALTER TABLE `NCSSG_dumped_db_jn85`.`pra_dnum`
 	ADD PRIMARY KEY (`dnum`);
+=======
+ALTER TABLE `NCSSG_dumped_db_as36`.`org_pnum`
+	ADD PRIMARY KEY (`pnum`);
+>>>>>>> 983bfe770aff4492217ee00d25256efe7160b47d
 -- 
 -- Constraints for dumped tables 
 -- 
 
 
 -- 
--- Constraint for table `practice` 
+-- Constraint for table `organization` 
 -- 
+<<<<<<< HEAD
 ALTER TABLE `NCSSG_dumped_db_jn85`.`practice`
 	ADD CONSTRAINT `practice_ibfk_1` 
 	FOREIGN KEY (`ssn`) REFERENCES `pra_ssn` (`ssn`) 
@@ -183,5 +226,13 @@ ALTER TABLE `NCSSG_dumped_db_jn85`.`pra_id`
 ALTER TABLE `NCSSG_dumped_db_jn85`.`pra_dnum`
 	ADD CONSTRAINT `pra_dnum_ibfk_1` 
 	FOREIGN KEY (`dnum`) REFERENCES `pra_id` (`dnum`) 
+=======
+ALTER TABLE `NCSSG_dumped_db_as36`.`organization`
+	ADD CONSTRAINT `organization_ibfk_1` 
+	FOREIGN KEY (`ssn`) REFERENCES `org_ssn` (`ssn`) 
+	ON DELETE CASCADE ON UPDATE CASCADE,
+	ADD CONSTRAINT `organization_ibfk_2` 
+	FOREIGN KEY (`pnum`) REFERENCES `org_pnum` (`pnum`) 
+>>>>>>> 983bfe770aff4492217ee00d25256efe7160b47d
 	ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
