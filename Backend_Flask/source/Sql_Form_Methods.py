@@ -37,7 +37,7 @@ def get_foreign_relation_of(relations):
 def get_foreign_keys(relation, all_relations, current):
     foreign_keys = []
     primary_keys = all_relations['Fully_dependent'][0]
-    print(current, ':')
+    # print(current, ':')
     for key, rel in all_relations.items():
         if key != current:
             relation_lhs = set(relation[0])
@@ -58,11 +58,8 @@ def get_foreign_keys(relation, all_relations, current):
 
     for element in foreign_keys:
         relations = get_foreign_relation_of(element['relationName'])
-        print('Relations:', relations)
         if 'fully' in relations and len(primary_keys) == 1:
             element['relationName'] = 'Fully_dependent'
-        # elif 'fully' in relations:
-        #     element['relationName'] = 'Fully_dependent'
         elif 'partial' in relations:
             index = relations.index('partial')
             element['relationName'] = element['relationName'][index]
@@ -74,7 +71,7 @@ def get_foreign_keys(relation, all_relations, current):
             element['relationName'] = element['relationName'][index]
         # element['attribute'] = list(element['attribute'])
         # print('.... ', element['attribute'])
-    print('-->', foreign_keys)
+    # print('-->', foreign_keys)
 
     return foreign_keys
 
@@ -133,13 +130,25 @@ def create_relations(nf_result, relation_names, all_relations):
                 index += 1
                 json_data['Data'].append(relation)
 
-    print_data(json_data, all_relations)
+    # print_data(json_data, all_relations)
     return json_data
     # print(json_data)
 
 
+def get_all_foreign_keys_list(nf_result, relation_names, all_relations):
+    fk = {}
+    for key, value in nf_result.items():
+        index = 0
+        if len(value) > 0:
+            for rel in value:
+                if key.lower() != 'partial':
+                    name = relation_names[key][index][0]
+                    fk[name] = get_foreign_keys(rel, all_relations, relation_names[key][index][1])
+                    index += 1
+    return fk
+
+
 def print_data(Data, all_relations):
-    fk = []
     c = 0
     for data in Data['Data']:
         for key, value in data.items():

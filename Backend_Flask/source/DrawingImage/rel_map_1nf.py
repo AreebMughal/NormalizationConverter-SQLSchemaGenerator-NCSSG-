@@ -5,7 +5,7 @@ from turtle import *
 from PIL import Image
 from turtle import Turtle, Screen
 
-class ONENFCLASS:
+class RelationalMapping1nf:
     def __init__(self,dics):
         self.__dic = dics
         self.__multivalue = dics['multi_value']

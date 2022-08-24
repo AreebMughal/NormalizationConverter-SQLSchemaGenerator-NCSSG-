@@ -14,10 +14,10 @@ from source.DrawingImage.relationalMapping import RelationalMapping
 from source.NF_1 import Nf1st
 from source.NF_2 import Nf2nd
 from source.NF_3 import Nf3rd
-from source.BCNF import BCNF
+from source.BCNF import BcNf
 from source.Relation import Relation
 from source.normalizedRelation import NormalizedRelation
-from source.Sql_Form_Methods import create_relation_names
+from source.Sql_Form_Methods import create_relation_names, get_all_foreign_keys_list
 from source.Sql_Form_Methods import get_foreign_keys
 from source.Sql_Form_Methods import get_all_relations
 from source.Sql_Form_Methods import create_relations
@@ -72,13 +72,37 @@ def get_result(object_type, input_boxes_dic):
             nf_3 = Nf3rd(my_rel=my_relation)
             result = nf_3.find_nf_3()
         elif object_type == 'BCNF':
-            bcnf = BCNF(my_rel=my_relation)
+            bcnf = BcNf(my_rel=my_relation)
             result = bcnf.find_bcnf()
         relation_names = create_relation_names(result, data['relationName']) if object_type != 'minimal_cover' else ''
     except Exception as e:
         my_exception(e)
 
     return {"result": result, "relation_names": relation_names}
+
+
+def get_relationalMapping(nf_type, api_data):
+    try:
+        data = json.loads(api_data)
+        input_boxes = data['inputBoxes']
+        relation_name = data['relationName']
+        my_relation = Relation(rel_name=relation_name, input_boxes=input_boxes)
+        nf_result = get_result(object_type=nf_type, input_boxes_dic=request.data.decode('utf-8'))['result']
+
+        if nf_type == 'NF1':
+            dic = my_relation.extract_data(input_boxes)
+            rel_map = RelationalMapping(dic)
+        elif nf_type == 'NF3' or nf_type == 'BCNF':
+            all_relations = get_all_relations(nf_result, relation_name)
+            relation_names = create_relation_names(nf_result, relation_name)
+            fk = get_all_foreign_keys_list(nf_result, relation_names, all_relations)
+            print('All Relation:\n', all_relations)
+            print('All Relation Names:\n', relation_names)
+            print('Foreign Key:\n', fk)
+
+    except Exception as e:
+        my_exception(e)
+    return ''
 
 
 @app.route("/minimalCover", methods=['GET', 'POST'])
@@ -102,7 +126,11 @@ def NF3():
     return get_result(object_type='NF3', input_boxes_dic=request.data.decode('utf-8'))
 
 
-<<<<<<< HEAD
+@app.route("/BCNF", methods=['GET', 'POST'])
+def BCNF():
+    return get_result(object_type='BCNF', input_boxes_dic=request.data.decode('utf-8'))
+
+
 @app.route("/relationalMapping", methods=['GET', 'POST'])
 def relationalMapping():
     return get_relationalMapping('NF1', request.data.decode('utf-8'))
@@ -123,8 +151,6 @@ def relationalMapping_bcnf():
     return get_relationalMapping('BCNF', request.data.decode('utf-8'))
 
 
-=======
->>>>>>> parent of 983bfe7 (Relational Mapping Generalized along with required Input | Load Data Frontend Completed)
 @app.route("/getSqlSchemaData", methods=['GET', 'POST'])
 def getSqlSchemaData():
     json_data = {"Data": []}
@@ -178,76 +204,15 @@ def preliminaryCheck():
     return ''
 
 
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
->>>>>>> a05eedfcda1c9118c43012cf0ddbefc96006cb0b
-@app.route("/relationalMapping", methods=['GET', 'POST'])
-def relationalMapping():
-    try:
-        data = json.loads(request.data.decode('utf-8'))
-        input_boxes = data['inputBoxes']
-        relation_name = data['relationName']
-        # relation_name = 'Something'
-        my_relation = Relation(rel_name=relation_name, input_boxes=input_boxes)
-        dic = my_relation.extract_data(input_boxes)
-<<<<<<< HEAD
-        # print(dic)
-        # rl = RelationalMapping(dic)
-        nf_result = get_result(object_type='NF3', input_boxes_dic=request.data.decode('utf-8'))['result']
-        print(nf_result)
-        all_relations = get_all_relations(nf_result, relation_name)
-        print('All Relation:\n', all_relations)
-        relation_names = create_relation_names(nf_result, relation_name)
-        print('All Relation Names:\n', relation_names)
-        create_relations(nf_result, relation_names, all_relations)
-        fk = []
-        for key, value in nf_result.items():
-            index = 0
-            if len(value) > 0:
-                for rel in value:
-                    get_foreign_keys(rel, all_relations, relation_names[key][index][1])
-
-=======
-        print(dic)
-        rl = RelationalMapping(dic)
->>>>>>> a05eedfcda1c9118c43012cf0ddbefc96006cb0b
-
-    except Exception as e:
-        my_exception(e)
-    return ''
-
-<<<<<<< HEAD
-@app.route("/RM3", methods=['GET', 'POST'])
-def RM3():
-    pass
-
-
-
-=======
-
-=======
->>>>>>> 983bfe770aff4492217ee00d25256efe7160b47d
->>>>>>> a05eedfcda1c9118c43012cf0ddbefc96006cb0b
 @app.route('/fdMining', methods=['GET', 'POST'])
 def fdMining():
     data = '0'
     try:
-        print(len(request.files))
         if len(request.files) > 0:
-            print('--' * 30)
             file = request.files['file']
             file.save(os.path.join('./datasets/', secure_filename(file.filename)))
             fd_miner = FdsMiner('./datasets/' + file.filename, 'fdtool')
             data = fd_miner.fd_mining()
-            print(data)
-            # print('adsf', len(data['inputBoxes']))
-
-        # filename = file.filename
-        # print(f"Uploading file {filename}")
-        # file_bytes = file.read()
-        # file_content = BytesIO(file_bytes).readlines()
-        # print(file_content)
     except Exception as e:
         my_exception(e)
 

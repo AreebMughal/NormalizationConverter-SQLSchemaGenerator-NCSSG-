@@ -6,6 +6,8 @@ class Nf3rd(NormalizedRelation):
     def __init__(self, my_rel) -> None:
         super().__init__(relation=my_rel)
         self.__nf_3_result = None
+        self.my_relation = super().get_relation()
+
 
     def get_nf_3_result(self):
         return self.__nf_3_result
@@ -59,12 +61,8 @@ class Nf3rd(NormalizedRelation):
             transitive = []
         return transitive
 
-    @staticmethod
-    def __get_fully_dependent_relation(fully_dependent):
+
+    def __get_fully_dependent_relation(self, fully_dependent):
         if len(fully_dependent) == 0:
-<<<<<<< HEAD
-            fully_dependent = []
-=======
-            fully_dependent = [[self.my_relation.get_attr_info()['primary'], []]]
->>>>>>> parent of 983bfe7 (Relational Mapping Generalized along with required Input | Load Data Frontend Completed)
+            fully_dependent = [[self.my_relation.get_attr_info()['primary']]]
         return fully_dependent

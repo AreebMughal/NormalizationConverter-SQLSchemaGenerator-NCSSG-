@@ -7,7 +7,7 @@ from turtle import *
 from PIL import Image
 from turtle import Turtle, Screen
 
-class NFSCLASS():
+class RelationalMappingNfs:
     def __init__(self,relation,relation_name,fks):
         self.__yertle = Turtle(shape="turtle", visible=True)
         self.__screen = turtle.Screen()

@@ -4,10 +4,11 @@ import './css/hr.css';
 import CreateRelation from "./relation/CreateRelation";
 import DependencyNConstraint from "./dependency_constraint/DependencyNConstraint";
 import FdsList from "./fds_list/FdsList";
-import {get_inputBoxes, inputBoxes_data} from "../../store/inputBoxes_dataStore";
+import {get_inputBoxes, inputBoxes_data, suggestion_store} from "../../store/inputBoxes_dataStore";
 import Suggestion from "./fds_list/Suggestion";
 import UploadFile from "./UploadFile";
 import Loader from "../full_page_loader/loader";
+import HrOR from "../general_UI/hrOR";
 
 const MainTool = (props) => {
     const [inputBoxes, setInputBoxes] = useState([]);
@@ -17,12 +18,14 @@ const MainTool = (props) => {
     const [currentCell, setCurrentCell] = useState(false);
     const [isFdMine, setIsFdMine] = useState(false);
     const [loading, setLoading] = useState(false);
+    const [suggestion, setSuggestion] = useState('');
 
     const data = inputBoxes_data.getRawState()
 
     useEffect(() => {
-        setInputBoxes(data.inputBoxes)
-        setRelationName(data.relationName)
+        setInputBoxes(data.inputBoxes);
+        setRelationName(data.relationName);
+        setSuggestion(suggestion_store.getRawState().value);
     }, []);
 
     useEffect(() => {
@@ -34,6 +37,13 @@ const MainTool = (props) => {
             setLoading(false);
         }
     }, [isFdMine]);
+
+    useEffect(() => {
+        suggestion_store.update(s => {
+            s.value = suggestion
+        });
+    }, [suggestion]);
+
 
     useEffect(() => {
         inputBoxes_data.update(s => {
@@ -66,36 +76,17 @@ const MainTool = (props) => {
     const updateCurrentIndex = (index) => {
         setCurrentIndex(index);
     }
+
     return (
         <section className={`${styles.main}`}>
-<<<<<<< HEAD
-            {loading &&
-            <Loader
-                loading={loading}
-            />
-            }
-=======
-            { loading && <Loader loading={loading} /> }
->>>>>>> parent of 983bfe7 (Relational Mapping Generalized along with required Input | Load Data Frontend Completed)
+            { loading && <Loader loading={loading} message={<span>Extracting Functional Dependencies <br/>
+                    Please wait...</span>} /> }
             <UploadFile
                 setIsFdMine={setIsFdMine}
                 setLoader={setLoading}
+                setSuggestion={setSuggestion}
             />
-            {/*<div className="my-hr container mt-2 mb-0">*/}
-            {/*<div className="col-12 d-inline-flex">*/}
-
-            {/*</div>*/}
-            {/*</div>*/}
-            <div className="col-12 mt-2">
-                <div className="container">
-                    <div className="d-inline-flex col-12">
-                        <hr className='my-hr-or me-1'/>
-                        <span className='hr-content'>OR</span>
-                        <hr className='my-hr-or ms-1 me-2'/>
-                    </div>
-                </div>
-            </div>
-
+            <HrOR/>
             <div className="m row col-12">
                 <div className={`col-lg-8 col-md-10 col-sm-12 ${styles['__create-relation']}`}>
                     <CreateRelation
@@ -111,6 +102,7 @@ const MainTool = (props) => {
                         props_data={props.props_data}
                         onPreliminaryCheckClick={props.onPreliminaryCheckClick}
                         setShowNavbarContent={props.setShowNavbarContent}
+                        setSuggestion={setSuggestion}
                     />
                     <hr className='ms-5 me-5'/>
                     <div className="row ms-2 ">
@@ -122,7 +114,8 @@ const MainTool = (props) => {
                         </div>
                         <div className={`col-lg-6 col-md-12 col-sm-12 m-0 p-0 ${styles.suggestion}`}>
                             <Suggestion
-                                isOpen={false}
+                                isOpen={suggestion !== ''}
+                                suggestion={suggestion}
                             />
                         </div>
                     </div>
