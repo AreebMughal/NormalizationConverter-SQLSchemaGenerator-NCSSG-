@@ -39,7 +39,6 @@ const CreateRelation = (props) => {
             multiValue: false,
         }]);
         props.setRelationName('');
-        props.setSuggestion('');
     }
 
     const renderInputBoxes = () => {

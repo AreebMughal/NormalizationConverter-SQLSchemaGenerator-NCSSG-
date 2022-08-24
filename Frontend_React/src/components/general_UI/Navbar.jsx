@@ -25,45 +25,40 @@ function Navbar(props) {
                                 </NavLink>
                             </li>
                             {showNavbarContent &&
-                                <React.Fragment>
-                                    <li className="nav-item me-0">
-                                        <NavLink className="nav-link" to="/NC-SSG/MinimalCover" onClick={props.onClick}>
-                                            <span className='me-1 circled-number'>&#9313;</span>
-                                            Minimal Cover
-                                        </NavLink>
-                                    </li>
-                                    <li className="nav-item me-0">
-                                        <NavLink className="nav-link" to="/NC-SSG/1NF" onClick={props.onClick}>
-                                            <span className='me-1 circled-number'>&#9314;</span>
-                                            Show 1-NF
-                                        </NavLink>
-                                    </li>
-                                    <li className="nav-item me-0">
-                                        <NavLink className="nav-link" to="/NC-SSG/2NF" onClick={props.onClick}>
-                                            <span className='me-1 ms-0 p-0 circled-number'>&#9315;</span>
-                                            Show 2-NF
-                                        </NavLink>
-                                    </li>
-                                    <li className="nav-item me-0">
-                                        <NavLink className="nav-link" to="/NC-SSG/3NF" onClick={props.onClick}>
-                                            <span className='me-1 circled-number'>&#9316;</span>
-                                            Show 3-NF
-                                        </NavLink>
-                                    </li>
-                                    <li className="nav-item me-0">
-                                        <NavLink className="nav-link" to="/NC-SSG/BCNF" onClick={props.onClick}>
-                                            <span className='me-1 circled-number'>&#9317;</span>
-                                            BCNF
-                                        </NavLink>
-                                    </li>
-                                    <li className="nav-item me-0">
-                                        <NavLink className="nav-link" to="/NC-SSG/SQLSchema">
-                                            <span className='me-1 circled-number'>&#9318;</span>
-                                            SQL Schema
-                                        </NavLink>
-                                    </li>
-                                </React.Fragment>
+                            <React.Fragment>
+                                <li className="nav-item me-0">
+                                    <NavLink className="nav-link" to="/NC-SSG/MinimalCover" onClick={props.onClick}>
+                                        <span className='me-1 circled-number'>&#9313;</span>
+                                        Minimal Cover
+                                    </NavLink>
+                                </li>
+                                <li className="nav-item me-0">
+                                    <NavLink className="nav-link" to="/NC-SSG/1NF" onClick={props.onClick}>
+                                        <span className='me-1 circled-number'>&#9314;</span>
+                                        Show 1-NF
+                                    </NavLink>
+                                </li>
+                                <li className="nav-item me-0">
+                                    <NavLink className="nav-link" to="/NC-SSG/2NF" onClick={props.onClick}>
+                                        <span className='me-1 ms-0 p-0 circled-number'>&#9315;</span>
+                                        Show 2-NF
+                                    </NavLink>
+                                </li>
+                                <li className="nav-item me-0">
+                                    <NavLink className="nav-link" to="/NC-SSG/3NF" onClick={props.onClick}>
+                                        <span className='me-1 circled-number'>&#9316;</span>
+                                        Show 3-NF
+                                    </NavLink>
+                                </li>
+
+                            </React.Fragment>
                             }
+                            <li className="nav-item me-0">
+                                <NavLink className="nav-link" to="/NC-SSG/SQLSchema">
+                                    <span className='me-1 circled-number'>&#9316;</span>
+                                    SQL Schema
+                                </NavLink>
+                            </li>
                         </ul>
                     </div>
                 </div>

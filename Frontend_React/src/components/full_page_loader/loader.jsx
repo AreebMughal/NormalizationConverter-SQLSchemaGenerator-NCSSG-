@@ -20,9 +20,13 @@ function Loader(props) {
     return (
         <div id="cover" className='m-0 p-0'>
             <div className="sweet-loading loader m-0 p-0">
+<<<<<<< HEAD
+=======
                 <span className='text-white loader-text'>
-                    {props.message}
+                    Extracting Functional Dependencies <br/>
+                    Please wait...
                 </span>
+>>>>>>> parent of 983bfe7 (Relational Mapping Generalized along with required Input | Load Data Frontend Completed)
                 <ScaleLoader color={color} loading={loading} cssOverride={override} size={150}/>
             </div>
         </div>

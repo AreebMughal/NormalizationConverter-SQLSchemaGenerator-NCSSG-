@@ -71,10 +71,5 @@
 .loader {
     position: absolute;
     top: 45%;
-    left: 48%;
-}
-.loader-text {
-    position: relative;
-    top: 42%;
-    left: -30%;
+    left: 45%;
 }
