@@ -52,19 +52,18 @@ function Navbar(props) {
                                     </li>
                                     <li className="nav-item me-0">
                                         <NavLink className="nav-link" to="/NC-SSG/BCNF" onClick={props.onClick}>
-                                            <span className='me-1 circled-number'>&#9315;</span>
+                                            <span className='me-1 circled-number'>&#9317;</span>
                                             BCNF
                                         </NavLink>
                                     </li>
                                     <li className="nav-item me-0">
                                         <NavLink className="nav-link" to="/NC-SSG/SQLSchema">
-                                            <span className='me-1 circled-number'>&#9316;</span>
+                                            <span className='me-1 circled-number'>&#9318;</span>
                                             SQL Schema
                                         </NavLink>
                                     </li>
                                 </React.Fragment>
                             }
-
                         </ul>
                     </div>
                 </div>

@@ -13,7 +13,18 @@ const SqlForm = (props) => {
     const [path, setPath] = useState(null);
 
     const requiredLength = ['BIT', 'CHAR', 'VARCHAR']
-
+    const singleLenght = [
+        "SMALLINT",
+        "INT",
+        "BIGINT",
+        "TEXT",
+        "DATE",
+        "DATETIME",
+        "TIMESTAMP",
+        "BOOLEAN",
+        "TIME",
+        "YEAR",
+    ];
     function extractedFormData(formData) {
         let inputFields = {}
         let relationNames = []
@@ -52,26 +63,67 @@ const SqlForm = (props) => {
 
     function checkInputFields(inputFields) {
         for (let key in inputFields) {
-            const input_fields = inputFields[key]
+            const input_fields = inputFields[key];
             const inp_dataType = input_fields[0].value;
             const inp_length = input_fields[1];
+            let splitArray = inp_length.value.split(",");
+            console.log(splitArray);
+
             if (inp_length.value.length === 0) {
                 if (requiredLength.includes(inp_dataType)) {
                     const msg = `Please enter the length of Data Type: ${inp_dataType}`;
                     openAlertPopup(inp_length, msg);
-                    return false
+                    return false;
                 }
             } else {
-                if (!(parseInt(inp_length.value) > 0 && !(parseInt(inp_length.value) > parseInt(validRange[inp_dataType][0] && parseInt(inp_length.value) <= parseInt(validRange[inp_dataType][1]))))) {
-                    const msg = 'Please enter valid range: ' + inp_dataType + '\nValid Range is ' + validRange[inp_dataType];
-                    openAlertPopup(inp_length, msg);
-                    return false
+                if (singleLenght.includes(inp_dataType)) {
+                    if (
+                        !(
+                            parseInt(inp_length.value) >
+                            parseInt(validRange[inp_dataType][0]) &&
+                            parseInt(inp_length.value) < parseInt(validRange[inp_dataType][1])
+                        )
+                    ) {
+                        console.log("phliu");
+                        const msg =
+                            "Please enter valid range: " +
+                            inp_dataType +
+                            "\nValid Range is " +
+                            validRange[inp_dataType];
+                        openAlertPopup(inp_length, msg);
+                        return false;
+                    }
+                } else {
+                    let range = validRange[inp_dataType];
+                    console.log("range ", range);
+                    let before = range["before"];
+                    let after = range["after"];
+                    console.log("dosri");
+                    if (
+                        !(
+                            parseInt(before[0]) < parseInt(splitArray[0]) &&
+                            parseInt(before[1]) > parseInt(splitArray[0]) &&
+                            parseInt(after[0]) < parseInt(splitArray[1]) &&
+                            parseInt(after[1]) > parseInt(splitArray[1])
+                        )
+                    ) {
+                        const msg =
+                            "Please enter valid range: " +
+                            inp_dataType +
+                            "\nValid Range is " +
+                            validRange[inp_dataType];
+                        openAlertPopup(inp_length, msg);
+                        return false;
+                    }
                 }
             }
+            // if (!(parseInt(inp_length.value) > 0 && parseInt(inp_length.value) <= parseInt(validRange[inp_dataType]))) {
+
+            // }
         }
+
         return true;
     }
-
     function isValidData(formData) {
         const inputFields = extractedFormData(formData)['inputFields'];
         const relationNames = extractedFormData(formData)['relationNames'];
@@ -106,9 +158,6 @@ const SqlForm = (props) => {
                     element.href = URL.createObjectURL(file);
                     console.log(' URL ', element.href)
                     element.download = "dump_schema.sql";
-
-                    const f = new File([res.data], 'as.sql')
-
                     document.body.appendChild(element);
                     element.click();
                 })

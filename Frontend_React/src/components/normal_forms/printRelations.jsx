@@ -7,7 +7,7 @@ function PrintRelations(props) {
     const inputBoxes = my_data.getRawState().inputBoxes;
     const [data, setData] = useState([{}]);
     const [relationNames, setRelationNames] = useState({});
-    // let count = 1;
+    let count = 1;
 
     useEffect(() => {
         setData(props.data)
@@ -23,8 +23,10 @@ function PrintRelations(props) {
                                 if (data[key].length !== 0) {
                                     const rel = (key === 'multi' ? '-VALUED' : ' Dependent') + ' Relations';
                                     return (
-                                        <div key={key_index}>
-                                            <div className='text-center relation_type'>{key.toUpperCase() + rel}</div>
+                                        <div key={key_index+count}>
+                                            <div className='text-center relation_type' key={key_index}>
+                                                {key.toUpperCase() + rel}
+                                            </div>
                                             {
                                                 Object.keys(data[key]).map((list, index) => {
                                                         const len = data[key][list][0].length;
@@ -32,14 +34,16 @@ function PrintRelations(props) {
                                                         let num = 0;
                                                         let check = 0;
                                                         return (
-                                                            <div className="d-flex flex-wrap" key={key_index+'-'+index}>
+                                                            <div className="d-flex flex-wrap"
+                                                                 key={key_index + '-' + index + count}>
                                                                 {/*<span>Relation-{count++}: </span>*/}
-                                                                <span className='mt-3' style={{width: 120}}>{name}: </span>
+                                                                <span className='mt-3'
+                                                                      style={{width: 120}}>{name}: </span>
                                                                 {
                                                                     (data[key][list].toString().split(',')).map((value, ind) => {
                                                                             const bool = (++check <= len);
                                                                             return (
-                                                                                <input key={num++}
+                                                                                <input key={num++ + '-' + count++}
                                                                                        className={get2NFClassName(value, key, bool)}
                                                                                        type="text" readOnly autoFocus
                                                                                        value={value}

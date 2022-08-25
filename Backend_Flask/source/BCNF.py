@@ -3,9 +3,9 @@ from source.NF_3 import Nf3rd
 from source.normalizedRelation import NormalizedRelation
 
 
-class BCNF(NormalizedRelation):
+class BcNf(NormalizedRelation):
     def __init__(self, my_rel) -> None:
-        super().__init__(my_rel)
+        super().__init__(relation=my_rel)
         self.__bcnf_result = None
 
     def get_BCNF_result(self):
@@ -20,18 +20,16 @@ class BCNF(NormalizedRelation):
         return index
 
     def find_bcnf(self):
-        # nf_3 = Nf3rd(my_rel=super().get_relation())
-        # result = nf_3.find_nf_3()
-        result = []
-
+        nf_3 = Nf3rd(my_rel=super().get_relation())
+        result = nf_3.find_nf_3()
         my_relation = super().get_relation()
         primary = set(my_relation.get_primary_keys())
-        multi_valued = set(my_relation.get_multi_valued_attribute())
         NotprimeDep = []
         primeDep = []
         for fd in super().get_minimal_cover_result():
-            self.__checkPrimaryKeyDependency(fd, primary,primeDep)
-            self.__checkNonPrimaryKeyDependency(fd, primary, NotprimeDep)
+            print()
+            self.checkPrimaryKeyDependency(fd, primary,primeDep)
+            self.checkNonPrimaryKeyDependency(fd, primary, NotprimeDep)
 
         result['primeDependency'] = self.__get_prime_relation(primeDep)
         result['noPrimeDependency'] = self.__get_NotPrime_dependent_relation(NotprimeDep)

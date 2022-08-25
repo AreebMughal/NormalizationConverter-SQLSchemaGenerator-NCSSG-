@@ -3,6 +3,7 @@ import React, {useEffect, useState} from "react";
 import axios from "axios";
 import PrintRelations from "./printRelations";
 import {get3nfReason} from "../../assets/js/nfReasons";
+import DetailReason from "../DetailReason";
 
 function NF_3() {
     const inputBoxes = my_data.getRawState().inputBoxes
@@ -20,12 +21,17 @@ function NF_3() {
     }, [inputBoxes, relationName])
 
     return (
-        <PrintRelations
-            data={data}
-            normalFormNumber='3rd'
-            names={relationNames}
-            reason={get3nfReason(data)}
-        />
+        <>
+            <PrintRelations
+                data={data}
+                normalFormNumber='3rd'
+                names={relationNames}
+                reason={get3nfReason(data)}
+            />
+            <DetailReason
+                type='3rd'
+            />
+        </>
     );
 }
 
