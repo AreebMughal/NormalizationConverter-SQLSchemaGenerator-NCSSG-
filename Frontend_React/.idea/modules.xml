@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/NCSSG.iml" filepath="$PROJECT_DIR$/.idea/NCSSG.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/Frontend_React.iml" filepath="$PROJECT_DIR$/.idea/Frontend_React.iml" />
     </modules>
   </component>
 </project>

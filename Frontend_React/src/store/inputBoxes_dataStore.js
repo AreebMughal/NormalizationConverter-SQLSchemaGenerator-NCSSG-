@@ -16,7 +16,7 @@ export const inputBoxes_data = new Store({
 });
 
 export const suggestion_store = new Store({
-    value: null
+    value: ''
 })
 
 export const get_inputBoxes = () => {

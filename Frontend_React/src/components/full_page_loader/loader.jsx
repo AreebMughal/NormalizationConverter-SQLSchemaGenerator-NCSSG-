@@ -21,8 +21,7 @@ function Loader(props) {
         <div id="cover" className='m-0 p-0'>
             <div className="sweet-loading loader m-0 p-0">
                 <span className='text-white loader-text'>
-                    Extracting Functional Dependencies <br/>
-                    Please wait...
+                    {props.message}
                 </span>
                 <ScaleLoader color={color} loading={loading} cssOverride={override} size={150}/>
             </div>

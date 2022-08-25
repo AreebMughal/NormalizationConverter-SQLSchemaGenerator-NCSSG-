@@ -76,9 +76,11 @@ const MainTool = (props) => {
     const updateCurrentIndex = (index) => {
         setCurrentIndex(index);
     }
+
     return (
         <section className={`${styles.main}`}>
-            { loading && <Loader loading={loading} /> }
+            { loading && <Loader loading={loading} message={<span>Extracting Functional Dependencies <br/>
+                    Please wait...</span>} /> }
             <UploadFile
                 setIsFdMine={setIsFdMine}
                 setLoader={setLoading}
