@@ -5,23 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3e7395d8-bd70-43b1-ae66-a5d25473b243" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/../Backend_Flask/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Backend_Flask/.idea/Backend_Flask.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Backend_Flask/.idea/React_Flask.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Backend_Flask/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Backend_Flask/.idea/inspectionProfiles/profiles_settings.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Backend_Flask/.idea/misc.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Backend_Flask/.idea/modules.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Backend_Flask/.idea/vcs.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Backend_Flask/1NF.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Backend_Flask/1nf.eps" beforeDir="false" afterPath="$PROJECT_DIR$/../Backend_Flask/1nf.eps" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Backend_Flask/dump_schema.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Backend_Flask/fdtool/FD_Info.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../Backend_Flask/fdtool/FD_Info.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Backend_Flask/server.py" beforeDir="false" afterPath="$PROJECT_DIR$/../Backend_Flask/server.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Backend_Flask/source/DrawingImage/NFSCLASS.py" beforeDir="false" afterPath="$PROJECT_DIR$/../Backend_Flask/source/DrawingImage/rel_map_nfs.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Backend_Flask/source/DrawingImage/ONENFCLASS.py" beforeDir="false" afterPath="$PROJECT_DIR$/../Backend_Flask/source/DrawingImage/rel_map_1nf.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Backend_Flask/source/NF_3.py" beforeDir="false" afterPath="$PROJECT_DIR$/../Backend_Flask/source/NF_3.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Backend_Flask/source/Sql_Form_Methods.py" beforeDir="false" afterPath="$PROJECT_DIR$/../Backend_Flask/source/Sql_Form_Methods.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/js/nfReasons.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/assets/js/nfReasons.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/DetailReason.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/DetailReason.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/normal_forms/BCNF.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/normal_forms/BCNF.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/normal_forms/NF_3.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/normal_forms/NF_3.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -47,6 +36,9 @@
       <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
     </file-type-list>
   </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
   <component name="ProjectId" id="26SF6jsi8UApciPf9vhyUhYIcpL" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <ConfirmationsSetting value="2" id="Add" />
@@ -55,22 +47,20 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">
-    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
-    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/components/full_page_loader" />
-    <property name="list.type.of.created.stylesheet" value="CSS" />
-    <property name="node.js.detected.package.eslint" value="true" />
-    <property name="node.js.detected.package.tslint" value="true" />
-    <property name="node.js.selected.package.eslint" value="(autodetect)" />
-    <property name="node.js.selected.package.tslint" value="(autodetect)" />
-    <property name="nodejs_package_manager_path" value="npm" />
-    <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
-    <property name="settings.editor.selected.configurable" value="preferences.editor" />
-    <property name="ts.external.directory.path" value="C:\Program Files\JetBrains\WebStorm 2021.2.3\plugins\JavaScriptLanguage\jsLanguageServicesImpl\external" />
-    <property name="vue.rearranger.settings.migration" value="true" />
-  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Project.color": "061f07",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\areeb\OneDrive\Desktop\FYP Project\Frontend_React\src\components\full_page_loader" />
@@ -239,6 +229,7 @@
       <workItem from="1661054467173" duration="5488000" />
       <workItem from="1661172862525" duration="7248000" />
       <workItem from="1661352109091" duration="4038000" />
+      <workItem from="1661407395297" duration="11319000" />
     </task>
     <servers />
   </component>
