@@ -29,11 +29,14 @@ const LoadData = (props) => {
     // }
 
     useEffect(() => {
-        if (data !== '')
+        if (data !== '') {
             inputBoxes_data.update(s => {
-                s.inputBoxes = data['data']['inputBoxes']
-                s.relationName = data['data']['relationName']
+                s.inputBoxes = data['inputBoxes']
+                s.relationName = data['relationName']
             });
+            props.setIsLoadWork(true);
+            console.log('Updated')
+        }
     }, [data])
 
     const handleClick = event => {
@@ -44,11 +47,11 @@ const LoadData = (props) => {
         const fileUploaded = event.target.files[0];
         setFile(fileUploaded);
         const data = new FormData();
-        data.append('file', file);
+        data.append('file', fileUploaded);
         axios.post('http://127.0.0.1:5000/loadData', data)
             .then(res => {
                 if (res.data !== 0) {
-                    console.log('=> Data:', res.data);
+                    // console.log('=> Data:', res.data);
                     setData(res.data);
                 }
             }).catch(err => {
@@ -56,6 +59,7 @@ const LoadData = (props) => {
             error = err.toString();
             setVisibility(true);
         });
+        event.target.value = null;
     };
     const setShow = () => setVisibility(false);
     return (

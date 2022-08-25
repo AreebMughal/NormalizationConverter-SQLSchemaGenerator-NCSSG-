@@ -69,7 +69,9 @@ const RelationButtons = (props) => {
                     View Diagram
                 </button>
                 <SaveData />
-                <LoadData />
+                <LoadData
+                    setIsLoadWork={props.setIsLoadWork}
+                />
             </div>
         </div>
     );

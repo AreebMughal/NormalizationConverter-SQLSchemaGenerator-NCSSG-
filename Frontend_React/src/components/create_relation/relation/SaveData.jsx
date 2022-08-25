@@ -1,14 +1,12 @@
-import axios from "axios";
-import my_data from "../../../store/data";
+import {inputBoxes_data} from "../../../store/inputBoxes_dataStore";
 import React from "react";
 
 
 const SaveData = (props) => {
 
     const saveDataClickHandler = (e) => {
-        const data = my_data.getRawState();
+        const data = inputBoxes_data.getRawState();
         // const relationName = my_data.getRawState()['relation']
-        console.log();
         const element = document.createElement("a");
         const file = new Blob([JSON.stringify(data)], {
             type: "text/plain"

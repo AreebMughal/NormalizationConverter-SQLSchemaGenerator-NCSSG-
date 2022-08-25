@@ -100,6 +100,7 @@ const CreateRelation = (props) => {
                     setCurrentCell={props.setCurrentCell}
                     onPreliminaryCheckClick={props.onPreliminaryCheckClick}
                     setShowNavbarContent={props.setShowNavbarContent}
+                    setIsLoadWork={props.setIsLoadWork}
                 />
             </div>
         </div>

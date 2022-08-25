@@ -2,7 +2,11 @@ import my_data from "../../store/data";
 import React, {useEffect, useState} from "react";
 import axios from "axios";
 import PrintRelations from "./printRelations";
+<<<<<<< HEAD
 import {get3nfReason, getBcnfReason} from "../../assets/js/nfReasons";
+=======
+import {getBcnfReason} from "../../assets/js/nfReasons";
+>>>>>>> 4031dba8cdaa0ca49c427be4f49411325bc8d962
 import DetailReason from "../DetailReason";
 
 function BCNF() {
@@ -22,6 +26,7 @@ function BCNF() {
 
     return (
         <>
+<<<<<<< HEAD
 
         <PrintRelations
             data={data}
@@ -29,6 +34,14 @@ function BCNF() {
             names={relationNames}
             reason={getBcnfReason(data)}
         />
+=======
+            <PrintRelations
+                data={data}
+                normalFormNumber='BCNF'
+                names={relationNames}
+                reason={getBcnfReason(data)}
+            />
+>>>>>>> 4031dba8cdaa0ca49c427be4f49411325bc8d962
             <DetailReason
                 type='bcnf'
             />

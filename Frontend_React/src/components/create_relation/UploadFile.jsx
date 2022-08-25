@@ -48,7 +48,6 @@ function UploadFile(props) {
             })
             props.setIsFdMine(true);
             props.setSuggestion(getSuggestion());
-
         }
     }, [data])
 
@@ -56,7 +55,6 @@ function UploadFile(props) {
         if (file === null) {
             // const FileUploader = fileUploaderRef.current
             fileUploaderRef.current.childNodes[0].childNodes[0].value = null;
-
         }
     }, [file]);
 
@@ -73,7 +71,7 @@ function UploadFile(props) {
             return (
                 <span>
                     <Bold>Note: </Bold> <br/>
-                    All Functional Dependencies are first extracted by <a href="https://pypi.org/project/fdtool/" target='_blank'>FDtool</a> and then filtered through Minimal Cover.
+                    All Functional Dependencies are first extracted and then filtered through Minimal Cover.
                     <br/>
                     And the set <Bold>{keys}</Bold> is identifying most attributes, that why we made it <Bold>Primary Key</Bold>. <br/>
                     You can change Primary key and Functional Dependencies as per your need.

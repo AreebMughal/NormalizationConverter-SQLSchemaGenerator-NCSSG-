@@ -10,6 +10,7 @@ import BCNF from "./components/normal_forms/BCNF";
 import Home from "./components/home";
 import SqlSchemaGenerator from "./components/sql_schema_generator/sqlSchemaGenerator";
 import MainTool from "./components/create_relation/MainTool";
+import BCNF from "./components/normal_forms/BCNF";
 
 function App() {
 
@@ -30,6 +31,7 @@ function App() {
         }
         return true;
     }
+
     function checkPrimary(inputBoxes) {
         const isHavePrimary = inputBoxes.map(input => input.value.trim().length !== 0 && input.primary).includes(true)
         if (!isHavePrimary) {
