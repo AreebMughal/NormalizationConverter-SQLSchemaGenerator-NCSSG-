@@ -16,7 +16,7 @@ function NF_2() {
     useEffect(() => {
         axios.post('http://127.0.0.1:5000/NF2', {inputBoxes, relationName})
             .then(res => {
-                // console.log(res.data)
+                console.log(res.data)
                 setData(res.data['result'])
                 setRelationNames(res.data['relation_names'])
             })
@@ -24,16 +24,15 @@ function NF_2() {
 
     return (
         <>
-        <PrintRelations
-            data={data}
-            normalFormNumber='2nd'
-            names={relationNames}
-            reason={get2nfReason(data, inputBoxes)}
+            <PrintRelations
+                data={data}
+                normalFormNumber='2nd'
+                names={relationNames}
+                reason={get2nfReason(data, inputBoxes)}
 
-        />
+            />
             <DetailReason
-            type = '2nd'
-
+                type='2nd'
             />
         </>
     );

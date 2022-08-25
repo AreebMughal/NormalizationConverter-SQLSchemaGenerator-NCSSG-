@@ -1,3 +1,8 @@
+from operator import mod
+
+import numpy
+from numpy.ma import shape
+
 from fdtool.fdtool import find_fdtool
 from fdtool.tane import Tane
 from source.normalizedRelation import NormalizedRelation
@@ -16,6 +21,7 @@ class FdsMiner:
             'relationName': '',
             'inputBoxes': []
         }
+        self.frequent_keys = ''
 
     def read_csv_file(self):
         with open(self.file_path, 'r') as csv_file:
@@ -26,10 +32,8 @@ class FdsMiner:
 
     def generate_new_fields(self):
         alphabet = {1: 'a', 2: 'b', 3: 'c', 4: 'd', 5: 'e', 6: 'f', 7: 'g', 8: 'h', 9: 'i', 10: 'j', 11: 'k', 12: 'l',
-                    13: 'm',
-                    14: 'n', 15: 'o', 16: 'p', 17: 'q', 18: 'r', 19: 's', 20: 't', 21: 'u', 22: 'v', 23: 'w', 24: 'x',
-                    25: 'y',
-                    26: 'z'}
+                    13: 'm', 14: 'n', 15: 'o', 16: 'p', 17: 'q', 18: 'r', 19: 's', 20: 't', 21: 'u', 22: 'v',
+                    23: 'w', 24: 'x', 25: 'y', 26: 'z'}
         count = 1
         for i in self.fields:
             self.new_fields[alphabet[count].upper()] = i
@@ -49,7 +53,6 @@ class FdsMiner:
         self.write_new_csv()
         tane_algo = Tane('./datasets/newDataset.csv', self.file_path.split('/')[2].split('.')[0])
         tane_algo.find_fds()
-
 
     def find_fds_by_fdtool(self):
         find_fdtool(self.file_path)
@@ -81,7 +84,7 @@ class FdsMiner:
                 'value': attr,
                 'width': 90,
                 'dependency': [],
-                'primary': False,
+                'primary': {attr}.issubset(self.frequent_keys),
                 'multiValue': False,
             }
             self.data_dict['inputBoxes'].append(input_box)
@@ -102,9 +105,9 @@ class FdsMiner:
                 current_attr = self.get_id(fd[1][0])
                 dependencies.append([lhs, current_attr])
 
-        print(dependencies)
+        # print(dependencies)
         for dep in dependencies:
-            print(dep)
+            # print(dep)
             self.data_dict['inputBoxes'][int(dep[1] - 1)]['dependency'].append(dep[0])
 
     def minimal_cover_filter(self):
@@ -112,6 +115,35 @@ class FdsMiner:
         table_name = file.readline().split(' : ')[1].replace('\n', '')
         attribute_names = tuple(file.readline().rsplit(' : ')[1].replace('\n', '').split(', '))
         file.readline()
+        all_fds = self.read_all_fds(file)
+
+        n = NormalizedRelation(fd=all_fds)
+        fds = n.get_minimal_cover_result()
+        # print(n.find_candidate_key(attributes_set=set(attribute_names)))
+        if self.algo_type == 'tane':
+            fds = self.revert_fields_name(fds[:])
+            attribute_names = self.fields
+        # self.print_data(fds)
+        self.get_most_frequent_key(fds)
+        self.data_dict['relationName'] = table_name
+        self.create_input_boxes(attribute_names)
+        self.add_dependencies(fds)
+
+
+    def get_most_frequent_key(self, fds):
+        keys = [set(fd[0]) for fd in fds if len(fd) != 0]
+        unique_keys = []
+        [unique_keys.append(key) for key in keys if key not in unique_keys]
+        counts = numpy.zeros(len(unique_keys), dtype='int')
+        for key in keys:
+            if key in unique_keys:
+                counts[unique_keys.index(key)] += 1
+        self.frequent_keys = (unique_keys[numpy.where(counts == max(counts))[0][0]])
+        # print(numpy.array(self.frequent_keys))
+
+
+    @staticmethod
+    def read_all_fds(file):
         all_fds = []
         if "Functional Dependencies" in file.readline():
             for fd in file.readlines():
@@ -121,44 +153,29 @@ class FdsMiner:
                 lhs = set(line[0].replace('{', '').replace('}', '').split(', '))
                 rhs = set(line[1].replace('\n', '').replace('{', '').replace('}', '').split(', '))
                 all_fds.append([lhs, rhs])
-
-        n = NormalizedRelation(fd=all_fds)
-        fds = n.get_minimal_cover_result()
-        if self.algo_type == 'tane':
-            fds = self.revert_fields_name(fds[:])
-            attribute_names = self.fields
-        self.print_data(fds)
-
-        self.data_dict['relationName'] = table_name
-        self.create_input_boxes(attribute_names)
-        for data in self.data_dict['inputBoxes']:
-            print(data)
-        self.add_dependencies(fds)
-
+        return all_fds
 
     def fd_mining(self):
-        # file = open(self.file_path, 'r')
         if self.algo_type == 'tane':
             self.find_fds_by_tane()
         else:
             self.find_fds_by_fdtool()
 
         self.minimal_cover_filter()
-        return self.data_dict
+        return {'data': self.data_dict, 'keys': list(self.frequent_keys)}
 
-
- # fds = [
- #            [['ssn'], ['Address1']],
- #            [['ssn'], ['Name']],
- #            [['ssn'], ['Email1']],
- #            [['Name', 'ssn'], ['Email1']],
- #            [['ssn'], ['pname']],
- #            [['ssn'], ['dname']],
- #            [['ssn'], ['dnum']],
- #            [['ssn'], ['Address2']],
- #            [['ssn'], ['DId']],
- #            [['ssn'], ['Email2']],
- #            [['ssn'], ['ploc']],
- #            [['Name'], ['ssn']],
- #            [['ssn'], ['pnum']]
- #        ]
+# fds = [
+#            [['ssn'], ['Address1']],
+#            [['ssn'], ['Name']],
+#            [['ssn'], ['Email1']],
+#            [['Name', 'ssn'], ['Email1']],
+#            [['ssn'], ['pname']],
+#            [['ssn'], ['dname']],
+#            [['ssn'], ['dnum']],
+#            [['ssn'], ['Address2']],
+#            [['ssn'], ['DId']],
+#            [['ssn'], ['Email2']],
+#            [['ssn'], ['ploc']],
+#            [['Name'], ['ssn']],
+#            [['ssn'], ['pnum']]
+#        ]

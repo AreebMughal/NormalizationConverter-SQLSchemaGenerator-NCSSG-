@@ -62,7 +62,7 @@ const SqlForm = (props) => {
                     return false
                 }
             } else {
-                if (!(parseInt(inp_length.value) > 0 && parseInt(inp_length.value) <= parseInt(validRange[inp_dataType]))) {
+                if (!(parseInt(inp_length.value) > 0 && !(parseInt(inp_length.value) > parseInt(validRange[inp_dataType][0] && parseInt(inp_length.value) <= parseInt(validRange[inp_dataType][1]))))) {
                     const msg = 'Please enter valid range: ' + inp_dataType + '\nValid Range is ' + validRange[inp_dataType];
                     openAlertPopup(inp_length, msg);
                     return false
@@ -106,9 +106,6 @@ const SqlForm = (props) => {
                     element.href = URL.createObjectURL(file);
                     console.log(' URL ', element.href)
                     element.download = "dump_schema.sql";
-
-                    const f = new File([res.data], 'as.sql')
-
                     document.body.appendChild(element);
                     element.click();
                 })

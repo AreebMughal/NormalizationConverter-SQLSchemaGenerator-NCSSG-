@@ -71,14 +71,6 @@ function get3nfTransitive(transitive) {
     );
 }
 
-function getBcNFDependency(primeDep) {
-    return (
-        <span>
-            BC-NF works on Primary key dependency. As attribute set => <Bold>{'{'}{primeDep[1].toString().replaceAll(',', ', ')}{'}'}</Bold> is <Bold>dependent</Bold> on
-            set => <Bold>{'{'}{primeDep[0].toString().replaceAll(',', ', ')}{'}'}</Bold>. So, it would be separated as new relation.
-        </span>
-    );
-}
 export const get3nfReason = (data) => {
     let reason = []
     if (Object.keys(data).length > 0) {
@@ -94,9 +86,17 @@ export const get3nfReason = (data) => {
         }
     }
 
-
     return (
         <p>{reason}</p>
+    );
+}
+
+function getBcNFDependency(primeDep) {
+    return (
+        <span>
+            BC-NF works on Primary key dependency. As attribute set => <Bold>{'{'}{primeDep[1].toString().replaceAll(',', ', ')}{'}'}</Bold> is <Bold>dependent</Bold> on
+            set => <Bold>{'{'}{primeDep[0].toString().replaceAll(',', ', ')}{'}'}</Bold>. So, it would be separated as new relation.
+        </span>
     );
 }
 
