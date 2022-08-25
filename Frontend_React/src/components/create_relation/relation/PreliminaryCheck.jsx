@@ -1,13 +1,15 @@
-import React, {useEffect} from "react";
+import React from "react";
 import my_data from "../../../store/data";
 import axios from "axios";
 
 const PreliminaryCheck = (props) => {
 
-
     const preliminaryCheckClickHandler = (e) => {
         if (props.onPreliminaryCheckClick(e)) {
-            axios.post('http://127.0.0.1:5000/preliminaryCheck', my_data.getRawState().inputBoxes)
+            axios.post('http://127.0.0.1:5000/preliminaryCheck', {
+                inputBoxes: my_data.getRawState().inputBoxes,
+                relationName: my_data.getRawState().relationName
+            })
                 .then(res => {
                     console.log(res);
                     props.setShowNavbarContent(true);

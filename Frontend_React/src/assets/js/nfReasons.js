@@ -103,9 +103,9 @@ function getBcNFDependency(primeDep) {
 export const getBcnfReason = (data) => {
     let reason = []
     if (Object.keys(data).length > 0) {
-        if (data['primeDep'].length > 0) {
-            for (let i = 0; i < data['primeDep'].length; i++) {
-                reason.push(getBcNFDependency(data['primeDep'][i]))
+        if (data['primeDependency'].length > 0) {
+            for (let i = 0; i < data['primeDependency'].length; i++) {
+                reason.push(getBcNFDependency(data['primeDependency'][i]))
                 reason.push(<br/>)
             }
         } else {

@@ -9,6 +9,7 @@ import NF_3 from "./components/normal_forms/NF_3";
 import Home from "./components/home";
 import SqlSchemaGenerator from "./components/sql_schema_generator/sqlSchemaGenerator";
 import MainTool from "./components/create_relation/MainTool";
+import BCNF from "./components/normal_forms/BCNF";
 
 function App() {
 
@@ -29,6 +30,7 @@ function App() {
         }
         return true;
     }
+
     function checkPrimary(inputBoxes) {
         const isHavePrimary = inputBoxes.map(input => input.value.trim().length !== 0 && input.primary).includes(true)
         if (!isHavePrimary) {
@@ -101,6 +103,7 @@ function App() {
                     <Route path="/NC-SSG/1NF" element={<NF_1/>}/>
                     <Route path="/NC-SSG/2NF" element={<NF_2/>}/>
                     <Route path="/NC-SSG/3NF" element={<NF_3/>}/>
+                    <Route path="/NC-SSG/BCNF" element={<BCNF/>}/>
                     <Route path="/NC-SSG/SQLSchema" element={<SqlSchemaGenerator/>}/>
                 </Routes>
             </BrowserRouter>

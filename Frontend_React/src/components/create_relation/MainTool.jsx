@@ -17,6 +17,7 @@ const MainTool = (props) => {
     const [disableConstraintBox, setDisableConstraintBox] = useState(false);
     const [currentCell, setCurrentCell] = useState(false);
     const [isFdMine, setIsFdMine] = useState(false);
+    const [isLoadWork, setIsLoadWork] = useState(false);
     const [loading, setLoading] = useState(false);
     const [suggestion, setSuggestion] = useState('');
 
@@ -29,14 +30,15 @@ const MainTool = (props) => {
     }, []);
 
     useEffect(() => {
-        if (isFdMine) {
+        if (isFdMine || isLoadWork) {
             const data = inputBoxes_data.getRawState();
             setInputBoxes(data.inputBoxes);
             setRelationName(data.relationName);
             setIsFdMine(false);
+            setIsLoadWork(false);
             setLoading(false);
         }
-    }, [isFdMine]);
+    }, [isFdMine, isLoadWork]);
 
     useEffect(() => {
         suggestion_store.update(s => {
@@ -103,6 +105,7 @@ const MainTool = (props) => {
                         onPreliminaryCheckClick={props.onPreliminaryCheckClick}
                         setShowNavbarContent={props.setShowNavbarContent}
                         setSuggestion={setSuggestion}
+                        setIsLoadWork={setIsLoadWork}
                     />
                     <hr className='ms-5 me-5'/>
                     <div className="row ms-2 ">

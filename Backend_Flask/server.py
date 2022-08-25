@@ -194,6 +194,7 @@ def sqlSchemaGenerator():
 def preliminaryCheck():
     try:
         data = json.loads(request.data.decode('utf-8'))
+        print(data)
         input_boxes = data['inputBoxes']
         # relation_name = data['relationName']
         relation_name = 'Something'
@@ -221,12 +222,18 @@ def fdMining():
 
 @app.route('/loadData', methods=['GET', 'POST'])
 def loadData():
+    data = '0'
     try:
-        data = json.loads(request.data.decode('utf-8'))
-        input_boxes = data['inputBoxes']
-        relation_name = data['relationName']
+        if len(request.files) > 0:
+            file = request.files['file']
+            file.save(os.path.join('./user_work/', secure_filename(file.filename)))
+            read_file = open('./user_work/'+file.filename, 'r')
+            # print(type(read_file.readline()))
+            data = read_file.readline()
     except Exception as e:
         my_exception(e)
+
+    return data
 
 
 if __name__ == '__main__':
