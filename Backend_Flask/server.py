@@ -82,6 +82,7 @@ def get_result(object_type, input_boxes_dic):
 
 
 def get_relationalMapping(nf_type, api_data):
+    result = '1'
     try:
         data = json.loads(api_data)
         input_boxes = data['inputBoxes']
@@ -92,7 +93,7 @@ def get_relationalMapping(nf_type, api_data):
         if nf_type == 'NF1':
             dic = my_relation.extract_data(input_boxes)
             rel_map = RelationalMapping(dic)
-        elif nf_type == 'NF3' or nf_type == 'BCNF':
+        elif nf_type == 'NF2' or nf_type == 'NF3' or nf_type == 'BCNF':
             normalized_relation = NormalizedRelation(relation=my_relation)
             minimal_cover_result = normalized_relation.get_minimal_cover()
             all_relations = get_all_relations(nf_result, relation_name)
@@ -103,59 +104,60 @@ def get_relationalMapping(nf_type, api_data):
             print('All Relation:\n', all_relations)
             print('All Relation Names:\n', relation_names)
             print('Foreign Key:\n', fk)
-
+        else:
+            result = '0'
     except Exception as e:
         my_exception(e)
-    return ''
+    return result
 
 
-@app.route("/minimalCover", methods=['GET', 'POST'])
+@app.route("/minimalCover", methods=['POST'])
 def minimalCover():
     return get_result(object_type='minimal_cover', input_boxes_dic=request.data.decode('utf-8'))
 
 
-@app.route("/NF1", methods=['GET', 'POST'])
+@app.route("/NF1", methods=['POST'])
 def NF1():
     return get_result(object_type='NF1', input_boxes_dic=request.data.decode('utf-8'))
 
 
-@app.route("/NF2", methods=['GET', 'POST'])
+@app.route("/NF2", methods=['POST'])
 def NF2():
     res = get_result(object_type='NF2', input_boxes_dic=request.data.decode('utf-8'))
     return res
 
 
-@app.route("/NF3", methods=['GET', 'POST'])
+@app.route("/NF3", methods=['POST'])
 def NF3():
     return get_result(object_type='NF3', input_boxes_dic=request.data.decode('utf-8'))
 
 
-@app.route("/BCNF", methods=['GET', 'POST'])
+@app.route("/BCNF", methods=['POST'])
 def BCNF():
     return get_result(object_type='BCNF', input_boxes_dic=request.data.decode('utf-8'))
 
 
-@app.route("/relationalMapping", methods=['GET', 'POST'])
+@app.route("/relationalMapping", methods=['POST'])
 def relationalMapping():
-    return get_relationalMapping('NF3', request.data.decode('utf-8'))
+    return get_relationalMapping('NF', request.data.decode('utf-8'))
 
 
-@app.route("/relationalMapping_nf2", methods=['GET', 'POST'])
+@app.route("/relationalMapping_nf2", methods=['POST'])
 def relationalMapping_nf2():
     return get_relationalMapping('NF2', request.data.decode('utf-8'))
 
 
-@app.route("/relationalMapping_nf3", methods=['GET', 'POST'])
+@app.route("/relationalMapping_nf3", methods=['POST'])
 def relationalMapping_nf3():
     return get_relationalMapping('NF3', request.data.decode('utf-8'))
 
 
-@app.route("/relationalMapping_bcnf", methods=['GET', 'POST'])
+@app.route("/relationalMapping_bcnf", methods=['POST'])
 def relationalMapping_bcnf():
     return get_relationalMapping('BCNF', request.data.decode('utf-8'))
 
 
-@app.route("/getSqlSchemaData", methods=['GET', 'POST'])
+@app.route("/getSqlSchemaData", methods=['POST'])
 def getSqlSchemaData():
     json_data = {"Data": []}
     try:
@@ -178,7 +180,7 @@ def getSqlSchemaData():
     return json_data
 
 
-@app.route("/sqlSchemaGenerator", methods=['GET', 'POST'])
+@app.route("/sqlSchemaGenerator", methods=['POST'])
 def sqlSchemaGenerator():
     script_string = ''
     try:
@@ -194,7 +196,7 @@ def sqlSchemaGenerator():
     return script_string
 
 
-@app.route("/preliminaryCheck", methods=['GET', 'POST'])
+@app.route("/preliminaryCheck", methods=['POST'])
 def preliminaryCheck():
     try:
         data = json.loads(request.data.decode('utf-8'))
@@ -209,7 +211,7 @@ def preliminaryCheck():
     return ''
 
 
-@app.route('/fdMining', methods=['GET', 'POST'])
+@app.route('/fdMining', methods=['POST'])
 def fdMining():
     data = '0'
     try:
@@ -224,7 +226,7 @@ def fdMining():
     return data
 
 
-@app.route('/loadData', methods=['GET', 'POST'])
+@app.route('/loadData', methods=['POST'])
 def loadData():
     data = '0'
     try:

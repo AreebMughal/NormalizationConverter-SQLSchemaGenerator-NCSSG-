@@ -1,11 +1,15 @@
-import React from "react";
+import React, {useState} from "react";
 import PreliminaryCheck from "./PreliminaryCheck";
 import axios from "axios";
 import my_data from "../../../store/data";
 import SaveData from "./SaveData";
 import LoadData from "./LoadData";
+import ImageModal from "../../relational_mapping/ImageModal";
 
 const RelationButtons = (props) => {
+    const [relMapModal, setRelMapModal] = useState(false);
+    const [relMapLoader, setRelMapLoader] = useState(false);
+
 
     const addCellClickHandler = (e) => {
         props.addCell({
@@ -30,7 +34,11 @@ const RelationButtons = (props) => {
         axios.post('http://127.0.0.1:5000/relationalMapping',
             {inputBoxes: my_data.getRawState().inputBoxes, relationName: my_data.getRawState().relationName})
             .then(res => {
-                console.log(res);
+                console.log(res.data);
+                if (res.data !== 0) {
+                    setRelMapModal(true);
+                }
+                setRelMapModal(true);
 
             }).catch(error => {
             alert('Server is not running => ' + error)
@@ -39,6 +47,11 @@ const RelationButtons = (props) => {
 
     return (
         <div className="buttons ms-2 mt-1">
+            <ImageModal
+                imgName='/1NF.png'
+                show={relMapModal}
+                setShow={setRelMapModal}
+            />
             <button
                 className='btn btn-sm btn-primary text-white btn-style me-1'
                 onClick={addCellClickHandler}
@@ -68,7 +81,7 @@ const RelationButtons = (props) => {
                 >
                     View Diagram
                 </button>
-                <SaveData />
+                <SaveData/>
                 <LoadData
                     setIsLoadWork={props.setIsLoadWork}
                 />

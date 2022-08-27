@@ -135,9 +135,7 @@ const MainTool = (props) => {
                 />
             </div>
             {/*<LoadImage />*/}
-            <ImageModal
-                imgName='/1NF.png'
-            />
+
         </section>
     );
 }

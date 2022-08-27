@@ -13,28 +13,8 @@ font_size = 14
 
 
 class RelationalMapping:
-    def __init__(self):
-        dics = {
-            'fds': [
-                [{'ssn'}, {'ename'}],
-                [{'ssn'}, {'email'}],
-                [{'ssn'}, {'dnum'}],
-                [{'ssn'}, {'pakistanpakistan1'}],
-                [{'ssn'}, {'dcdcz'}],
-                [{'ssn'}, {'alisabkiikochwinaiah'}],
-                [{'ssn'}, {'pczdf'}],
-                [{'ssn'}, {'tasdaspakistan'}],
-                [{'ssn'}, {'idada'}],
-                [{'ssn'}, {'jsdas'}],
-                [{'ssn'}, {'lsdasd'}],
-                [{'ssn'}, {'ksdasd'}],
-                [{'ssn', 'dnum'}, {'dname'}],
-                [{'ssn', 'dcdcz'}, {'p'}],
-                [{'dnum'}, {'dloc'}]
-            ],
-            'primary': ['ssn'],
-            'multi_value': ['email', 'dname']
-        }
+    def __init__(self, dics):
+
         self.__dic = dics
         self.__multivalue = self.__dic['multi_value']
         self.__primary = self.__dic['primary']

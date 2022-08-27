@@ -11,6 +11,11 @@ const ImageModal = (props) => {
     const [url, seturl] = useState();
 
     useEffect(() => {
+        setShow(props.show);
+        console.log('Img Modal', props.show);
+    }, [props.show])
+
+    useEffect(() => {
         const func = async () => {
             // const storage = getStorage();
             const reference = ref(firebaseStorage, props.imgName);
@@ -22,16 +27,9 @@ const ImageModal = (props) => {
         func();
     }, []);
 
-    function handleShow(v) {
-        setShow(true);
-    }
-
     return (
         <>
-            <Button className="me-2 mb-2" onClick={() => handleShow()}>
-                Full screen
-            </Button>
-            <Modal show={show} fullscreen={true} onHide={() => setShow(false)}>
+            <Modal show={show} fullscreen={true} onHide={() => props.setShow(false)}>
                 <Modal.Header closeButton>
                     <Modal.Title>Modal</Modal.Title>
                 </Modal.Header>

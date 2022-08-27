@@ -1,7 +1,7 @@
 import {useEffect, useState} from "react";
 import {getDownloadURL, ref} from "firebase/storage";
 import {firebaseStorage} from "./connectFirebase";
-import '../components/relational_mapping/LoadImage.css';
+
 
 const LoadImage = () => {
     const [url, seturl] = useState();
