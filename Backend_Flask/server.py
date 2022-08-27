@@ -93,9 +93,13 @@ def get_relationalMapping(nf_type, api_data):
             dic = my_relation.extract_data(input_boxes)
             rel_map = RelationalMapping(dic)
         elif nf_type == 'NF3' or nf_type == 'BCNF':
+            normalized_relation = NormalizedRelation(relation=my_relation)
+            minimal_cover_result = normalized_relation.get_minimal_cover()
             all_relations = get_all_relations(nf_result, relation_name)
             relation_names = create_relation_names(nf_result, relation_name)
             fk = get_all_foreign_keys_list(nf_result, relation_names, all_relations)
+
+            print('Minimal Cover:\n', minimal_cover_result)
             print('All Relation:\n', all_relations)
             print('All Relation Names:\n', relation_names)
             print('Foreign Key:\n', fk)
@@ -133,7 +137,7 @@ def BCNF():
 
 @app.route("/relationalMapping", methods=['GET', 'POST'])
 def relationalMapping():
-    return get_relationalMapping('NF1', request.data.decode('utf-8'))
+    return get_relationalMapping('NF3', request.data.decode('utf-8'))
 
 
 @app.route("/relationalMapping_nf2", methods=['GET', 'POST'])
