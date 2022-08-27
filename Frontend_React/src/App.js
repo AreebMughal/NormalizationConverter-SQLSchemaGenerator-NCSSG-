@@ -10,7 +10,7 @@ import BCNF from "./components/normal_forms/BCNF";
 import Home from "./components/home";
 import SqlSchemaGenerator from "./components/sql_schema_generator/sqlSchemaGenerator";
 import MainTool from "./components/create_relation/MainTool";
-import BCNF from "./components/normal_forms/BCNF";
+// import BCNF from "./components/normal_forms/BCNF";
 
 function App() {
 

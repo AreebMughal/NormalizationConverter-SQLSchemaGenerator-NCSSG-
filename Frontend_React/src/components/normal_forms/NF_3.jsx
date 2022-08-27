@@ -22,18 +22,7 @@ function NF_3() {
 
     return (
         <>
-<<<<<<< HEAD
 
-        <PrintRelations
-            data={data}
-            normalFormNumber='3rd'
-            names={relationNames}
-            reason={get3nfReason(data)}
-        />
-        <DetailReason
-        type='3rd'
-    />
-=======
             <PrintRelations
                 data={data}
                 normalFormNumber='3rd'
@@ -43,7 +32,7 @@ function NF_3() {
             <DetailReason
                 type='3rd'
             />
->>>>>>> 4031dba8cdaa0ca49c427be4f49411325bc8d962
+
         </>
     );
 }
