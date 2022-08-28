@@ -6,11 +6,10 @@ import MinimalCover from "./components/minimalCover";
 import NF_2 from "./components/normal_forms/NF_2";
 import my_data from "./store/data";
 import NF_3 from "./components/normal_forms/NF_3";
-import BCNF from "./components/normal_forms/BCNF";
 import Home from "./components/home";
 import SqlSchemaGenerator from "./components/sql_schema_generator/sqlSchemaGenerator";
 import MainTool from "./components/create_relation/MainTool";
-// import BCNF from "./components/normal_forms/BCNF";
+import BCNF from "./components/normal_forms/BCNF";
 
 function App() {
 

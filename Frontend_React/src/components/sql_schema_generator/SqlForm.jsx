@@ -130,20 +130,6 @@ const SqlForm = (props) => {
         return checkRelationNames(relationNames) && checkInputFields(inputFields)
     }
 
-    function getURL() {
-        let url = ''
-        axios({
-            url: 'https://source.unsplash.com/random/500x500',
-            method: 'GET',
-            responseType: 'blob'
-        })
-            .then((response) => {
-                url = window.URL
-                    .createObjectURL(new Blob([response.data]));
-            })
-        return url;
-    }
-
     const formSubmit = (e) => {
         e.preventDefault();
         if (isValidData(e.target)) {

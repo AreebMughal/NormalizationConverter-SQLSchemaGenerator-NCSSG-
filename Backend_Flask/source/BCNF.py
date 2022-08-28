@@ -29,8 +29,7 @@ class BcNf(NormalizedRelation):
         NotprimeDep = []
         primeDep = []
         for fd in super().get_minimal_cover_result():
-
-            self.checkPrimaryKeyDependency(fd, primary,primeDep)
+            self.checkPrimaryKeyDependency(fd, primary, primeDep)
             self.checkNonPrimaryKeyDependency(fd, primary, NotprimeDep)
         print("y")
         print(primeDep)
@@ -40,19 +39,16 @@ class BcNf(NormalizedRelation):
         result['primeDependency'] = self.__get_prime_relation(primeDep)
         result['noPrimeDependency'] = self.__get_NotPrime_dependent_relation(NotprimeDep)
 
-
         return result
 
     def checkPrimaryKeyDependency(self, fd, primary, primeDep):
-        if set(fd[1]).issubset(primary) or set(fd[1])==(primary):
+        if set(fd[1]).issubset(primary) or set(fd[1]) == (primary):
             primeDep.append(fd)
 
-
     @staticmethod
-    def checkNonPrimaryKeyDependency(fd, primary,NotprimeDep):
-        if not set(fd[1]).issubset(primary) or set(fd[1])==(primary):
+    def checkNonPrimaryKeyDependency(fd, primary, NotprimeDep):
+        if not set(fd[1]).issubset(primary) or set(fd[1]) == (primary):
             NotprimeDep.append(fd)
-
 
     @staticmethod
     def __get_prime_relation(primeDep):

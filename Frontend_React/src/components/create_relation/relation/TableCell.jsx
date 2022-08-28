@@ -37,7 +37,7 @@ const TableCell = (props) => {
     }
     const getClassName = (inputBox) => {
         // let classname = 'inputBox red-border alert-danger mt-3 '
-        let classname = 'inputBox mt-3 '
+        let classname = 'inputBox '
         if (inputBox.primary && inputBox.multiValue)
             classname += 'ib-underline ib-dash';
         else if (inputBox.multiValue)

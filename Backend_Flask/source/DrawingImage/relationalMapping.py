@@ -1,23 +1,31 @@
+import os
 import turtle
 from tkinter import *
 # import cv2
 from turtle import *
+import pyrebase
 from PIL import Image
 from turtle import Turtle, Screen
+from google.cloud import storage
+from firebase import firebase
+
+font_size = 14
 
 
 class RelationalMapping:
-    def __init__(self, dic):
-        self.__dic = dic
-        self.__multivalue = dic['multi_value']
-        self.__primary = dic['primary']
+    def __init__(self, dics):
+
+        self.__dic = dics
+        self.__multivalue = self.__dic['multi_value']
+        self.__primary = self.__dic['primary']
+
         self.yertle = None
         self.TURTLE_SIZE = 0
         self.screen = 0
         self.starting()
 
-
     def starting(self):
+
         self.TURTLE_SIZE = 20
         self.screen = turtle.Screen()
         screenTk = self.screen.getcanvas().winfo_toplevel()
@@ -26,17 +34,20 @@ class RelationalMapping:
         hight = self.screen.window_height() / 8 - self.TURTLE_SIZE / 2
         turtle.tracer(0)
         self.yertle = Turtle(shape="turtle", visible=False)
+
         elements = self.getattribute()
         single_compo = self.find_single_composite(self.__dic['fds'])
         self.drawattr(elements, self.__multivalue, self.__primary, single_compo)
 
         turtle.getcanvas().postscript(file="1nf.eps")
         self.get_image()
+        self.upload()
         # self.screen.mainloop()
 
     def set_Tortle(self):
         self.yertle.penup()
-        self.yertle.goto(self.TURTLE_SIZE / 2 - self.screen.window_width(), self.screen.window_height() / 8 - self.TURTLE_SIZE / 2)
+        self.yertle.goto(self.TURTLE_SIZE / 2 - self.screen.window_width(),
+                         self.screen.window_height() / 8 - self.TURTLE_SIZE / 2)
         self.yertle.pendown()
         self.yertle.shape("square")
         self.yertle.width(2)
@@ -107,12 +118,14 @@ class RelationalMapping:
         self.set_Tortle()
         multivalue = multivalue
         primarykeys = primary
-        box_size = 70
+        box_size = 90
         single = single_compo[0]
         composite = single_compo[1]
 
         keyss = single.keys()
         attributes = att
+        print(attributes)
+        print(len(attributes))
         level = 1
         keys_level_dic = dict()
         self.simple_line(attributes, box_size, keys_level_dic, level, single)
@@ -207,7 +220,7 @@ class RelationalMapping:
                 self.simple_box(box_size, i, primarykeys)
 
     def get_image(self):
-        TARGET_BOUNDS = (2000, 2000)
+        TARGET_BOUNDS = (1600, 800)
         # Load the EPS at 10 times whatever size Pillow thinks it should be
         # (Experimentaton suggests that scale=1 means 72 DPI but that would
         #  make 600 DPI scale=8⅓ and Pillow requires an integer)
@@ -293,18 +306,31 @@ class RelationalMapping:
         self.yertle.pendown()
         self.yertle.forward(box_size)
         self.yertle.right(90)
-        self.yertle.forward(30)
+        self.yertle.forward(40)
         self.yertle.right(90)
         self.yertle.forward(box_size)
         self.yertle.right(90)
-        self.yertle.forward(30)
+        self.yertle.forward(40)
         self.yertle.right(90)
         self.yertle.right(90)
         self.yertle.penup()
         self.yertle.forward(15)
         self.yertle.left(90)
-        self.yertle.forward(10)
-        self.yertle.write(i, font=("Verdana", 10, "normal",))
+        self.yertle.forward(5)
+        if (len(i) >= 10):
+            part1 = i[:10] + "_"
+
+            part2 = i[10:len(i)]
+            self.yertle.write(part1, font=("Verdana", font_size, "bold"))
+            self.yertle.right(90)
+            self.yertle.forward(15)
+            self.yertle.left(90)
+            self.yertle.write(part2, font=("Verdana", font_size, "bold"))
+            self.yertle.right(90)
+            self.yertle.back(15)
+            self.yertle.left(90)
+        else:
+            self.yertle.write(i, font=("Verdana", font_size, "bold",))
         if (i in primarykeys):
             self.yertle.right(90)
             self.yertle.forward(1)
@@ -316,7 +342,7 @@ class RelationalMapping:
             self.yertle.right(90)
             self.yertle.back(1)
             self.yertle.left(90)
-        self.yertle.back(10)
+        self.yertle.back(5)
         self.yertle.right(90)
         self.yertle.back(15)
         self.yertle.right(90)
@@ -347,7 +373,7 @@ class RelationalMapping:
                 self.yertle.right(90)
             else:
                 self.yertle.pendown()
-                self.yertle.forward(30)
+                self.yertle.forward(40)
                 self.yertle.penup()
                 self.yertle.right(90)
         self.yertle.penup()
@@ -355,7 +381,7 @@ class RelationalMapping:
         self.yertle.forward(15)
         self.yertle.left(90)
         self.yertle.forward(10)
-        self.yertle.write(i, font=("Verdana", 10, "normal"))
+        self.yertle.write(i, font=("Verdana", font_size, "bold"))
         self.yertle.back(10)
         self.yertle.right(90)
         self.yertle.back(15)
@@ -364,3 +390,19 @@ class RelationalMapping:
         self.yertle.right(90)
         self.yertle.forward(box_size)
         self.yertle.back(2)
+
+    def upload(self):
+        global firebase
+        os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "accountConfig.json"
+        db_url = 'https://ncssg-27984-default-rtdb.firebaseio.com/'  # Your project url
+        firebase = firebase.FirebaseApplication(db_url, None)
+        client = storage.Client()
+        bucket = client.get_bucket('ncssg-27984.appspot.com')
+        imageBlob = bucket.blob("/")
+        file_name = "1NF.png"
+        imagePath = r"C:\Users\areeb\OneDrive\Desktop\FYP Project\Backend_Flask\source\DrawingImage\1NF.png"
+        imageBlob = bucket.blob(file_name)
+        imageBlob.upload_from_filename(imagePath)  # Upload your imagepip install pycryptodome
+
+
+# RelationalMapping()

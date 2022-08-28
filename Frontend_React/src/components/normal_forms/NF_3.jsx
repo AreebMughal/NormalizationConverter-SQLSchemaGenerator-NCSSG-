@@ -22,7 +22,6 @@ function NF_3() {
 
     return (
         <>
-
             <PrintRelations
                 data={data}
                 normalFormNumber='3rd'
@@ -32,7 +31,6 @@ function NF_3() {
             <DetailReason
                 type='3rd'
             />
-
         </>
     );
 }

@@ -81,7 +81,7 @@ const CreateRelation = (props) => {
                 </div>
             </div>
             <div className="card-body">
-                <div className='col-12 d-flex flex-wrap'>
+                <div className='col-12 d-flex flex-wrap mb-3'>
                     <RelationName
                         setRelationName={props.setRelationName}
                         name={props.relationName}

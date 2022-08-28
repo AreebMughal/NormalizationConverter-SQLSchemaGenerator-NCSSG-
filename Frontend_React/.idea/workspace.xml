@@ -7,10 +7,22 @@
     <list default="true" id="3e7395d8-bd70-43b1-ae66-a5d25473b243" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/../Backend_Flask/fdtool/FD_Info.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../Backend_Flask/fdtool/FD_Info.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../Backend_Flask/source/BCNF.py" beforeDir="false" afterPath="$PROJECT_DIR$/../Backend_Flask/source/BCNF.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/assets/js/nfReasons.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/assets/js/nfReasons.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/DetailReason.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/DetailReason.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/normal_forms/BCNF.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/normal_forms/BCNF.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/create_relation/MainTool.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/create_relation/MainTool.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/create_relation/UploadFile.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/create_relation/UploadFile.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/create_relation/css/TableCell.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/create_relation/css/TableCell.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/create_relation/relation/CreateRelation.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/create_relation/relation/CreateRelation.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/create_relation/relation/RelationButtons.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/create_relation/relation/RelationButtons.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/create_relation/relation/TableCell.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/create_relation/relation/TableCell.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/full_page_loader/loader.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/full_page_loader/loader.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/full_page_loader/loader.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/full_page_loader/loader.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/normal_forms/NF_3.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/normal_forms/NF_3.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/sql_schema_generator/SqlForm.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/sql_schema_generator/SqlForm.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -47,20 +59,20 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Project.color": "061f07",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Project.color&quot;: &quot;061f07&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\areeb\OneDrive\Desktop\FYP Project\Frontend_React\src\components\full_page_loader" />
@@ -230,6 +242,7 @@
       <workItem from="1661172862525" duration="7248000" />
       <workItem from="1661352109091" duration="4038000" />
       <workItem from="1661407395297" duration="23818000" />
+      <workItem from="1661695780065" duration="393000" />
     </task>
     <servers />
   </component>

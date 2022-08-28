@@ -84,9 +84,9 @@ const DetailReason = (props) => {
 
                     else  {
                         reason.push(
-                          <span>
+                            <span>
                               The FD <b>{data['step_3'][i][j]}</b> --> <b>{data['step_3'][i][j+1]}</b> is a partial dependency As LHS  <b>{data['step_3'][i][j]}</b> is a proper subset of <b>{primaryKey}</b> which is a PK , so we split it
-                              {/*string += `The FD ${data['step_3'][i][j]} --> ${data['step_3'][i][j+1]} is a partial dependency As LHS  ${data['step_3'][i][j]} is a proper subset of ${primaryKey} which is a PK , so we split it`*/}
+                                {/*string += `The FD ${data['step_3'][i][j]} --> ${data['step_3'][i][j+1]} is a partial dependency As LHS  ${data['step_3'][i][j]} is a proper subset of ${primaryKey} which is a PK , so we split it`*/}
                          </span>
                         )
 
@@ -121,13 +121,13 @@ const DetailReason = (props) => {
                             <span>
                                 The FD <b>{data['step_3'][i][j]} </b> --> <b>{data['step_3'][i][j+1]}</b> is already in 3NF;
                             </span>
-                    )}
+                        )}
                     else  {
                         reason.push(
                             <span>
                                 The FD <b>{data['step_3'][i][j]}</b> --> <b>{data['step_3'][i][j+1]}</b> is a transitive dependency As LHS <b>{data['step_3'][i][j]}</b> is not PrimaryKey, so we split it into a new relation
                             </span>
-                                )
+                        )
                     }
 
                 }
@@ -204,21 +204,21 @@ const DetailReason = (props) => {
                     //     { getType() }
                     // </div>
 
-                        <div className="row mt-2">
-                            <div className="col-sm-8">
-                                <div className="card">
-                                    <div className="card-header">
-                                        Reason through Minimal Cover
-                                    </div>
-                                    <div className="card-body">
-                                        {/*<h5 className="card-title">hth</h5>*/}
-                                        <p className="card-text"> { minimalCover() }</p>
-                                        <h5 className="card-title">Resolving FDs</h5>
-                                        <p className="card-text"> { getType() }</p>
-                                    </div>
+                    <div className="row mt-2">
+                        <div className="col-sm-8">
+                            <div className="card">
+                                <div className="card-header">
+                                    Reason through Minimal Cover
+                                </div>
+                                <div className="card-body">
+                                    {/*<h5 className="card-title">hth</h5>*/}
+                                    <p className="card-text"> { minimalCover() }</p>
+                                    <h5 className="card-title">Resolving FDs</h5>
+                                    <p className="card-text"> { getType() }</p>
                                 </div>
                             </div>
                         </div>
+                    </div>
 
                     : ''
                 }

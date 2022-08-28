@@ -1,0 +1,14 @@
+.image {
+    min-width: 97.5vw;
+    height: 90vh;
+    border: 1px solid black;
+}
+
+.__btn-rm-download {
+    border-color: white;
+}
+.__btn-rm-download:hover {
+    background: white;
+    color: black !important;
+    transition: all .6s ease-out;
+}

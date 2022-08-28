@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import {FileUploader} from "react-drag-drop-files";
 import axios from "axios";
 import './css/uploadFile.css'
-import {inputBoxes_data, suggestion_store} from "../../store/inputBoxes_dataStore";
+import {inputBoxes_data} from "../../store/inputBoxes_dataStore";
 import ErrorModal from "../modal/ErrorModal";
 import Bold from "../general_UI/Bold";
 
@@ -27,7 +27,7 @@ function UploadFile(props) {
                     if (res.data !== 0) {
                         console.log('=> Data:', res.data);
                         setData(res.data);
-                    }
+                    } else setError('Error! There is some problem in Flask Server.');
                 }).catch(err => {
                 console.log(err);
                 setError(err.toString());
@@ -90,7 +90,7 @@ function UploadFile(props) {
                 setShow={setShow}
             />
             }
-            <div className="container pt-2" ref={fileUploaderRef} >
+            <div className="container pt-2" ref={fileUploaderRef}>
                 <FileUploader handleChange={handleChange} name="file"
                               types={fileTypes}
                               classes='upload-file col-lg-12'

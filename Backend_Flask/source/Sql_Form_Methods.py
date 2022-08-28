@@ -36,6 +36,7 @@ def get_foreign_relation_of(relations):
 
 def get_foreign_keys(relation, all_relations, current):
     foreign_keys = []
+    print(all_relations)
     primary_keys = all_relations['Fully_dependent'][0]
     # print(current, ':')
     for key, rel in all_relations.items():
@@ -91,7 +92,10 @@ def get_all_relations(nf_result, relation_name):
     for key, relations in nf_result.items():
         index = 0
         for relation in relations:
-            all_relations[relation_names[key][index][1]] = ([set(relation[0]), set(relation[1])])
+            if len(relation) > 1:
+                all_relations[relation_names[key][index][1]] = ([set(relation[0]), set(relation[1])])
+            elif len(relation) == 1:
+                all_relations[relation_names[key][index][1]] = ([set(relation[0])])
             index += 1
     # print(all_relations)
     return all_relations

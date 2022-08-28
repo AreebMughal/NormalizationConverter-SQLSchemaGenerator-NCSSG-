@@ -5,12 +5,21 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a573f349-5d8b-480f-b5d2-5a4c765ae901" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/1nf.eps" beforeDir="false" afterPath="$PROJECT_DIR$/1nf.eps" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/datasets/Dataset.csv" beforeDir="false" afterPath="$PROJECT_DIR$/datasets/Dataset.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fdtool/FD_Info.txt" beforeDir="false" afterPath="$PROJECT_DIR$/fdtool/FD_Info.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server.py" beforeDir="false" afterPath="$PROJECT_DIR$/server.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/source/BCNF.py" beforeDir="false" afterPath="$PROJECT_DIR$/source/BCNF.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/DrawingImage/rel_map_nfs.py" beforeDir="false" afterPath="$PROJECT_DIR$/source/DrawingImage/rel_map_nfs.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/DrawingImage/relationalMapping.py" beforeDir="false" afterPath="$PROJECT_DIR$/source/DrawingImage/relationalMapping.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/NF_2.py" beforeDir="false" afterPath="$PROJECT_DIR$/source/NF_2.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/Sql_Form_Methods.py" beforeDir="false" afterPath="$PROJECT_DIR$/source/Sql_Form_Methods.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user_work/your_work_1.txt" beforeDir="false" afterPath="$PROJECT_DIR$/user_work/your_work_1.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../Frontend_React/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Frontend_React/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../Frontend_React/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/../Frontend_React/src/App.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../Frontend_React/src/assets/js/nfReasons.js" beforeDir="false" afterPath="$PROJECT_DIR$/../Frontend_React/src/assets/js/nfReasons.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../Frontend_React/src/components/DetailReason.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../Frontend_React/src/components/DetailReason.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Frontend_React/src/components/normal_forms/BCNF.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../Frontend_React/src/components/normal_forms/BCNF.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../Frontend_React/src/components/normal_forms/NF_3.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../Frontend_React/src/components/normal_forms/NF_3.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -30,13 +39,13 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;
   }
-}]]></component>
+}</component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
