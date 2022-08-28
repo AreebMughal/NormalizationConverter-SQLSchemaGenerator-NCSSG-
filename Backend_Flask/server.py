@@ -200,11 +200,14 @@ def sqlSchemaGenerator():
 def preliminaryCheck():
     try:
         data = json.loads(request.data.decode('utf-8'))
-        print(data)
+        # print(data)
         input_boxes = data['inputBoxes']
-        # relation_name = data['relationName']
-        relation_name = 'Something'
+        relation_name = data['relationName']
+        # relation_name = 'Something'
         my_relation = Relation(rel_name=relation_name, input_boxes=input_boxes)
+        normalized_relation = NormalizedRelation(my_relation)
+        minimal_cover_result = normalized_relation.get_minimal_cover_result()
+        print(minimal_cover_result)
 
     except Exception as e:
         my_exception(e)

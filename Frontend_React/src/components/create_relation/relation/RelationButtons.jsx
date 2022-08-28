@@ -5,10 +5,16 @@ import my_data from "../../../store/data";
 import SaveData from "./SaveData";
 import LoadData from "./LoadData";
 import ImageModal from "../../relational_mapping/ImageModal";
+import Loader from "../../full_page_loader/loader";
+import ImageLoader from "../../full_page_loader/ImageLoader";
+import ErrorModal from "../../modal/ErrorModal";
+import RelationalMapping from "../../relational_mapping/RelationalMapping";
 
 const RelationButtons = (props) => {
     const [relMapModal, setRelMapModal] = useState(false);
     const [relMapLoader, setRelMapLoader] = useState(false);
+    const [visibility, setVisibility] = useState(false);
+    const [error, setError] = useState(null);
 
 
     const addCellClickHandler = (e) => {
@@ -31,26 +37,35 @@ const RelationButtons = (props) => {
     }
 
     const relationalMappingClickHandler = (e) => {
+        setRelMapLoader(true);
         axios.post('http://127.0.0.1:5000/relationalMapping',
             {inputBoxes: my_data.getRawState().inputBoxes, relationName: my_data.getRawState().relationName})
             .then(res => {
                 console.log(res.data);
                 if (res.data !== 0) {
                     setRelMapModal(true);
+                    setRelMapLoader(false);
                 }
                 setRelMapModal(true);
-
-            }).catch(error => {
-            alert('Server is not running => ' + error)
+                setRelMapLoader(false);
+            }).catch(err => {
+            console.log(err);
+            setRelMapLoader(false);
+            setError(err.toString());
+            setVisibility(true);
         });
     }
 
     return (
         <div className="buttons ms-2 mt-1">
-            <ImageModal
-                imgName='/1NF.png'
-                show={relMapModal}
-                setShow={setRelMapModal}
+            <RelationalMapping
+                relMapModal={relMapModal}
+                relMapLoader={relMapLoader}
+                visibility={visibility}
+                error={error}
+                setRelMapModal={setRelMapModal}
+                setRelMapLoader={setRelMapLoader}
+                setVisibility={setVisibility}
             />
             <button
                 className='btn btn-sm btn-primary text-white btn-style me-1'
