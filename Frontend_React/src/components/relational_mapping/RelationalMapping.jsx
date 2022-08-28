@@ -31,6 +31,7 @@ const RelationalMapping = (props) => {
                 imgName='/1NF.png'
                 show={relMapModal}
                 setShow={props.setRelMapModal}
+                title={props.title}
             />
         </>
     );

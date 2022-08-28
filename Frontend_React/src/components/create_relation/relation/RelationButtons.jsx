@@ -4,10 +4,6 @@ import axios from "axios";
 import my_data from "../../../store/data";
 import SaveData from "./SaveData";
 import LoadData from "./LoadData";
-import ImageModal from "../../relational_mapping/ImageModal";
-import Loader from "../../full_page_loader/loader";
-import ImageLoader from "../../full_page_loader/ImageLoader";
-import ErrorModal from "../../modal/ErrorModal";
 import RelationalMapping from "../../relational_mapping/RelationalMapping";
 
 const RelationButtons = (props) => {
@@ -38,8 +34,10 @@ const RelationButtons = (props) => {
 
     const relationalMappingClickHandler = (e) => {
         setRelMapLoader(true);
-        axios.post('http://127.0.0.1:5000/relationalMapping',
-            {inputBoxes: my_data.getRawState().inputBoxes, relationName: my_data.getRawState().relationName})
+        axios.post('http://127.0.0.1:5000/relationalMapping', {
+            inputBoxes: my_data.getRawState().inputBoxes,
+            relationName: my_data.getRawState().relationName
+        })
             .then(res => {
                 console.log(res.data);
                 if (res.data !== 0) {
@@ -57,7 +55,7 @@ const RelationButtons = (props) => {
     }
 
     return (
-        <div className="buttons ms-2 mt-1">
+        <div className="buttons ms-2 mt-3">
             <RelationalMapping
                 relMapModal={relMapModal}
                 relMapLoader={relMapLoader}
@@ -66,6 +64,7 @@ const RelationButtons = (props) => {
                 setRelMapModal={setRelMapModal}
                 setRelMapLoader={setRelMapLoader}
                 setVisibility={setVisibility}
+                title={'Relational Mapping'}
             />
             <button
                 className='btn btn-sm btn-primary text-white btn-style me-1'
@@ -101,8 +100,7 @@ const RelationButtons = (props) => {
                     setIsLoadWork={props.setIsLoadWork}
                 />
             </div>
-        </div>
-    );
+        </div>);
 }
 
 export default RelationButtons;
