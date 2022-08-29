@@ -80,7 +80,7 @@ function UploadFile(props) {
         }
         return '';
     }
-    getSuggestion();
+    // getSuggestion();
     return (
         <>
             {visibility &&

@@ -23,7 +23,6 @@ function BCNF() {
 
     return (
         <>
-
             <PrintRelations
                 data={data}
                 normalFormNumber='BCNF'

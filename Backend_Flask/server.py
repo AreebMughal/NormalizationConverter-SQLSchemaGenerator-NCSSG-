@@ -91,7 +91,6 @@ def get_relationalMapping(nf_type, api_data):
         nf_result = get_result(object_type=nf_type, input_boxes_dic=request.data.decode('utf-8'))['result']
 
         if nf_type == 'NF1':
-            print('yess')
             dic = my_relation.extract_data(input_boxes)
             rel_map = RelationalMapping(dic)
         elif nf_type == 'NF2' or nf_type == 'NF3' or nf_type == 'BCNF':
