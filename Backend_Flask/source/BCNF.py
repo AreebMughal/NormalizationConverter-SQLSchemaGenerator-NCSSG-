@@ -13,8 +13,10 @@ class BcNf(NormalizedRelation):
 
     @staticmethod
     def check_fd_in_primeDep(fd, primeDep):
+
         index = -1
         for i in range(len(primeDep)):
+            print(primeDep[i][0])
             if fd == primeDep[i][0]:
                 index = i
         return index
@@ -27,30 +29,26 @@ class BcNf(NormalizedRelation):
         NotprimeDep = []
         primeDep = []
         for fd in super().get_minimal_cover_result():
-            print()
-            self.checkPrimaryKeyDependency(fd, primary,primeDep)
+            self.checkPrimaryKeyDependency(fd, primary, primeDep)
             self.checkNonPrimaryKeyDependency(fd, primary, NotprimeDep)
+        print("y")
+        print(primeDep)
+        print("n")
+        print(NotprimeDep)
 
         result['primeDependency'] = self.__get_prime_relation(primeDep)
         result['noPrimeDependency'] = self.__get_NotPrime_dependent_relation(NotprimeDep)
-        print(result)
+
         return result
 
     def checkPrimaryKeyDependency(self, fd, primary, primeDep):
-        if set(fd[1]).issubset(primary) or set(fd[1])==(primary):
-            index = self.check_fd_in_primeDep(fd[0], primeDep)
-            if index != -1:
-                primeDep[index][1].append(fd[1][0])
-            else:
-                primeDep.append(fd)
+        if set(fd[1]).issubset(primary) or set(fd[1]) == (primary):
+            primeDep.append(fd)
 
     @staticmethod
-    def checkNonPrimaryKeyDependency(fd, primary,NotprimeDep):
-        if not set(fd[1]) == primary:
-            if len(NotprimeDep) == 0:
-                NotprimeDep.append(fd)
-            else:
-                NotprimeDep[0][1].append(fd[1][0])
+    def checkNonPrimaryKeyDependency(fd, primary, NotprimeDep):
+        if not set(fd[1]).issubset(primary) or set(fd[1]) == (primary):
+            NotprimeDep.append(fd)
 
     @staticmethod
     def __get_prime_relation(primeDep):

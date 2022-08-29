@@ -9,6 +9,8 @@ import Suggestion from "./fds_list/Suggestion";
 import UploadFile from "./UploadFile";
 import Loader from "../full_page_loader/loader";
 import HrOR from "../general_UI/hrOR";
+import LoadImage from "../../firebase/LoadImage";
+import ImageModal from "../relational_mapping/ImageModal";
 
 const MainTool = (props) => {
     const [inputBoxes, setInputBoxes] = useState([]);
@@ -132,6 +134,8 @@ const MainTool = (props) => {
                     setCurrentCell={setCurrentCell}
                 />
             </div>
+            {/*<LoadImage />*/}
+
         </section>
     );
 }

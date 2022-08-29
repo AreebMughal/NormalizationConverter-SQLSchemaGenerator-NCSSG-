@@ -2,6 +2,7 @@ import my_data from "../../store/data";
 import React, {useEffect, useState} from "react";
 import axios from "axios";
 import PrintRelations from "./printRelations";
+
 import {getBcnfReason} from "../../assets/js/nfReasons";
 import DetailReason from "../DetailReason";
 

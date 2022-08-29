@@ -51,7 +51,7 @@ class Nf2nd(NormalizedRelation):
 
         fully_dependent_rel = [[fully_dependent_rel[0], full_dependent_rhs]]
         if len(fully_dependent_rel[0][0]) == 0:
-            fully_dependent_rel = []
+            fully_dependent_rel = [[list(primary), full_dependent_rhs]]
         result['full'] = fully_dependent_rel
         result['partial'] = partially_dependent_rel
         result['multi'] = multi_value_rel

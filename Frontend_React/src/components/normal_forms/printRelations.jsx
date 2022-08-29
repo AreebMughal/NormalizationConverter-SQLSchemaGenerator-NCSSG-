@@ -1,12 +1,21 @@
 import my_data from "../../store/data";
 import {checkRelation, handleSizeChange, isRelationsEmpty} from "../../assets/js/relationScript";
-import {useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import Relation from "./relation";
+import './normalform.css';
+import RelationalMapping from "../relational_mapping/RelationalMapping";
+import axios from "axios";
 
 function PrintRelations(props) {
     const inputBoxes = my_data.getRawState().inputBoxes;
     const [data, setData] = useState([{}]);
     const [relationNames, setRelationNames] = useState({});
+
+    const [relMapModal, setRelMapModal] = useState(false);
+    const [relMapLoader, setRelMapLoader] = useState(false);
+    const [visibility, setVisibility] = useState(false);
+    const [error, setError] = useState(null);
+
     let count = 1;
 
     useEffect(() => {
@@ -23,7 +32,7 @@ function PrintRelations(props) {
                                 if (data[key].length !== 0) {
                                     const rel = (key === 'multi' ? '-VALUED' : ' Dependent') + ' Relations';
                                     return (
-                                        <div key={key_index+count}>
+                                        <div key={key_index + count}>
                                             <div className='text-center relation_type' key={key_index}>
                                                 {key.toUpperCase() + rel}
                                             </div>
@@ -68,10 +77,41 @@ function PrintRelations(props) {
         );
     }
 
+    const relationalMappingClickHandler = (e) => {
+        setRelMapLoader(true);
+        axios.post('http://127.0.0.1:5000/relationalMapping', {
+            inputBoxes: my_data.getRawState().inputBoxes,
+            relationName: my_data.getRawState().relationName
+        })
+            .then(res => {
+                console.log(res.data);
+                if (res.data !== 0) {
+                    setRelMapModal(true);
+                    setRelMapLoader(false);
+                }
+                setError("Error! There is some issue in Flask Server.");
+                setRelMapModal(true);
+                setRelMapLoader(false);
+            }).catch(err => {
+            console.log(err);
+            setRelMapLoader(false);
+            setError(err.toString());
+            setVisibility(true);
+        });
+    }
+
     function returnNFRelations() {
         return (
             <div className={`card card-${props.normalFormNumber[0]}NF-result`}>
-                <div className="card-header">{props.normalFormNumber[0]}-NF Result</div>
+                <div className="card-header">
+                    {props.normalFormNumber[0]}-NF Result
+                    <button
+                        className="btn btn-sm btn-secondary __normal-form-rm-btn float-end"
+                        onClick={relationalMappingClickHandler}
+                    >
+                        View Diagram
+                    </button>
+                </div>
                 <div className="card-body pt-0">
                     {renderRelation()}
                 </div>
@@ -80,28 +120,41 @@ function PrintRelations(props) {
     }
 
     return (
-        <div className="m-3">
-            <Relation/>
-            <hr className='ms-5 me-5'/>
-            {!isRelationsEmpty(props.data) ?
-                <div className="main">
-                    <h4>{props.normalFormNumber} Normal Form:</h4>
-                    <div className="d-flex flex-wrap">
-                        <div className=" mt-3 me-3">
-                            {returnNFRelations()}
-                        </div>
-                        <div className="NF-reason mt-3 col-lg-4 col-md-12 col-sm-12">
-                            <div className="card">
-                                <div className="card-header">Reason</div>
-                                <div className="card-body">
-                                    {props.reason}
+        <>
+            <RelationalMapping
+                relMapModal={relMapModal}
+                relMapLoader={relMapLoader}
+                visibility={visibility}
+                error={error}
+                setRelMapModal={setRelMapModal}
+                setRelMapLoader={setRelMapLoader}
+                setVisibility={setVisibility}
+                title={'Relational Mapping'}
+            />
+
+            <div className="m-3">
+                <Relation/>
+                <hr className='ms-5 me-5'/>
+                {!isRelationsEmpty(props.data) ?
+                    <div className="main">
+                        <h4>{props.normalFormNumber} Normal Form:</h4>
+                        <div className="d-flex flex-wrap">
+                            <div className=" mt-3 me-3">
+                                {returnNFRelations()}
+                            </div>
+                            <div className="NF-reason mt-3 col-lg-4 col-md-12 col-sm-12">
+                                <div className="card">
+                                    <div className="card-header">Reason</div>
+                                    <div className="card-body">
+                                        {props.reason}
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </div> : "No relation found in normalized result    "
-            }
-        </div>
+                    </div> : "No relation found in normalized result    "
+                }
+            </div>
+        </>
     );
 
     function get2NFClassName(value, key, flag) {

@@ -1,12 +1,17 @@
+import os
 import turtle
 from tkinter import *
 from typing import Type
 
-import cv2
-from turtle import *
+import firebase
+import pyrebase
+
 from PIL import Image
 from turtle import Turtle, Screen
+from google.cloud import storage
 
+
+font_size=8
 class RelationalMappingNfs:
     def __init__(self,relation,relation_name,fks):
         self.__yertle = Turtle(shape="turtle", visible=True)
@@ -24,16 +29,16 @@ class RelationalMappingNfs:
         names = self.getnames(self.__relation_names)
         self.set_Tortle()
         self.drawRelations(self.__relations, names, self.__fk)
-        turtle.getcanvas().postscript(file="../../../../../../PycharmProjects/pythonProject4/3nf.eps")
+        turtle.getcanvas().postscript(file="3nf.eps")
         self.get_image()
 
 
     def get_image(self):
-        TARGET_BOUNDS = (2000, 2000)
+        TARGET_BOUNDS = (1600, 800)
         # Load the EPS at 10 times whatever size Pillow thinks it should be
         # (Experimentaton suggests that scale=1 means 72 DPI but that would
         #  make 600 DPI scale=8⅓ and Pillow requires an integer)
-        pic = Image.open('../../../../../../PycharmProjects/pythonProject4/3nf.eps')
+        pic = Image.open('3nf.eps')
         pic.load(scale=10)
         # Ensure scaling can anti-alias by converting 1-bit or paletted images
         if pic.mode in ('P', '10'):
@@ -45,6 +50,7 @@ class RelationalMappingNfs:
         # Resize to fit the target size
         pic = pic.resize(new_size, Image.Resampling.LANCZOS)
         # Save to PNG
+
         pic.save("3NF.png")
     def set_Tortle(self):
         self.__yertle.penup()
@@ -67,19 +73,31 @@ class RelationalMappingNfs:
         self.__yertle.pendown()
         self.__yertle.forward(box_size)
         self.__yertle.right(90)
-        self.__yertle.forward(30)
+        self.__yertle.forward(40)
         self.__yertle.right(90)
         self.__yertle.forward(box_size)
         self.__yertle.right(90)
-        self.__yertle.forward(30)
+        self.__yertle.forward(40)
         self.__yertle.right(90)
         self.__yertle.right(90)
         self.__yertle.penup()
         self.__yertle.forward(15)
         self.__yertle.left(90)
-        self.__yertle.forward(10)
-        self.__yertle.write(i, font=("Verdana", 10, "normal",))
-        print(primarykeys)
+        self.__yertle.forward(5)
+        if (len(i) >= 10):
+            part1 = i[:10] + "_"
+
+            part2 = i[10:len(i)]
+            self.__yertle.write(part1, font=("Verdana", font_size, "bold"))
+            self.__yertle.right(90)
+            self.__yertle.forward(15)
+            self.__yertle.left(90)
+            self.__yertle.write(part2, font=("Verdana", font_size, "bold"))
+            self.__yertle.right(90)
+            self.__yertle.back(15)
+            self.__yertle.left(90)
+        else:
+            self.__yertle.write(i, font=("Verdana", font_size, "bold",))
         if (i in primarykeys ):
             print(i)
             self.__yertle.right(90)
@@ -92,7 +110,7 @@ class RelationalMappingNfs:
             self.__yertle.right(90)
             self.__yertle.back(1)
             self.__yertle.left(90)
-        self.__yertle.back(10)
+        self.__yertle.back(5)
         self.__yertle.right(90)
         self.__yertle.back(15)
         self.__yertle.right(90)
@@ -319,6 +337,32 @@ class RelationalMappingNfs:
         #         else:
         #             pass
 
+    def upload(self):
+        firebaseConfig = {
+        "apiKey": "AIzaSyC6ficlQvWLyJI_M8Alr-0hOHiCnkW6k7k",
+        "authDomain": "ncssg-27984.firebaseapp.com",
+        "projectId": "ncssg-27984",
+        "storageBucket": "ncssg-27984.appspot.com",
+        "messagingSenderId": "857164548773",
+        "appId": "1:857164548773:web:21d281f781befd6d111b4c",
+        "measurementId": "G-H70L9Z1TJQ",
+        "serviceAccount": "accountConfig.json",
+        "databaseURL": "https://ncssg-27984-default-rtdb.firebaseio.com/"
+        }
+        firebase = pyrebase.initialize_app(firebaseConfig)
+        storage = firebase.storage()
+        storage.child("OneNF1.png").put("OneNF.png")
+    # You just get your CREDENTIALS on previous step
+    os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "ncssg-27984-firebase-adminsdk-o3i2s-ce7bec64be.json"
+    db_url = 'https://ncssg-27984-default-rtdb.firebaseio.com/'  # Your project url
+    firebase = firebase.FirebaseApplication(db_url, None)
+    client = storage.Client()
+    bucket = client.get_bucket('gs://ncssg-27984.appspot.com')
+    imageBlob = bucket.blob("/")
+    file_name = "\OneNF.png"
+    imagePath = (r"E:\NormalizationConverter-SQLSchemaGenerator-NCSSG-\Backend_Flask\OneNF.png")
+    imageBlob = bucket.blob(file_name)
+    imageBlob.upload_from_filename(imagePath)  # Upload your imagepip install pycryptodome
 if __name__ == "__main__":
     relations = {
         'Fully_dependent': [{'ssn', 'pnum'}, {'name'}],
@@ -365,5 +409,7 @@ if __name__ == "__main__":
             {'attribute': ['dnum'], 'relationName': 'transitive_1'}
         ]
     }
-    p = NFSCLASS(relations,relation_names,fk)
+    p = RelationalMappingNfs(relations,relation_names,fk)
+
+
 
