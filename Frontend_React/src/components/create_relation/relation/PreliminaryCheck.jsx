@@ -12,7 +12,11 @@ const PreliminaryCheck = (props) => {
             })
                 .then(res => {
                     console.log(res);
-                    props.setSuggestion(res.data);
+                    props.setSuggestion(
+                        <span>
+                            {res.data}
+                        </span>
+                    );
                     props.setShowNavbarContent(true);
                 })
         }
