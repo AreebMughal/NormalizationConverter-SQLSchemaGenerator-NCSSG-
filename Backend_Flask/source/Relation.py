@@ -9,6 +9,7 @@ class Relation:
         self.__primary_key = dic['primary']
         self.__multi_valued_attribute = dic['multi_value']
         self.__attribute_dependency = AttributeDependency(func_dep=dic['fds'])
+        # self.__attribute_dependency = dic['fds']
 
     def get_rel_name(self):
         return self.__rel_name

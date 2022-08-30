@@ -195,10 +195,55 @@ def sqlSchemaGenerator():
         my_exception(e)
 
     return script_string
+def Find_CK(minimal_cover):
+    L_H_S = []
+    R_H_S = []
+
+    for each_FD in minimal_cover:
+        counter = 0
+        for each_side in each_FD:
+            if counter % 2 == 0:
+                for i in each_side:
+                    L_H_S.append(i)
+            else:
+                R_H_S.append(each_side[0])
+            counter += 1
+    CK = []
+    for i in L_H_S:
+        if i in R_H_S:
+            pass
+        else:
+            CK.append(i)
+    CK = set(CK)
+    return CK,L_H_S,R_H_S
+
+def primaryKeyCheck(pk,fds):
+    result = {}
+    countPrimary = 0
+    countNonPrimary = 0
+    print('==> ',fds)
+    for fd in fds:
+        print(fd)
+        lhs = set(fd[0])
+        print(lhs)
+        # rhs = set(fd[1])
+        if lhs.issubset(pk):
+            countPrimary+=1
+        else:
+            countNonPrimary+=1
+    if countPrimary < countNonPrimary:
+       result['countPK'] = "You are determining more attributes with a non prime attribute. Please review your primary key selection."
+    if(countPrimary == 0):
+        result['countZero'] = "Selected Primary key is not determining any attribute which may lead to problem. Please review your primary key selection. "
+    print(result)
+    return  result
+
+
 
 
 @app.route("/preliminaryCheck", methods=['POST'])
 def preliminaryCheck():
+    checkCount = ''
     try:
         data = json.loads(request.data.decode('utf-8'))
         # print(data)
@@ -207,12 +252,15 @@ def preliminaryCheck():
         # relation_name = 'Something'
         my_relation = Relation(rel_name=relation_name, input_boxes=input_boxes)
         normalized_relation = NormalizedRelation(my_relation)
-        minimal_cover_result = normalized_relation.get_minimal_cover_result()
-        print(minimal_cover_result)
+        PK = my_relation.get_primary_keys()
+        fds = (my_relation.get_attribute_dependency()).get_func_dep()
+        print('Fds:', fds)
+
+        checkCount = primaryKeyCheck(set(PK),fds)
 
     except Exception as e:
         my_exception(e)
-    return ''
+    return  checkCount
 
 
 @app.route('/fdMining', methods=['POST'])
@@ -238,7 +286,6 @@ def loadData():
             file = request.files['file']
             file.save(os.path.join('./user_work/', secure_filename(file.filename)))
             read_file = open('./user_work/'+file.filename, 'r')
-            # print(type(read_file.readline()))
             data = read_file.readline()
     except Exception as e:
         my_exception(e)

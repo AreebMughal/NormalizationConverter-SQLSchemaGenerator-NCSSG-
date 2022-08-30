@@ -5,22 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a573f349-5d8b-480f-b5d2-5a4c765ae901" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/../Frontend_React/src/assets/css/bg.jpg" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/1nf.eps" beforeDir="false" afterPath="$PROJECT_DIR$/1nf.eps" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/datasets/Dataset.csv" beforeDir="false" afterPath="$PROJECT_DIR$/datasets/Dataset.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fdtool/FD_Info.txt" beforeDir="false" afterPath="$PROJECT_DIR$/fdtool/FD_Info.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/server.py" beforeDir="false" afterPath="$PROJECT_DIR$/server.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/source/BCNF.py" beforeDir="false" afterPath="$PROJECT_DIR$/source/BCNF.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/DrawingImage/rel_map_nfs.py" beforeDir="false" afterPath="$PROJECT_DIR$/source/DrawingImage/rel_map_nfs.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/DrawingImage/relationalMapping.py" beforeDir="false" afterPath="$PROJECT_DIR$/source/DrawingImage/relationalMapping.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/NF_2.py" beforeDir="false" afterPath="$PROJECT_DIR$/source/NF_2.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/Sql_Form_Methods.py" beforeDir="false" afterPath="$PROJECT_DIR$/source/Sql_Form_Methods.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/user_work/your_work_1.txt" beforeDir="false" afterPath="$PROJECT_DIR$/user_work/your_work_1.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/Relation.py" beforeDir="false" afterPath="$PROJECT_DIR$/source/Relation.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../Frontend_React/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Frontend_React/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Frontend_React/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/../Frontend_React/src/App.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Frontend_React/src/assets/js/nfReasons.js" beforeDir="false" afterPath="$PROJECT_DIR$/../Frontend_React/src/assets/js/nfReasons.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Frontend_React/src/assets/css/home.css" beforeDir="false" afterPath="$PROJECT_DIR$/../Frontend_React/src/assets/css/home.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../Frontend_React/src/components/DetailReason.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../Frontend_React/src/components/DetailReason.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Frontend_React/src/components/normal_forms/NF_3.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../Frontend_React/src/components/normal_forms/NF_3.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Frontend_React/src/components/home.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../Frontend_React/src/components/home.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

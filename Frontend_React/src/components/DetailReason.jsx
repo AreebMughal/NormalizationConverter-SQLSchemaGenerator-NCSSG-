@@ -71,7 +71,7 @@ const DetailReason = (props) => {
                     reason.push(<><br/><Bold>Round {i}: </Bold></>)
                     // string += `Round ${i}`;
 
-                    if (data['step_3'][i][j] == primaryKey || (primaryKey.includes(data['step_3'][i][j][0]) && primaryKey.includes(data['step_3'][i][j][1]))) {
+                    if (data['step_3'][i][j] == primaryKey || (primaryKey.includes(data['step_3'][i][j][0]) && primaryKey.includes(data['step_3'][i][j][1])) || (data['step_3'][i][j] === primaryKey || ((primaryKey.includes(data['step_3'][i][j][0]) || primaryKey.includes(data['step_3'][i][j][1]))))) {
 
 
                         // string += `The FD ${data['step_3'][i][j]}  --> ${data['step_3'][i][j+1]} is already in 2NF`;
