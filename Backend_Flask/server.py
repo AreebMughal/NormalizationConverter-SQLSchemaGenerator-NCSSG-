@@ -8,6 +8,7 @@ import numpy as np
 from werkzeug.utils import secure_filename
 from flask import Flask, request, jsonify
 from flask_cors import CORS
+from flask import send_file
 
 from Fd_Miner import FdsMiner
 from source.DrawingImage.relationalMapping import RelationalMapping
@@ -231,9 +232,11 @@ def primaryKeyCheck(pk, fds):
         else:
             countNonPrimary += 1
     if countPrimary < countNonPrimary:
-        result['countPK'] = "You are determining more attributes with a non prime attribute. Please review your primary key selection."
+        result[
+            'countPK'] = "You are determining more attributes with a non prime attribute. Please review your primary key selection."
     if (countPrimary == 0):
-        result['countZero'] = "Selected Primary key is not determining any attribute which may lead to problem. Please review your primary key selection. "
+        result[
+            'countZero'] = "Selected Primary key is not determining any attribute which may lead to problem. Please review your primary key selection. "
     print(result)
     return result
 
@@ -286,6 +289,11 @@ def loadData():
         my_exception(e)
 
     return data
+
+
+@app.route('/image', methods=['GET'])
+def image():
+    return send_file('./1NF.png', mimetype='image')
 
 
 if __name__ == '__main__':

@@ -38,6 +38,7 @@ const ImageModal = (props) => {
 
     const saveFile = () => {
         saveAs(
+            // 'http://127.0.0.1:5000/image',
             url,
             "example.png"
         );
@@ -51,13 +52,12 @@ const ImageModal = (props) => {
                         {props.title}
                     </Modal.Title>
                     <div style={{width: '40%'}}>
-                        <a
+                        <button
                             className='btn btn-sm __btn-rm-download btn-outline-dark ps-3 pe-3 float-end me-5 text-white'
-                            // onClick={imgDownloadClickHandler}
-                            onClick={getFirebaseImage}
+                            onClick={saveFile}
                         >
                             Download Image (*.png)
-                        </a>
+                        </button>
                     </div>
                 </Modal.Header>
                 <Modal.Body>
