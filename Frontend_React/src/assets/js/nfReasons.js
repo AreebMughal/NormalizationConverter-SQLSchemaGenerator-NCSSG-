@@ -85,7 +85,7 @@ export const get3nfReason = (data) => {
                 </span>
         }
     }
-
+    console.log(reason)
     return (
         <p>{reason}</p>
     );

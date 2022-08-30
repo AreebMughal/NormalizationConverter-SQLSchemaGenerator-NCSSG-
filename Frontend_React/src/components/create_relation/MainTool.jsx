@@ -43,6 +43,7 @@ const MainTool = (props) => {
     }, [isFdMine, isLoadWork]);
 
     useEffect(() => {
+        console.log(suggestion)
         suggestion_store.update(s => {
             s.value = suggestion
         });
