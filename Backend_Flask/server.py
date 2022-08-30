@@ -173,10 +173,8 @@ def getSqlSchemaData():
             all_relations = get_all_relations(res, relation_name)
             json_data = create_relations(res, create_relation_names(res, relation_name), all_relations)
 
-        # print(res)
     except Exception as e:
         my_exception(e)
-    # print(json_data)
     return json_data
 
 
@@ -189,29 +187,75 @@ def sqlSchemaGenerator():
         script_string = script.write_sql_script()
         file = open('dump_schema.sql', 'w+')
         file.write(script_string)
-        # path = os.path.abspath('./dump_schema.sql')
     except Exception as e:
         my_exception(e)
 
     return script_string
 
 
+def Find_CK(minimal_cover):
+    L_H_S = []
+    R_H_S = []
+
+    for each_FD in minimal_cover:
+        counter = 0
+        for each_side in each_FD:
+            if counter % 2 == 0:
+                for i in each_side:
+                    L_H_S.append(i)
+            else:
+                R_H_S.append(each_side[0])
+            counter += 1
+    CK = []
+    for i in L_H_S:
+        if i in R_H_S:
+            pass
+        else:
+            CK.append(i)
+    CK = set(CK)
+    return CK, L_H_S, R_H_S
+
+
+def primaryKeyCheck(pk, fds):
+    result = {}
+    countPrimary = 0
+    countNonPrimary = 0
+    print('==> ', fds)
+    for fd in fds:
+        print(fd)
+        lhs = set(fd[0])
+        print(lhs)
+        # rhs = set(fd[1])
+        if lhs.issubset(pk):
+            countPrimary += 1
+        else:
+            countNonPrimary += 1
+    if countPrimary < countNonPrimary:
+        result['countPK'] = "You are determining more attributes with a non prime attribute. Please review your primary key selection."
+    if (countPrimary == 0):
+        result['countZero'] = "Selected Primary key is not determining any attribute which may lead to problem. Please review your primary key selection. "
+    print(result)
+    return result
+
+
 @app.route("/preliminaryCheck", methods=['POST'])
 def preliminaryCheck():
+    checkCount = ''
     try:
         data = json.loads(request.data.decode('utf-8'))
-        # print(data)
         input_boxes = data['inputBoxes']
         relation_name = data['relationName']
-        # relation_name = 'Something'
         my_relation = Relation(rel_name=relation_name, input_boxes=input_boxes)
         normalized_relation = NormalizedRelation(my_relation)
-        minimal_cover_result = normalized_relation.get_minimal_cover_result()
-        print(minimal_cover_result)
+        PK = my_relation.get_primary_keys()
+        fds = (my_relation.get_attribute_dependency()).get_func_dep()
+        print('Fds:', fds)
+
+        checkCount = primaryKeyCheck(set(PK), fds)
 
     except Exception as e:
         my_exception(e)
-    return ''
+    return checkCount
 
 
 @app.route('/fdMining', methods=['POST'])
@@ -236,8 +280,7 @@ def loadData():
         if len(request.files) > 0:
             file = request.files['file']
             file.save(os.path.join('./user_work/', secure_filename(file.filename)))
-            read_file = open('./user_work/'+file.filename, 'r')
-            # print(type(read_file.readline()))
+            read_file = open('./user_work/' + file.filename, 'r')
             data = read_file.readline()
     except Exception as e:
         my_exception(e)
@@ -247,49 +290,3 @@ def loadData():
 
 if __name__ == '__main__':
     app.run(debug=True)
-    # fd_miner = FdsMiner('./datasets/abalone.csv', 'tane')
-    # data = fd_miner.fd_mining()
-
-    # res = get_dummy_nf_result()
-    #
-    # rel_names = create_relation_names(res, 'Organization')
-    # # names_dictionary = {}
-    # # for key, value in rel_names.items():
-    # #     names_dictionary[value[1]] = value[0]
-    # #
-    # # print('=>', names_dictionary)
-    #
-    # fk = {}
-    # all_relation = get_all_relations(nf_result=res, relation_name='Organization')
-    #
-    # for key, value in res.items():
-    #     index = 0
-    #     if len(value) > 0:
-    #         for rel in value:
-    #             if key.lower() != 'full':
-    #                 name = rel_names[key][index][0]
-    #                 fk[name] = get_foreign_keys(rel, all_relation, rel_names[key][index][1])
-    #                 index += 1
-    #
-    # print(fk)
-
-    # fk = {
-    #     'Org_ssn': [
-    #         {'attribute': ['ssn'], 'relationName': 'Fully_dependent'}
-    #     ],
-    #     'Org_pnum': [
-    #         {'attribute': ['pnum'], 'relationName': 'Fully_dependent'}
-    #     ],
-    #     'Org_email': [
-    #         {'attribute': ['pnum', 'ssn'], 'relationName': 'Fully_dependent'}
-    #     ],
-    #     'Org_address': [
-    #         {'attribute': ['ssn'], 'relationName': 'Fully_dependent'}
-    #     ],
-    #     'Org_id': [
-    #         {'attribute': ['id'], 'relationName': 'partial_1'}
-    #     ],
-    #     'Org_dnum': [
-    #         {'attribute': ['dnum'], 'relationName': 'transitive_1'}
-    #     ]
-    # }

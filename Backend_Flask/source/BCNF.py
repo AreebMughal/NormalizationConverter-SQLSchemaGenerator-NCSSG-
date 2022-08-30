@@ -31,13 +31,12 @@ class BcNf(NormalizedRelation):
         for fd in super().get_minimal_cover_result():
             self.checkPrimaryKeyDependency(fd, primary, primeDep)
             self.checkNonPrimaryKeyDependency(fd, primary, NotprimeDep)
-        print("y")
         print(primeDep)
-        print("n")
+
         print(NotprimeDep)
 
         result['primeDependency'] = self.__get_prime_relation(primeDep)
-        result['noPrimeDependency'] = self.__get_NotPrime_dependent_relation(NotprimeDep)
+        # result['noPrimeDependency'] = self.__get_NotPrime_dependent_relation(NotprimeDep)
 
         return result
 

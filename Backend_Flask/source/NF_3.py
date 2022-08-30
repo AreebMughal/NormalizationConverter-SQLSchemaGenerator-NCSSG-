@@ -40,7 +40,8 @@ class Nf3rd(NormalizedRelation):
         return result
 
     def __append_transitive_dependent(self, fd, primary, transitive):
-        if not set(fd[0]).issubset(primary):
+        print(fd[0], fd[1], not set(fd[0]).issubset(primary))
+        if not set(fd[0]).issubset(primary) and not set(fd[1]).issubset(primary):
             index = self.check_fd_in_transitive(fd[0], transitive)
             if index != -1:
                 transitive[index][1].append(fd[1][0])
