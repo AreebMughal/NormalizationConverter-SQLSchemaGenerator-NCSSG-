@@ -88,6 +88,7 @@ const RelationButtons = (props) => {
                 <PreliminaryCheck
                     onPreliminaryCheckClick={props.onPreliminaryCheckClick}
                     setShowNavbarContent={props.setShowNavbarContent}
+                    setSuggestion={props.setSuggestion}
                 />
                 <button
                     className='btn btn-sm btn-info ms-2 text-white'

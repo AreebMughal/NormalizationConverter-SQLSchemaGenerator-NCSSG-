@@ -12,6 +12,7 @@ const PreliminaryCheck = (props) => {
             })
                 .then(res => {
                     console.log(res);
+                    props.setSuggestion(res.data);
                     props.setShowNavbarContent(true);
                 })
         }
