@@ -8,8 +8,8 @@ function Home() {
                 <h4 className='title'>Normalization Convertor and SQL Schema Generator <br/> (NC SSG)</h4>
             </div>
             <div className='intro row col-12 mt-5'>
-                <div className="col-lg-6">
-                    <div className='ms-5 mb-5'>
+                <div className="col-lg-6 ">
+                    <div className='ms-5 mb-5 usage2'>
                         <div className="intro-header">
                             <h4>The New Way to Learn <br/> Normalization and Generate SQL Schema </h4>
                         </div>

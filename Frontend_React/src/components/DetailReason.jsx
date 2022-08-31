@@ -194,7 +194,7 @@ const DetailReason = (props) => {
         <React.Fragment>
             <div className="mx-4">
                 <hr></hr>
-                <button onClick={() => setToggle(!toggle)}>Show Steps</button>
+                <button className='btn btn-outline-secondary p-2' onClick={() => setToggle(!toggle)}>Show Steps</button>
                 {(toggle) ?
                     // <div>
                     //
