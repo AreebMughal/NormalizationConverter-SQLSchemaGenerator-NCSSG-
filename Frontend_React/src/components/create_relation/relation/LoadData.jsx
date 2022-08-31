@@ -9,8 +9,8 @@ const LoadData = (props) => {
     const [visibility, setVisibility] = useState(false);
     const [data, setData] = useState('');
 
-    // const [error, setError] = useState(null);
-    let error = '';
+    const [error, setError] = useState(null);
+    // let error = '';
     const hiddenFileInput = React.useRef(null);
     //
     // const saveDataClickHandler = (e) => {
@@ -51,12 +51,14 @@ const LoadData = (props) => {
         axios.post('http://127.0.0.1:5000/loadData', data)
             .then(res => {
                 if (res.data !== 0) {
-                    // console.log('=> Data:', res.data);
                     setData(res.data);
+                } else {
+                    setError("Error! There is some error in Flask Server.")
+                    setVisibility(true);
                 }
             }).catch(err => {
             console.log(err);
-            error = err.toString();
+            setError(err.toString());
             setVisibility(true);
         });
         event.target.value = null;

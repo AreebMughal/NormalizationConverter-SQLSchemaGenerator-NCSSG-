@@ -58,3 +58,8 @@
     background-color: white;
     opacity: 0.7;
 }
+
+.usage2:hover, .usage:hover {
+    background-color: #6c757d;
+    /*color: green;*/
+}

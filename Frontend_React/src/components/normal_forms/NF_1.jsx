@@ -26,6 +26,7 @@ function NF_1() {
         <PrintRelations
             data={data}
             normalFormNumber='1st'
+            nf_type='1'
             names={relationNames}
             reason={get1nfReason(inputBoxes)}
         />

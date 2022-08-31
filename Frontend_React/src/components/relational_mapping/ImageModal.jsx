@@ -12,8 +12,12 @@ const ImageModal = (props) => {
 
     useEffect(() => {
         setShow(props.show);
-        console.log('Img Modal', props.show);
     }, [props.show])
+
+    useEffect(() => {
+        console.log(props.url);
+        setUrl(props.url);
+    }, [props.url])
 
     const getFirebaseImage = async () => {
         const reference = ref(firebaseStorage, props.imgName);
@@ -24,21 +28,12 @@ const ImageModal = (props) => {
     }
 
     useEffect(() => {
-        getFirebaseImage();
+        // getFirebaseImage();
     }, []);
 
-    const imgDownloadClickHandler = (e) => {
-        // const element = document.createElement("a");
-        // element.href = url
-        // console.log(' URL ', element.href)
-        // element.download = "pic.png";
-        // document.body.appendChild(element);
-        // element.click();
-    }
 
     const saveFile = () => {
         saveAs(
-            // 'http://127.0.0.1:5000/image',
             url,
             "example.png"
         );

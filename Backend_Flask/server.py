@@ -47,6 +47,49 @@ ress = {
 }
 
 
+def Find_CK(minimal_cover):
+    L_H_S = []
+    R_H_S = []
+
+    for each_FD in minimal_cover:
+        counter = 0
+        for each_side in each_FD:
+            if counter % 2 == 0:
+                for i in each_side:
+                    L_H_S.append(i)
+            else:
+                R_H_S.append(each_side[0])
+            counter += 1
+    CK = []
+    for i in L_H_S:
+        if i in R_H_S:
+            pass
+        else:
+            CK.append(i)
+    CK = set(CK)
+    return CK, L_H_S, R_H_S
+
+
+def primaryKeyCheck(pk, fds):
+    result = {}
+    countPrimary = 0
+    countNonPrimary = 0
+    for fd in fds:
+        lhs = set(fd[0])
+        if lhs.issubset(pk):
+            countPrimary += 1
+        else:
+            countNonPrimary += 1
+    if countPrimary < countNonPrimary:
+        result['countPK'] = "You are determining more attributes with a non prime attribute. " \
+                            "Please review your primary key selection."
+    if countPrimary == 0:
+        result['countZero'] = "Selected Primary key is not determining any attribute which may lead " \
+                              "to problem. Please review your primary key selection. "
+    return result
+
+
+
 def my_exception(e):
     print('exp: ', e)
     traceback.print_exception(*sys.exc_info())
@@ -91,8 +134,13 @@ def get_relationalMapping(nf_type, api_data):
         my_relation = Relation(rel_name=relation_name, input_boxes=input_boxes)
         nf_result = get_result(object_type=nf_type, input_boxes_dic=request.data.decode('utf-8'))['result']
 
-        if nf_type == 'NF1':
+        if nf_type == 'RM':
             dic = my_relation.extract_data(input_boxes)
+            rel_map = RelationalMapping(dic)
+        if nf_type == 'NF1':
+            normalized_relation = NormalizedRelation(relation=my_relation)
+            dic = my_relation.extract_data(input_boxes)
+            dic['fds'] = normalized_relation.get_minimal_cover()
             rel_map = RelationalMapping(dic)
         elif nf_type == 'NF2' or nf_type == 'NF3' or nf_type == 'BCNF':
             normalized_relation = NormalizedRelation(relation=my_relation)
@@ -108,8 +156,14 @@ def get_relationalMapping(nf_type, api_data):
         else:
             result = '0'
     except Exception as e:
+        # result = '0'
         my_exception(e)
-    return result
+
+    image_name = '1NF' if nf_type == 'RM' else nf_type
+    if result == '0':
+        return result
+    else:
+        return send_file(f'./{image_name}.png', mimetype='image')
 
 
 @app.route("/minimalCover", methods=['POST'])
@@ -138,22 +192,29 @@ def BCNF():
     return get_result(object_type='BCNF', input_boxes_dic=request.data.decode('utf-8'))
 
 
-@app.route("/relationalMapping", methods=['POST'])
+@app.route("/relationalMapping", methods=['POST', 'GET'])
 def relationalMapping():
-    return get_relationalMapping('NF2', request.data.decode('utf-8'))
+    return get_relationalMapping('RM', request.data.decode('utf-8'))
 
 
-@app.route("/relationalMapping_nf2", methods=['POST'])
-def relationalMapping_nf2():
-    return get_relationalMapping('NF2', request.data.decode('utf-8'))
+
+@app.route("/relationalMapping_1nf", methods=['POST', 'GET'])
+def relationalMapping_1nf():
+    return get_relationalMapping('1NF', request.data.decode('utf-8'))
 
 
-@app.route("/relationalMapping_nf3", methods=['POST'])
-def relationalMapping_nf3():
-    return get_relationalMapping('NF3', request.data.decode('utf-8'))
+@app.route("/relationalMapping_2nf", methods=['POST', 'GET'])
+def relationalMapping_2nf():
+    return get_relationalMapping('2NF', request.data.decode('utf-8'))
 
 
-@app.route("/relationalMapping_bcnf", methods=['POST'])
+@app.route("/relationalMapping_3nf", methods=['POST', 'GET'])
+def relationalMapping_3nf():
+    print('called')
+    return get_relationalMapping('3NF', request.data.decode('utf-8'))
+
+
+@app.route("/relationalMapping_bcnf", methods=['POST', 'GET'])
 def relationalMapping_bcnf():
     return get_relationalMapping('BCNF', request.data.decode('utf-8'))
 
@@ -194,53 +255,6 @@ def sqlSchemaGenerator():
     return script_string
 
 
-def Find_CK(minimal_cover):
-    L_H_S = []
-    R_H_S = []
-
-    for each_FD in minimal_cover:
-        counter = 0
-        for each_side in each_FD:
-            if counter % 2 == 0:
-                for i in each_side:
-                    L_H_S.append(i)
-            else:
-                R_H_S.append(each_side[0])
-            counter += 1
-    CK = []
-    for i in L_H_S:
-        if i in R_H_S:
-            pass
-        else:
-            CK.append(i)
-    CK = set(CK)
-    return CK, L_H_S, R_H_S
-
-
-def primaryKeyCheck(pk, fds):
-    result = {}
-    countPrimary = 0
-    countNonPrimary = 0
-    print('==> ', fds)
-    for fd in fds:
-        print(fd)
-        lhs = set(fd[0])
-        print(lhs)
-        # rhs = set(fd[1])
-        if lhs.issubset(pk):
-            countPrimary += 1
-        else:
-            countNonPrimary += 1
-    if countPrimary < countNonPrimary:
-        result[
-            'countPK'] = "You are determining more attributes with a non prime attribute. Please review your primary key selection."
-    if (countPrimary == 0):
-        result[
-            'countZero'] = "Selected Primary key is not determining any attribute which may lead to problem. Please review your primary key selection. "
-    print(result)
-    return result
-
-
 @app.route("/preliminaryCheck", methods=['POST'])
 def preliminaryCheck():
     checkCount = ''
@@ -249,11 +263,9 @@ def preliminaryCheck():
         input_boxes = data['inputBoxes']
         relation_name = data['relationName']
         my_relation = Relation(rel_name=relation_name, input_boxes=input_boxes)
-        normalized_relation = NormalizedRelation(my_relation)
         PK = my_relation.get_primary_keys()
         fds = (my_relation.get_attribute_dependency()).get_func_dep()
-        print('Fds:', fds)
-
+        # print('Fds:', fds)
         checkCount = primaryKeyCheck(set(PK), fds)
 
     except Exception as e:

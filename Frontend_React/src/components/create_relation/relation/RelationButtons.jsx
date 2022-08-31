@@ -1,17 +1,12 @@
 import React, {useState} from "react";
 import PreliminaryCheck from "./PreliminaryCheck";
-import axios from "axios";
-import my_data from "../../../store/data";
 import SaveData from "./SaveData";
 import LoadData from "./LoadData";
 import RelationalMapping from "../../relational_mapping/RelationalMapping";
 
 const RelationButtons = (props) => {
-    const [relMapModal, setRelMapModal] = useState(false);
-    const [relMapLoader, setRelMapLoader] = useState(false);
-    const [visibility, setVisibility] = useState(false);
-    const [error, setError] = useState(null);
 
+    const api_url = 'http://127.0.0.1:5000/relationalMapping';
 
     const addCellClickHandler = (e) => {
         props.addCell({
@@ -31,32 +26,11 @@ const RelationButtons = (props) => {
     const resetAllClickHandler = (e) => {
         props.resetAll();
     }
-
-    const relationalMappingClickHandler = (e) => {
-        setRelMapLoader(true);
-        axios.post('http://127.0.0.1:5000/relationalMapping', {
-            inputBoxes: my_data.getRawState().inputBoxes,
-            relationName: my_data.getRawState().relationName
-        })
-            .then(res => {
-                console.log(res.data);
-                if (res.data !== 0) {
-                    setRelMapModal(true);
-                    setRelMapLoader(false);
-                }
-                setRelMapModal(true);
-                setRelMapLoader(false);
-            }).catch(err => {
-            console.log(err);
-            setRelMapLoader(false);
-            setError(err.toString());
-            setVisibility(true);
-        });
-    }
+    const [isRelMapTrigger, setIsRelMapTrigger] = useState(false);
 
     return (
         <div className="buttons ms-2 mt-3">
-            <RelationalMapping
+            {/*<RelationalMapping
                 relMapModal={relMapModal}
                 relMapLoader={relMapLoader}
                 visibility={visibility}
@@ -65,6 +39,13 @@ const RelationButtons = (props) => {
                 setRelMapLoader={setRelMapLoader}
                 setVisibility={setVisibility}
                 title={'Relational Mapping'}
+                url={api_url}
+            />*/}
+            <RelationalMapping
+                isRelMapTrigger={isRelMapTrigger}
+                setIsRelMapTrigger={setIsRelMapTrigger}
+                title={'Relational Mapping'}
+                url={api_url}
             />
             <button
                 className='btn btn-sm btn-primary text-white btn-style me-1'
@@ -92,7 +73,8 @@ const RelationButtons = (props) => {
                 />
                 <button
                     className='btn btn-sm btn-info ms-2 text-white'
-                    onClick={relationalMappingClickHandler}
+                    // onClick={relationalMappingClickHandler}
+                    onClick={() => setIsRelMapTrigger(true)}
                 >
                     View Diagram
                 </button>

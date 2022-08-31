@@ -25,6 +25,7 @@ function NF_3() {
             <PrintRelations
                 data={data}
                 normalFormNumber='3rd'
+                nf_type='3'
                 names={relationNames}
                 reason={get3nfReason(data)}
             />
