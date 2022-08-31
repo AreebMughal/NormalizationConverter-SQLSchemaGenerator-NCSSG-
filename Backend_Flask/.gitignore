@@ -3,6 +3,12 @@
 # dependencies
 /node_modules
 /.pnp
+/__pycache__
+/.idea
+/fdtool/__pycache__
+/source/__pycache__
+/source/DrawingImage/__pycache__
+/venv
 .pnp.js
 
 # testing

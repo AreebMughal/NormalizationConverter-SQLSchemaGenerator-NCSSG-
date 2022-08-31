@@ -25,7 +25,8 @@ function BCNF() {
         <>
             <PrintRelations
                 data={data}
-                normalFormNumber='BCNF'
+                normalFormNumber='Boyce - Codd'
+                nf_type='BC'
                 names={relationNames}
                 reason={getBcnfReason(data)}
             />

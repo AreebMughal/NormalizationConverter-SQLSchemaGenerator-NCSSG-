@@ -27,6 +27,7 @@ function NF_2() {
             <PrintRelations
                 data={data}
                 normalFormNumber='2nd'
+                nf_type='2'
                 names={relationNames}
                 reason={get2nfReason(data, inputBoxes)}
 

@@ -1,8 +1,16 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import my_data from "../../../store/data";
 import axios from "axios";
 
 const PreliminaryCheck = (props) => {
+    const [data, setData] = useState('');
+
+    useEffect(() => {
+        if (Object.keys(data).length > 0) {
+            const suggestion = Object.keys(data).map(key => <span>{data[key]}</span>)
+            props.setSuggestion(<p>{suggestion}</p>)
+        }
+    }, [data])
 
     const preliminaryCheckClickHandler = (e) => {
         if (props.onPreliminaryCheckClick(e)) {
@@ -11,7 +19,8 @@ const PreliminaryCheck = (props) => {
                 relationName: my_data.getRawState().relationName
             })
                 .then(res => {
-                    console.log(res);
+                    console.log(res.data);
+                    setData(res.data);
                     props.setShowNavbarContent(true);
                 })
         }

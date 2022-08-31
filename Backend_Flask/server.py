@@ -8,6 +8,7 @@ import numpy as np
 from werkzeug.utils import secure_filename
 from flask import Flask, request, jsonify
 from flask_cors import CORS
+from flask import send_file
 
 from Fd_Miner import FdsMiner
 from source.DrawingImage.relationalMapping import RelationalMapping
@@ -44,6 +45,49 @@ ress = {
         [['dnum'], ['dloc', 'dname']]
     ]
 }
+
+
+def Find_CK(minimal_cover):
+    L_H_S = []
+    R_H_S = []
+
+    for each_FD in minimal_cover:
+        counter = 0
+        for each_side in each_FD:
+            if counter % 2 == 0:
+                for i in each_side:
+                    L_H_S.append(i)
+            else:
+                R_H_S.append(each_side[0])
+            counter += 1
+    CK = []
+    for i in L_H_S:
+        if i in R_H_S:
+            pass
+        else:
+            CK.append(i)
+    CK = set(CK)
+    return CK, L_H_S, R_H_S
+
+
+def primaryKeyCheck(pk, fds):
+    result = {}
+    countPrimary = 0
+    countNonPrimary = 0
+    for fd in fds:
+        lhs = set(fd[0])
+        if lhs.issubset(pk):
+            countPrimary += 1
+        else:
+            countNonPrimary += 1
+    if countPrimary < countNonPrimary:
+        result['countPK'] = "You are determining more attributes with a non prime attribute. " \
+                            "Please review your primary key selection."
+    if countPrimary == 0:
+        result['countZero'] = "Selected Primary key is not determining any attribute which may lead " \
+                              "to problem. Please review your primary key selection. "
+    return result
+
 
 
 def my_exception(e):
@@ -90,8 +134,13 @@ def get_relationalMapping(nf_type, api_data):
         my_relation = Relation(rel_name=relation_name, input_boxes=input_boxes)
         nf_result = get_result(object_type=nf_type, input_boxes_dic=request.data.decode('utf-8'))['result']
 
-        if nf_type == 'NF1':
+        if nf_type == 'RM':
             dic = my_relation.extract_data(input_boxes)
+            rel_map = RelationalMapping(dic)
+        if nf_type == 'NF1':
+            normalized_relation = NormalizedRelation(relation=my_relation)
+            dic = my_relation.extract_data(input_boxes)
+            dic['fds'] = normalized_relation.get_minimal_cover()
             rel_map = RelationalMapping(dic)
         elif nf_type == 'NF2' or nf_type == 'NF3' or nf_type == 'BCNF':
             normalized_relation = NormalizedRelation(relation=my_relation)
@@ -107,8 +156,14 @@ def get_relationalMapping(nf_type, api_data):
         else:
             result = '0'
     except Exception as e:
+        # result = '0'
         my_exception(e)
-    return result
+
+    image_name = '1NF' if nf_type == 'RM' else nf_type
+    if result == '0':
+        return result
+    else:
+        return send_file(f'./{image_name}.png', mimetype='image')
 
 
 @app.route("/minimalCover", methods=['POST'])
@@ -137,22 +192,29 @@ def BCNF():
     return get_result(object_type='BCNF', input_boxes_dic=request.data.decode('utf-8'))
 
 
-@app.route("/relationalMapping", methods=['POST'])
+@app.route("/relationalMapping", methods=['POST', 'GET'])
 def relationalMapping():
-    return get_relationalMapping('NF2', request.data.decode('utf-8'))
+    return get_relationalMapping('RM', request.data.decode('utf-8'))
 
 
-@app.route("/relationalMapping_nf2", methods=['POST'])
-def relationalMapping_nf2():
-    return get_relationalMapping('NF2', request.data.decode('utf-8'))
+
+@app.route("/relationalMapping_1nf", methods=['POST', 'GET'])
+def relationalMapping_1nf():
+    return get_relationalMapping('1NF', request.data.decode('utf-8'))
 
 
-@app.route("/relationalMapping_nf3", methods=['POST'])
-def relationalMapping_nf3():
-    return get_relationalMapping('NF3', request.data.decode('utf-8'))
+@app.route("/relationalMapping_2nf", methods=['POST', 'GET'])
+def relationalMapping_2nf():
+    return get_relationalMapping('2NF', request.data.decode('utf-8'))
 
 
-@app.route("/relationalMapping_bcnf", methods=['POST'])
+@app.route("/relationalMapping_3nf", methods=['POST', 'GET'])
+def relationalMapping_3nf():
+    print('called')
+    return get_relationalMapping('3NF', request.data.decode('utf-8'))
+
+
+@app.route("/relationalMapping_bcnf", methods=['POST', 'GET'])
 def relationalMapping_bcnf():
     return get_relationalMapping('BCNF', request.data.decode('utf-8'))
 
@@ -173,10 +235,8 @@ def getSqlSchemaData():
             all_relations = get_all_relations(res, relation_name)
             json_data = create_relations(res, create_relation_names(res, relation_name), all_relations)
 
-        # print(res)
     except Exception as e:
         my_exception(e)
-    # print(json_data)
     return json_data
 
 
@@ -189,7 +249,6 @@ def sqlSchemaGenerator():
         script_string = script.write_sql_script()
         file = open('dump_schema.sql', 'w+')
         file.write(script_string)
-        # path = os.path.abspath('./dump_schema.sql')
     except Exception as e:
         my_exception(e)
 
@@ -198,20 +257,20 @@ def sqlSchemaGenerator():
 
 @app.route("/preliminaryCheck", methods=['POST'])
 def preliminaryCheck():
+    checkCount = ''
     try:
         data = json.loads(request.data.decode('utf-8'))
-        # print(data)
         input_boxes = data['inputBoxes']
         relation_name = data['relationName']
-        # relation_name = 'Something'
         my_relation = Relation(rel_name=relation_name, input_boxes=input_boxes)
-        normalized_relation = NormalizedRelation(my_relation)
-        minimal_cover_result = normalized_relation.get_minimal_cover_result()
-        print(minimal_cover_result)
+        PK = my_relation.get_primary_keys()
+        fds = (my_relation.get_attribute_dependency()).get_func_dep()
+        # print('Fds:', fds)
+        checkCount = primaryKeyCheck(set(PK), fds)
 
     except Exception as e:
         my_exception(e)
-    return ''
+    return checkCount
 
 
 @app.route('/fdMining', methods=['POST'])
@@ -236,8 +295,7 @@ def loadData():
         if len(request.files) > 0:
             file = request.files['file']
             file.save(os.path.join('./user_work/', secure_filename(file.filename)))
-            read_file = open('./user_work/'+file.filename, 'r')
-            # print(type(read_file.readline()))
+            read_file = open('./user_work/' + file.filename, 'r')
             data = read_file.readline()
     except Exception as e:
         my_exception(e)
@@ -245,51 +303,10 @@ def loadData():
     return data
 
 
+@app.route('/image', methods=['GET'])
+def image():
+    return send_file('./1NF.png', mimetype='image')
+
+
 if __name__ == '__main__':
     app.run(debug=True)
-    # fd_miner = FdsMiner('./datasets/abalone.csv', 'tane')
-    # data = fd_miner.fd_mining()
-
-    # res = get_dummy_nf_result()
-    #
-    # rel_names = create_relation_names(res, 'Organization')
-    # # names_dictionary = {}
-    # # for key, value in rel_names.items():
-    # #     names_dictionary[value[1]] = value[0]
-    # #
-    # # print('=>', names_dictionary)
-    #
-    # fk = {}
-    # all_relation = get_all_relations(nf_result=res, relation_name='Organization')
-    #
-    # for key, value in res.items():
-    #     index = 0
-    #     if len(value) > 0:
-    #         for rel in value:
-    #             if key.lower() != 'full':
-    #                 name = rel_names[key][index][0]
-    #                 fk[name] = get_foreign_keys(rel, all_relation, rel_names[key][index][1])
-    #                 index += 1
-    #
-    # print(fk)
-
-    # fk = {
-    #     'Org_ssn': [
-    #         {'attribute': ['ssn'], 'relationName': 'Fully_dependent'}
-    #     ],
-    #     'Org_pnum': [
-    #         {'attribute': ['pnum'], 'relationName': 'Fully_dependent'}
-    #     ],
-    #     'Org_email': [
-    #         {'attribute': ['pnum', 'ssn'], 'relationName': 'Fully_dependent'}
-    #     ],
-    #     'Org_address': [
-    #         {'attribute': ['ssn'], 'relationName': 'Fully_dependent'}
-    #     ],
-    #     'Org_id': [
-    #         {'attribute': ['id'], 'relationName': 'partial_1'}
-    #     ],
-    #     'Org_dnum': [
-    #         {'attribute': ['dnum'], 'relationName': 'transitive_1'}
-    #     ]
-    # }

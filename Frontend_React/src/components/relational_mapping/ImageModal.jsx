@@ -12,8 +12,12 @@ const ImageModal = (props) => {
 
     useEffect(() => {
         setShow(props.show);
-        console.log('Img Modal', props.show);
     }, [props.show])
+
+    useEffect(() => {
+        console.log(props.url);
+        setUrl(props.url);
+    }, [props.url])
 
     const getFirebaseImage = async () => {
         const reference = ref(firebaseStorage, props.imgName);
@@ -24,17 +28,9 @@ const ImageModal = (props) => {
     }
 
     useEffect(() => {
-        getFirebaseImage();
+        // getFirebaseImage();
     }, []);
 
-    const imgDownloadClickHandler = (e) => {
-        // const element = document.createElement("a");
-        // element.href = url
-        // console.log(' URL ', element.href)
-        // element.download = "pic.png";
-        // document.body.appendChild(element);
-        // element.click();
-    }
 
     const saveFile = () => {
         saveAs(
@@ -51,13 +47,12 @@ const ImageModal = (props) => {
                         {props.title}
                     </Modal.Title>
                     <div style={{width: '40%'}}>
-                        <a
+                        <button
                             className='btn btn-sm __btn-rm-download btn-outline-dark ps-3 pe-3 float-end me-5 text-white'
-                            // onClick={imgDownloadClickHandler}
-                            onClick={getFirebaseImage}
+                            onClick={saveFile}
                         >
                             Download Image (*.png)
-                        </a>
+                        </button>
                     </div>
                 </Modal.Header>
                 <Modal.Body>

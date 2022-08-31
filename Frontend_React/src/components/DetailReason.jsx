@@ -71,21 +71,16 @@ const DetailReason = (props) => {
                     reason.push(<><br/><Bold>Round {i}: </Bold></>)
                     // string += `Round ${i}`;
 
-                    if (data['step_3'][i][j] == primaryKey || (primaryKey.includes(data['step_3'][i][j][0]) && primaryKey.includes(data['step_3'][i][j][1]))) {
-
-
+                    if (data['step_3'][i][j] == primaryKey || (primaryKey.includes(data['step_3'][i][j][0]) && primaryKey.includes(data['step_3'][i][j][1])) || (data['step_3'][i][j] === primaryKey || ((primaryKey.includes(data['step_3'][i][j][0]) || primaryKey.includes(data['step_3'][i][j][1]))))) {
                         // string += `The FD ${data['step_3'][i][j]}  --> ${data['step_3'][i][j+1]} is already in 2NF`;
-
                         reason.push(<span>
-                            The FD <b>{data['step_3'][i][j]} </b> --> <b> {data['step_3'][i][j+1]}</b> is already in 2NF
+                            The FD <b>{data['step_3'][i][j]} </b> --> <b> {data['step_3'][i][j + 1]}</b> is already in 2NF
                             </span>)
 
-                    }
-
-                    else  {
+                    } else {
                         reason.push(
                             <span>
-                              The FD <b>{data['step_3'][i][j]}</b> --> <b>{data['step_3'][i][j+1]}</b> is a partial dependency As LHS  <b>{data['step_3'][i][j]}</b> is a proper subset of <b>{primaryKey}</b> which is a PK , so we split it
+                              The FD <b>{data['step_3'][i][j]}</b> --> <b>{data['step_3'][i][j + 1]}</b> is a partial dependency As LHS  <b>{data['step_3'][i][j]}</b> is a proper subset of <b>{primaryKey}</b> which is a PK , so we split it
                                 {/*string += `The FD ${data['step_3'][i][j]} --> ${data['step_3'][i][j+1]} is a partial dependency As LHS  ${data['step_3'][i][j]} is a proper subset of ${primaryKey} which is a PK , so we split it`*/}
                          </span>
                         )
@@ -110,7 +105,7 @@ const DetailReason = (props) => {
         let reason = []
         let string = ''
         if (Object.keys(data).length >= 1) {
-            for (let i = 1; i < (Object.keys(data['step_3']).length)+1; i++) {
+            for (let i = 1; i < (Object.keys(data['step_3']).length) + 1; i++) {
                 // string += `Round  ${i} `
                 reason.push(<><br/><Bold>Round {i}: </Bold></>)
                 for (let j = 0; j < 1; j++) {
@@ -119,13 +114,13 @@ const DetailReason = (props) => {
                     if (data['step_3'][i][j] === primaryKey || ((primaryKey.includes(data['step_3'][i][j][0]) || primaryKey.includes(data['step_3'][i][j][1])))) {
                         reason.push(
                             <span>
-                                The FD <b>{data['step_3'][i][j]} </b> --> <b>{data['step_3'][i][j+1]}</b> is already in 3NF;
+                                The FD <b>{data['step_3'][i][j]} </b> --> <b>{data['step_3'][i][j + 1]}</b> is already in 3NF;
                             </span>
-                        )}
-                    else  {
+                        )
+                    } else {
                         reason.push(
                             <span>
-                                The FD <b>{data['step_3'][i][j]}</b> --> <b>{data['step_3'][i][j+1]}</b> is a transitive dependency As LHS <b>{data['step_3'][i][j]}</b> is not PrimaryKey, so we split it into a new relation
+                                The FD <b>{data['step_3'][i][j]}</b> --> <b>{data['step_3'][i][j + 1]}</b> is a transitive dependency As LHS <b>{data['step_3'][i][j]}</b> is not PrimaryKey, so we split it into a new relation
                             </span>
                         )
                     }
@@ -147,19 +142,18 @@ const DetailReason = (props) => {
         let string = ''
         if (Object.keys(data).length >= 1) {
 
-            for (let i = 1; i < (Object.keys(data['step_3']).length)+1; i++) {
+            for (let i = 1; i < (Object.keys(data['step_3']).length) + 1; i++) {
                 console.log(data['step_3'][i][i])
                 reason.push(<><br/><Bold>Round {i}: </Bold></>)
                 // string += `Round  ${i}`
                 if ((primaryKey.includes(data['step_3'][i][i])) || (primaryKey.includes(data['step_3'][i][i]))) {
                     reason.push(
                         <span>
-                            BC-NF works on Primary key dependency. As in FD <b>{data['step_3'][i][i-1]}</b> --> <b>{data['step_3'][i][i]}</b> ,LHS <b>{data['step_3'][i][i-1]}</b> is Pk so it would be separated as new relation.
+                            BC-NF works on Primary key dependency. As in FD <b>{data['step_3'][i][i - 1]}</b> --> <b>{data['step_3'][i][i]}</b> ,LHS <b>{data['step_3'][i][i - 1]}</b> is Pk so it would be separated as new relation.
                         </span>
                     )
 
-                }
-                else {
+                } else {
                     reason.push(
                         <span>
                             The FD <b>{data['step_3'][i][0]} </b> --> <b>{data['step_3'][i][1]}</b> is already in BCNF
@@ -179,25 +173,24 @@ const DetailReason = (props) => {
     }
 
 
-    function  getType(){
+    function getType() {
 
 
-        if(props.type == '2nd'){
+        if (props.type == '2nd') {
             return nf_2Reason()
 
-        }
-        else if (props.type == '3rd'){
+        } else if (props.type == '3rd') {
             return nf_3Reason()
-        }
-        else
+        } else
             return bnfReason()
 
     }
+
     return (
         <React.Fragment>
             <div className="mx-4">
                 <hr></hr>
-                <button onClick={() => setToggle(!toggle)}>Show Steps</button>
+                <button className='btn btn-outline-secondary p-2' onClick={() => setToggle(!toggle)}>Show Steps</button>
                 {(toggle) ?
                     // <div>
                     //
@@ -212,9 +205,9 @@ const DetailReason = (props) => {
                                 </div>
                                 <div className="card-body">
                                     {/*<h5 className="card-title">hth</h5>*/}
-                                    <p className="card-text"> { minimalCover() }</p>
+                                    <p className="card-text"> {minimalCover()}</p>
                                     <h5 className="card-title">Resolving FDs</h5>
-                                    <p className="card-text"> { getType() }</p>
+                                    <p className="card-text"> {getType()}</p>
                                 </div>
                             </div>
                         </div>

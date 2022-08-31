@@ -4,17 +4,15 @@ import React, {useEffect, useState} from "react";
 import Relation from "./relation";
 import './normalform.css';
 import RelationalMapping from "../relational_mapping/RelationalMapping";
-import axios from "axios";
 
 function PrintRelations(props) {
     const inputBoxes = my_data.getRawState().inputBoxes;
     const [data, setData] = useState([{}]);
     const [relationNames, setRelationNames] = useState({});
 
-    const [relMapModal, setRelMapModal] = useState(false);
-    const [relMapLoader, setRelMapLoader] = useState(false);
-    const [visibility, setVisibility] = useState(false);
-    const [error, setError] = useState(null);
+    const [isRelMapTrigger, setIsRelMapTrigger] = useState(false);
+
+    const api_url = 'http://127.0.0.1:5000/relationalMapping_' + props.nf_type.toLowerCase() + 'nf';
 
     let count = 1;
 
@@ -26,7 +24,7 @@ function PrintRelations(props) {
     const renderRelation = () => {
         return (
             checkRelation(inputBoxes) ?
-                <div className={`${props.normalFormNumber[0]}NF`}>
+                <div className={`${props.nf_type[0]}NF`}>
                     {
                         Object.keys(data).map((key, key_index) => {
                                 if (data[key].length !== 0) {
@@ -56,7 +54,7 @@ function PrintRelations(props) {
                                                                                        className={get2NFClassName(value, key, bool)}
                                                                                        type="text" readOnly autoFocus
                                                                                        value={value}
-                                                                                       id={`${props.normalFormNumber[0]}nf-${key}-${num}-${ind}-${index}`}
+                                                                                       id={`${props.nf_type[0]}nf-${key}-${num}-${ind}-${index}`}
                                                                                        onFocus={handleSizeChange}
                                                                                 />);
                                                                         }
@@ -77,37 +75,14 @@ function PrintRelations(props) {
         );
     }
 
-    const relationalMappingClickHandler = (e) => {
-        setRelMapLoader(true);
-        axios.post('http://127.0.0.1:5000/relationalMapping', {
-            inputBoxes: my_data.getRawState().inputBoxes,
-            relationName: my_data.getRawState().relationName
-        })
-            .then(res => {
-                console.log(res.data);
-                if (res.data !== 0) {
-                    setRelMapModal(true);
-                    setRelMapLoader(false);
-                }
-                setError("Error! There is some issue in Flask Server.");
-                setRelMapModal(true);
-                setRelMapLoader(false);
-            }).catch(err => {
-            console.log(err);
-            setRelMapLoader(false);
-            setError(err.toString());
-            setVisibility(true);
-        });
-    }
-
     function returnNFRelations() {
         return (
-            <div className={`card card-${props.normalFormNumber[0]}NF-result`}>
+            <div className={`card card-${props.nf_type}NF-result`}>
                 <div className="card-header">
-                    {props.normalFormNumber[0]}-NF Result
+                    {props.nf_type}-NF Result
                     <button
                         className="btn btn-sm btn-secondary __normal-form-rm-btn float-end"
-                        onClick={relationalMappingClickHandler}
+                        onClick={() => setIsRelMapTrigger(true)}
                     >
                         View Diagram
                     </button>
@@ -122,14 +97,10 @@ function PrintRelations(props) {
     return (
         <>
             <RelationalMapping
-                relMapModal={relMapModal}
-                relMapLoader={relMapLoader}
-                visibility={visibility}
-                error={error}
-                setRelMapModal={setRelMapModal}
-                setRelMapLoader={setRelMapLoader}
-                setVisibility={setVisibility}
-                title={'Relational Mapping'}
+                isRelMapTrigger={isRelMapTrigger}
+                setIsRelMapTrigger={setIsRelMapTrigger}
+                title={props.nf_type + '- NF Relational Mapping'}
+                url={api_url}
             />
 
             <div className="m-3">
@@ -162,7 +133,7 @@ function PrintRelations(props) {
         for (let i = 0; i < data[key].length; i++) {
             if ((flag && data[key][i][0].includes(value)) || key.toLowerCase() === 'multi')
                 underline = 'ib-underline';
-            if (props.normalFormNumber[0] === '1')
+            if (props.nf_type === '1')
                 underline = get1nfClass(value);
         }
         return 'inputBox mt-2 ' + underline;

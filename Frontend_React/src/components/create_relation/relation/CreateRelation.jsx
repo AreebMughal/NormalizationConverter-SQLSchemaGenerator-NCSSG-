@@ -101,6 +101,7 @@ const CreateRelation = (props) => {
                     onPreliminaryCheckClick={props.onPreliminaryCheckClick}
                     setShowNavbarContent={props.setShowNavbarContent}
                     setIsLoadWork={props.setIsLoadWork}
+                    setSuggestion={props.setSuggestion}
                 />
             </div>
         </div>
