@@ -6,22 +6,27 @@ from typing import Type
 import cv2
 from turtle import *
 
+import numpy
 # import pyrebase
 from PIL import Image
 from turtle import Turtle, Screen
 
 # from google.cloud import storage
 
-font_size=8
+font_size = 8
+
+
 class RelationalMappingNfs:
-    def __init__(self,relation,relation_name,fks):
+    def __init__(self, relation, relation_name, fks, MC):
         self.__yertle = Turtle(shape="turtle", visible=True)
         self.__screen = turtle.Screen()
         self.__TURTLE_SIZE = 20
         self.__relations = relation
         self.__relation_names = relation_name
-        self.__fk=fks
+        self.__fk = fks
+        self.__minimal_cover = MC
         self.preporcessing()
+
     def preporcessing(self):
 
         screenTk = self.__screen.getcanvas().winfo_toplevel()
@@ -30,16 +35,15 @@ class RelationalMappingNfs:
         names = self.getnames(self.__relation_names)
         self.set_Tortle()
         self.drawRelations(self.__relations, names, self.__fk)
-        turtle.getcanvas().postscript(file="3nf.eps")
+        turtle.getcanvas().postscript(file="2nf.eps")
         self.get_image()
-
 
     def get_image(self):
         TARGET_BOUNDS = (1600, 800)
         # Load the EPS at 10 times whatever size Pillow thinks it should be
         # (Experimentaton suggests that scale=1 means 72 DPI but that would
         #  make 600 DPI scale=8⅓ and Pillow requires an integer)
-        pic = Image.open('3nf.eps')
+        pic = Image.open('2nf.eps')
         pic.load(scale=10)
         # Ensure scaling can anti-alias by converting 1-bit or paletted images
         if pic.mode in ('P', '10'):
@@ -52,16 +56,18 @@ class RelationalMappingNfs:
         pic = pic.resize(new_size, Image.Resampling.LANCZOS)
         # Save to PNG
 
-        pic.save("3NF.png")
+        pic.save("2NF.png")
+
     def set_Tortle(self):
         self.__yertle.penup()
-        self.__yertle.goto(self.__TURTLE_SIZE / 2 - self.__screen.window_width() / 2, self.__screen.window_height() - 250 - self.__TURTLE_SIZE / 2)
+        self.__yertle.goto(self.__TURTLE_SIZE / 2 - self.__screen.window_width() / 2,
+                           self.__screen.window_height() - 250 - self.__TURTLE_SIZE / 2)
         self.__yertle.pendown()
 
         self.__yertle.shape("square")
         self.__yertle.width(2)
 
-    def getnames(self,relation_names):
+    def getnames(self, relation_names):
         names = []
         for one in relation_names:
             a = relation_names[one]
@@ -69,16 +75,16 @@ class RelationalMappingNfs:
                 names.append(each)
         return names
 
-    def simple_box(self,box_size, i, primarykeys):
+    def simple_box(self, box_size, i, primarykeys):
 
         self.__yertle.pendown()
         self.__yertle.forward(box_size)
         self.__yertle.right(90)
-        self.__yertle.forward(40)
+        self.__yertle.forward(30)
         self.__yertle.right(90)
         self.__yertle.forward(box_size)
         self.__yertle.right(90)
-        self.__yertle.forward(40)
+        self.__yertle.forward(30)
         self.__yertle.right(90)
         self.__yertle.right(90)
         self.__yertle.penup()
@@ -99,8 +105,7 @@ class RelationalMappingNfs:
             self.__yertle.left(90)
         else:
             self.__yertle.write(i, font=("Verdana", font_size, "bold",))
-        if (i in primarykeys ):
-
+        if (i in primarykeys):
             self.__yertle.right(90)
             self.__yertle.forward(1)
             self.__yertle.left(90)
@@ -119,22 +124,25 @@ class RelationalMappingNfs:
         self.__yertle.right(90)
         self.__yertle.forward(box_size)
 
-    def simple_line(self,attributes, box_size, single):
+    def simple_line(self, attributes, box_size, single,level):
 
         for key in single:
-            distnce = ((attributes.index(key) + 1) * box_size) - (box_size) + 20
+            distnce = ((attributes.index(key) + 1) * box_size) - (box_size) + 20 +level
             self.__yertle.penup()
             self.__yertle.forward(distnce)
 
             self.__yertle.pendown()
             self.__yertle.left(90)
-            self.__yertle.forward(25)
-            self.__yertle.back(25)
+            self.__yertle.forward(25+level)
+            self.__yertle.back(25+level)
             self.__yertle.right(90)
             self.__yertle.penup()
             self.__yertle.back(distnce)
 
-    def draw_forgin_key(self,fks, attibutes, relnames):
+    def draw_forgin_key(self, fks, attibutes, relnames):
+        print("fks" ,fks)
+        print("rel names",relnames)
+
         fk_relations = []
 
         for fk in fks:
@@ -148,8 +156,8 @@ class RelationalMappingNfs:
                 for i in rel:
                     fk_rel.append(rel[i])
                 fk_relations.append(fk_rel)
-
-
+        print("fk rela",fk_relations)
+        print("attribute" , attibutes)
         keyss = list(attibutes.keys())
         self.__yertle.penup()
         self.__yertle.right(90)
@@ -177,9 +185,12 @@ class RelationalMappingNfs:
             #     from_relation = goto_relation
             #     goto_relation = temp
             #     print("gsfdf")
+            print("keys" , keyss)
             a = ((keyss.index(from_relation) + 1) * 100)
+
             self.__yertle.forward(a)
             right_dist1 = ((attibutes[from_relation].index(forgin_keys[0]) + 1) * 70) - 25
+            print("firsr dis" ,((attibutes[from_relation].index(forgin_keys[0]) + 1) * 70) - 25 )
             self.__yertle.left(90)
             self.__yertle.forward(right_dist1)
             self.__yertle.pendown()
@@ -195,6 +206,7 @@ class RelationalMappingNfs:
             b = ((keyss.index(goto_relation) + 1) * 100) - a
             self.__yertle.forward(b)
             right_dist2 = ((attibutes[goto_relation].index(forgin_keys[0]) + 1) * 70) - 25
+            print("second relation" , (attibutes[goto_relation].index(forgin_keys[0])))
             self.__yertle.left(90)
             self.__yertle.forward(right_dist2 + (color_counter * 6))
             self.__yertle.left(90)
@@ -216,8 +228,10 @@ class RelationalMappingNfs:
             self.__yertle.back(a)
             color_counter += 1
 
-    def draw_arrows(self,attributes, box_size, dependentent, pk):
+    def draw_arrows(self, attributes, box_size, dependentent, pk,level):
+
         for element in dependentent:
+
             distnce = ((attributes.index(element) + 1) * box_size) - (box_size) + 20
             self.__yertle.penup()
             self.__yertle.forward(distnce)
@@ -227,8 +241,8 @@ class RelationalMappingNfs:
             self.__yertle.back(5)
             self.__yertle.right(45)
             self.__yertle.left(90)
-            self.__yertle.forward(25)
-            self.__yertle.back(25)
+            self.__yertle.forward(25 + level)
+            self.__yertle.back(25+level)
             self.__yertle.right(90)
             self.__yertle.left(135)
             self.__yertle.forward(5)
@@ -236,31 +250,81 @@ class RelationalMappingNfs:
             self.__yertle.right(135)
             self.__yertle.penup()
             self.__yertle.back(distnce)
+
+
         a = ((attributes.index(pk[0]) + 1) * box_size) - box_size + 20
         self.__yertle.penup()
         self.__yertle.forward(a)
         self.__yertle.left(90)
         self.__yertle.forward(25)
         self.__yertle.right(90)
-        b = ((attributes.index(dependentent[(len(dependentent) - 1)]) + 1) * box_size) - box_size
+
+        self.__yertle.left(90)
+        self.__yertle.forward(level)
+        self.__yertle.right(90)
+        self.__yertle.forward(level)
+
+
+        door_attribute = 0
+        for i in dependentent:
+            if door_attribute < attributes.index(i):
+                door_attribute = attributes.index(i)
+        b = (((door_attribute + 1) * box_size) - box_size) - a + 20-level
         self.__yertle.pendown()
         self.__yertle.forward(b)
         self.__yertle.back(b)
         self.__yertle.penup()
         self.__yertle.left(90)
-        self.__yertle.back(25)
+        self.__yertle.back(25 )
         self.__yertle.right(90)
         self.__yertle.back(a)
 
-    def oneRelationDrawing(self,relation, name, name_counter, att_List,name_print):
+    def oneRelationDrawing(self, relation, name, name_counter, att_List):
         box_size = 70
         rel = relation
         attibutes = []
+        prime_att= []
+
+        left_side = []
+        for oneRel in self.__minimal_cover:
+            for i in oneRel[0]:
+                left_side.append(i)
+        left_side = set(left_side)
+        left_side = list(left_side)
+
+
+
+        # for each in relation:
+        #     convertSet_List = list(each)
+        #     for i in convertSet_List:
+        #         attibutes.append(i)
+
+
+
         for each in relation:
             convertSet_List = list(each)
             for i in convertSet_List:
+                if i in left_side:
+                    prime_att.append(i)
+        Non_prime_attribute = []
+        for each in relation:
+            convertSet_List = list(each)
+            for i in convertSet_List:
+                Non_prime_attribute.append(i)
+
+        attibutes = prime_att
+        for i in Non_prime_attribute:
+            if i in prime_att:
+                pass
+            else:
                 attibutes.append(i)
+
+        # print("atteibutes" , attibutes)
+
+
+
         att_List[name] = attibutes
+
         multivalue_check = False
         primaryKeys = []
         rel_zero = list(rel[0])
@@ -273,7 +337,7 @@ class RelationalMappingNfs:
         self.__yertle.forward(20)
         self.__yertle.right(90)
         self.__yertle.pendown()
-        self.__yertle.write(name_print, font=("Verdana", 10, "normal",))
+        self.__yertle.write(name, font=("Verdana", 10, "normal",))
         self.__yertle.pendown()
         self.__yertle.right(90)
 
@@ -285,19 +349,73 @@ class RelationalMappingNfs:
 
         # self.__yertle.forward(box_size* len(att_List[name]))
         # code yhn krna ha
+        # print(att_List)
+        # print(attibutes)
+        # print(self.__minimal_cover)
+        # print(name)
+
         for att in att_List[name]:
             self.simple_box(box_size, att, primaryKeys)
         # self.__yertle.back(box_size * len(att_List[name]))
 
-        self.__yertle.back(box_size * len(att_List[name]))
-        self.simple_line(att_List[name], box_size, primaryKeys)
-        self.dependentent = list(set(attibutes) - set(primaryKeys)) + list(set(primaryKeys) - set(attibutes))
-        self.draw_arrows(attibutes, box_size, self.dependentent, primaryKeys)
+
+
+        # iske bad wo uss relation ki phli jagha par aa jaye ga
+        # self.eachDependentandidentefir(attibutes,)
+        # print("Att_List name" , att_List[name])
+        # print("Primary Keyss" , primaryKeys)
+        # print("Attributess",attibutes)
+        level = 0
+        if(name == "Fully_dependent"):
+            full_dependent_rel = relations['Fully_dependent']
+            full = [[list(full_dependent_rel[0]), []]]
+            # print(full)
+
+            self.__yertle.back(box_size * len(att_List[name]))
+            for rel_attr in list(full_dependent_rel[1]):
+                for ele in minimal_cover:
+                    append_fd_list(rel_attr, ele, full)
+            # print("Full List " , full)
+            if len(full[0][1]) == 0:
+                full.remove(full[0])
+
+
+            # print("Attt" , attibutes)
+            for i in range(len(full)):
+                oneRel = full[i]
+                # print("loop main phli position"  , self.__yertle.pos())
+
+                self.simple_line(att_List[name], box_size, oneRel[0],level)
+                # self.dependentent = list(set(attibutes) - set(primaryKeys)) + list(set(primaryKeys) - set(attibutes))
+                # print(self.dependentent)
+                self.draw_arrows(attibutes, box_size, oneRel[1], oneRel[0],level)
+
+
+                # print("loop main dosri position", self.__yertle.pos())
+                level=level+10
+
+
+        else:
+            level=0
+            self.__yertle.back(box_size * len(att_List[name]))
+            self.simple_line(att_List[name], box_size, primaryKeys,level)
+            self.dependentent = list(set(attibutes) - set(primaryKeys)) + list(set(primaryKeys) - set(attibutes))
+
+            self.draw_arrows(attibutes, box_size, self.dependentent, primaryKeys,level)
+
+
+
         self.__yertle.penup()
         self.__yertle.goto(self.__yertle.pos()[0], self.__yertle.pos()[1] - 20)
         self.__yertle.pendown()
+        # self.__yertle.penup()
+        # self.__yertle.goto(self.__yertle.pos()[0], self.__yertle.pos()[1] - 20)
+        # self.__yertle.pendown()
 
-    def drawRelations(self,relations, rels_names, fk):
+    def eachDependentandidentefir(self):
+        pass
+
+    def drawRelations(self, relations, rels_names, fk):
         # full = nfs['full']
         # partial = nfs['partial']
         # multi_value = nfs['Multi']
@@ -310,7 +428,7 @@ class RelationalMappingNfs:
         name_counter = 0
         for one in rels:
             attributes[names[name_counter][1]] = []
-            self.oneRelationDrawing(rels[one], names[name_counter][1], name_counter, attributes,names[name_counter][0])
+            self.oneRelationDrawing(rels[one], names[name_counter][1], name_counter, attributes)
             name_counter += 1
             self.__yertle.penup()
 
@@ -364,51 +482,33 @@ class RelationalMappingNfs:
     # imagePath = (r"E:\NormalizationConverter-SQLSchemaGenerator-NCSSG-\Backend_Flask\OneNF.png")
     # imageBlob = bucket.blob(file_name)
     # imageBlob.upload_from_filename(imagePath)  # Upload your imagepip install pycryptodome
+
+
+def check_fd_in_list(fd, my_list):
+    index = -1
+    for i in range(len(my_list)):
+
+        if fd == set(my_list[i][0]):
+            index = i
+    return index
+
+
+def append_fd_list(rel_attr, fd, my_list):
+    if {rel_attr}.issubset(fd[1]):
+        index = check_fd_in_list(fd[0], my_list)
+
+        if index != -1:
+            # print(my_list[index], 'fd ', fd[1].pop())
+            my_list[index][1].append(fd[1].pop())
+        else:
+            my_list.append([list(fd[0]), list(fd[1])])
+
+
 # if __name__ == "__main__":
-#     relations = {
-#         'Fully_dependent': [{'ssn', 'pnum'}, {'name'}],
-#         'partial_1': [{'ssn'}, {'id'}],
-#         'partial_2': [{'pnum'}, {'pname', 'ploc'}],
-#         'Multi_1': [{'ssn', 'pnum'}, {'email'}],
-#         'Multi_2': [{'ssn'}, {'address'}],
-#         'transitive_1': [{'id'}, {'dnum'}],
-#         'transitive_2': [{'dnum'}, {'dloc', 'dname'}]
-#     }
-#     relation_names = {
-#         'full': [['Organization', 'Fully_dependent']],
-#         'partial': [
-#             ['Org_ssn', 'partial_1'],
-#             ['Org_pnum', 'partial_2']
-#         ],
-#         'multi': [
-#             ['Org_email', 'multi_1'],
-#             ['Org_address', 'multi_2']
-#         ],
-#         'transitive': [
-#             ['Org_id', 'transitive_1'],
-#             ['Org_dnum', 'transitive_2']
-#         ]
-#     }
+#     relations = {'Fully_dependent': [{'ssn', 'pnum'}, {'dname', 'dnum', 'd_id'}], 'partial_1': [{'ssn'}, {'emp_id', 'ename'}], 'partial_2': [{'pnum'}, {'ploc'}], 'multi_1': [{'ssn'}, {'email'}]}
+#     relation_names =  {'full': [['organization', 'Fully_dependent']], 'partial': [['org_ssn', 'partial_1'], ['org_pnum', 'partial_2']], 'multi': [['org_email', 'multi_1']]}
+#     fk =   {'organization': [{'attribute': ['ssn'], 'relationName': 'partial_1'}, {'attribute': ['pnum'], 'relationName': 'partial_2'}], 'org_email': [{'attribute': ['ssn'], 'relationName': 'partial_1'}]}
+#     minimal_cover =  [[{'ssn'}, {'ename'}], [{'ssn'}, {'email'}], [{'ssn'}, {'emp_id'}], [{'d_id'}, {'dnum'}], [{'dnum'}, {'d_id'}], [{'d_id'}, {'dname'}], [{'pnum'}, {'ploc'}]]
+#     p = RelationalMappingNfs(relations,relation_names,fk,minimal_cover)
 #
-#     fk = {
-#         'Org_ssn': [
-#             {'attribute': ['ssn'], 'relationName': 'Fully_dependent'}
-#         ],
-#         'Org_pnum': [
-#             {'attribute': ['pnum'], 'relationName': 'Fully_dependent'}
-#         ],
-#         'Org_email': [
-#             {'attribute': ['pnum', 'ssn'], 'relationName': 'Fully_dependent'}
-#         ],
-#         'Org_address': [
-#             {'attribute': ['ssn'], 'relationName': 'Fully_dependent'}
-#         ],
-#         'Org_id': [
-#             {'attribute': ['id'], 'relationName': 'partial_1'}
-#         ],
-#         'Org_dnum': [
-#             {'attribute': ['dnum'], 'relationName': 'transitive_1'}
-#         ]
-#     }
-#     p = RelationalMappingNfs(relations,relation_names,fk)
 

@@ -30,7 +30,7 @@ class RelationalMappingNfs:
         names = self.getnames(self.__relation_names)
         self.set_Tortle()
         self.drawRelations(self.__relations, names, self.__fk)
-        turtle.getcanvas().postscript(file="3nf.eps")
+        turtle.getcanvas().postscript(file="bcnf.eps")
         self.get_image()
 
 
@@ -39,7 +39,7 @@ class RelationalMappingNfs:
         # Load the EPS at 10 times whatever size Pillow thinks it should be
         # (Experimentaton suggests that scale=1 means 72 DPI but that would
         #  make 600 DPI scale=8⅓ and Pillow requires an integer)
-        pic = Image.open('3nf.eps')
+        pic = Image.open('bcnf.eps')
         pic.load(scale=10)
         # Ensure scaling can anti-alias by converting 1-bit or paletted images
         if pic.mode in ('P', '10'):
@@ -52,7 +52,7 @@ class RelationalMappingNfs:
         pic = pic.resize(new_size, Image.Resampling.LANCZOS)
         # Save to PNG
 
-        pic.save("3NF.png")
+        pic.save("BCNF.png")
     def set_Tortle(self):
         self.__yertle.penup()
         self.__yertle.goto(self.__TURTLE_SIZE / 2 - self.__screen.window_width() / 2, self.__screen.window_height() - 250 - self.__TURTLE_SIZE / 2)
@@ -273,6 +273,7 @@ class RelationalMappingNfs:
         self.__yertle.forward(20)
         self.__yertle.right(90)
         self.__yertle.pendown()
+
         self.__yertle.write(name_print, font=("Verdana", 10, "normal",))
         self.__yertle.pendown()
         self.__yertle.right(90)
@@ -306,9 +307,10 @@ class RelationalMappingNfs:
         attributes = {}
         rels = self.__relations
         names = rels_names
-
+        print(names)
         name_counter = 0
         for one in rels:
+
             attributes[names[name_counter][1]] = []
             self.oneRelationDrawing(rels[one], names[name_counter][1], name_counter, attributes,names[name_counter][0])
             name_counter += 1
@@ -319,12 +321,7 @@ class RelationalMappingNfs:
 
             self.__yertle.goto(self.__yertle.pos()[0], self.__yertle.pos()[1] - 20)
 
-        # self.__yertle.goto(self.__TURTLE_SIZE / 2 - self.__screen.window_width() / 2, self.__screen.window_height() - 250 - self.__TURTLE_SIZE / 2)
-        # self.__yertle.right(90)
-        # self.__yertle.penup()
-        # self.__yertle.forward(100)
-        #
-        # self.__yertle.write("name", font=("Verdana", 10, "normal",))
+
 
         self.draw_forgin_key(fks, attributes, names)
 
@@ -389,6 +386,7 @@ class RelationalMappingNfs:
 #             ['Org_dnum', 'transitive_2']
 #         ]
 #     }
+#
 #
 #     fk = {
 #         'Org_ssn': [

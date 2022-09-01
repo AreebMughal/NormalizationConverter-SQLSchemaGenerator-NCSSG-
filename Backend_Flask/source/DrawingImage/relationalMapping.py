@@ -3,17 +3,14 @@ import turtle
 from tkinter import *
 # import cv2
 from turtle import *
-import pyrebase
+
+# import pyrebase
 from PIL import Image
 from turtle import Turtle, Screen
-from google.cloud import storage
-from firebase import firebase
-
-font_size = 14
-
-
+font_size=14
+# from google.cloud import storage
 class RelationalMapping:
-    def __init__(self, dics):
+    def __init__(self,dics):
 
         self.__dic = dics
         self.__multivalue = self.__dic['multi_value']
@@ -23,6 +20,7 @@ class RelationalMapping:
         self.TURTLE_SIZE = 0
         self.screen = 0
         self.starting()
+
 
     def starting(self):
 
@@ -41,13 +39,12 @@ class RelationalMapping:
 
         turtle.getcanvas().postscript(file="1nf.eps")
         self.get_image()
-        self.upload()
+        # self.upload()
         # self.screen.mainloop()
 
     def set_Tortle(self):
         self.yertle.penup()
-        self.yertle.goto(self.TURTLE_SIZE / 2 - self.screen.window_width(),
-                         self.screen.window_height() / 8 - self.TURTLE_SIZE / 2)
+        self.yertle.goto(self.TURTLE_SIZE / 2 - self.screen.window_width(), self.screen.window_height() / 8 - self.TURTLE_SIZE / 2)
         self.yertle.pendown()
         self.yertle.shape("square")
         self.yertle.width(2)
@@ -317,15 +314,16 @@ class RelationalMapping:
         self.yertle.forward(15)
         self.yertle.left(90)
         self.yertle.forward(5)
-        if (len(i) >= 10):
-            part1 = i[:10] + "_"
+        if(len(i) >= 10):
+            part1= i[:10] + "_"
+
 
             part2 = i[10:len(i)]
-            self.yertle.write(part1, font=("Verdana", font_size, "bold"))
+            self.yertle.write(part1,font=("Verdana", font_size, "bold"))
             self.yertle.right(90)
             self.yertle.forward(15)
             self.yertle.left(90)
-            self.yertle.write(part2, font=("Verdana", font_size, "bold"))
+            self.yertle.write(part2,font=("Verdana", font_size, "bold"))
             self.yertle.right(90)
             self.yertle.back(15)
             self.yertle.left(90)
@@ -390,19 +388,30 @@ class RelationalMapping:
         self.yertle.right(90)
         self.yertle.forward(box_size)
         self.yertle.back(2)
-
-    def upload(self):
-        global firebase
-        os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "accountConfig.json"
-        db_url = 'https://ncssg-27984-default-rtdb.firebaseio.com/'  # Your project url
-        firebase = firebase.FirebaseApplication(db_url, None)
-        client = storage.Client()
-        bucket = client.get_bucket('ncssg-27984.appspot.com')
-        imageBlob = bucket.blob("/")
-        file_name = "1NF.png"
-        imagePath = r"C:\Users\areeb\OneDrive\Desktop\FYP Project\Backend_Flask\source\DrawingImage\1NF.png"
-        imageBlob = bucket.blob(file_name)
-        imageBlob.upload_from_filename(imagePath)  # Upload your imagepip install pycryptodome
-
-
+#     def upload(self):
+#         firebaseConfig = {
+#         "apiKey": "AIzaSyC6ficlQvWLyJI_M8Alr-0hOHiCnkW6k7k",
+#         "authDomain": "ncssg-27984.firebaseapp.com",
+#         "projectId": "ncssg-27984",
+#         "storageBucket": "ncssg-27984.appspot.com",
+#         "messagingSenderId": "857164548773",
+#         "appId": "1:857164548773:web:21d281f781befd6d111b4c",
+#         "measurementId": "G-H70L9Z1TJQ",
+#         "serviceAccount": "accountConfig.json",
+#         "databaseURL": "https://ncssg-27984-default-rtdb.firebaseio.com/"
+#         }
+#         firebase = pyrebase.initialize_app(firebaseConfig)
+#         storage = firebase.storage()
+#         storage.child("1NF.png").put("1NF.png")
+#     # You just get your CREDENTIALS on previous step
+#         os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "ncssg-27984-firebase-adminsdk-o3i2s-ce7bec64be.json"
+#         db_url = 'https://ncssg-27984-default-rtdb.firebaseio.com/'  # Your project url
+#         firebase = firebase.FirebaseApplication(db_url, None)
+#         client = storage.Client()
+#         bucket = client.get_bucket('gs://ncssg-27984.appspot.com')
+#         imageBlob = bucket.blob("/")
+#         file_name = "OneNF.png"
+#         imagePath = (r"C:\Users\Sharif\PycharmProjects\pythonProject4\1NF.png")
+#         imageBlob = bucket.blob(file_name)
+#         imageBlob.upload_from_filename(imagePath)  # Upload your imagepip install pycryptodome
 # RelationalMapping()
