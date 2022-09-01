@@ -11,6 +11,10 @@ from flask_cors import CORS
 from flask import send_file
 
 from Fd_Miner import FdsMiner
+from source.DrawingImage.rel_map_1nf import RelationalMapping1nf
+from source.DrawingImage.rel_map_2nf import RelationalMapping2nf
+from source.DrawingImage.rel_map_3nf import RelationalMapping3nf
+from source.DrawingImage.rel_map_bcnf import RelationalMappingBcnf
 from source.DrawingImage.relationalMapping import RelationalMapping
 from source.NF_1 import Nf1st
 from source.NF_2 import Nf2nd
@@ -24,6 +28,8 @@ from source.Sql_Form_Methods import get_all_relations
 from source.Sql_Form_Methods import create_relations
 from source.StaticMethods import get_dummy_nf_result
 from source.SqlScript import SqlScript
+from os.path import exists
+
 
 app = Flask(__name__)
 CORS(app)
@@ -89,7 +95,6 @@ def primaryKeyCheck(pk, fds):
     return result
 
 
-
 def my_exception(e):
     print('exp: ', e)
     traceback.print_exception(*sys.exc_info())
@@ -106,13 +111,13 @@ def get_result(object_type, input_boxes_dic):
         if object_type == 'minimal_cover':
             normalized_relation = NormalizedRelation(relation=my_relation)
             result = normalized_relation.get_minimal_cover_JSON()
-        elif object_type == 'NF1':
+        elif object_type == '1NF':
             nf_1 = Nf1st(my_rel=my_relation)
             result = nf_1.find_nf_1()
-        elif object_type == 'NF2':
+        elif object_type == '2NF':
             nf_2 = Nf2nd(my_rel=my_relation)
             result = nf_2.find_nf_2()
-        elif object_type == 'NF3':
+        elif object_type == '3NF':
             nf_3 = Nf3rd(my_rel=my_relation)
             result = nf_3.find_nf_3()
         elif object_type == 'BCNF':
@@ -125,7 +130,10 @@ def get_result(object_type, input_boxes_dic):
     return {"result": result, "relation_names": relation_names}
 
 
+
+
 def get_relationalMapping(nf_type, api_data):
+    print('=====> ', api_data)
     result = '1'
     try:
         data = json.loads(api_data)
@@ -137,33 +145,46 @@ def get_relationalMapping(nf_type, api_data):
         if nf_type == 'RM':
             dic = my_relation.extract_data(input_boxes)
             rel_map = RelationalMapping(dic)
-        if nf_type == 'NF1':
+        elif nf_type == '1NF':
             normalized_relation = NormalizedRelation(relation=my_relation)
             dic = my_relation.extract_data(input_boxes)
             dic['fds'] = normalized_relation.get_minimal_cover()
-            rel_map = RelationalMapping(dic)
-        elif nf_type == 'NF2' or nf_type == 'NF3' or nf_type == 'BCNF':
+
+            new_dict = {'fds': dic['fds'], 'primary': dic['primary'], 'multi_value': dic['multi_value']}
+            print(new_dict)
+            rel_map = RelationalMapping1nf(new_dict)
+
+        elif nf_type == '2NF' or nf_type == '3NF' or nf_type == 'BCNF':
             normalized_relation = NormalizedRelation(relation=my_relation)
             minimal_cover_result = normalized_relation.get_minimal_cover()
             all_relations = get_all_relations(nf_result, relation_name)
             relation_names = create_relation_names(nf_result, relation_name)
             fk = get_all_foreign_keys_list(nf_result, relation_names, all_relations)
-
             print('Minimal Cover:\n', minimal_cover_result)
             print('All Relation:\n', all_relations)
             print('All Relation Names:\n', relation_names)
             print('Foreign Key:\n', fk)
+            if nf_type == '2NF':
+                rm = RelationalMapping2nf(all_relations, relation_names, fk, minimal_cover_result)
+            elif nf_type == '3NF':
+                rm = RelationalMapping3nf(all_relations, relation_names, fk)
+            elif nf_type == 'BCNF':
+                rm = RelationalMappingBcnf(all_relations, relation_names, fk)
+
         else:
+            print('ELse')
             result = '0'
     except Exception as e:
         # result = '0'
         my_exception(e)
 
-    image_name = '1NF' if nf_type == 'RM' else nf_type
+    # image_name = '1NF' if nf_type == 'RM' else nf_type
+
     if result == '0':
         return result
     else:
-        return send_file(f'./{image_name}.png', mimetype='image')
+        return send_file(f'./{nf_type}.png', mimetype='image') if exists(f'./{nf_type}.png') else '0'
+
 
 
 @app.route("/minimalCover", methods=['POST'])
@@ -173,18 +194,18 @@ def minimalCover():
 
 @app.route("/NF1", methods=['POST'])
 def NF1():
-    return get_result(object_type='NF1', input_boxes_dic=request.data.decode('utf-8'))
+    return get_result(object_type='1NF', input_boxes_dic=request.data.decode('utf-8'))
 
 
 @app.route("/NF2", methods=['POST'])
 def NF2():
-    res = get_result(object_type='NF2', input_boxes_dic=request.data.decode('utf-8'))
+    res = get_result(object_type='2NF', input_boxes_dic=request.data.decode('utf-8'))
     return res
 
 
 @app.route("/NF3", methods=['POST'])
 def NF3():
-    return get_result(object_type='NF3', input_boxes_dic=request.data.decode('utf-8'))
+    return get_result(object_type='3NF', input_boxes_dic=request.data.decode('utf-8'))
 
 
 @app.route("/BCNF", methods=['POST'])
@@ -197,7 +218,6 @@ def relationalMapping():
     return get_relationalMapping('RM', request.data.decode('utf-8'))
 
 
-
 @app.route("/relationalMapping_1nf", methods=['POST', 'GET'])
 def relationalMapping_1nf():
     return get_relationalMapping('1NF', request.data.decode('utf-8'))
@@ -205,6 +225,7 @@ def relationalMapping_1nf():
 
 @app.route("/relationalMapping_2nf", methods=['POST', 'GET'])
 def relationalMapping_2nf():
+    print('\n\n Request ', request.data.decode('utf-8'), '\n\n')
     return get_relationalMapping('2NF', request.data.decode('utf-8'))
 
 
@@ -226,14 +247,14 @@ def getSqlSchemaData():
         data = json.loads(request.data.decode('utf-8'))
         normal_form = data['normalForm']
         relation_name = data['relationName']
-        if normal_form == 'BCNF':
-            res = get_dummy_nf_result()
-            all_relations = get_all_relations(res, 'Practice')
-            json_data = create_relations(res, create_relation_names(res, 'Practice'), all_relations)
-        else:
-            res = get_result(object_type=normal_form, input_boxes_dic=request.data.decode('utf-8'))['result']
-            all_relations = get_all_relations(res, relation_name)
-            json_data = create_relations(res, create_relation_names(res, relation_name), all_relations)
+        # if normal_form == 'BCNF':
+        #     res = get_dummy_nf_result()
+        #     all_relations = get_all_relations(res, 'Practice')
+        #     json_data = create_relations(res, create_relation_names(res, 'Practice'), all_relations)
+        # else:
+        res = get_result(object_type=normal_form, input_boxes_dic=request.data.decode('utf-8'))['result']
+        all_relations = get_all_relations(res, relation_name)
+        json_data = create_relations(res, create_relation_names(res, relation_name), all_relations)
 
     except Exception as e:
         my_exception(e)

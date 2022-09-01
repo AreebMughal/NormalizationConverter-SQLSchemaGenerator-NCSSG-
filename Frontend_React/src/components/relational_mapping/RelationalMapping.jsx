@@ -31,7 +31,7 @@ const RelationalMapping = (props) => {
             relationName: my_data.getRawState().relationName
         })
             .then(res => {
-                // console.log(res.data);
+                console.log(res.data);
                 if (res.data !== 0) {
                     setRelMapModal(true);
                     setRelMapLoader(false);

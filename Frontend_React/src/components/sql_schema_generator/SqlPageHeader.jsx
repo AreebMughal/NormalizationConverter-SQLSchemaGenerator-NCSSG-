@@ -16,7 +16,7 @@ const SqlPageHeader = (props) => {
             <div className='d-flex ms-3'>
                 <div className="form-check">
                     <input className="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault3"
-                           value='NF3' onChange={nfLevelChangeHandler}/>
+                           value='3NF' onChange={nfLevelChangeHandler}/>
                     <label className="nf-check-label me-4" htmlFor="flexRadioDefault3">
                         3-NF
                     </label>

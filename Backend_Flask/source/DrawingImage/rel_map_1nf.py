@@ -7,27 +7,28 @@ from turtle import *
 # import pyrebase
 from PIL import Image
 from turtle import Turtle, Screen
-font_size=14
+
+font_size = 14
+
 from os.path import exists
 
 # from google.cloud import storage
-class RelationalMapping:
+class RelationalMapping1nf:
     def __init__(self, dics):
-        if exists('./RM.png'):
-            os.remove("RM.png")
-        if exists('./rm.eps'):
-            os.remove('rm.eps')
+        if exists('./1NF.png'):
+            os.remove("1NF.png")
+        if exists('./1nf.eps'):
+            os.remove('1nf.eps')
         self.__dic = dics
         self.__multivalue = self.__dic['multi_value']
         self.__primary = self.__dic['primary']
+
         self.yertle = None
         self.TURTLE_SIZE = 0
         self.screen = 0
         self.starting()
 
-
     def starting(self):
-
         self.TURTLE_SIZE = 20
         self.screen = turtle.Screen()
         screenTk = self.screen.getcanvas().winfo_toplevel()
@@ -41,17 +42,17 @@ class RelationalMapping:
         single_compo = self.find_single_composite(self.__dic['fds'])
         self.drawattr(elements, self.__multivalue, self.__primary, single_compo)
 
-        turtle.getcanvas().postscript(file="rm.eps")
+        turtle.getcanvas().postscript(file="1nf.eps")
         self.get_image()
         turtle.bye()
-        # turtle.done()
 
         # self.upload()
         # self.screen.mainloop()
 
     def set_Tortle(self):
         self.yertle.penup()
-        self.yertle.goto(self.TURTLE_SIZE / 2 - self.screen.window_width(), self.screen.window_height() / 8 - self.TURTLE_SIZE / 2)
+        self.yertle.goto(self.TURTLE_SIZE / 2 - self.screen.window_width(),
+                         self.screen.window_height() / 8 - self.TURTLE_SIZE / 2)
         self.yertle.pendown()
         self.yertle.shape("square")
         self.yertle.width(2)
@@ -228,7 +229,7 @@ class RelationalMapping:
         # Load the EPS at 10 times whatever size Pillow thinks it should be
         # (Experimentaton suggests that scale=1 means 72 DPI but that would
         #  make 600 DPI scale=8⅓ and Pillow requires an integer)
-        pic = Image.open('rm.eps')
+        pic = Image.open('1nf.eps')
         pic.load(scale=10)
         # Ensure scaling can anti-alias by converting 1-bit or paletted images
         if pic.mode in ('P', '1'):
@@ -240,7 +241,7 @@ class RelationalMapping:
         # Resize to fit the target size
         pic = pic.resize(new_size, Image.Resampling.LANCZOS)
         # Save to PNG
-        pic.save("RM.png")
+        pic.save("1NF.png")
 
     def draw_arrows(self, attributes, box_size, keys_level_dic, keyss, single):
         for key in keyss:
@@ -321,16 +322,15 @@ class RelationalMapping:
         self.yertle.forward(15)
         self.yertle.left(90)
         self.yertle.forward(5)
-        if(len(i) >= 10):
-            part1= i[:10] + "_"
-
+        if (len(i) >= 10):
+            part1 = i[:10] + "_"
 
             part2 = i[10:len(i)]
-            self.yertle.write(part1,font=("Verdana", font_size, "bold"))
+            self.yertle.write(part1, font=("Verdana", font_size, "bold"))
             self.yertle.right(90)
             self.yertle.forward(15)
             self.yertle.left(90)
-            self.yertle.write(part2,font=("Verdana", font_size, "bold"))
+            self.yertle.write(part2, font=("Verdana", font_size, "bold"))
             self.yertle.right(90)
             self.yertle.back(15)
             self.yertle.left(90)

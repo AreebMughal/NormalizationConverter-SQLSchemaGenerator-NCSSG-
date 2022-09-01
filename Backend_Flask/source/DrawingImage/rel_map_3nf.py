@@ -3,7 +3,6 @@ import turtle
 from tkinter import *
 from typing import Type
 
-import cv2
 from turtle import *
 
 # import pyrebase
@@ -12,27 +11,37 @@ from turtle import Turtle, Screen
 
 # from google.cloud import storage
 
-font_size=8
-class RelationalMappingNfs:
-    def __init__(self,relation,relation_name,fks):
-        self.__yertle = Turtle(shape="turtle", visible=True)
+font_size = 14
+
+from os.path import exists
+
+class RelationalMapping3nf:
+    def __init__(self, relation, relation_name, fks):
+        if exists('./3NF.png'):
+            os.remove("3NF.png")
+        if exists('./3nf.eps'):
+            os.remove('3nf.eps')
+        self.__yertle = None
         self.__screen = turtle.Screen()
         self.__TURTLE_SIZE = 20
         self.__relations = relation
         self.__relation_names = relation_name
-        self.__fk=fks
+        self.__fk = fks
         self.preporcessing()
+
     def preporcessing(self):
 
         screenTk = self.__screen.getcanvas().winfo_toplevel()
         screenTk.attributes("-fullscreen", True)
         turtle.tracer(0)
+        self.__yertle = Turtle(shape="turtle", visible=False)
+
         names = self.getnames(self.__relation_names)
         self.set_Tortle()
         self.drawRelations(self.__relations, names, self.__fk)
         turtle.getcanvas().postscript(file="3nf.eps")
         self.get_image()
-
+        turtle.bye()
 
     def get_image(self):
         TARGET_BOUNDS = (1600, 800)
@@ -53,15 +62,17 @@ class RelationalMappingNfs:
         # Save to PNG
 
         pic.save("3NF.png")
+
     def set_Tortle(self):
         self.__yertle.penup()
-        self.__yertle.goto(self.__TURTLE_SIZE / 2 - self.__screen.window_width() / 2, self.__screen.window_height() - 250 - self.__TURTLE_SIZE / 2)
+        self.__yertle.goto(self.__TURTLE_SIZE / 2 - self.__screen.window_width() / 2,
+                           self.__screen.window_height() - 250 - self.__TURTLE_SIZE / 2)
         self.__yertle.pendown()
 
         self.__yertle.shape("square")
         self.__yertle.width(2)
 
-    def getnames(self,relation_names):
+    def getnames(self, relation_names):
         names = []
         for one in relation_names:
             a = relation_names[one]
@@ -69,7 +80,7 @@ class RelationalMappingNfs:
                 names.append(each)
         return names
 
-    def simple_box(self,box_size, i, primarykeys):
+    def simple_box(self, box_size, i, primarykeys):
 
         self.__yertle.pendown()
         self.__yertle.forward(box_size)
@@ -99,8 +110,7 @@ class RelationalMappingNfs:
             self.__yertle.left(90)
         else:
             self.__yertle.write(i, font=("Verdana", font_size, "bold",))
-        if (i in primarykeys ):
-
+        if (i in primarykeys):
             self.__yertle.right(90)
             self.__yertle.forward(1)
             self.__yertle.left(90)
@@ -119,7 +129,7 @@ class RelationalMappingNfs:
         self.__yertle.right(90)
         self.__yertle.forward(box_size)
 
-    def simple_line(self,attributes, box_size, single):
+    def simple_line(self, attributes, box_size, single):
 
         for key in single:
             distnce = ((attributes.index(key) + 1) * box_size) - (box_size) + 20
@@ -134,7 +144,7 @@ class RelationalMappingNfs:
             self.__yertle.penup()
             self.__yertle.back(distnce)
 
-    def draw_forgin_key(self,fks, attibutes, relnames):
+    def draw_forgin_key(self, fks, attibutes, relnames):
         fk_relations = []
 
         for fk in fks:
@@ -148,7 +158,6 @@ class RelationalMappingNfs:
                 for i in rel:
                     fk_rel.append(rel[i])
                 fk_relations.append(fk_rel)
-
 
         keyss = list(attibutes.keys())
         self.__yertle.penup()
@@ -216,7 +225,7 @@ class RelationalMappingNfs:
             self.__yertle.back(a)
             color_counter += 1
 
-    def draw_arrows(self,attributes, box_size, dependentent, pk):
+    def draw_arrows(self, attributes, box_size, dependentent, pk):
         for element in dependentent:
             distnce = ((attributes.index(element) + 1) * box_size) - (box_size) + 20
             self.__yertle.penup()
@@ -252,8 +261,8 @@ class RelationalMappingNfs:
         self.__yertle.right(90)
         self.__yertle.back(a)
 
-    def oneRelationDrawing(self,relation, name, name_counter, att_List,name_print):
-        box_size = 70
+    def oneRelationDrawing(self, relation, name, name_counter, att_List, name_print):
+        box_size = 90
         rel = relation
         attibutes = []
         for each in relation:
@@ -297,7 +306,7 @@ class RelationalMappingNfs:
         self.__yertle.goto(self.__yertle.pos()[0], self.__yertle.pos()[1] - 20)
         self.__yertle.pendown()
 
-    def drawRelations(self,relations, rels_names, fk):
+    def drawRelations(self, relations, rels_names, fk):
         # full = nfs['full']
         # partial = nfs['partial']
         # multi_value = nfs['Multi']
@@ -310,7 +319,7 @@ class RelationalMappingNfs:
         name_counter = 0
         for one in rels:
             attributes[names[name_counter][1]] = []
-            self.oneRelationDrawing(rels[one], names[name_counter][1], name_counter, attributes,names[name_counter][0])
+            self.oneRelationDrawing(rels[one], names[name_counter][1], name_counter, attributes, names[name_counter][0])
             name_counter += 1
             self.__yertle.penup()
 
@@ -411,4 +420,3 @@ class RelationalMappingNfs:
 #         ]
 #     }
 #     p = RelationalMappingNfs(relations,relation_names,fk)
-

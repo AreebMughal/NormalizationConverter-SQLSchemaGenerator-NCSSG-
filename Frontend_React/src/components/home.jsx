@@ -11,7 +11,7 @@ function Home() {
                 <div className="col-lg-6">
                     <div className='ms-5 mb-5 usage2'>
                         <div className="intro-header">
-                            <h4>The New Way to Learn <br/> Normalization and Generate SQL Schema </h4>
+                            <h4>Easy Way to Learn <br/> Normalization and Generate SQL Schema </h4>
                         </div>
                         <div className="intro-body">
                             <p className=''>

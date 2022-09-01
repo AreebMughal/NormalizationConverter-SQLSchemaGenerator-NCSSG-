@@ -3,7 +3,6 @@ import turtle
 from tkinter import *
 from typing import Type
 
-import cv2
 from turtle import *
 
 # import pyrebase
@@ -11,11 +10,16 @@ from PIL import Image
 from turtle import Turtle, Screen
 
 # from google.cloud import storage
+from os.path import exists
 
-font_size=8
-class RelationalMappingNfs:
+font_size=14
+class RelationalMappingBcnf:
     def __init__(self,relation,relation_name,fks):
-        self.__yertle = Turtle(shape="turtle", visible=True)
+        if exists('./BCNF.png'):
+            os.remove("BCNF.png")
+        if exists('./bcnf.eps'):
+            os.remove('bcnf.eps')
+        self.__yertle = None
         self.__screen = turtle.Screen()
         self.__TURTLE_SIZE = 20
         self.__relations = relation
@@ -27,11 +31,14 @@ class RelationalMappingNfs:
         screenTk = self.__screen.getcanvas().winfo_toplevel()
         screenTk.attributes("-fullscreen", True)
         turtle.tracer(0)
+        self.__yertle = Turtle(shape="turtle", visible=False)
+
         names = self.getnames(self.__relation_names)
         self.set_Tortle()
         self.drawRelations(self.__relations, names, self.__fk)
         turtle.getcanvas().postscript(file="bcnf.eps")
         self.get_image()
+        turtle.bye()
 
 
     def get_image(self):
@@ -253,7 +260,7 @@ class RelationalMappingNfs:
         self.__yertle.back(a)
 
     def oneRelationDrawing(self,relation, name, name_counter, att_List,name_print):
-        box_size = 70
+        box_size = 90
         rel = relation
         attibutes = []
         for each in relation:

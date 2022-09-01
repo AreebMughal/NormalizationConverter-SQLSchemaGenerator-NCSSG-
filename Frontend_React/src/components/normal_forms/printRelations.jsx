@@ -13,7 +13,7 @@ function PrintRelations(props) {
     const [isRelMapTrigger, setIsRelMapTrigger] = useState(false);
 
     const api_url = 'http://127.0.0.1:5000/relationalMapping_' + props.nf_type.toLowerCase() + 'nf';
-
+    console.log(api_url);
     let count = 1;
 
     useEffect(() => {
