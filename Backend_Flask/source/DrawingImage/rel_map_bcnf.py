@@ -249,15 +249,16 @@ class RelationalMappingBcnf:
         self.__yertle.left(90)
         self.__yertle.forward(25)
         self.__yertle.right(90)
-        b = ((attributes.index(dependentent[(len(dependentent) - 1)]) + 1) * box_size) - box_size
-        self.__yertle.pendown()
-        self.__yertle.forward(b)
-        self.__yertle.back(b)
-        self.__yertle.penup()
-        self.__yertle.left(90)
-        self.__yertle.back(25)
-        self.__yertle.right(90)
-        self.__yertle.back(a)
+        if len(dependentent) > 0:
+            b = ((attributes.index(dependentent[(len(dependentent) - 1)]) + 1) * box_size) - box_size
+            self.__yertle.pendown()
+            self.__yertle.forward(b)
+            self.__yertle.back(b)
+            self.__yertle.penup()
+            self.__yertle.left(90)
+            self.__yertle.back(25)
+            self.__yertle.right(90)
+            self.__yertle.back(a)
 
     def oneRelationDrawing(self,relation, name, name_counter, att_List,name_print):
         box_size = 90

@@ -17,6 +17,7 @@ class RelationalMapping:
             os.remove("RM.png")
         if exists('./rm.eps'):
             os.remove('rm.eps')
+
         self.__dic = dics
         self.__multivalue = self.__dic['multi_value']
         self.__primary = self.__dic['primary']
@@ -187,7 +188,7 @@ class RelationalMapping:
                         small = i
 
                     i = i + 1
-
+                print('--->', composite, element_counter -1, small)
                 a = ((attributes.index(composite[element_counter - 1][small])) * box_size) + (level * 7)
                 self.yertle.penup()
                 self.yertle.forward(a)
@@ -266,6 +267,7 @@ class RelationalMapping:
                 self.yertle.penup()
                 self.yertle.back(distnce)
             a = ((attributes.index(key)) * box_size) + (level * 7)
+            print(attributes.index(key))
             self.yertle.penup()
             self.yertle.forward(a)
             self.yertle.left(90)
@@ -275,6 +277,7 @@ class RelationalMapping:
             agoto = listofsingle[len(listofsingle) - 1]
 
             b = ((attributes.index(agoto) - attributes.index(key)) * box_size)
+
             self.yertle.pendown()
             self.yertle.forward(b)
             self.yertle.back(b)

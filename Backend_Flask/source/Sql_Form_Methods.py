@@ -36,7 +36,7 @@ def get_foreign_relation_of(relations):
 
 def get_foreign_keys(relation, all_relations, current):
     foreign_keys = []
-    print(all_relations)
+    # print(all_relations)
     primary_keys = all_relations['Fully_dependent'][0]
     # print(current, ':')
     for key, rel in all_relations.items():
@@ -54,9 +54,11 @@ def get_foreign_keys(relation, all_relations, current):
             # elif not('Fully_dependent' in current):
             #     print(' in - current', current)
             for attr in relation[0]:
-                if {attr}.issubset(rel[0]) or {attr}.issubset(rel[1]):
+                if len(rel) > 1:
+                    if {attr}.issubset(rel[0]) or {attr}.issubset(rel[1]):
+                        append_foreign_key(foreign_keys, key, [attr])
+                elif {attr}.issubset(rel[0]):
                     append_foreign_key(foreign_keys, key, [attr])
-
     for element in foreign_keys:
         relations = get_foreign_relation_of(element['relationName'])
         if 'fully' in relations and len(primary_keys) == 1:

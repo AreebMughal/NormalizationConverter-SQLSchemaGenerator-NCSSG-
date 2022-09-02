@@ -133,7 +133,6 @@ def get_result(object_type, input_boxes_dic):
 
 
 def get_relationalMapping(nf_type, api_data):
-    print('=====> ', api_data)
     result = '1'
     try:
         data = json.loads(api_data)
@@ -145,6 +144,7 @@ def get_relationalMapping(nf_type, api_data):
         if nf_type == 'RM':
             dic = my_relation.extract_data(input_boxes)
             rel_map = RelationalMapping(dic)
+
         elif nf_type == '1NF':
             normalized_relation = NormalizedRelation(relation=my_relation)
             dic = my_relation.extract_data(input_boxes)
@@ -192,18 +192,18 @@ def minimalCover():
     return get_result(object_type='minimal_cover', input_boxes_dic=request.data.decode('utf-8'))
 
 
-@app.route("/NF1", methods=['POST'])
+@app.route("/NF1", methods=['POST', 'GET'])
 def NF1():
     return get_result(object_type='1NF', input_boxes_dic=request.data.decode('utf-8'))
 
 
-@app.route("/NF2", methods=['POST'])
+@app.route("/NF2", methods=['POST', 'GET'])
 def NF2():
     res = get_result(object_type='2NF', input_boxes_dic=request.data.decode('utf-8'))
     return res
 
 
-@app.route("/NF3", methods=['POST'])
+@app.route("/NF3", methods=['POST', 'GET'])
 def NF3():
     return get_result(object_type='3NF', input_boxes_dic=request.data.decode('utf-8'))
 
@@ -218,6 +218,7 @@ def relationalMapping():
     return get_relationalMapping('RM', request.data.decode('utf-8'))
 
 
+
 @app.route("/relationalMapping_1nf", methods=['POST', 'GET'])
 def relationalMapping_1nf():
     return get_relationalMapping('1NF', request.data.decode('utf-8'))
@@ -225,7 +226,6 @@ def relationalMapping_1nf():
 
 @app.route("/relationalMapping_2nf", methods=['POST', 'GET'])
 def relationalMapping_2nf():
-    print('\n\n Request ', request.data.decode('utf-8'), '\n\n')
     return get_relationalMapping('2NF', request.data.decode('utf-8'))
 
 

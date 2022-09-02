@@ -370,9 +370,10 @@ class RelationalMapping2nf:
             # print(full)
 
             self.__yertle.back(box_size * len(att_List[name]))
-            for rel_attr in list(full_dependent_rel[1]):
-                for ele in self.__minimal_cover:
-                    append_fd_list(rel_attr, ele, full)
+            if len(full_dependent_rel) > 1:
+                for rel_attr in list(full_dependent_rel[1]):
+                    for ele in self.__minimal_cover:
+                        append_fd_list(rel_attr, ele, full)
             # print("Full List " , full)
             if len(full[0][1]) == 0:
                 full.remove(full[0])
