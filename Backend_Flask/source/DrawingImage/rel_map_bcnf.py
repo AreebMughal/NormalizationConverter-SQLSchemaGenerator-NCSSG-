@@ -15,6 +15,7 @@ from os.path import exists
 font_size=14
 class RelationalMappingBcnf:
     def __init__(self,relation,relation_name,fks):
+        print("contractor" , fks)
         if exists('./BCNF.png'):
             os.remove("BCNF.png")
         if exists('./bcnf.eps'):
@@ -143,7 +144,8 @@ class RelationalMappingBcnf:
 
     def draw_forgin_key(self,fks, attibutes, relnames):
         fk_relations = []
-
+        print("Forgin keys" , fks)
+        print("relnames" , relnames)
         for fk in fks:
             fk_rel = []
             for name in relnames:
@@ -170,7 +172,7 @@ class RelationalMappingBcnf:
         self.__yertle.right(90)
         cololist = ["blue", "indigo", "violet", "orange", "green", "red", "yellow", "orange"]
         color_counter = 0
-
+        print("FKs " , fk_relations)
         for rel in fk_relations:
             goto_relation = rel[0]
             from_relation = rel[2]
@@ -184,9 +186,13 @@ class RelationalMappingBcnf:
             #     from_relation = goto_relation
             #     goto_relation = temp
             #     print("gsfdf")
-            a = ((keyss.index(from_relation) + 1) * 100)
+            # print("from ", (from_relation[0]))
+            print("attibutes",attibutes)
+            from_rel = from_relation[0] if type(from_relation) is list else from_relation
+
+            a = ((keyss.index(from_rel) + 1) * 100)
             self.__yertle.forward(a)
-            right_dist1 = ((attibutes[from_relation].index(forgin_keys[0]) + 1) * 70) - 25
+            right_dist1 = ((attibutes[from_rel].index(forgin_keys[0]) + 1) * 90) - 25
             self.__yertle.left(90)
             self.__yertle.forward(right_dist1)
             self.__yertle.pendown()
@@ -201,7 +207,7 @@ class RelationalMappingBcnf:
 
             b = ((keyss.index(goto_relation) + 1) * 100) - a
             self.__yertle.forward(b)
-            right_dist2 = ((attibutes[goto_relation].index(forgin_keys[0]) + 1) * 70) - 25
+            right_dist2 = ((attibutes[goto_relation].index(forgin_keys[0]) + 1) * 90) - 25
             self.__yertle.left(90)
             self.__yertle.forward(right_dist2 + (color_counter * 6))
             self.__yertle.left(90)
@@ -279,9 +285,12 @@ class RelationalMappingBcnf:
         self.__yertle.right(90)
         self.__yertle.forward(20)
         self.__yertle.right(90)
-        self.__yertle.pendown()
+        self.__yertle.forward(120)
 
-        self.__yertle.write(name_print, font=("Verdana", 10, "normal",))
+        self.__yertle.pendown()
+        self.__yertle.write(name, font=("Verdana", 16, "bold",))
+        self.__yertle.penup()
+        self.__yertle.back(120)
         self.__yertle.pendown()
         self.__yertle.right(90)
 

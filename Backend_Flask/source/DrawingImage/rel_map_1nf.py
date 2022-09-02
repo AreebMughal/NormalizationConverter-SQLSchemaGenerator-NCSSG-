@@ -3,7 +3,9 @@ import turtle
 from tkinter import *
 # import cv2
 from turtle import *
-
+import matplotlib
+matplotlib.use('Agg')
+from matplotlib import pyplot as plt
 # import pyrebase
 from PIL import Image
 from turtle import Turtle, Screen
@@ -129,23 +131,21 @@ class RelationalMapping1nf:
 
         keyss = single.keys()
         attributes = att
-        print(attributes)
-        print(len(attributes))
         level = 1
         keys_level_dic = dict()
         self.simple_line(attributes, box_size, keys_level_dic, level, single)
         self.draw_arrows(attributes, box_size, keys_level_dic, keyss, single)
-        print(keys_level_dic)
         element_counter = 0
         level = len(keys_level_dic) + 1
         self.yertle.color("black")
         color_counter = 0
         color_list = ["blue", "indigo", "violet", "orange"]
-        for index in composite:
+
+        for indexx in composite:
             self.yertle.color(color_list[color_counter])
             if element_counter % 2 == 0:
 
-                for each in index:
+                for each in indexx:
                     distnce = ((attributes.index(each) + 1) * box_size) - (box_size) + (level * 7)
                     self.yertle.penup()
                     self.yertle.forward(distnce)
@@ -161,7 +161,9 @@ class RelationalMapping1nf:
 
             else:
                 self.yertle.color(color_list[color_counter - 1])
-                distnce = ((attributes.index(index[0]) + 1) * box_size) - (box_size) + (level * 7)
+                KhnnTakJanaHa = 0
+
+                distnce = ((attributes.index(indexx[0]) + 1) * box_size) - (box_size) + (level * 7)
                 self.yertle.penup()
                 self.yertle.forward(distnce)
                 self.yertle.left(45)
@@ -179,25 +181,33 @@ class RelationalMapping1nf:
                 self.yertle.right(135)
                 self.yertle.penup()
                 self.yertle.back(distnce)
-                small = (attributes.index(composite[element_counter - 1][0]))
+
 
                 l = composite[element_counter - 1]
+
+                for determin in composite[element_counter]:
+                    l.append(composite[element_counter][0])
+
+                small = attributes.index(l[0])
+                big = attributes.index(l[0])
                 i = 0
                 while i < len(l):
                     if (small > attributes.index(l[i])):
-                        small = i
+                        small = attributes.index(l[i])
+                    elif (big < attributes.index(l[i])):
+                        big = attributes.index(l[i])
 
                     i = i + 1
 
-                a = ((attributes.index(composite[element_counter - 1][small])) * box_size) + (level * 7)
+
+                a = ((small) * box_size) + (level * 7)
                 self.yertle.penup()
                 self.yertle.forward(a)
                 self.yertle.left(90)
                 self.yertle.forward(50 + (level * 10))
                 self.yertle.right(90)
 
-                b = ((attributes.index(composite[element_counter][0]) - attributes.index(
-                    composite[element_counter - 1][small])) * box_size)
+                b = (big - small) * box_size
                 self.yertle.pendown()
                 self.yertle.forward(b)
                 self.yertle.back(b)

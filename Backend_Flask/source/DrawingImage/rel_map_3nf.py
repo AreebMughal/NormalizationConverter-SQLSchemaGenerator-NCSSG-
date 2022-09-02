@@ -4,7 +4,9 @@ from tkinter import *
 from typing import Type
 
 from turtle import *
-
+import matplotlib
+matplotlib.use('Agg')
+from matplotlib import pyplot as plt
 # import pyrebase
 from PIL import Image
 from turtle import Turtle, Screen
@@ -172,7 +174,7 @@ class RelationalMapping3nf:
         self.__yertle.right(90)
         cololist = ["blue", "indigo", "violet", "orange", "green", "red", "yellow", "orange"]
         color_counter = 0
-
+        level = 1
         for rel in fk_relations:
             goto_relation = rel[0]
             from_relation = rel[2]
@@ -186,15 +188,18 @@ class RelationalMapping3nf:
             #     from_relation = goto_relation
             #     goto_relation = temp
             #     print("gsfdf")
-            a = ((keyss.index(from_relation) + 1) * 100)
+            # print('\n\nkeys', keyss)
+            # print('from_relation', from_relation, '\n\n')
+            from_relation = from_relation[0] if type(from_relation) is list else from_relation
+            a = ((keyss.index(from_relation) + 1) * 100) + (level*2)
             self.__yertle.forward(a)
-            right_dist1 = ((attibutes[from_relation].index(forgin_keys[0]) + 1) * 70) - 25
+            right_dist1 = ((attibutes[from_relation].index(forgin_keys[0]) + 1) * 90) - 25
             self.__yertle.left(90)
             self.__yertle.forward(right_dist1)
             self.__yertle.pendown()
             self.__yertle.left(90)
-            self.__yertle.forward(10)
-            self.__yertle.back(10)
+            self.__yertle.forward(20)
+            self.__yertle.back(20)
             self.__yertle.right(90)
             self.__yertle.back(right_dist1 + (color_counter * 6) + 4)
             self.__yertle.right(90)
@@ -203,7 +208,7 @@ class RelationalMapping3nf:
 
             b = ((keyss.index(goto_relation) + 1) * 100) - a
             self.__yertle.forward(b)
-            right_dist2 = ((attibutes[goto_relation].index(forgin_keys[0]) + 1) * 70) - 25
+            right_dist2 = ((attibutes[goto_relation].index(forgin_keys[0]) + 1) * 90) - 25
             self.__yertle.left(90)
             self.__yertle.forward(right_dist2 + (color_counter * 6))
             self.__yertle.left(90)
@@ -224,8 +229,12 @@ class RelationalMapping3nf:
             self.__yertle.back(b)
             self.__yertle.back(a)
             color_counter += 1
+            if(color_counter == 3):
+                color_counter = 0
+            level+=1
 
-    def draw_arrows(self, attributes, box_size, dependentent, pk):
+    def draw_arrows(self, attributes, box_size, dependentent, pk, level=0):
+
         for element in dependentent:
             distnce = ((attributes.index(element) + 1) * box_size) - (box_size) + 20
             self.__yertle.penup()
@@ -236,8 +245,8 @@ class RelationalMapping3nf:
             self.__yertle.back(5)
             self.__yertle.right(45)
             self.__yertle.left(90)
-            self.__yertle.forward(25)
-            self.__yertle.back(25)
+            self.__yertle.forward(25 + level)
+            self.__yertle.back(25 + level)
             self.__yertle.right(90)
             self.__yertle.left(135)
             self.__yertle.forward(5)
@@ -245,13 +254,35 @@ class RelationalMapping3nf:
             self.__yertle.right(135)
             self.__yertle.penup()
             self.__yertle.back(distnce)
-        a = ((attributes.index(pk[0]) + 1) * box_size) - box_size + 20
+        print("pk", pk)
+        print("dependent ", dependentent)
+        l = pk
+        for each in dependentent:
+            l.append(each)
+        print("L ki value", l)
+        small = attributes.index(l[0])
+        big = attributes.index(l[0])
+        i = 0
+        while i < len(l):
+            if (small > attributes.index(l[i])):
+                small = attributes.index(l[i])
+            elif (big < attributes.index(l[i])):
+                big = attributes.index(l[i])
+
+            i = i + 1
+        a = ((small + 1) * box_size) - box_size + 20
         self.__yertle.penup()
         self.__yertle.forward(a)
         self.__yertle.left(90)
         self.__yertle.forward(25)
         self.__yertle.right(90)
-        b = ((attributes.index(dependentent[(len(dependentent) - 1)]) + 1) * box_size) - box_size
+
+        self.__yertle.left(90)
+        self.__yertle.forward(level)
+        self.__yertle.right(90)
+        self.__yertle.forward(level)
+
+        b = (((big + 1) * box_size) - box_size) - a + 20 - level
         self.__yertle.pendown()
         self.__yertle.forward(b)
         self.__yertle.back(b)
@@ -281,8 +312,12 @@ class RelationalMapping3nf:
         self.__yertle.right(90)
         self.__yertle.forward(20)
         self.__yertle.right(90)
+        self.__yertle.forward(120)
+
         self.__yertle.pendown()
-        self.__yertle.write(name_print, font=("Verdana", 10, "normal",))
+        self.__yertle.write(name, font=("Verdana", 16, "bold",))
+        self.__yertle.penup()
+        self.__yertle.back(120)
         self.__yertle.pendown()
         self.__yertle.right(90)
 
