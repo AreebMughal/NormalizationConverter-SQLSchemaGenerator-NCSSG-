@@ -3,7 +3,9 @@ import turtle
 from tkinter import *
 from typing import Type
 from turtle import *
-
+import matplotlib
+matplotlib.use('Agg')
+from matplotlib import pyplot as plt
 import numpy
 # import pyrebase
 from PIL import Image
@@ -198,7 +200,7 @@ class RelationalMapping2nf:
             a = ((keyss.index(from_relation) + 1) * 100)
 
             self.__yertle.forward(a)
-            right_dist1 = ((attibutes[from_relation].index(forgin_keys[0]) + 1) * 70) - 25
+            right_dist1 = ((attibutes[from_relation].index(forgin_keys[0]) + 1) * 90) - 25
             print("firsr dis", ((attibutes[from_relation].index(forgin_keys[0]) + 1) * 70) - 25)
             self.__yertle.left(90)
             self.__yertle.forward(right_dist1)
@@ -214,7 +216,7 @@ class RelationalMapping2nf:
 
             b = ((keyss.index(goto_relation) + 1) * 100) - a
             self.__yertle.forward(b)
-            right_dist2 = ((attibutes[goto_relation].index(forgin_keys[0]) + 1) * 70) - 25
+            right_dist2 = ((attibutes[goto_relation].index(forgin_keys[0]) + 1) * 90) - 25
             print("second relation", (attibutes[goto_relation].index(forgin_keys[0])))
             self.__yertle.left(90)
             self.__yertle.forward(right_dist2 + (color_counter * 6))
@@ -258,8 +260,23 @@ class RelationalMapping2nf:
             self.__yertle.right(135)
             self.__yertle.penup()
             self.__yertle.back(distnce)
+        print("pk" , pk)
+        print("dependent " , dependentent)
+        l = pk
+        for each in dependentent:
+            l.append(each)
+        print("L ki value" , l)
+        small = attributes.index(l[0])
+        big = attributes.index(l[0])
+        i = 0
+        while i < len(l):
+            if (small > attributes.index(l[i])):
+                small = attributes.index(l[i])
+            elif (big < attributes.index(l[i])):
+                big = attributes.index(l[i])
 
-        a = ((attributes.index(pk[0]) + 1) * box_size) - box_size + 20
+            i = i + 1
+        a = ((small + 1) * box_size) - box_size + 20
         self.__yertle.penup()
         self.__yertle.forward(a)
         self.__yertle.left(90)
@@ -271,11 +288,8 @@ class RelationalMapping2nf:
         self.__yertle.right(90)
         self.__yertle.forward(level)
 
-        door_attribute = 0
-        for i in dependentent:
-            if door_attribute < attributes.index(i):
-                door_attribute = attributes.index(i)
-        b = (((door_attribute + 1) * box_size) - box_size) - a + 20 - level
+
+        b = (((big + 1) * box_size) - box_size) - a + 20 - level
         self.__yertle.pendown()
         self.__yertle.forward(b)
         self.__yertle.back(b)
@@ -336,8 +350,12 @@ class RelationalMapping2nf:
         self.__yertle.right(90)
         self.__yertle.forward(20)
         self.__yertle.right(90)
+        self.__yertle.forward(120)
+
         self.__yertle.pendown()
-        self.__yertle.write(name, font=("Verdana", 10, "normal",))
+        self.__yertle.write(name, font=("Verdana", 16, "bold",))
+        self.__yertle.penup()
+        self.__yertle.back(120)
         self.__yertle.pendown()
         self.__yertle.right(90)
 
