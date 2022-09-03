@@ -10,7 +10,8 @@
 /source/DrawingImage/__pycache__
 /venv
 .pnp.js
-
+.png
+.eps
 # testing
 /coverage
 
