@@ -30,7 +30,6 @@ from source.StaticMethods import get_dummy_nf_result
 from source.SqlScript import SqlScript
 from os.path import exists
 
-
 app = Flask(__name__)
 CORS(app)
 
@@ -130,9 +129,8 @@ def get_result(object_type, input_boxes_dic):
     return {"result": result, "relation_names": relation_names}
 
 
-
-
 def get_relationalMapping(nf_type, api_data):
+    # print('\n\n ===> ', api_data, '\n\n')
     result = '1'
     try:
         data = json.loads(api_data)
@@ -148,11 +146,9 @@ def get_relationalMapping(nf_type, api_data):
         elif nf_type == '1NF':
             normalized_relation = NormalizedRelation(relation=my_relation)
             dic = my_relation.extract_data(input_boxes)
-            dic['fds'] = normalized_relation.get_minimal_cover()
-
-            new_dict = {'fds': dic['fds'], 'primary': dic['primary'], 'multi_value': dic['multi_value']}
-            print(new_dict)
-            rel_map = RelationalMapping1nf(new_dict)
+            # dic['fds'] = normalized_relation.get_minimal_cover()
+            # new_dict = {'fds': dic['fds'], 'primary': dic['primary'], 'multi_value': dic['multi_value']}
+            rel_map = RelationalMapping1nf(dic)
 
         elif nf_type == '2NF' or nf_type == '3NF' or nf_type == 'BCNF':
             normalized_relation = NormalizedRelation(relation=my_relation)
@@ -170,21 +166,16 @@ def get_relationalMapping(nf_type, api_data):
                 rm = RelationalMapping3nf(all_relations, relation_names, fk)
             elif nf_type == 'BCNF':
                 rm = RelationalMappingBcnf(all_relations, relation_names, fk)
-
         else:
-            print('ELse')
             result = '0'
     except Exception as e:
         # result = '0'
         my_exception(e)
 
-    # image_name = '1NF' if nf_type == 'RM' else nf_type
-
     if result == '0':
         return result
     else:
         return send_file(f'./{nf_type}.png', mimetype='image') if exists(f'./{nf_type}.png') else '0'
-
 
 
 @app.route("/minimalCover", methods=['POST'])
@@ -215,29 +206,42 @@ def BCNF():
 
 @app.route("/relationalMapping", methods=['POST', 'GET'])
 def relationalMapping():
-    return get_relationalMapping('RM', request.data.decode('utf-8'))
-
+    if len(request.data.decode('utf-8')) != 0:
+        return get_relationalMapping('RM', request.data.decode('utf-8'))
+    else:
+        return send_file(f'./RM.png', mimetype='image') if exists(f'./RM.png') else '0'
 
 
 @app.route("/relationalMapping_1nf", methods=['POST', 'GET'])
 def relationalMapping_1nf():
-    return get_relationalMapping('1NF', request.data.decode('utf-8'))
+    if len(request.data.decode('utf-8')) != 0:
+        return get_relationalMapping('1NF', request.data.decode('utf-8'))
+    else:
+        return send_file(f'./RM.png', mimetype='image') if exists(f'./RM.png') else '0'
 
 
 @app.route("/relationalMapping_2nf", methods=['POST', 'GET'])
 def relationalMapping_2nf():
-    return get_relationalMapping('2NF', request.data.decode('utf-8'))
+    if len(request.data.decode('utf-8')) != 0:
+        return get_relationalMapping('2NF', request.data.decode('utf-8'))
+    else:
+        return send_file(f'./RM.png', mimetype='image') if exists(f'./RM.png') else '0'
 
 
 @app.route("/relationalMapping_3nf", methods=['POST', 'GET'])
 def relationalMapping_3nf():
-    print('called')
-    return get_relationalMapping('3NF', request.data.decode('utf-8'))
+    if len(request.data.decode('utf-8')) != 0:
+        return get_relationalMapping('3NF', request.data.decode('utf-8'))
+    else:
+        return send_file(f'./RM.png', mimetype='image') if exists(f'./RM.png') else '0'
 
 
 @app.route("/relationalMapping_bcnf", methods=['POST', 'GET'])
 def relationalMapping_bcnf():
-    return get_relationalMapping('BCNF', request.data.decode('utf-8'))
+    if len(request.data.decode('utf-8')) != 0:
+        return get_relationalMapping('BCNF', request.data.decode('utf-8'))
+    else:
+        return send_file(f'./RM.png', mimetype='image') if exists(f'./RM.png') else '0'
 
 
 @app.route("/getSqlSchemaData", methods=['POST'])

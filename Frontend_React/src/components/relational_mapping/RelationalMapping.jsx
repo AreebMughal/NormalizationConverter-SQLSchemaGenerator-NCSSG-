@@ -21,12 +21,13 @@ const RelationalMapping = (props) => {
     useEffect(() => {
         if (props.isRelMapTrigger)
             getRelationalMapping();
-    }, [props])
+    }, [props.isRelMapTrigger])
 
-    function getRelationalMapping() {
+
+    const getRelationalMapping = async () => {
         console.log('RelationalMapping ', props.url)
         setRelMapLoader(true);
-        axios.post(props.url, {
+        await axios.post(props.url, {
             inputBoxes: my_data.getRawState().inputBoxes,
             relationName: my_data.getRawState().relationName
         })
