@@ -1,3 +1,14 @@
+def current_name_count(name, relation_names_list):
+    count = 0
+    for rel_name_l in relation_names_list:
+        for name_list in rel_name_l:
+            for rel_name in name_list:
+                print(rel_name, name, rel_name == name)
+                if rel_name == name:
+                    count += 1
+    return count
+
+
 def create_relation_names(nf_result, relation_name):
     relation_names = {'full': [[relation_name, 'Fully_dependent']]}
     rel_name = relation_name[:3]
@@ -7,7 +18,10 @@ def create_relation_names(nf_result, relation_name):
             relation_names[key] = []
             for rel in value:
                 name = rel[1][0] if key.lower() == 'multi' else rel[0][0]
-                relation_names[key].append([(rel_name + '_' + name), key + '_' + str(count)])
+                name = rel_name + '_' + name
+                same_name_count = current_name_count(name, list(relation_names.values()))
+                name += (('_' + str(same_name_count)) if same_name_count != 0 else '')
+                relation_names[key].append([name, key + '_' + str(count)])
                 count += 1
 
     return relation_names
@@ -116,13 +130,11 @@ def get_attribute_detail(name, index_value):
 
 
 def create_relations(nf_result, relation_names, all_relations):
-    print(nf_result)
     json_data = {"Data": []}
     for key, value in nf_result.items():
         index = 0
         if len(value) > 0:
             for rel in value:
-                print('->',rel)
                 relation = {"relationName": relation_names[key][index], "attributes": [], "foreignKeys": []}
                 if key.lower() != 'multi':
                     for attr in rel[0]:

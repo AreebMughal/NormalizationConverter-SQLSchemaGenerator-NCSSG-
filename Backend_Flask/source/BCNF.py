@@ -37,7 +37,7 @@ class BcNf(NormalizedRelation):
 
         result['primeDependency'] = self.__get_prime_relation(primeDep)
         # result['noPrimeDependency'] = self.__get_NotPrime_dependent_relation(NotprimeDep)
-
+        print(result)
         return result
 
     def checkPrimaryKeyDependency(self, fd, primary, primeDep):

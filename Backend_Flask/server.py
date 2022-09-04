@@ -33,24 +33,6 @@ from os.path import exists
 app = Flask(__name__)
 CORS(app)
 
-ress = {
-    'full': [
-        [['pnum', 'ssn'], ['name']]
-    ],
-    'partial': [
-        [['ssn'], ['id']],
-        [['pnum'], ['ploc', 'pname']]
-    ],
-    'multi': [
-        [['pnum', 'ssn'], ['email']],
-        [['ssn'], ['address']]
-    ],
-    'transitive': [
-        [['id'], ['dnum']],
-        [['dnum'], ['dloc', 'dname']]
-    ]
-}
-
 
 def Find_CK(minimal_cover):
     L_H_S = []
@@ -123,6 +105,7 @@ def get_result(object_type, input_boxes_dic):
             bcnf = BcNf(my_rel=my_relation)
             result = bcnf.find_bcnf()
         relation_names = create_relation_names(result, data['relationName']) if object_type != 'minimal_cover' else ''
+        print(relation_names)
     except Exception as e:
         my_exception(e)
 

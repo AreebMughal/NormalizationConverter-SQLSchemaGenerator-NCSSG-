@@ -168,9 +168,12 @@ class SqlScript:
                 count = 1
                 for fk in relation['foreignKeys']:
                     all_attr = (' '.join(['`' + str(elem) + '`,' for elem in fk['attribute']])).rstrip(',')
+                    if type(fk["relationName"]) == list:
+                        print(fk["relationName"] )
+                    rel_name = fk["relationName"] if type(fk["relationName"]) != list else fk["relationName"][0]
                     constraints += f'\tADD CONSTRAINT `{self.get_fk_constraint_name(relation_name, count)}` \n' \
                                    f'\tFOREIGN KEY ({all_attr}) ' \
-                                   f'REFERENCES `{all_relation_names[fk["relationName"]].lower()}` ({all_attr}) \n' \
+                                   f'REFERENCES `{all_relation_names[rel_name].lower()}` ({all_attr}) \n' \
                                    f'\tON DELETE CASCADE ON UPDATE CASCADE,' + '\n'
                     count += 1
                 constraints = constraints.rstrip('\n,') + ';' + '\n'
