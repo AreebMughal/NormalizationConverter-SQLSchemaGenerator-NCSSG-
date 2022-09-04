@@ -116,11 +116,13 @@ def get_attribute_detail(name, index_value):
 
 
 def create_relations(nf_result, relation_names, all_relations):
+    print(nf_result)
     json_data = {"Data": []}
     for key, value in nf_result.items():
         index = 0
         if len(value) > 0:
             for rel in value:
+                print('->',rel)
                 relation = {"relationName": relation_names[key][index], "attributes": [], "foreignKeys": []}
                 if key.lower() != 'multi':
                     for attr in rel[0]:

@@ -40,6 +40,8 @@ function PrintRelations(props) {
                                                         const name = props.names[key][list][0]
                                                         let num = 0;
                                                         let check = 0;
+                                                        const boxes = data[key][list].toString().split(',')
+                                                            .filter(i => i !== '')
                                                         return (
                                                             <div className="d-flex flex-wrap"
                                                                  key={key_index + '-' + index + count}>
@@ -47,7 +49,7 @@ function PrintRelations(props) {
                                                                 <span className='mt-3'
                                                                       style={{width: 120}}>{name}: </span>
                                                                 {
-                                                                    (data[key][list].toString().split(',')).map((value, ind) => {
+                                                                    boxes.map((value, ind) => {
                                                                             const bool = (++check <= len);
                                                                             return (
                                                                                 <input key={num++ + '-' + count++}
