@@ -9,7 +9,6 @@ class Nf2nd(NormalizedRelation):
         self.__nf_2_result = None
         self.minimal_cover_res = deepcopy(super().get_minimal_cover_result())
 
-
     def get_nf_2_result(self):
         return self.__nf_2_result
 
@@ -31,7 +30,6 @@ class Nf2nd(NormalizedRelation):
 
     def find_nf_2(self):
         result = {}
-        # self.minimal_cover_res = super().get_minimal_cover_result()
         my_relation = super().get_relation()
         multi_value = my_relation.get_attr_info()['multi_value']
         primary = set(my_relation.get_attr_info()['primary'])
@@ -40,7 +38,6 @@ class Nf2nd(NormalizedRelation):
         full_dependent_rhs = []
         partially_dependent_rel = []
         remaining_fds = []
-        # print('Before Loop', self.minimal_cover_res)
 
         for fd in copy(self.minimal_cover_res):
             if len(fd) > 0:
@@ -50,20 +47,33 @@ class Nf2nd(NormalizedRelation):
                     if set(fd[0]) == primary:
                         full_dependent_rhs.append(fd[1][0])
                         fully_dependent_rel = [fd[0]]
-                    if set(fd[0]) != primary and set(fd[0]).issubset(primary):
-                        index = self.check_fd_in_partial(fd[0], partially_dependent_rel)
-                        if index != -1:
-                            partially_dependent_rel[index][1].append(fd[1][0])
-                        else:
-                            partially_dependent_rel.append(fd)
-                    else:
-                        if fd[1][0] not in full_dependent_rhs and fd[1][0] not in primary:
-                            remaining_fds.append(fd)
-                            # full_dependent_rhs.append(fd[1][0])
-        # print('After Loop', self.minimal_cover_res)
+                    self.__append_partial_dependent(fd, partially_dependent_rel, primary)
+                    self.__append_remaining_fds(fd, remaining_fds, full_dependent_rhs, primary)
+
+        self.handle_remaining_fd(full_dependent_rhs, partially_dependent_rel, remaining_fds)
+
+        fully_dependent_rel = [[fully_dependent_rel[0], full_dependent_rhs]]
+
+        fully_dependent_rel = self.__get_fully_dependent_rel(full_dependent_rhs, fully_dependent_rel, primary)
+
+        result['full'] = fully_dependent_rel
+        result['partial'] = partially_dependent_rel
+        result['multi'] = multi_value_rel
+
+        return result
+
+    @staticmethod
+    def __get_fully_dependent_rel(full_dep_rhs, fully_dependent_rel, primary):
+        if len(fully_dependent_rel[0][0]) == 0 and len(fully_dependent_rel[0][1]) == 0:
+            fully_dependent_rel = [[list(primary), []]]
+        elif len(fully_dependent_rel[0][0]) == 0 and len(fully_dependent_rel[0][1]) != 0:
+            fully_dependent_rel = [[list(primary), full_dep_rhs]]
+        return fully_dependent_rel
+
+    def handle_remaining_fd(self, full_dep_rhs, partially_dependent_rel, remaining_fds):
         for fd in remaining_fds:
-            if set(fd[0]).issubset(set(full_dependent_rhs)):
-                full_dependent_rhs.append(fd[1][0])
+            if set(fd[0]).issubset(set(full_dep_rhs)):
+                full_dep_rhs.append(fd[1][0])
             else:
                 index = self.check_attr_in_partial_rhs(fd[0], partially_dependent_rel)
                 if index != -1:
@@ -71,16 +81,18 @@ class Nf2nd(NormalizedRelation):
                 # else:
                 #     print(fd)
 
-        fully_dependent_rel = [[fully_dependent_rel[0], full_dependent_rhs]]
+    @staticmethod
+    def __append_remaining_fds(fd, remaining_fds, full_dependent_rhs, primary):
+        if not (set(fd[0]) != primary and set(fd[0]).issubset(primary)):
+            if fd[1][0] not in full_dependent_rhs and fd[1][0] not in primary:
+                remaining_fds.append(fd)
+            # full_dependent_rhs.append(fd[1][0])
 
-        if len(fully_dependent_rel[0][0]) == 0 and len(fully_dependent_rel[0][1]) == 0:
-            fully_dependent_rel = [[list(primary), []]]
-        elif len(fully_dependent_rel[0][0]) == 0 and len(fully_dependent_rel[0][1]) != 0:
-            fully_dependent_rel = [[list(primary), full_dependent_rhs]]
-        result['full'] = fully_dependent_rel
-        result['partial'] = partially_dependent_rel
-        result['multi'] = multi_value_rel
-        # print('After 2NF', self.minimal_cover_res)
 
-        # print(super().get_minimal_cover_result())
-        return result
+    def __append_partial_dependent(self, fd, partial, primary):
+        if set(fd[0]) != primary and set(fd[0]).issubset(primary):
+            index = self.check_fd_in_partial(fd[0], partial)
+            if index != -1:
+                partial[index][1].append(fd[1][0])
+            else:
+                partial.append(fd)

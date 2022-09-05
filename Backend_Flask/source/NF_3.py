@@ -75,7 +75,6 @@ class Nf3rd(NormalizedRelation):
 
 
     def __append_partial_dependent(self, fd, primary, partial, nf2_obj):
-        # print(fd[0], fd[1], set(fd[0]) != primary and set(fd[0]).issubset(primary))
         if set(fd[0]) != primary and set(fd[0]).issubset(primary):
             index = self.check_fd_in_partial(fd[0], partial)
             if index != -1:
