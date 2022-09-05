@@ -47,7 +47,7 @@ class Nf2nd(NormalizedRelation):
                     if set(fd[0]) == primary:
                         full_dependent_rhs.append(fd[1][0])
                         fully_dependent_rel = [fd[0]]
-                    self.__append_partial_dependent(fd, partially_dependent_rel, primary)
+                    self.append_partial_dependent(fd, partially_dependent_rel, primary)
                     self.__append_remaining_fds(fd, remaining_fds, full_dependent_rhs, primary)
 
         self.handle_remaining_fd(full_dependent_rhs, partially_dependent_rel, remaining_fds)
@@ -88,8 +88,7 @@ class Nf2nd(NormalizedRelation):
                 remaining_fds.append(fd)
             # full_dependent_rhs.append(fd[1][0])
 
-
-    def __append_partial_dependent(self, fd, partial, primary):
+    def append_partial_dependent(self, fd, partial, primary):
         if set(fd[0]) != primary and set(fd[0]).issubset(primary):
             index = self.check_fd_in_partial(fd[0], partial)
             if index != -1:

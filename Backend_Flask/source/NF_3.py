@@ -50,7 +50,8 @@ class Nf3rd(NormalizedRelation):
             if not set(fd[1]).issubset(multi_valued):
                 self.__append_fully_dependent(fd, fully_dependent, primary)
                 self.__append_transitive_dependent(fd, primary, transitive)
-                self.__append_partial_dependent(fd, primary, partial, nf_2)
+                # self.__append_partial_dependent(fd, primary, partial, nf_2)
+                nf_2.append_partial_dependent(fd, partial, primary)
 
         result['full'] = self.__get_fully_dependent_relation(fully_dependent)
         result['transitive'] = self.__get_transitive_relation(transitive)
@@ -73,14 +74,13 @@ class Nf3rd(NormalizedRelation):
             else:
                 fully_dependent[0][1].append(fd[1][0])
 
-
-    def __append_partial_dependent(self, fd, primary, partial, nf2_obj):
-        if set(fd[0]) != primary and set(fd[0]).issubset(primary):
-            index = self.check_fd_in_partial(fd[0], partial)
-            if index != -1:
-                partial[index][1].append(fd[1][0])
-            else:
-                partial.append(fd)
+    # def __append_partial_dependent(self, fd, primary, partial, nf2_obj):
+    #     if set(fd[0]) != primary and set(fd[0]).issubset(primary):
+    #         index = self.check_fd_in_partial(fd[0], partial)
+    #         if index != -1:
+    #             partial[index][1].append(fd[1][0])
+    #         else:
+    #             partial.append(fd)
 
     @staticmethod
     def __get_transitive_relation(transitive):
