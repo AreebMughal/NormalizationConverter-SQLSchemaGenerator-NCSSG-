@@ -2,31 +2,19 @@ import axios from "axios";
 import React, {useEffect, useState} from "react";
 import {inputBoxes_data} from "../../../store/inputBoxes_dataStore";
 import ErrorModal from "../../modal/ErrorModal";
+import ImageLoader from "../../full_page_loader/ImageLoader";
+import GeneralLoader from "../../full_page_loader/GeneralLoader";
 
 
 const LoadData = (props) => {
     const [file, setFile] = useState(null);
-    const [visibility, setVisibility] = useState(false);
     const [data, setData] = useState('');
 
+    const [generalLoader, setGeneralLoader] = useState(false);
+    const [visibility, setVisibility] = useState(false);
     const [error, setError] = useState(null);
-    // let error = '';
+
     const hiddenFileInput = React.useRef(null);
-    //
-    // const saveDataClickHandler = (e) => {
-    //     const data = new FormData();
-    //     data.append('file', file);
-    //     axios.post('http://127.0.0.1:5000/loadData', data)
-    //         .then(res => {
-    //             if (res.data !== 0) {
-    //                 console.log('=> Data:', res.data);
-    //                 setData(res.data);
-    //             }
-    //         }).catch(err => {
-    //         console.log(err);
-    //         error = err.toString();
-    //     });
-    // }
 
     useEffect(() => {
         if (data !== '') {
@@ -43,34 +31,41 @@ const LoadData = (props) => {
         hiddenFileInput.current.click();
     };
 
+    function handleError(error) {
+        console.log(error);
+        setError(error.toString() + "\nTry Restarting Server.");
+        setGeneralLoader(false);
+        setVisibility(true);
+    }
+
     const handleChange = event => {
         const fileUploaded = event.target.files[0];
+        setGeneralLoader(true);
         setFile(fileUploaded);
         const data = new FormData();
         data.append('file', fileUploaded);
         axios.post('http://127.0.0.1:5000/loadData', data)
             .then(res => {
+                setGeneralLoader(false);
                 if (res.data !== 0) {
                     setData(res.data);
-                } else {
-                    setError("Error! There is some error in Flask Server.")
-                    setVisibility(true);
-                }
+                } else
+                    handleError("Error! There is some error in Flask Server.");
             }).catch(err => {
-            console.log(err);
-            setError(err.toString());
-            setVisibility(true);
+            handleError(err);
         });
         event.target.value = null;
     };
-    const setShow = () => setVisibility(false);
+
     return (
         <>
+            {generalLoader && <GeneralLoader loading={generalLoader} message={<span>Extracting your work <br/>
+                    Please wait...</span>}/>}
             {visibility &&
             <ErrorModal
                 show={visibility}
                 message={error}
-                setShow={setShow}
+                setShow={() => setVisibility(false)}
             />
             }
             <button onClick={handleClick} className='btn btn-sm btn-secondary ms-2'>
