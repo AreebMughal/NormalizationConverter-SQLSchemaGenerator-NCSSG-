@@ -21,17 +21,20 @@ const NfsNetworkCall = (props) => {
     }
 
     useEffect(() => {
-        axios.post('http://127.0.0.1:5000/NF1', {inputBoxes, relationName})
+        setGeneralLoader(true);
+        axios.post(props.url, {inputBoxes, relationName})
             .then(res => {
-                props.setData(res.data['result'])
-                props.setRelationNames(res.data['relation_names'])
-            })
-    }, [props.inputBoxes, props.relationName])
+                props.setData(res.data['result']);
+                props.setRelationNames(res.data['relation_names']);
+                setGeneralLoader(false);
+            }).catch(error => {
+                handleError(error);
+        })
+    }, [])
 
     return (
         <>
-            {generalLoader && <GeneralLoader loading={generalLoader} message={<span>Extracting your work <br/>
-                    Please wait...</span>}/>}
+            {generalLoader && <GeneralLoader loading={generalLoader} message={<span>Loading...</span>}/>}
             {visibility &&
             <ErrorModal
                 show={visibility}

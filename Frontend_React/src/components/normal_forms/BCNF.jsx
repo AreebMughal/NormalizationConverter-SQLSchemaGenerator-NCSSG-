@@ -5,24 +5,22 @@ import PrintRelations from "./printRelations";
 
 import {getBcnfReason} from "../../assets/js/nfReasons";
 import DetailReason from "../DetailReason";
+import NfsNetworkCall from "./NfsNetworkCall";
 
 function BCNF() {
-    const inputBoxes = my_data.getRawState().inputBoxes
-    const relationName = my_data.getRawState().relationName
     const [relationNames, setRelationNames] = useState(null);
     const [data, setData] = useState({})
 
-    useEffect(() => {
-        axios.post('http://127.0.0.1:5000/BCNF', {inputBoxes, relationName})
-            .then(res => {
-                console.log(res.data)
-                setData(res.data['result'])
-                setRelationNames(res.data['relation_names'])
-            })
-    }, [inputBoxes, relationName])
 
     return (
         <>
+            <NfsNetworkCall
+                data={data}
+                relationNames={relationNames}
+                setData={setData}
+                setRelationNames={setRelationNames}
+                url={'http://127.0.0.1:5000/BCNF'}
+            />
             <PrintRelations
                 data={data}
                 normalFormNumber='Boyce - Codd'

@@ -8,13 +8,9 @@ import {get1nfReason} from "../../assets/js/nfReasons";
 import NfsNetworkCall from "./NfsNetworkCall";
 
 function NF_1() {
-
-
+    const inputBoxes = my_data.getRawState().inputBoxes;
     const [data, setData] = useState({});
     const [relationNames, setRelationNames] = useState(null);
-
-
-
 
     return (
         <>
