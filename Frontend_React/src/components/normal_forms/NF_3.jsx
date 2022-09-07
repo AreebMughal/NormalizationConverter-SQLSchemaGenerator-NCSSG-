@@ -1,6 +1,4 @@
-import my_data from "../../store/data";
-import React, {useEffect, useState} from "react";
-import axios from "axios";
+import React, {useState} from "react";
 import PrintRelations from "./printRelations";
 import {get3nfReason} from "../../assets/js/nfReasons";
 import DetailReason from "../DetailReason";

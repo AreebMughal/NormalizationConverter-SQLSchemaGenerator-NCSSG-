@@ -1,6 +1,4 @@
-import my_data from "../../store/data";
-import React, {useEffect, useState} from "react";
-import axios from "axios";
+import React, {useState} from "react";
 import PrintRelations from "./printRelations";
 
 import {getBcnfReason} from "../../assets/js/nfReasons";
@@ -10,7 +8,6 @@ import NfsNetworkCall from "./NfsNetworkCall";
 function BCNF() {
     const [relationNames, setRelationNames] = useState(null);
     const [data, setData] = useState({})
-
 
     return (
         <>

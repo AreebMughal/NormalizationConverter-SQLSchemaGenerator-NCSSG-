@@ -1,6 +1,5 @@
 import my_data from "../../store/data";
-import React, {useEffect, useState} from "react";
-import axios from "axios";
+import React, {useState} from "react";
 import PrintRelations from "./printRelations";
 import {inputBoxes_data} from "../../store/inputBoxes_dataStore";
 import {get2nfReason} from "../../assets/js/nfReasons";

@@ -1,9 +1,7 @@
 import my_data from "../../store/data";
 import 'bootstrap'
 import PrintRelations from "./printRelations";
-import React, {useEffect, useState} from "react";
-import axios from "axios";
-import {inputBoxes_data} from "../../store/inputBoxes_dataStore";
+import React, {useState} from "react";
 import {get1nfReason} from "../../assets/js/nfReasons";
 import NfsNetworkCall from "./NfsNetworkCall";
 
@@ -14,13 +12,13 @@ function NF_1() {
 
     return (
         <>
-        <NfsNetworkCall
-            data={data}
-            relationNames={relationNames}
-            setData={setData}
-            setRelationNames={setRelationNames}
-            url={'http://127.0.0.1:5000/NF1'}
-        />
+            <NfsNetworkCall
+                data={data}
+                relationNames={relationNames}
+                setData={setData}
+                setRelationNames={setRelationNames}
+                url={'http://127.0.0.1:5000/NF1'}
+            />
         <PrintRelations
             data={data}
             normalFormNumber='1st'

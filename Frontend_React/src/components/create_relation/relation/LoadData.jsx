@@ -3,7 +3,6 @@ import React, {useEffect, useState} from "react";
 import {inputBoxes_data} from "../../../store/inputBoxes_dataStore";
 import ErrorModal from "../../modal/ErrorModal";
 import GeneralLoader from "../../full_page_loader/GeneralLoader";
-import { FaUpload } from "react-icons/fa";
 import '../../../assets/css/icon.css';
 
 const LoadData = (props) => {
