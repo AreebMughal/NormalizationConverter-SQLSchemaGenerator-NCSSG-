@@ -1,5 +1,5 @@
 import '../../assets/css/SqlSchemaGenerator.css';
-import {useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import RelationAttributes from "./RelationAttributes";
 import axios from "axios";
 import my_data from "../../store/data";
@@ -7,16 +7,25 @@ import SqlPageHeader from "./SqlPageHeader";
 import SqlForm from "./SqlForm";
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import Form from 'react-bootstrap/Form';
+import ErrorModal from "../modal/ErrorModal";
 
 const SqlSchemaGenerator = () => {
-    const inputBoxes = my_data.getRawState().inputBoxes
-    const relationName = my_data.getRawState().relationName
-    const [normalForm, setNormalForm] = useState(null)
+    const inputBoxes = my_data.getRawState().inputBoxes;
+    const relationName = my_data.getRawState().relationName;
+    const [normalForm, setNormalForm] = useState(null);
     const [relationList, setRelationList] = useState([]);
     // const [modalOpen, setModalOpen] = useState(false);
+    const [visibility, setVisibility] = useState(false);
+    const [error, setError] = useState(null);
 
     const normalFormChangeHandler = (value) => {
         setNormalForm(value)
+    }
+
+    function handleError(error) {
+        console.log(error);
+        setError(error.toString() + "\nTry Restarting Server.");
+        setVisibility(true);
     }
 
     useEffect(() => {
@@ -30,9 +39,9 @@ const SqlSchemaGenerator = () => {
                 console.log(res.data.Data)
                 setRelationList(res.data.Data)
             }).catch(error => {
-            alert('Server is not running')
+            handleError(error);
         })
-    }, [inputBoxes, normalForm, relationName])
+    }, [normalForm])
 
     useEffect(() => {
         console.log('use Effect - send data')
@@ -117,24 +126,39 @@ const SqlSchemaGenerator = () => {
             return '';
     }
 
+    console.log(typeof relationList, relationList.length)
     return (
-        <div className='mt-4'>
-            <SqlPageHeader
-                onChange={normalFormChangeHandler}
+        <>
+            {visibility &&
+            <ErrorModal
+                show={visibility}
+                message={error}
+                setShow={() => setVisibility(false)}
             />
-            <SqlForm data={relationList}>
-                {isDataValid() ? relationList.map((obj, index) => {
-                    return renderMainContent(obj, index);
-                }) : (
-                    <div>
-                        <h4>No Relation Found</h4>
-                    </div>
-                )}
-                <div className='float-end m-3'>
-                    <input type='submit' className='btn btn-primary' value='Generate SQL Schema'/>
-                </div>
-            </SqlForm>
-        </div>
+            }
+            <div className='mt-4'>
+                <SqlPageHeader
+                    onChange={normalFormChangeHandler}
+                />
+                <SqlForm data={relationList}>
+                    {isDataValid() &&
+                    <>
+                        {relationList.map((obj, index) => {
+                            return renderMainContent(obj, index);
+                        })}
+                        <div className='float-end m-3'>
+                            <input type='submit' className='btn btn-primary' value='Generate SQL Schema'/>
+                        </div>
+                    </>
+                        // : (
+                        // <div>
+                        //     <h4>No Relation Found</h4>
+                        // </div>
+                    }
+
+                </SqlForm>
+            </div>
+        </>
     );
 }
 
