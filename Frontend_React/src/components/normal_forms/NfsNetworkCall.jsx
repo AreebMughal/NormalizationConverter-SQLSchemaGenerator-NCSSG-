@@ -25,7 +25,8 @@ const NfsNetworkCall = (props) => {
         axios.post(props.url, {inputBoxes, relationName})
             .then(res => {
                 props.setData(res.data['result']);
-                props.setRelationNames(res.data['relation_names']);
+                if (props.setRelationNames !== undefined)
+                    props.setRelationNames(res.data['relation_names']);
                 setGeneralLoader(false);
             }).catch(error => {
                 handleError(error);

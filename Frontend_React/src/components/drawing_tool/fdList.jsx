@@ -1,4 +1,6 @@
-import {Component} from "react";
+import React, {Component} from "react";
+import {faArrowRight} from "@fortawesome/free-solid-svg-icons";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
 class FdList extends Component {
 
@@ -13,7 +15,7 @@ class FdList extends Component {
                   if (dep !== undefined) {
                       return dep.map((d, i) => {
                           if (d.length > 0)
-                              return <li key={i}>{d.toString().replaceAll(',', ', ') + ' --> ' + input.value}</li>
+                              return <li key={i}>{d.toString().replaceAll(',', ', ')} <FontAwesomeIcon icon={faArrowRight} className="ms-1 me-1"/> {input.value}</li>
                           return ''
                       })
                   } else {

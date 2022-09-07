@@ -12,9 +12,11 @@
 
 .vertical-line {
     position: relative;
-    height: 300px;
+    min-height: 300px;
+    max-height: 740px;
     top: 50px;
     width: 2px;
+    padding-bottom: 40px;
     border: 1px solid #877c7c;
 }
 .horizontal-line {

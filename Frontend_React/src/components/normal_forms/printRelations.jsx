@@ -8,17 +8,17 @@ import RelationalMapping from "../relational_mapping/RelationalMapping";
 function PrintRelations(props) {
     const inputBoxes = my_data.getRawState().inputBoxes;
     const [data, setData] = useState([{}]);
-    const [relationNames, setRelationNames] = useState({});
+    // const [relationNames, setRelationNames] = useState({});
 
     const [isRelMapTrigger, setIsRelMapTrigger] = useState(false);
 
     const api_url = 'http://127.0.0.1:5000/relationalMapping_' + props.nf_type.toLowerCase() + 'nf';
-    console.log(api_url);
+    // console.log(api_url);
     let count = 1;
 
     useEffect(() => {
         setData(props.data)
-        setRelationNames(props.names)
+        // setRelationNames(props.names)
     }, [props.data, props.names]);
 
     const renderRelation = () => {
