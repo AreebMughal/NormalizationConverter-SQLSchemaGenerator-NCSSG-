@@ -4,13 +4,28 @@ import axios from "axios";
 
 const PreliminaryCheck = (props) => {
     const [data, setData] = useState('');
-
+    let reason = []
     useEffect(() => {
         if (Object.keys(data).length > 0) {
-            const suggestion = Object.keys(data).map(key => <span>{data[key]}</span>)
-            props.setSuggestion(<p>{suggestion}</p>)
+            for (let key in data) {
+                if (data[key].length !== 0) {
+                    if (key === 'countZero') {
+                        console.log('=>',key, data[key].length)
+                        reason.push(<>Selected Primary key is not determining any attribute which may lead to problem. Please review your primary key selection. <br/></>)
+                    } else {
+                        reason.push(<>You are determining more attributes with a non prime attribute. Please review your primary key selection. <br/></>)
+                    }
+                    Object.values(data[key]).map(list => {
+                        console.log(list);
+                        reason.push(<><span style={{ color: 'red' }}><b>{list[0]}</b> --> <b>{list[1]}</b></span><br/></>)
+                        return ''
+                    });
+                }
+            }
+            props.setSuggestion(<p>{reason}</p>)
         }
     }, [data])
+
 
     const preliminaryCheckClickHandler = (e) => {
         if (props.onPreliminaryCheckClick(e)) {

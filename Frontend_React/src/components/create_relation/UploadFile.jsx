@@ -14,7 +14,7 @@ function UploadFile(props) {
     const [error, setError] = useState(null);
     const [data, setData] = useState('');
     const fileUploaderRef = React.useRef();
-    const fileUploaderLabel = 'Upload or drag a file right here - Dataset to Extract Functional Dependencies';
+    const fileUploaderLabel = 'Upload or drag a CSV file right here - Dataset to Extract Functional Dependencies (CSV File Only)';
 
     useEffect(() => {
         if (file !== null) {
@@ -60,6 +60,7 @@ function UploadFile(props) {
 
 
     const handleChange = (file) => {
+        console.log(file);
         setFile(file);
     }
 

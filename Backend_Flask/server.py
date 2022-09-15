@@ -56,23 +56,39 @@ def Find_CK(minimal_cover):
     CK = set(CK)
     return CK, L_H_S, R_H_S
 
-
 def primaryKeyCheck(pk, fds):
     result = {}
+    fdNonPK = []
+    # fdPK = []
     countPrimary = 0
     countNonPrimary = 0
+    print("fds  " , fds)
     for fd in fds:
         lhs = set(fd[0])
         if lhs.issubset(pk):
+            fdNonPK.append(fd)
             countPrimary += 1
         else:
             countNonPrimary += 1
     if countPrimary < countNonPrimary:
-        result['countPK'] = "You are determining more attributes with a non prime attribute. " \
-                            "Please review your primary key selection."
+        # fdNonPK.append("You are determining more attributes with a non prime attribute. " \
+        #                     "Please review your primary key selection.")
+        result['countPK'] = fdNonPK
+    result['countZero'] = []
     if countPrimary == 0:
-        result['countZero'] = "Selected Primary key is not determining any attribute which may lead " \
-                              "to problem. Please review your primary key selection. "
+        # fdPK.append(fds)
+        # fdPK.append("Selected Primary key is not determining any attribute which may lead " \
+        #                       "to problem. Please review your primary key selection. ")
+        result['countZero'] = fds
+    print(result)
+    for each in result:
+        print(len(result[each]))
+        for i in range(len(result[each])):
+            print(result[each][i][0])
+            result[each][i] = [list(result[each][i][0]),list(result[each][i][1])]
+
+
+    print(result)
     return result
 
 
@@ -189,42 +205,47 @@ def BCNF():
 
 @app.route("/relationalMapping", methods=['POST', 'GET'])
 def relationalMapping():
+    nf_type = 'RM'
     if len(request.data.decode('utf-8')) != 0:
-        return get_relationalMapping('RM', request.data.decode('utf-8'))
+        return get_relationalMapping(nf_type, request.data.decode('utf-8'))
     else:
-        return send_file(f'./RM.png', mimetype='image') if exists(f'./RM.png') else '0'
+        return send_file(f'./{nf_type}.png', mimetype='image') if exists(f'./{nf_type}.png') else '0'
 
 
 @app.route("/relationalMapping_1nf", methods=['POST', 'GET'])
 def relationalMapping_1nf():
+    nf_type = '1NF'
     if len(request.data.decode('utf-8')) != 0:
-        return get_relationalMapping('1NF', request.data.decode('utf-8'))
+        return get_relationalMapping(nf_type, request.data.decode('utf-8'))
     else:
-        return send_file(f'./RM.png', mimetype='image') if exists(f'./RM.png') else '0'
+        return send_file(f'./{nf_type}.png', mimetype='image') if exists(f'./{nf_type}.png') else '0'
 
 
 @app.route("/relationalMapping_2nf", methods=['POST', 'GET'])
 def relationalMapping_2nf():
+    nf_type = '2NF'
     if len(request.data.decode('utf-8')) != 0:
-        return get_relationalMapping('2NF', request.data.decode('utf-8'))
+        return get_relationalMapping(nf_type, request.data.decode('utf-8'))
     else:
-        return send_file(f'./RM.png', mimetype='image') if exists(f'./RM.png') else '0'
+        return send_file(f'./{nf_type}.png', mimetype='image') if exists(f'./{nf_type}.png') else '0'
 
 
 @app.route("/relationalMapping_3nf", methods=['POST', 'GET'])
 def relationalMapping_3nf():
+    nf_type = '3NF'
     if len(request.data.decode('utf-8')) != 0:
-        return get_relationalMapping('3NF', request.data.decode('utf-8'))
+        return get_relationalMapping(nf_type, request.data.decode('utf-8'))
     else:
-        return send_file(f'./RM.png', mimetype='image') if exists(f'./RM.png') else '0'
+        return send_file(f'./{nf_type}.png', mimetype='image') if exists(f'./{nf_type}.png') else '0'
 
 
 @app.route("/relationalMapping_bcnf", methods=['POST', 'GET'])
 def relationalMapping_bcnf():
+    nf_type = 'BCNF'
     if len(request.data.decode('utf-8')) != 0:
-        return get_relationalMapping('BCNF', request.data.decode('utf-8'))
+        return get_relationalMapping(nf_type, request.data.decode('utf-8'))
     else:
-        return send_file(f'./RM.png', mimetype='image') if exists(f'./RM.png') else '0'
+        return send_file(f'./{nf_type}.png', mimetype='image') if exists(f'./{nf_type}.png') else '0'
 
 
 @app.route("/getSqlSchemaData", methods=['POST'])
@@ -237,7 +258,7 @@ def getSqlSchemaData():
         # if normal_form == 'BCNF':
         #     res = get_dummy_nf_result()
         #     all_relations = get_all_relations(res, 'Practice')
-        #     json_data = create_relations(res, create_relation_names(res, 'Practice'), all_relations)
+        #     json_data = create_relations(res, creatFe_relation_names(res, 'Practice'), all_relations)
         # else:
         res = get_result(object_type=normal_form, input_boxes_dic=request.data.decode('utf-8'))['result']
         all_relations = get_all_relations(res, relation_name)

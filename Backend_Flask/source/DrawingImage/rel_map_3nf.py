@@ -277,18 +277,6 @@ class RelationalMapping3nf:
         self.__yertle.forward(25)
         self.__yertle.right(90)
 
-        if len(dependentent) > 0:
-            b = ((attributes.index(dependentent[(len(dependentent) - 1)]) + 1) * box_size) - box_size
-            self.__yertle.pendown()
-            self.__yertle.forward(b)
-            self.__yertle.back(b)
-            self.__yertle.penup()
-            self.__yertle.left(90)
-            self.__yertle.back(25)
-            self.__yertle.right(90)
-            self.__yertle.back(a)
-
-
         self.__yertle.left(90)
         self.__yertle.forward(level)
         self.__yertle.right(90)
