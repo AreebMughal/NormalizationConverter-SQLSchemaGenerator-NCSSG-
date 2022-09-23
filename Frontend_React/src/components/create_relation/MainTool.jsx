@@ -20,7 +20,7 @@ const MainTool = (props) => {
     const [isLoadWork, setIsLoadWork] = useState(false);
     const [loading, setLoading] = useState(false);
     const [suggestion, setSuggestion] = useState('');
-
+    const [cardTitle, setCardTitle] = useState('Issues Detected:');
     const data = inputBoxes_data.getRawState()
 
     useEffect(() => {
@@ -38,6 +38,7 @@ const MainTool = (props) => {
             setIsLoadWork(false);
             setLoading(false);
         }
+        if (isFdMine) setCardTitle('Note:');
     }, [isFdMine, isLoadWork]);
 
     useEffect(() => {
@@ -121,6 +122,7 @@ const MainTool = (props) => {
                             <Suggestion
                                 isOpen={suggestion !== ''}
                                 suggestion={suggestion}
+                                cardTitle={cardTitle}
                             />
                         </div>
                     </div>

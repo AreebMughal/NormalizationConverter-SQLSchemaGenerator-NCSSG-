@@ -32,28 +32,33 @@ const LoadData = (props) => {
 
     function handleError(error) {
         console.log(error);
-        setError(error.toString() + "\nTry Restarting Server.");
+        setError(error.toString());
         setGeneralLoader(false);
         setVisibility(true);
     }
 
     const handleChange = event => {
         const fileUploaded = event.target.files[0];
-        setGeneralLoader(true);
-        setFile(fileUploaded);
-        const data = new FormData();
-        data.append('file', fileUploaded);
-        axios.post('http://127.0.0.1:5000/loadData', data)
-            .then(res => {
-                setGeneralLoader(false);
-                if (res.data !== 0) {
-                    setData(res.data);
-                } else
-                    handleError("Error! There is some error in Flask Server.");
-            }).catch(err => {
-            handleError(err);
-        });
-        event.target.value = null;
+        const fileName = fileUploaded.name.split('.')
+        if (fileName[fileName.length - 1] === 'txt') {
+            setGeneralLoader(true);
+            setFile(fileUploaded);
+            const data = new FormData();
+            data.append('file', fileUploaded);
+            axios.post('http://127.0.0.1:5000/loadData', data)
+                .then(res => {
+                    setGeneralLoader(false);
+                    if (res.data !== 0) {
+                        setData(res.data);
+                    } else
+                        handleError("Error! There is some error in Flask Server.\nTry Restarting Server.");
+                }).catch(err => {
+                handleError(err.toString() + '\nTry Restarting Server.');
+            });
+            event.target.value = null;
+        } else {
+            handleError("File type is Supporter. \nOnly txt file is supported.");
+        }
     };
 
     return (
@@ -75,6 +80,7 @@ const LoadData = (props) => {
                 type="file"
                 ref={hiddenFileInput}
                 onChange={handleChange}
+                accept=".txt"
                 style={{display: 'none'}}
             />
         </>

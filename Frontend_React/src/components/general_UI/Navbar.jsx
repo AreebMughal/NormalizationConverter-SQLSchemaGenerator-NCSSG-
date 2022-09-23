@@ -74,7 +74,6 @@ function Navbar(props) {
                                     <FaFilePdf className='tutorial-icon me-1 mb-1'/>
                                     Tutorial
                                 </a>
-
                             </li>
                         </div>
                     </div>

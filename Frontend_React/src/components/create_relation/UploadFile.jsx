@@ -71,7 +71,7 @@ function UploadFile(props) {
             const keys = '{' + data['keys'].toString().replaceAll(',', ', ') + '}'
             return (
                 <span>
-                    <Bold>Note: </Bold> <br/>
+                    {/*<Bold>Note: </Bold> <br/>*/}
                     All Functional Dependencies are first extracted and then filtered through Minimal Cover.
                     <br/>
                     And the set <Bold>{keys}</Bold> is identifying most attributes, that why we made it <Bold>Primary Key</Bold>. <br/>
