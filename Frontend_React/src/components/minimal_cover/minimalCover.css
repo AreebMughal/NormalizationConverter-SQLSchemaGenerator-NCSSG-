@@ -1,0 +1,61 @@
+:root {
+    /*--current_fd: rgba(0, 187, 187, 0.87);*/
+    --current_fd: rgba(172, 171, 171, 0.91);
+    --m_result: rgb(59, 144, 229);
+}
+
+.background {
+    background-color: rgba(231, 220, 220, 0.64);
+    min-height: 90.5vh;
+}
+
+._current-fd {
+    border-color: var(--current_fd);
+    box-shadow: 0 1px 6px rgba(0, 0, 0, 0.12), 0 1px 4px rgba(0, 0, 0, 0.24);
+    margin-bottom: .75rem;
+}
+
+._current-fd-header {
+    background-color: var(--current_fd);
+    color: #ffffff;
+    font-weight: 600;
+}
+
+._minimal-cover-res {
+    border-color: var(--m_result);
+    box-shadow: 0 1px 6px rgba(0, 0, 0, 0.12), 0 1px 4px rgba(0, 0, 0, 0.24);
+    margin-bottom: .75rem;
+}
+
+._minimal-cover-res-header {
+    background-color: var(--m_result);
+    color: #ffffff;
+    font-weight: 600;
+}
+
+.minimal-cover-step {
+    /*border-bottom: 1px solid black;*/
+    text-align: center;
+    padding: .25rem;
+    background-color: rgba(0, 0, 0, 0.85);
+    color: #ffffff;
+    border-radius: 5px;
+}
+
+.step-1, .step-2, .step-3 {
+    background-color: rgba(252, 244, 244, 0.66);
+}
+
+.vertical-line {
+    position: relative;
+    min-height: 300px;
+    max-height: 740px;
+    /*top: 50px;*/
+    width: 2px;
+    padding-bottom: 40px;
+    border: 1px solid #877c7c;
+}
+
+.horizontal-line {
+    border: 1px solid #877c7c;
+}

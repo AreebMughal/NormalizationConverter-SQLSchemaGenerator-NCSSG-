@@ -8,7 +8,7 @@ class FdList extends Component {
         const {inputBoxes} = this.props;
         return (
           <div className="mb-5 mt-2 ms-2">
-              <h5>Current Functional Dependencies:</h5>
+              {/*<h5>Current Functional Dependencies:</h5>*/}
               <ol>
               {inputBoxes.map(input => {
                   const dep = input.dependency

@@ -2,6 +2,8 @@ import React from 'react';
 import {NavLink} from "react-router-dom";
 import 'bootstrap'
 import "../../assets/css/navbar.css"
+import pdf from '../../Tutorial.pdf';
+import {FaFilePdf} from "react-icons/fa";
 
 function Navbar(props) {
     const {showNavbarContent} = props;
@@ -25,46 +27,56 @@ function Navbar(props) {
                                 </NavLink>
                             </li>
                             {showNavbarContent &&
-                                <React.Fragment>
-                                    <li className="nav-item me-0">
-                                        <NavLink className="nav-link" to="/NC-SSG/MinimalCover" onClick={props.onClick}>
-                                            <span className='me-1 circled-number'>&#9313;</span>
-                                            Minimal Cover
-                                        </NavLink>
-                                    </li>
-                                    <li className="nav-item me-0">
-                                        <NavLink className="nav-link" to="/NC-SSG/1NF" onClick={props.onClick}>
-                                            <span className='me-1 circled-number'>&#9314;</span>
-                                            Show 1-NF
-                                        </NavLink>
-                                    </li>
-                                    <li className="nav-item me-0">
-                                        <NavLink className="nav-link" to="/NC-SSG/2NF" onClick={props.onClick}>
-                                            <span className='me-1 ms-0 p-0 circled-number'>&#9315;</span>
-                                            Show 2-NF
-                                        </NavLink>
-                                    </li>
-                                    <li className="nav-item me-0">
-                                        <NavLink className="nav-link" to="/NC-SSG/3NF" onClick={props.onClick}>
-                                            <span className='me-1 circled-number'>&#9316;</span>
-                                            Show 3-NF
-                                        </NavLink>
-                                    </li>
-                                    <li className="nav-item me-0">
-                                        <NavLink className="nav-link" to="/NC-SSG/BCNF" onClick={props.onClick}>
-                                            <span className='me-1 circled-number'>&#9317;</span>
-                                            BCNF
-                                        </NavLink>
-                                    </li>
-                                    <li className="nav-item me-0">
-                                        <NavLink className="nav-link" to="/NC-SSG/SQLSchema">
-                                            <span className='me-1 circled-number'>&#9318;</span>
-                                            SQL Schema
-                                        </NavLink>
-                                    </li>
-                                </React.Fragment>
+                            <React.Fragment>
+                                <li className="nav-item me-0">
+                                    <NavLink className="nav-link" to="/NC-SSG/MinimalCover" onClick={props.onClick}>
+                                        <span className='me-1 circled-number'>&#9313;</span>
+                                        Minimal Cover
+                                    </NavLink>
+                                </li>
+                                <li className="nav-item me-0">
+                                    <NavLink className="nav-link" to="/NC-SSG/1NF" onClick={props.onClick}>
+                                        <span className='me-1 circled-number'>&#9314;</span>
+                                        Show 1-NF
+                                    </NavLink>
+                                </li>
+                                <li className="nav-item me-0">
+                                    <NavLink className="nav-link" to="/NC-SSG/2NF" onClick={props.onClick}>
+                                        <span className='me-1 ms-0 p-0 circled-number'>&#9315;</span>
+                                        Show 2-NF
+                                    </NavLink>
+                                </li>
+                                <li className="nav-item me-0">
+                                    <NavLink className="nav-link" to="/NC-SSG/3NF" onClick={props.onClick}>
+                                        <span className='me-1 circled-number'>&#9316;</span>
+                                        Show 3-NF
+                                    </NavLink>
+                                </li>
+                                <li className="nav-item me-0">
+                                    <NavLink className="nav-link" to="/NC-SSG/BCNF" onClick={props.onClick}>
+                                        <span className='me-1 circled-number'>&#9317;</span>
+                                        BCNF
+                                    </NavLink>
+                                </li>
+                                <li className="nav-item me-0">
+                                    <NavLink className="nav-link" to="/NC-SSG/SQLSchema">
+                                        <span className='me-1 circled-number'>&#9318;</span>
+                                        SQL Schema
+                                    </NavLink>
+                                </li>
+                            </React.Fragment>
                             }
+
                         </ul>
+                        <div className="tutorial">
+                            <li className="nav-item me-0 ">
+                                <a className="nav-link float-end" href={pdf} target='_blank' rel="noopener noreferrer" >
+                                    <FaFilePdf className='tutorial-icon me-1 mb-1'/>
+                                    Tutorial
+                                </a>
+
+                            </li>
+                        </div>
                     </div>
                 </div>
             </nav>

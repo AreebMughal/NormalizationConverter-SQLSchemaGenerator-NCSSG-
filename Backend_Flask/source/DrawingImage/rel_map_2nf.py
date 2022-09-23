@@ -3,19 +3,12 @@ import turtle
 from tkinter import *
 from typing import Type
 from turtle import *
-import matplotlib
-matplotlib.use('Agg')
-from matplotlib import pyplot as plt
 import numpy
-# import pyrebase
 from PIL import Image
 from turtle import Turtle, Screen
-
-# from google.cloud import storage
-
-font_size = 14
 from os.path import exists
 
+font_size = 14
 
 class RelationalMapping2nf:
     def __init__(self, relation, relation_name, fks, MC):

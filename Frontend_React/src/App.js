@@ -2,7 +2,7 @@ import React, {useState} from "react";
 import {BrowserRouter, Route, Routes} from "react-router-dom";
 import NF_1 from "./components/normal_forms/NF_1";
 import Navbar from "./components/general_UI/Navbar";
-import MinimalCover from "./components/minimalCover";
+import MinimalCover from "./components/minimal_cover/minimalCover";
 import NF_2 from "./components/normal_forms/NF_2";
 import my_data from "./store/data";
 import NF_3 from "./components/normal_forms/NF_3";

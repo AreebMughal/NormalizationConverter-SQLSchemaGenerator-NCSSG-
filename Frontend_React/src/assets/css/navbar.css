@@ -8,6 +8,15 @@
 .navbar .navbar-nav .nav-link {
     color: #cbcaca;
 }
+
+.navbar .tutorial .nav-link {
+    color: #cbcaca;
+}
+
+.navbar .tutorial .nav-link:hover {
+    color: #fafcfc;
+}
+
 @media only screen and (min-width: 992px) {
     .navbar {
         padding: 0;
@@ -40,10 +49,16 @@
     width: 100%;
 }
 
-.navbar .navbar-nav .nav-item::after {
+.navbar .navbar-nav .nav-item::after,
+.navbar .tutorial .nav-item::after {
     transition: all 0.5s;
 }
 
 .circled-number {
     font-size: 18px;
+}
+
+.tutorial-icon {
+    font-size: 20px;
+
 }

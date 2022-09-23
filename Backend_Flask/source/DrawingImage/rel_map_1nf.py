@@ -1,20 +1,12 @@
 import os
 import turtle
 from tkinter import *
-# import cv2
-from turtle import *
-import matplotlib
-matplotlib.use('Agg')
-from matplotlib import pyplot as plt
-# import pyrebase
 from PIL import Image
 from turtle import Turtle, Screen
+from os.path import exists
 
 font_size = 14
 
-from os.path import exists
-
-# from google.cloud import storage
 class RelationalMapping1nf:
     def __init__(self, dics):
         if exists('./1NF.png'):
@@ -182,7 +174,6 @@ class RelationalMapping1nf:
                 self.yertle.penup()
                 self.yertle.back(distnce)
 
-
                 l = composite[element_counter - 1]
 
                 for determin in composite[element_counter]:
@@ -198,7 +189,6 @@ class RelationalMapping1nf:
                         big = attributes.index(l[i])
 
                     i = i + 1
-
 
                 a = ((small) * box_size) + (level * 7)
                 self.yertle.penup()

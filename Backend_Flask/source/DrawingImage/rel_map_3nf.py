@@ -1,21 +1,12 @@
 import os
 import turtle
 from tkinter import *
-from typing import Type
-
-from turtle import *
-import matplotlib
-matplotlib.use('Agg')
-from matplotlib import pyplot as plt
-# import pyrebase
 from PIL import Image
 from turtle import Turtle, Screen
-
-# from google.cloud import storage
+from os.path import exists
 
 font_size = 14
 
-from os.path import exists
 
 class RelationalMapping3nf:
     def __init__(self, relation, relation_name, fks):
@@ -191,7 +182,7 @@ class RelationalMapping3nf:
             # print('\n\nkeys', keyss)
             # print('from_relation', from_relation, '\n\n')
             from_relation = from_relation[0] if type(from_relation) is list else from_relation
-            a = ((keyss.index(from_relation) + 1) * 100) + (level*2)
+            a = ((keyss.index(from_relation) + 1) * 100) + (level * 2)
             self.__yertle.forward(a)
             right_dist1 = ((attibutes[from_relation].index(forgin_keys[0]) + 1) * 90) - 25
             self.__yertle.left(90)
@@ -229,9 +220,9 @@ class RelationalMapping3nf:
             self.__yertle.back(b)
             self.__yertle.back(a)
             color_counter += 1
-            if(color_counter == 3):
+            if (color_counter == 3):
                 color_counter = 0
-            level+=1
+            level += 1
 
     def draw_arrows(self, attributes, box_size, dependentent, pk, level=0):
 

@@ -1,21 +1,16 @@
 import os
 import turtle
 from tkinter import *
-from typing import Type
-
-from turtle import *
-
-# import pyrebase
 from PIL import Image
 from turtle import Turtle, Screen
-
-# from google.cloud import storage
 from os.path import exists
 
-font_size=14
+font_size = 14
+
+
 class RelationalMappingBcnf:
-    def __init__(self,relation,relation_name,fks):
-        print("contractor" , fks)
+    def __init__(self, relation, relation_name, fks):
+        print("contractor", fks)
         if exists('./BCNF.png'):
             os.remove("BCNF.png")
         if exists('./bcnf.eps'):
@@ -25,8 +20,9 @@ class RelationalMappingBcnf:
         self.__TURTLE_SIZE = 20
         self.__relations = relation
         self.__relation_names = relation_name
-        self.__fk=fks
+        self.__fk = fks
         self.preporcessing()
+
     def preporcessing(self):
 
         screenTk = self.__screen.getcanvas().winfo_toplevel()
@@ -40,7 +36,6 @@ class RelationalMappingBcnf:
         turtle.getcanvas().postscript(file="bcnf.eps")
         self.get_image()
         turtle.bye()
-
 
     def get_image(self):
         TARGET_BOUNDS = (1600, 800)
@@ -61,15 +56,17 @@ class RelationalMappingBcnf:
         # Save to PNG
 
         pic.save("BCNF.png")
+
     def set_Tortle(self):
         self.__yertle.penup()
-        self.__yertle.goto(self.__TURTLE_SIZE / 2 - self.__screen.window_width() / 2, self.__screen.window_height() - 250 - self.__TURTLE_SIZE / 2)
+        self.__yertle.goto(self.__TURTLE_SIZE / 2 - self.__screen.window_width() / 2,
+                           self.__screen.window_height() - 250 - self.__TURTLE_SIZE / 2)
         self.__yertle.pendown()
 
         self.__yertle.shape("square")
         self.__yertle.width(2)
 
-    def getnames(self,relation_names):
+    def getnames(self, relation_names):
         names = []
         for one in relation_names:
             a = relation_names[one]
@@ -77,7 +74,7 @@ class RelationalMappingBcnf:
                 names.append(each)
         return names
 
-    def simple_box(self,box_size, i, primarykeys):
+    def simple_box(self, box_size, i, primarykeys):
 
         self.__yertle.pendown()
         self.__yertle.forward(box_size)
@@ -107,8 +104,7 @@ class RelationalMappingBcnf:
             self.__yertle.left(90)
         else:
             self.__yertle.write(i, font=("Verdana", font_size, "bold",))
-        if (i in primarykeys ):
-
+        if (i in primarykeys):
             self.__yertle.right(90)
             self.__yertle.forward(1)
             self.__yertle.left(90)
@@ -127,7 +123,7 @@ class RelationalMappingBcnf:
         self.__yertle.right(90)
         self.__yertle.forward(box_size)
 
-    def simple_line(self,attributes, box_size, single):
+    def simple_line(self, attributes, box_size, single):
 
         for key in single:
             distnce = ((attributes.index(key) + 1) * box_size) - (box_size) + 20
@@ -142,10 +138,10 @@ class RelationalMappingBcnf:
             self.__yertle.penup()
             self.__yertle.back(distnce)
 
-    def draw_forgin_key(self,fks, attibutes, relnames):
+    def draw_forgin_key(self, fks, attibutes, relnames):
         fk_relations = []
-        print("Forgin keys" , fks)
-        print("relnames" , relnames)
+        print("Forgin keys", fks)
+        print("relnames", relnames)
         for fk in fks:
             fk_rel = []
             for name in relnames:
@@ -157,7 +153,6 @@ class RelationalMappingBcnf:
                 for i in rel:
                     fk_rel.append(rel[i])
                 fk_relations.append(fk_rel)
-
 
         keyss = list(attibutes.keys())
         self.__yertle.penup()
@@ -172,7 +167,7 @@ class RelationalMappingBcnf:
         self.__yertle.right(90)
         cololist = ["blue", "indigo", "violet", "orange", "green", "red", "yellow", "orange"]
         color_counter = 0
-        print("FKs " , fk_relations)
+        print("FKs ", fk_relations)
         for rel in fk_relations:
             goto_relation = rel[0]
             from_relation = rel[2]
@@ -187,7 +182,7 @@ class RelationalMappingBcnf:
             #     goto_relation = temp
             #     print("gsfdf")
             # print("from ", (from_relation[0]))
-            print("attibutes",attibutes)
+            print("attibutes", attibutes)
             from_rel = from_relation[0] if type(from_relation) is list else from_relation
 
             a = ((keyss.index(from_rel) + 1) * 100)
@@ -229,7 +224,7 @@ class RelationalMappingBcnf:
             self.__yertle.back(a)
             color_counter += 1
 
-    def draw_arrows(self,attributes, box_size, dependentent, pk):
+    def draw_arrows(self, attributes, box_size, dependentent, pk):
         for element in dependentent:
             distnce = ((attributes.index(element) + 1) * box_size) - (box_size) + 20
             self.__yertle.penup()
@@ -266,7 +261,7 @@ class RelationalMappingBcnf:
             self.__yertle.right(90)
             self.__yertle.back(a)
 
-    def oneRelationDrawing(self,relation, name, name_counter, att_List,name_print):
+    def oneRelationDrawing(self, relation, name, name_counter, att_List, name_print):
         box_size = 90
         rel = relation
         attibutes = []
@@ -315,7 +310,7 @@ class RelationalMappingBcnf:
         self.__yertle.goto(self.__yertle.pos()[0], self.__yertle.pos()[1] - 20)
         self.__yertle.pendown()
 
-    def drawRelations(self,relations, rels_names, fk):
+    def drawRelations(self, relations, rels_names, fk):
         # full = nfs['full']
         # partial = nfs['partial']
         # multi_value = nfs['Multi']
@@ -327,9 +322,8 @@ class RelationalMappingBcnf:
         print(names)
         name_counter = 0
         for one in rels:
-
             attributes[names[name_counter][1]] = []
-            self.oneRelationDrawing(rels[one], names[name_counter][1], name_counter, attributes,names[name_counter][0])
+            self.oneRelationDrawing(rels[one], names[name_counter][1], name_counter, attributes, names[name_counter][0])
             name_counter += 1
             self.__yertle.penup()
 
@@ -337,8 +331,6 @@ class RelationalMappingBcnf:
             self.__yertle.back(20)
 
             self.__yertle.goto(self.__yertle.pos()[0], self.__yertle.pos()[1] - 20)
-
-
 
         self.draw_forgin_key(fks, attributes, names)
 
@@ -426,4 +418,3 @@ class RelationalMappingBcnf:
 #         ]
 #     }
 #     p = RelationalMappingNfs(relations,relation_names,fk)
-

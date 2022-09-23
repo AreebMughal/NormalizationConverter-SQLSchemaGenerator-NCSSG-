@@ -1,17 +1,13 @@
 import os
 import turtle
 from tkinter import *
-# import cv2
-from turtle import *
-
-from matplotlib import pyplot as plt
-# import pyrebase
 from PIL import Image
 from turtle import Turtle, Screen
-font_size=14
 from os.path import exists
 
-# from google.cloud import storag
+font_size = 14
+
+
 class RelationalMapping:
     def __init__(self, dics):
         if exists('./RM.png'):
@@ -26,7 +22,6 @@ class RelationalMapping:
         self.screenTk = None
         self.screen = 0
         self.starting()
-
 
     def starting(self):
 
@@ -53,7 +48,8 @@ class RelationalMapping:
 
     def set_Tortle(self):
         self.yertle.penup()
-        self.yertle.goto(self.TURTLE_SIZE / 2 - self.screen.window_width(), self.screen.window_height() / 8 - self.TURTLE_SIZE / 2)
+        self.yertle.goto(self.TURTLE_SIZE / 2 - self.screen.window_width(),
+                         self.screen.window_height() / 8 - self.TURTLE_SIZE / 2)
         self.yertle.pendown()
         self.yertle.shape("square")
         self.yertle.width(2)
@@ -126,7 +122,7 @@ class RelationalMapping:
         primarykeys = primary
         box_size = 90
         single = single_compo[0]
-        print("Single cmaskcmasklcmaskldmasklcnmasklndasknckasndkln" , single)
+        print("Single cmaskcmasklcmaskldmasklcnmasklndasknckasndkln", single)
         composite = single_compo[1]
 
         keyss = single.keys()
@@ -144,7 +140,7 @@ class RelationalMapping:
         color_counter = 0
         color_list = ["blue", "indigo", "violet", "orange"]
 
-        print("Compooo ",composite)
+        print("Compooo ", composite)
         for indexx in composite:
             self.yertle.color(color_list[color_counter])
             if element_counter % 2 == 0:
@@ -167,7 +163,6 @@ class RelationalMapping:
                 self.yertle.color(color_list[color_counter - 1])
                 KhnnTakJanaHa = 0
 
-
                 distnce = ((attributes.index(indexx[0]) + 1) * box_size) - (box_size) + (level * 7)
                 self.yertle.penup()
                 self.yertle.forward(distnce)
@@ -186,15 +181,14 @@ class RelationalMapping:
                 self.yertle.right(135)
                 self.yertle.penup()
                 self.yertle.back(distnce)
-                for oneElementinComop in composite[element_counter-1]:
+                for oneElementinComop in composite[element_counter - 1]:
                     print(oneElementinComop)
-
 
                 l = composite[element_counter - 1]
 
                 for determin in composite[element_counter]:
                     l.append(composite[element_counter][0])
-                print(" L  ki vale " , l)
+                print(" L  ki vale ", l)
 
                 small = attributes.index(l[0])
                 big = attributes.index(l[0])
@@ -202,21 +196,21 @@ class RelationalMapping:
                 while i < len(l):
                     if (small > attributes.index(l[i])):
                         small = attributes.index(l[i])
-                    elif(big < attributes.index(l[i])):
+                    elif (big < attributes.index(l[i])):
                         big = attributes.index(l[i])
 
                     i = i + 1
 
                 print("walue of big", big, "value of small", small)
 
-                a = ((small ) * box_size) + (level * 7)
+                a = ((small) * box_size) + (level * 7)
                 self.yertle.penup()
                 self.yertle.forward(a)
                 self.yertle.left(90)
                 self.yertle.forward(50 + (level * 10))
                 self.yertle.right(90)
 
-                b = (big -small ) * box_size
+                b = (big - small) * box_size
                 self.yertle.pendown()
                 self.yertle.forward(b)
                 self.yertle.back(b)
@@ -341,16 +335,15 @@ class RelationalMapping:
         self.yertle.forward(15)
         self.yertle.left(90)
         self.yertle.forward(5)
-        if(len(i) >= 10):
-            part1= i[:10] + "_"
-
+        if (len(i) >= 10):
+            part1 = i[:10] + "_"
 
             part2 = i[10:len(i)]
-            self.yertle.write(part1,font=("Verdana", font_size, "bold"))
+            self.yertle.write(part1, font=("Verdana", font_size, "bold"))
             self.yertle.right(90)
             self.yertle.forward(15)
             self.yertle.left(90)
-            self.yertle.write(part2,font=("Verdana", font_size, "bold"))
+            self.yertle.write(part2, font=("Verdana", font_size, "bold"))
             self.yertle.right(90)
             self.yertle.back(15)
             self.yertle.left(90)
