@@ -45,7 +45,7 @@ const MinimalCover = () => {
     }, [inputBoxes, relationName])
 
 
-    function getfdsList(step) {
+    function getFdsList(step) {
         return step !== undefined ? <ol>
             {Object.keys(step).map(i => {
                 return <li key={i}> {step[i][0].toString().replaceAll(',', ', ')} <FontAwesomeIcon
@@ -76,7 +76,7 @@ const MinimalCover = () => {
             />
             }
 
-            {/*{(typeof data !== "string") ?*/}
+            {(checkFds() && typeof data !== "string") ?
                 <div className="p-3 background">
                     <div className="row ps-3 pe-3">
                         <div className="col-lg-6 col-md-12 col-sm-12">
@@ -84,6 +84,7 @@ const MinimalCover = () => {
                                 cardHeader={'Current Functional Dependencies'}
                                 cardClass={'_current-fd'}
                                 headerClass={'_current-fd-header'}
+                                fdList={true}
                             />
                         </div>
                         <div className="col-lg-6 col-md-12 col-sm-12">
@@ -91,6 +92,7 @@ const MinimalCover = () => {
                                 cardHeader={'Minimal Cover Result'}
                                 cardClass={'_minimal-cover-res'}
                                 headerClass={'_minimal-cover-res-header'}
+                                step3={getFdsList(data.step_3)}
                             />
                         </div>
                     </div>
@@ -102,25 +104,25 @@ const MinimalCover = () => {
                             <div className="d-flex flex-wrap">
                                 <div className="step-1 m-1 flex-grow-1">
                                     <h6 className='minimal-cover-step'>Step-1 - Splitting RHS From FDs: </h6>
-                                    {getfdsList(data.step_1)}
+                                    {getFdsList(data.step_1)}
                                 </div>
                                 <VerticalHorizontalLine/>
                                 <div className="step-2 m-1 flex-grow-1">
                                     <h6 className='minimal-cover-step'>Step-2 - Remove Extraneous Attribute (LHS): </h6>
-                                    {getfdsList(data.step_2)}
+                                    {getFdsList(data.step_2)}
                                 </div>
                                 <VerticalHorizontalLine/>
                                 <div className="step-3 m-1 flex-grow-1">
                                     <h6 className='minimal-cover-step'>Step-3 - Remove Redundant FD: </h6>
-                                    {getfdsList(data.step_3)}
+                                    {getFdsList(data.step_3)}
                                 </div>
                             </div>
                         </div>
                     </CollapseDiv>
                 </div>
-            {/*    :*/}
-            {/*    <p>Server has been stopped. Kindly start or restart your server.</p>*/}
-            {/*}*/}
+                :
+                <h5 className='mt-5 ms-5'>Server has been stopped. Kindly start or restart your server.</h5>
+            }
             {/* <div className='m-3'>
                 {(checkFds()) ?
                     <div className="main d-flex flex-wrap ms-3">

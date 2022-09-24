@@ -17,13 +17,18 @@ const MinimalCoverModal = (props) => {
             <div className={`card-header ${props.headerClass}`}>
                 {props.cardHeader}
             </div>
-            <div className="card-body">
+            <div className="card-body pb-0">
                 {/*<FdsList*/}
                 {/*    inputBoxes={inputBoxes}*/}
                 {/*/>*/}
+                {(props.fdList) &&
                 <FdList
                     inputBoxes={inputBoxes}
                 />
+                }
+                {(props.step3 !== undefined) &&
+                    props.step3
+                }
             </div>
         </div>
     );
