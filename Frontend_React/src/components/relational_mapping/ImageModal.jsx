@@ -9,33 +9,32 @@ const ImageModal = (props) => {
 
     const [show, setShow] = useState(false);
     const [url, setUrl] = useState();
+    const [imgName, setImageName] = useState('');
+
+    const getImageName = (url) => {
+        const urlArray = props.url.split('/');
+        return urlArray[urlArray.length - 1];
+    }
 
     useEffect(() => {
         setShow(props.show);
-    }, [props.show])
-
-    useEffect(() => {
-        console.log(props.url);
         setUrl(props.url);
-    }, [props.url])
+        setImageName(getImageName(props.url));
+    }, [props.show, props.url])
 
-    const getFirebaseImage = async () => {
+
+    /*const getFirebaseImage = async () => {
         const reference = ref(firebaseStorage, props.imgName);
         await getDownloadURL(reference).then((url) => {
             setUrl(url);
             console.log(url);
         });
-    }
-
-    useEffect(() => {
-        // getFirebaseImage();
-    }, []);
-
+    }*/
 
     const saveFile = () => {
         saveAs(
             url,
-            "example.png"
+            imgName
         );
     };
 

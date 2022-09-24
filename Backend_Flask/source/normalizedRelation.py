@@ -4,11 +4,15 @@ from source.StaticMethods import convert_to_array
 
 
 class NormalizedRelation:
-    def __init__(self, relation=None, fd=None):
+    def __init__(self, relation=None, fds=None):
         self.__relation = relation
-        if fd is None:
-            fd = (relation.get_attribute_dependency()).get_func_dep()
-        self.fds = fd
+        if fds is None:
+            fds = (relation.get_attribute_dependency()).get_func_dep()
+        self.fds = fds
+        # for fd in fds:
+        #     if len(fd) != 0:
+        #         self.fds.append(fd)
+
         self.minimal_cover = self.get_minimal_cover()
 
     def get_fd(self):
@@ -39,7 +43,8 @@ class NormalizedRelation:
         print('Candidate Key: ', candidate_key)
 
     def remove_trivial(self):
-        self.fds = [fd for fd in self.fds if not fd[1].issubset(fd[0])]
+        self.fds = [fd for fd in self.fds if len(fd) != 0 and not fd[1].issubset(fd[0])]
+        # self.fds = [fd for fd in self.fds if not fd[1].issubset(fd[0])]
 
     def remove_transitivity(self):
         for i in range(len(self.fds)):

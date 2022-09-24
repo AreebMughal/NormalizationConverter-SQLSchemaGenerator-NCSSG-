@@ -21,13 +21,17 @@ export const suggestion_store = new Store({
 
 export const get_inputBoxes = () => {
     let inputBoxes = inputBoxes_data.getRawState().inputBoxes;
-    const newInputBoxes = inputBoxes.map((input, index) => input.dependency.map((dep, i) => {
-            const list = dep.map(id => inputBoxes.filter(inputBox => id === inputBox.id)[0].value);
-            const newInputBox = {...inputBoxes[index]}
-            newInputBox.dependency = [...newInputBox.dependency];
-            newInputBox.dependency[i] = list;
-            return newInputBox;
-        })[0]
+
+    const newInputBoxes = inputBoxes.map((input, index) => {
+        const newInputBox = {...inputBoxes[index]}
+        return input.dependency.map((dep, i) => {
+                const list = dep.map(id => inputBoxes.filter(inputBox => id === inputBox.id)[0].value);
+                console.log(list.toString(), '-> ', input.value);
+                newInputBox.dependency = [...newInputBox.dependency];
+                newInputBox.dependency[i] = list;
+                return newInputBox;
+            })[0]
+        }
     );
     my_data.update(s => {
         s.inputBoxes = newInputBoxes

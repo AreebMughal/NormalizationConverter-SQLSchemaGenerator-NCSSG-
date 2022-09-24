@@ -33,11 +33,12 @@ const MinimalCover = () => {
         setVisibility(true);
     }
 
+    console.log('Data => ', inputBoxes);
     useEffect(() => {
         axios.post('http://127.0.0.1:5000/minimalCover', {inputBoxes, relationName})
             .then(res => {
-                console.log(res.data)
-                setData(res.data['result'])
+                console.log('result',res.data);
+                setData(res.data['result']);
             }).catch(error => {
             handleError(error);
         });
@@ -74,50 +75,53 @@ const MinimalCover = () => {
                 setShow={() => setVisibility(false)}
             />
             }
-            <div className="p-3 background">
-                <div className="row ps-3 pe-3">
-                    <div className="col-lg-6 col-md-12 col-sm-12">
-                        <MinimalCoverModal
-                            cardHeader={'Current Functional Dependencies'}
-                            cardClass={'_current-fd'}
-                            headerClass={'_current-fd-header'}
-                        />
-                    </div>
-                    <div className="col-lg-6 col-md-12 col-sm-12">
-                        <MinimalCoverModal
-                            cardHeader={'Minimal Cover Result'}
-                            cardClass={'_minimal-cover-res'}
-                            headerClass={'_minimal-cover-res-header'}
-                        />
-                    </div>
-                </div>
-                <CollapseDiv
-                    cardTitle={'Minimal Cover\'s Steps:'}
-                    isOpen={true}
-                >
-                    <div className="ps-2 pe-2">
-                        <div className="d-flex flex-wrap">
-                            <div className="step-1 m-1 flex-grow-1">
-                                <h6 className='minimal-cover-step'>Step-1 - Splitting RHS From FDs: </h6>
-                                {getfdsList(data.step_1)}
-                            </div>
-                            <VerticalHorizontalLine />
-                            <div className="step-2 m-1 flex-grow-1">
-                                <h6 className='minimal-cover-step'>Step-2 - Remove Extraneous Attribute (LHS): </h6>
-                                {getfdsList(data.step_2)}
-                            </div>
-                            <VerticalHorizontalLine />
-                            <div className="step-3 m-1 flex-grow-1">
-                                <h6 className='minimal-cover-step'>Step-3 - Remove Redundant FD: </h6>
-                                {getfdsList(data.step_3)}
-                            </div>
+
+            {/*{(typeof data !== "string") ?*/}
+                <div className="p-3 background">
+                    <div className="row ps-3 pe-3">
+                        <div className="col-lg-6 col-md-12 col-sm-12">
+                            <MinimalCoverModal
+                                cardHeader={'Current Functional Dependencies'}
+                                cardClass={'_current-fd'}
+                                headerClass={'_current-fd-header'}
+                            />
+                        </div>
+                        <div className="col-lg-6 col-md-12 col-sm-12">
+                            <MinimalCoverModal
+                                cardHeader={'Minimal Cover Result'}
+                                cardClass={'_minimal-cover-res'}
+                                headerClass={'_minimal-cover-res-header'}
+                            />
                         </div>
                     </div>
-                </CollapseDiv>
-            </div>
-
+                    <CollapseDiv
+                        cardTitle={'Minimal Cover\'s Steps:'}
+                        isOpen={true}
+                    >
+                        <div className="ps-2 pe-2">
+                            <div className="d-flex flex-wrap">
+                                <div className="step-1 m-1 flex-grow-1">
+                                    <h6 className='minimal-cover-step'>Step-1 - Splitting RHS From FDs: </h6>
+                                    {getfdsList(data.step_1)}
+                                </div>
+                                <VerticalHorizontalLine/>
+                                <div className="step-2 m-1 flex-grow-1">
+                                    <h6 className='minimal-cover-step'>Step-2 - Remove Extraneous Attribute (LHS): </h6>
+                                    {getfdsList(data.step_2)}
+                                </div>
+                                <VerticalHorizontalLine/>
+                                <div className="step-3 m-1 flex-grow-1">
+                                    <h6 className='minimal-cover-step'>Step-3 - Remove Redundant FD: </h6>
+                                    {getfdsList(data.step_3)}
+                                </div>
+                            </div>
+                        </div>
+                    </CollapseDiv>
+                </div>
+            {/*    :*/}
+            {/*    <p>Server has been stopped. Kindly start or restart your server.</p>*/}
+            {/*}*/}
             {/* <div className='m-3'>
-
                 {(checkFds()) ?
                     <div className="main d-flex flex-wrap ms-3">
                         <div className="minimal-cover-result col-lg-5 col-md-5 col-sm-12">
