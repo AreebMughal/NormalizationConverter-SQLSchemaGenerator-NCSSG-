@@ -29,8 +29,9 @@ class BcNf(NormalizedRelation):
         NotprimeDep = []
         primeDep = []
         for fd in super().get_minimal_cover_result():
-            self.checkPrimaryKeyDependency(fd, primary, primeDep)
-            self.checkNonPrimaryKeyDependency(fd, primary, NotprimeDep)
+            if len(fd) > 0:
+                self.checkPrimaryKeyDependency(fd, primary, primeDep)
+                self.checkNonPrimaryKeyDependency(fd, primary, NotprimeDep)
         print(primeDep)
 
         print(NotprimeDep)

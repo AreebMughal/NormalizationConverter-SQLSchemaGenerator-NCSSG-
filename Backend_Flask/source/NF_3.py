@@ -47,7 +47,7 @@ class Nf3rd(NormalizedRelation):
         partial = []
 
         for fd in copy(self.minimal_cover_res):
-            if not set(fd[1]).issubset(multi_valued):
+            if len(fd) > 0 and not set(fd[1]).issubset(multi_valued):
                 self.__append_fully_dependent(fd, fully_dependent, primary)
                 self.__append_transitive_dependent(fd, primary, transitive)
                 # self.__append_partial_dependent(fd, primary, partial, nf_2)
