@@ -10,13 +10,18 @@
 /source/DrawingImage/__pycache__
 /venv
 .pnp.js
-.png
-.eps
+*.png
+*.eps
 # testing
 /coverage
 
 # production
 /build
+
+# folders
+/datasets
+/source/drawing
+/user_work
 
 # misc
 .DS_Store
