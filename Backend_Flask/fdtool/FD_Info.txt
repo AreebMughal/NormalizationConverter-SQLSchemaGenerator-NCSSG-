@@ -2,78 +2,78 @@ Table : Dataset
 Columns : pnum, ssn, Name, Email1, Email2, Address1, Address2, DId, ploc, pname, dnum, dname
 
 Functional Dependencies: 
+{ssn} -> {Address2}
+{ssn} -> {pnum}
 {ssn} -> {Name}
 {ssn} -> {Email2}
-{ssn} -> {dname}
-{ssn} -> {Address1}
-{ssn} -> {ploc}
-{ssn} -> {pnum}
 {ssn} -> {DId}
 {ssn} -> {pname}
-{ssn} -> {Address2}
 {ssn} -> {dnum}
+{ssn} -> {dname}
 {ssn} -> {Email1}
+{ssn} -> {Address1}
+{ssn} -> {ploc}
+{Name} -> {Address2}
+{Name} -> {pnum}
 {Name} -> {Email2}
+{Name} -> {DId}
+{Name} -> {pname}
+{Name} -> {dnum}
 {Name} -> {dname}
+{Name} -> {ssn}
+{Name} -> {Email1}
 {Name} -> {Address1}
 {Name} -> {ploc}
-{Name} -> {pnum}
-{Name} -> {DId}
-{Name} -> {ssn}
-{Name} -> {pname}
-{Name} -> {Address2}
-{Name} -> {dnum}
-{Name} -> {Email1}
+{Email1} -> {Address2}
+{Email1} -> {pnum}
 {Email1} -> {Name}
 {Email1} -> {Email2}
+{Email1} -> {DId}
+{Email1} -> {pname}
+{Email1} -> {dnum}
 {Email1} -> {dname}
+{Email1} -> {ssn}
 {Email1} -> {Address1}
 {Email1} -> {ploc}
-{Email1} -> {pnum}
-{Email1} -> {DId}
-{Email1} -> {ssn}
-{Email1} -> {pname}
-{Email1} -> {Address2}
-{Email1} -> {dnum}
+{Address1} -> {Address2}
+{Address1} -> {pnum}
 {Address1} -> {Name}
 {Address1} -> {Email2}
-{Address1} -> {dname}
-{Address1} -> {ploc}
-{Address1} -> {pnum}
 {Address1} -> {DId}
-{Address1} -> {ssn}
 {Address1} -> {pname}
-{Address1} -> {Address2}
 {Address1} -> {dnum}
+{Address1} -> {dname}
+{Address1} -> {ssn}
 {Address1} -> {Email1}
-{DId} -> {dname}
+{Address1} -> {ploc}
 {DId} -> {dnum}
+{DId} -> {dname}
 {ploc} -> {pnum}
 {ploc} -> {pname}
-{pname} -> {ploc}
 {pname} -> {pnum}
-{dnum} -> {dname}
+{pname} -> {ploc}
 {dnum} -> {DId}
+{dnum} -> {dname}
 {dname} -> {DId}
 {dname} -> {dnum}
-{Email2, pnum} -> {ploc}
-{ploc, DId} -> {Email2}
-{ploc, DId} -> {ssn}
-{ploc, DId} -> {Address2}
-{pnum, DId} -> {Email2}
+{Address2, pnum} -> {ssn}
+{Address2, pnum} -> {Email2}
+{Address2, pnum} -> {DId}
+{Address2, pnum} -> {ploc}
+{pnum, Email2} -> {ploc}
 {pnum, DId} -> {ssn}
+{pnum, DId} -> {Email2}
 {pnum, DId} -> {Address2}
 {pnum, DId} -> {ploc}
-{ploc, Address2} -> {Email2}
-{ploc, Address2} -> {ssn}
-{ploc, Address2} -> {DId}
-{pnum, Address2} -> {Email2}
-{pnum, Address2} -> {ssn}
-{pnum, Address2} -> {DId}
-{pnum, Address2} -> {ploc}
-{Email2, DId, Address2} -> {pnum}
-{Email2, DId, Address2} -> {ssn}
-{Email2, DId, Address2} -> {ploc}
+{Address2, ploc} -> {ssn}
+{Address2, ploc} -> {Email2}
+{Address2, ploc} -> {DId}
+{DId, ploc} -> {ssn}
+{DId, ploc} -> {Email2}
+{DId, ploc} -> {Address2}
+{Address2, Email2, DId} -> {ssn}
+{Address2, Email2, DId} -> {ploc}
+{Address2, Email2, DId} -> {pnum}
 
 Equivalences: 
 {ssn} <-> {Name}
@@ -86,12 +86,12 @@ Equivalences:
 {DId} <-> {dname}
 {ploc} <-> {pname}
 {dnum} <-> {dname}
-{Email2, ploc} <-> {Email2, pnum}
-{ploc, DId} <-> {pnum, DId}
-{ploc, DId} <-> {ploc, Address2}
-{ploc, DId} <-> {pnum, Address2}
-{pnum, DId} <-> {ploc, Address2}
-{pnum, DId} <-> {pnum, Address2}
-{ploc, Address2} <-> {pnum, Address2}
+{Address2, pnum} <-> {pnum, DId}
+{Address2, pnum} <-> {Address2, ploc}
+{Address2, pnum} <-> {DId, ploc}
+{pnum, DId} <-> {Address2, ploc}
+{pnum, DId} <-> {DId, ploc}
+{Address2, ploc} <-> {DId, ploc}
+{Email2, ploc} <-> {pnum, Email2}
 
 Keys: 

@@ -7,6 +7,7 @@ from os.path import exists
 
 font_size = 14
 
+
 class RelationalMapping1nf:
     def __init__(self, dics):
         if exists('./1NF.png'):
@@ -395,30 +396,3 @@ class RelationalMapping1nf:
         self.yertle.right(90)
         self.yertle.forward(box_size)
         self.yertle.back(2)
-#     def upload(self):
-#         firebaseConfig = {
-#         "apiKey": "AIzaSyC6ficlQvWLyJI_M8Alr-0hOHiCnkW6k7k",
-#         "authDomain": "ncssg-27984.firebaseapp.com",
-#         "projectId": "ncssg-27984",
-#         "storageBucket": "ncssg-27984.appspot.com",
-#         "messagingSenderId": "857164548773",
-#         "appId": "1:857164548773:web:21d281f781befd6d111b4c",
-#         "measurementId": "G-H70L9Z1TJQ",
-#         "serviceAccount": "accountConfig.json",
-#         "databaseURL": "https://ncssg-27984-default-rtdb.firebaseio.com/"
-#         }
-#         firebase = pyrebase.initialize_app(firebaseConfig)
-#         storage = firebase.storage()
-#         storage.child("1NF.png").put("1NF.png")
-#     # You just get your CREDENTIALS on previous step
-#         os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "ncssg-27984-firebase-adminsdk-o3i2s-ce7bec64be.json"
-#         db_url = 'https://ncssg-27984-default-rtdb.firebaseio.com/'  # Your project url
-#         firebase = firebase.FirebaseApplication(db_url, None)
-#         client = storage.Client()
-#         bucket = client.get_bucket('gs://ncssg-27984.appspot.com')
-#         imageBlob = bucket.blob("/")
-#         file_name = "OneNF.png"
-#         imagePath = (r"C:\Users\Sharif\PycharmProjects\pythonProject4\1NF.png")
-#         imageBlob = bucket.blob(file_name)
-#         imageBlob.upload_from_filename(imagePath)  # Upload your imagepip install pycryptodome
-# RelationalMapping()

@@ -117,7 +117,7 @@ class FdsMiner:
         file.readline()
         all_fds = self.read_all_fds(file)
 
-        n = NormalizedRelation(fd=all_fds)
+        n = NormalizedRelation(fds=all_fds)
         fds = n.get_minimal_cover_result()
         # print(n.find_candidate_key(attributes_set=set(attribute_names)))
         if self.algo_type == 'tane':

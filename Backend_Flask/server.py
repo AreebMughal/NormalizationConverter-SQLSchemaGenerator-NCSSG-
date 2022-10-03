@@ -2,9 +2,7 @@ import json
 import sys
 import traceback
 import os
-from io import BytesIO
 
-import numpy as np
 from werkzeug.utils import secure_filename
 from flask import Flask, request, jsonify
 from flask_cors import CORS
@@ -21,12 +19,9 @@ from source.NF_2 import Nf2nd
 from source.NF_3 import Nf3rd
 from source.BCNF import BcNf
 from source.Relation import Relation
+from source.Sql_Form_Methods import *
 from source.normalizedRelation import NormalizedRelation
-from source.Sql_Form_Methods import create_relation_names, get_all_foreign_keys_list
-from source.Sql_Form_Methods import get_foreign_keys
-from source.Sql_Form_Methods import get_all_relations
-from source.Sql_Form_Methods import create_relations
-from source.StaticMethods import get_dummy_nf_result
+from source.Sql_Form_Methods import *
 from source.SqlScript import SqlScript
 from os.path import exists
 
@@ -56,20 +51,22 @@ def Find_CK(minimal_cover):
     CK = set(CK)
     return CK, L_H_S, R_H_S
 
+
 def primaryKeyCheck(pk, fds):
     result = {}
     fdNonPK = []
     # fdPK = []
     countPrimary = 0
     countNonPrimary = 0
-    print("fds  " , fds)
+    print("fds  ", fds)
     for fd in fds:
         lhs = set(fd[0])
         if lhs.issubset(pk):
-            fdNonPK.append(fd)
+
             countPrimary += 1
         else:
             countNonPrimary += 1
+            fdNonPK.append(fd)
     if countPrimary < countNonPrimary:
         # fdNonPK.append("You are determining more attributes with a non prime attribute. " \
         #                     "Please review your primary key selection.")
@@ -85,8 +82,7 @@ def primaryKeyCheck(pk, fds):
         print(len(result[each]))
         for i in range(len(result[each])):
             print(result[each][i][0])
-            result[each][i] = [list(result[each][i][0]),list(result[each][i][1])]
-
+            result[each][i] = [list(result[each][i][0]), list(result[each][i][1])]
 
     print(result)
     return result
@@ -100,6 +96,7 @@ def my_exception(e):
 def get_result(object_type, input_boxes_dic):
     result = {}
     relation_names = []
+    print('==>', type(input_boxes_dic))
     try:
         data = json.loads(input_boxes_dic)
         input_boxes = data['inputBoxes']
@@ -120,7 +117,11 @@ def get_result(object_type, input_boxes_dic):
         elif object_type == 'BCNF':
             bcnf = BcNf(my_rel=my_relation)
             result = bcnf.find_bcnf()
-        relation_names = create_relation_names(result, data['relationName']) if object_type != 'minimal_cover' else ''
+
+        relation_names = ''
+        if object_type != 'minimal_cover':
+            sql_form = SqlFormAttributeConstraints(data, object_type, relation_name, nf_result=result)
+            relation_names = sql_form.get_relation_names()
         print(relation_names)
     except Exception as e:
         my_exception(e)
@@ -152,9 +153,12 @@ def get_relationalMapping(nf_type, api_data):
         elif nf_type == '2NF' or nf_type == '3NF' or nf_type == 'BCNF':
             normalized_relation = NormalizedRelation(relation=my_relation)
             minimal_cover_result = normalized_relation.get_minimal_cover()
-            all_relations = get_all_relations(nf_result, relation_name)
-            relation_names = create_relation_names(nf_result, relation_name)
-            fk = get_all_foreign_keys_list(nf_result, relation_names, all_relations)
+
+            sql_form = SqlFormAttributeConstraints(data, nf_type, relation_name, nf_result=nf_result)
+            all_relations = sql_form.get_all_relations()
+            relation_names = sql_form.get_relation_names()
+            fk = sql_form.get_all_foreign_keys_list()
+
             print('Minimal Cover:\n', minimal_cover_result)
             print('All Relation:\n', all_relations)
             print('All Relation Names:\n', relation_names)
@@ -255,14 +259,8 @@ def getSqlSchemaData():
         data = json.loads(request.data.decode('utf-8'))
         normal_form = data['normalForm']
         relation_name = data['relationName']
-        # if normal_form == 'BCNF':
-        #     res = get_dummy_nf_result()
-        #     all_relations = get_all_relations(res, 'Practice')
-        #     json_data = create_relations(res, creatFe_relation_names(res, 'Practice'), all_relations)
-        # else:
-        res = get_result(object_type=normal_form, input_boxes_dic=request.data.decode('utf-8'))['result']
-        all_relations = get_all_relations(res, relation_name)
-        json_data = create_relations(res, create_relation_names(res, relation_name), all_relations)
+        sql_form = SqlFormAttributeConstraints(request.data.decode('utf-8'), normal_form, relation_name)
+        json_data = sql_form.get_sql_form_data()
 
     except Exception as e:
         my_exception(e)
