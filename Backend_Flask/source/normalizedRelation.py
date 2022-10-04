@@ -12,8 +12,10 @@ class NormalizedRelation:
         # for fd in fds:
         #     if len(fd) != 0:
         #         self.fds.append(fd)
-
+        self.step1 = ''
+        self.step2 = ''
         self.minimal_cover = self.get_minimal_cover()
+        self.step3 = deepcopy(self.minimal_cover)
 
     def get_fd(self):
         return self.fds
@@ -106,12 +108,12 @@ class NormalizedRelation:
 
     def get_minimal_cover_JSON(self):
         return {
-            'step_1': convert_to_json(deepcopy(self.step1_minimal_cover())),
-            'step_2': convert_to_json(deepcopy(self.step2_minimal_cover())),
-            'step_3': convert_to_json(deepcopy(self.step3_minimal_cover()))
+            'step_1': convert_to_json(deepcopy(self.step1)),
+            'step_2': convert_to_json(deepcopy(self.step2)),
+            'step_3': convert_to_json(deepcopy(self.step3))
         }
 
     def get_minimal_cover(self):
-        self.step1_minimal_cover()
-        self.step2_minimal_cover()
+        self.step1 = deepcopy(self.step1_minimal_cover())
+        self.step2 = deepcopy(self.step2_minimal_cover())
         return self.step3_minimal_cover()

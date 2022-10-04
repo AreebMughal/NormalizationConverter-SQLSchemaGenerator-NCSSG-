@@ -1,4 +1,4 @@
-import React, {useEffect, useLayoutEffect, useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import axios from "axios";
 import my_data from "../../store/data";
 import '../../assets/css/relation.css'
@@ -10,9 +10,6 @@ import MinimalCoverModal from "./MinimalCoverModal";
 import './minimalCover.css';
 import CollapseDiv from "../div_collapse/CollapseDiv";
 import VerticalHorizontalLine from "./VerticalHorizontalLine";
-
-
-
 
 const MinimalCover = () => {
     const inputBoxes = my_data.getRawState().inputBoxes;
@@ -37,7 +34,7 @@ const MinimalCover = () => {
     useEffect(() => {
         axios.post('http://127.0.0.1:5000/minimalCover', {inputBoxes, relationName})
             .then(res => {
-                console.log('result',res.data);
+                console.log('result', res.data);
                 setData(res.data['result']);
             }).catch(error => {
             handleError(error);
