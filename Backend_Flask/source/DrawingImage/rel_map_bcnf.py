@@ -165,7 +165,7 @@ class RelationalMappingBcnf:
         self.__yertle.right(90)
         self.__yertle.forward(50)
         self.__yertle.right(90)
-        cololist = ["blue", "indigo", "violet", "orange", "green", "red", "yellow", "orange"]
+        cololist = ["blue", "indigo", "violet", "orange", "green", "red", "orange"]
         color_counter = 0
         print("FKs ", fk_relations)
         for rel in fk_relations:
@@ -223,6 +223,8 @@ class RelationalMappingBcnf:
             self.__yertle.back(b)
             self.__yertle.back(a)
             color_counter += 1
+            if (color_counter > 6):
+                color_counter = 0
 
     def draw_arrows(self, attributes, box_size, dependentent, pk):
         for element in dependentent:
@@ -250,16 +252,15 @@ class RelationalMappingBcnf:
         self.__yertle.left(90)
         self.__yertle.forward(25)
         self.__yertle.right(90)
-        if len(dependentent) > 0:
-            b = ((attributes.index(dependentent[(len(dependentent) - 1)]) + 1) * box_size) - box_size
-            self.__yertle.pendown()
-            self.__yertle.forward(b)
-            self.__yertle.back(b)
-            self.__yertle.penup()
-            self.__yertle.left(90)
-            self.__yertle.back(25)
-            self.__yertle.right(90)
-            self.__yertle.back(a)
+        b = ((attributes.index(dependentent[(len(dependentent) - 1)]) + 1) * box_size) - box_size
+        self.__yertle.pendown()
+        self.__yertle.forward(b)
+        self.__yertle.back(b)
+        self.__yertle.penup()
+        self.__yertle.left(90)
+        self.__yertle.back(25)
+        self.__yertle.right(90)
+        self.__yertle.back(a)
 
     def oneRelationDrawing(self, relation, name, name_counter, att_List, name_print):
         box_size = 90
@@ -281,12 +282,12 @@ class RelationalMappingBcnf:
         self.__yertle.right(90)
         self.__yertle.forward(20)
         self.__yertle.right(90)
-        self.__yertle.forward(120)
+        self.__yertle.forward(250)
 
         self.__yertle.pendown()
         self.__yertle.write(name, font=("Verdana", 16, "bold",))
         self.__yertle.penup()
-        self.__yertle.back(120)
+        self.__yertle.back(250)
         self.__yertle.pendown()
         self.__yertle.right(90)
 
@@ -333,88 +334,3 @@ class RelationalMappingBcnf:
             self.__yertle.goto(self.__yertle.pos()[0], self.__yertle.pos()[1] - 20)
 
         self.draw_forgin_key(fks, attributes, names)
-
-        # if(len(full) > 0):
-        #     for relation in full:
-        #         primarykey_forginkey = relation[0]
-        #         if(len(relation[0]) < 2 and len(relation[1] ) <2 ):
-        #             print(relation)
-        #             for element in relation:
-        #                 simple_box(box_size,element[0] , primarykey_forginkey)
-        #         else:
-        #             pass
-
-    # def upload(self):
-    #     firebaseConfig = {
-    #     "apiKey": "AIzaSyC6ficlQvWLyJI_M8Alr-0hOHiCnkW6k7k",
-    #     "authDomain": "ncssg-27984.firebaseapp.com",
-    #     "projectId": "ncssg-27984",
-    #     "storageBucket": "ncssg-27984.appspot.com",
-    #     "messagingSenderId": "857164548773",
-    #     "appId": "1:857164548773:web:21d281f781befd6d111b4c",
-    #     "measurementId": "G-H70L9Z1TJQ",
-    #     "serviceAccount": "accountConfig.json",
-    #     "databaseURL": "https://ncssg-27984-default-rtdb.firebaseio.com/"
-    #     };
-    #     firebase = pyrebase.initialize_app(firebaseConfig)
-    #     storage = firebase.storage()
-    #     storage.child("OneNF1.png").put("OneNF.png")
-    # # You just get your CREDENTIALS on previous step
-    # os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "ncssg-27984-firebase-adminsdk-o3i2s-ce7bec64be.json"
-    # db_url = 'https://ncssg-27984-default-rtdb.firebaseio.com/'  # Your project url
-    # firebase = firebase.FirebaseApplication(db_url, None)
-    # client = storage.Client()
-    # bucket = client.get_bucket('gs://ncssg-27984.appspot.com')
-    # imageBlob = bucket.blob("/")
-    # file_name = "\OneNF.png"
-    # imagePath = (r"E:\NormalizationConverter-SQLSchemaGenerator-NCSSG-\Backend_Flask\OneNF.png")
-    # imageBlob = bucket.blob(file_name)
-    # imageBlob.upload_from_filename(imagePath)  # Upload your imagepip install pycryptodome
-# if __name__ == "__main__":
-#     relations = {
-#         'Fully_dependent': [{'ssn', 'pnum'}, {'name'}],
-#         'partial_1': [{'ssn'}, {'id'}],
-#         'partial_2': [{'pnum'}, {'pname', 'ploc'}],
-#         'Multi_1': [{'ssn', 'pnum'}, {'email'}],
-#         'Multi_2': [{'ssn'}, {'address'}],
-#         'transitive_1': [{'id'}, {'dnum'}],
-#         'transitive_2': [{'dnum'}, {'dloc', 'dname'}]
-#     }
-#     relation_names = {
-#         'full': [['Organization', 'Fully_dependent']],
-#         'partial': [
-#             ['Org_ssn', 'partial_1'],
-#             ['Org_pnum', 'partial_2']
-#         ],
-#         'multi': [
-#             ['Org_email', 'multi_1'],
-#             ['Org_address', 'multi_2']
-#         ],
-#         'transitive': [
-#             ['Org_id', 'transitive_1'],
-#             ['Org_dnum', 'transitive_2']
-#         ]
-#     }
-#
-#
-#     fk = {
-#         'Org_ssn': [
-#             {'attribute': ['ssn'], 'relationName': 'Fully_dependent'}
-#         ],
-#         'Org_pnum': [
-#             {'attribute': ['pnum'], 'relationName': 'Fully_dependent'}
-#         ],
-#         'Org_email': [
-#             {'attribute': ['pnum', 'ssn'], 'relationName': 'Fully_dependent'}
-#         ],
-#         'Org_address': [
-#             {'attribute': ['ssn'], 'relationName': 'Fully_dependent'}
-#         ],
-#         'Org_id': [
-#             {'attribute': ['id'], 'relationName': 'partial_1'}
-#         ],
-#         'Org_dnum': [
-#             {'attribute': ['dnum'], 'relationName': 'transitive_1'}
-#         ]
-#     }
-#     p = RelationalMappingNfs(relations,relation_names,fk)

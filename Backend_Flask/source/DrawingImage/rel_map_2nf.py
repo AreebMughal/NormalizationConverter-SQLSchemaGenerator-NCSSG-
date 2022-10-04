@@ -10,6 +10,7 @@ from os.path import exists
 
 font_size = 14
 
+
 class RelationalMapping2nf:
     def __init__(self, relation, relation_name, fks, MC):
         if exists('./2NF.png'):
@@ -40,7 +41,6 @@ class RelationalMapping2nf:
         turtle.getcanvas().postscript(file="2nf.eps")
         self.get_image()
         turtle.bye()
-
 
     def get_image(self):
         TARGET_BOUNDS = (1600, 800)
@@ -253,12 +253,12 @@ class RelationalMapping2nf:
             self.__yertle.right(135)
             self.__yertle.penup()
             self.__yertle.back(distnce)
-        print("pk" , pk)
-        print("dependent " , dependentent)
+        print("pk", pk)
+        print("dependent ", dependentent)
         l = pk
         for each in dependentent:
             l.append(each)
-        print("L ki value" , l)
+        print("L ki value", l)
         small = attributes.index(l[0])
         big = attributes.index(l[0])
         i = 0
@@ -280,7 +280,6 @@ class RelationalMapping2nf:
         self.__yertle.forward(level)
         self.__yertle.right(90)
         self.__yertle.forward(level)
-
 
         b = (((big + 1) * box_size) - box_size) - a + 20 - level
         self.__yertle.pendown()
@@ -451,43 +450,6 @@ class RelationalMapping2nf:
 
         self.draw_forgin_key(fks, attributes, names)
 
-        # if(len(full) > 0):
-        #     for relation in full:
-        #         primarykey_forginkey = relation[0]
-        #         if(len(relation[0]) < 2 and len(relation[1] ) <2 ):
-        #             print(relation)
-        #             for element in relation:
-        #                 simple_box(box_size,element[0] , primarykey_forginkey)
-        #         else:
-        #             pass
-
-    # def upload(self):
-    #     firebaseConfig = {
-    #     "apiKey": "AIzaSyC6ficlQvWLyJI_M8Alr-0hOHiCnkW6k7k",
-    #     "authDomain": "ncssg-27984.firebaseapp.com",
-    #     "projectId": "ncssg-27984",
-    #     "storageBucket": "ncssg-27984.appspot.com",
-    #     "messagingSenderId": "857164548773",
-    #     "appId": "1:857164548773:web:21d281f781befd6d111b4c",
-    #     "measurementId": "G-H70L9Z1TJQ",
-    #     "serviceAccount": "accountConfig.json",
-    #     "databaseURL": "https://ncssg-27984-default-rtdb.firebaseio.com/"
-    #     };
-    #     firebase = pyrebase.initialize_app(firebaseConfig)
-    #     storage = firebase.storage()
-    #     storage.child("OneNF1.png").put("OneNF.png")
-    # # You just get your CREDENTIALS on previous step
-    # os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "ncssg-27984-firebase-adminsdk-o3i2s-ce7bec64be.json"
-    # db_url = 'https://ncssg-27984-default-rtdb.firebaseio.com/'  # Your project url
-    # firebase = firebase.FirebaseApplication(db_url, None)
-    # client = storage.Client()
-    # bucket = client.get_bucket('gs://ncssg-27984.appspot.com')
-    # imageBlob = bucket.blob("/")
-    # file_name = "\OneNF.png"
-    # imagePath = (r"E:\NormalizationConverter-SQLSchemaGenerator-NCSSG-\Backend_Flask\OneNF.png")
-    # imageBlob = bucket.blob(file_name)
-    # imageBlob.upload_from_filename(imagePath)  # Upload your imagepip install pycryptodome
-
 
 def check_fd_in_list(fd, my_list):
     index = -1
@@ -507,11 +469,3 @@ def append_fd_list(rel_attr, fd, my_list):
             my_list[index][1].append(fd[1].pop())
         else:
             my_list.append([list(fd[0]), list(fd[1])])
-
-# if __name__ == "__main__":
-#     relations = {'Fully_dependent': [{'ssn', 'pnum'}, {'dname', 'dnum', 'd_id'}], 'partial_1': [{'ssn'}, {'emp_id', 'ename'}], 'partial_2': [{'pnum'}, {'ploc'}], 'multi_1': [{'ssn'}, {'email'}]}
-#     relation_names =  {'full': [['organization', 'Fully_dependent']], 'partial': [['org_ssn', 'partial_1'], ['org_pnum', 'partial_2']], 'multi': [['org_email', 'multi_1']]}
-#     fk =   {'organization': [{'attribute': ['ssn'], 'relationName': 'partial_1'}, {'attribute': ['pnum'], 'relationName': 'partial_2'}], 'org_email': [{'attribute': ['ssn'], 'relationName': 'partial_1'}]}
-#     minimal_cover =  [[{'ssn'}, {'ename'}], [{'ssn'}, {'email'}], [{'ssn'}, {'emp_id'}], [{'d_id'}, {'dnum'}], [{'dnum'}, {'d_id'}], [{'d_id'}, {'dname'}], [{'pnum'}, {'ploc'}]]
-#     p = RelationalMappingNfs(relations,relation_names,fk,minimal_cover)
-#

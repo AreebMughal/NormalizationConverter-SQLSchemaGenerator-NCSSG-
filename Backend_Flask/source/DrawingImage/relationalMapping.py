@@ -14,6 +14,7 @@ class RelationalMapping:
             os.remove("RM.png")
         if exists('./rm.eps'):
             os.remove('rm.eps')
+
         self.__dic = dics
         self.__multivalue = self.__dic['multi_value']
         self.__primary = self.__dic['primary']
@@ -127,13 +128,13 @@ class RelationalMapping:
 
         keyss = single.keys()
         attributes = att
-        print(attributes)
-        print(len(attributes))
+        # print(attributes)
+        # print(len(attributes))
         level = 1
         keys_level_dic = dict()
         self.simple_line(attributes, box_size, keys_level_dic, level, single)
         self.draw_arrows(attributes, box_size, keys_level_dic, keyss, single)
-        print(keys_level_dic)
+        # print(keys_level_dic)
         element_counter = 0
         level = len(keys_level_dic) + 1
         self.yertle.color("black")
@@ -200,6 +201,10 @@ class RelationalMapping:
                         big = attributes.index(l[i])
 
                     i = i + 1
+
+                # print('-->', attributes)
+                # print('--->', composite, element_counter -1, small)
+                a = ((attributes.index(composite[element_counter - 1][small])) * box_size) + (level * 7)
 
                 print("walue of big", big, "value of small", small)
 
@@ -280,6 +285,7 @@ class RelationalMapping:
                 self.yertle.penup()
                 self.yertle.back(distnce)
             a = ((attributes.index(key)) * box_size) + (level * 7)
+            # print(attributes.index(key))
             self.yertle.penup()
             self.yertle.forward(a)
             self.yertle.left(90)
@@ -289,6 +295,7 @@ class RelationalMapping:
             agoto = listofsingle[len(listofsingle) - 1]
 
             b = ((attributes.index(agoto) - attributes.index(key)) * box_size)
+
             self.yertle.pendown()
             self.yertle.forward(b)
             self.yertle.back(b)
@@ -408,30 +415,3 @@ class RelationalMapping:
         self.yertle.right(90)
         self.yertle.forward(box_size)
         self.yertle.back(2)
-#     def upload(self):
-#         firebaseConfig = {
-#         "apiKey": "AIzaSyC6ficlQvWLyJI_M8Alr-0hOHiCnkW6k7k",
-#         "authDomain": "ncssg-27984.firebaseapp.com",
-#         "projectId": "ncssg-27984",
-#         "storageBucket": "ncssg-27984.appspot.com",
-#         "messagingSenderId": "857164548773",
-#         "appId": "1:857164548773:web:21d281f781befd6d111b4c",
-#         "measurementId": "G-H70L9Z1TJQ",
-#         "serviceAccount": "accountConfig.json",
-#         "databaseURL": "https://ncssg-27984-default-rtdb.firebaseio.com/"
-#         }
-#         firebase = pyrebase.initialize_app(firebaseConfig)
-#         storage = firebase.storage()
-#         storage.child("1NF.png").put("1NF.png")
-#     # You just get your CREDENTIALS on previous step
-#         os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "ncssg-27984-firebase-adminsdk-o3i2s-ce7bec64be.json"
-#         db_url = 'https://ncssg-27984-default-rtdb.firebaseio.com/'  # Your project url
-#         firebase = firebase.FirebaseApplication(db_url, None)
-#         client = storage.Client()
-#         bucket = client.get_bucket('gs://ncssg-27984.appspot.com')
-#         imageBlob = bucket.blob("/")
-#         file_name = "OneNF.png"
-#         imagePath = (r"C:\Users\Sharif\PycharmProjects\pythonProject4\1NF.png")
-#         imageBlob = bucket.blob(file_name)
-#         imageBlob.upload_from_filename(imagePath)  # Upload your imagepip install pycryptodome
-# RelationalMapping()
