@@ -138,17 +138,17 @@ def get_relationalMapping(nf_type, api_data):
         relation_name = data['relationName']
         my_relation = Relation(rel_name=relation_name, input_boxes=input_boxes)
         nf_result = get_result(object_type=nf_type, input_boxes_dic=request.data.decode('utf-8'))['result']
-
+        rm = ''
         if nf_type == 'RM':
             dic = my_relation.extract_data(input_boxes)
-            rel_map = RelationalMapping(dic)
+            rm = RelationalMapping(dic)
 
         elif nf_type == '1NF':
             normalized_relation = NormalizedRelation(relation=my_relation)
             dic = my_relation.extract_data(input_boxes)
             # dic['fds'] = normalized_relation.get_minimal_cover()
             # new_dict = {'fds': dic['fds'], 'primary': dic['primary'], 'multi_value': dic['multi_value']}
-            rel_map = RelationalMapping1nf(dic)
+            rm = RelationalMapping1nf(dic)
 
         elif nf_type == '2NF' or nf_type == '3NF' or nf_type == 'BCNF':
             normalized_relation = NormalizedRelation(relation=my_relation)
@@ -174,7 +174,7 @@ def get_relationalMapping(nf_type, api_data):
     except Exception as e:
         # result = '0'
         my_exception(e)
-
+    del rm
     if result == '0':
         return result
     else:

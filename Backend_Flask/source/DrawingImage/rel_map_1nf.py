@@ -39,6 +39,8 @@ class RelationalMapping1nf:
 
         turtle.getcanvas().postscript(file="1nf.eps")
         self.get_image()
+
+        screenTk.destroy()
         turtle.bye()
 
         # self.upload()

@@ -34,6 +34,7 @@ class RelationalMapping3nf:
         self.drawRelations(self.__relations, names, self.__fk)
         turtle.getcanvas().postscript(file="3nf.eps")
         self.get_image()
+        screenTk.destroy()
         turtle.bye()
 
     def get_image(self):

@@ -34,7 +34,7 @@ const ImageModal = (props) => {
     const saveFile = () => {
         saveAs(
             url,
-            imgName
+            imgName + '.png'
         );
     };
 
