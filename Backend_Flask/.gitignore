@@ -8,10 +8,12 @@
 /fdtool/__pycache__
 /source/__pycache__
 /source/DrawingImage/__pycache__
+/fdtool/modules/__pycache__
 /venv
 .pnp.js
 *.png
 *.eps
+*.pyc
 # testing
 /coverage
 

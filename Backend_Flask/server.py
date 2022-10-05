@@ -19,6 +19,7 @@ from source.NF_2 import Nf2nd
 from source.NF_3 import Nf3rd
 from source.BCNF import BcNf
 from source.Relation import Relation
+# from source.Sql_Form_Methods import SqlFormAttributeConstraints
 from source.Sql_Form_Methods import *
 from source.normalizedRelation import NormalizedRelation
 from source.Sql_Form_Methods import *
