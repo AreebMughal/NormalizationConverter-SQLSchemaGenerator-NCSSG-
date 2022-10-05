@@ -29,16 +29,18 @@ const MinimalCover = () => {
         setError(error.toString() + "\nTry Restarting Server.");
         setVisibility(true);
     }
-
-    console.log('Data => ', inputBoxes);
-    useEffect(() => {
-        axios.post('http://127.0.0.1:5000/minimalCover', {inputBoxes, relationName})
+    const minimalCoverNetworkCall = async() => {
+        await axios.post('http://127.0.0.1:5000/minimalCover', {inputBoxes, relationName})
             .then(res => {
                 console.log('result', res.data);
                 setData(res.data['result']);
             }).catch(error => {
             handleError(error);
         });
+    }
+    console.log('Data => ', inputBoxes);
+    useEffect(() => {
+        minimalCoverNetworkCall();
     }, [inputBoxes, relationName])
 
 
