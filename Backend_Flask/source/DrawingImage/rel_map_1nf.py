@@ -41,8 +41,12 @@ class RelationalMapping1nf:
         self.get_image()
 
         screenTk.destroy()
+        # screenTk.quit()
+        del screenTk
+        screenTk = None
+        self.__yertle = None
         turtle.bye()
-
+        # del self
         # self.upload()
         # self.screen.mainloop()
 

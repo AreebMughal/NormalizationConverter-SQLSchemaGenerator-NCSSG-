@@ -41,8 +41,14 @@ class RelationalMapping:
 
         turtle.getcanvas().postscript(file="rm.eps")
         self.get_image()
+
         self.screenTk.destroy()
+        del self.screenTk
+        # self.screenTk.quit()
+        screenTk = None
+        self.__yertle = None
         turtle.bye()
+        # del self
 
         # turtle.done()
 

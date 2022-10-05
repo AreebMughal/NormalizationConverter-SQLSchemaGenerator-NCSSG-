@@ -159,10 +159,10 @@ def get_relationalMapping(nf_type, api_data):
             relation_names = sql_form.get_relation_names()
             fk = sql_form.get_all_foreign_keys_list()
 
-            print('Minimal Cover:\n', minimal_cover_result)
-            print('All Relation:\n', all_relations)
-            print('All Relation Names:\n', relation_names)
-            print('Foreign Key:\n', fk)
+            # print('Minimal Cover:\n', minimal_cover_result)
+            # print('All Relation:\n', all_relations)
+            # print('All Relation Names:\n', relation_names)
+            # print('Foreign Key:\n', fk)
             if nf_type == '2NF':
                 rm = RelationalMapping2nf(all_relations, relation_names, fk, minimal_cover_result)
             elif nf_type == '3NF':
@@ -174,7 +174,7 @@ def get_relationalMapping(nf_type, api_data):
     except Exception as e:
         # result = '0'
         my_exception(e)
-    del rm
+    # del rm
     if result == '0':
         return result
     else:
