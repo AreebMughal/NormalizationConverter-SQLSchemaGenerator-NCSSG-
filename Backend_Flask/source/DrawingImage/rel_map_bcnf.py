@@ -10,7 +10,7 @@ font_size = 14
 
 class RelationalMappingBcnf:
     def __init__(self, relation, relation_name, fks):
-        print("contractor", fks)
+        # print("contractor", fks)
         if exists('./BCNF.png'):
             os.remove("BCNF.png")
         if exists('./bcnf.eps'):
@@ -147,8 +147,8 @@ class RelationalMappingBcnf:
 
     def draw_forgin_key(self, fks, attibutes, relnames):
         fk_relations = []
-        print("Forgin keys", fks)
-        print("relnames", relnames)
+        # print("Forgin keys", fks)
+        # print("relnames", relnames)
         for fk in fks:
             fk_rel = []
             for name in relnames:
@@ -174,7 +174,7 @@ class RelationalMappingBcnf:
         self.__yertle.right(90)
         cololist = ["blue", "indigo", "violet", "orange", "green", "red", "orange"]
         color_counter = 0
-        print("FKs ", fk_relations)
+        # print("FKs ", fk_relations)
         for rel in fk_relations:
             goto_relation = rel[0]
             from_relation = rel[2]
@@ -189,7 +189,7 @@ class RelationalMappingBcnf:
             #     goto_relation = temp
             #     print("gsfdf")
             # print("from ", (from_relation[0]))
-            print("attibutes", attibutes)
+            # print("attibutes", attibutes)
             from_rel = from_relation[0] if type(from_relation) is list else from_relation
 
             a = ((keyss.index(from_rel) + 1) * 100)
@@ -328,7 +328,7 @@ class RelationalMappingBcnf:
         attributes = {}
         rels = self.__relations
         names = rels_names
-        print(names)
+        # print(names)
         name_counter = 0
         for one in rels:
             attributes[names[name_counter][1]] = []

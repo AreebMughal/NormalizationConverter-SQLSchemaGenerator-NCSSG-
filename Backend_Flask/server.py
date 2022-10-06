@@ -336,5 +336,10 @@ def image():
     return send_file('./1NF.png', mimetype='image')
 
 
+from subprocess import call
+
 if __name__ == '__main__':
     app.run(debug=True)
+
+    # print(os.getcwd() + '\\' + 'server.py')
+    # call(["python", os.getcwd() + '\\' + 'server.py'])

@@ -119,6 +119,15 @@ class FdsMiner:
 
         n = NormalizedRelation(fds=all_fds)
         fds = n.get_minimal_cover_result()
+        print()
+        count = 1
+        for fd in fds:
+            # print(fd)
+            if len(fd) > 0:
+                # print(str(count) + ') {' + fd[0] + '} -> {' + fd[1] + '}')
+                print(count, ')', set(fd[0]), '->', set(fd[1]))
+                count += 1
+        print('After Minimal Cover Filter\nNo. of Functional Dependencies:', count)
         # print(n.find_candidate_key(attributes_set=set(attribute_names)))
         if self.algo_type == 'tane':
             fds = self.revert_fields_name(fds[:])
@@ -164,18 +173,3 @@ class FdsMiner:
         self.minimal_cover_filter()
         return {'data': self.data_dict, 'keys': list(self.frequent_keys)}
 
-# fds = [
-#            [['ssn'], ['Address1']],
-#            [['ssn'], ['Name']],
-#            [['ssn'], ['Email1']],
-#            [['Name', 'ssn'], ['Email1']],
-#            [['ssn'], ['pname']],
-#            [['ssn'], ['dname']],
-#            [['ssn'], ['dnum']],
-#            [['ssn'], ['Address2']],
-#            [['ssn'], ['DId']],
-#            [['ssn'], ['Email2']],
-#            [['ssn'], ['ploc']],
-#            [['Name'], ['ssn']],
-#            [['ssn'], ['pnum']]
-#        ]

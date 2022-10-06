@@ -128,6 +128,7 @@ def find_fdtool(file_path):
     Counter = [0, 0];
     FD_Store = [];
     E_Set = [];
+    count = 1
 
     while True:
 
@@ -168,15 +169,17 @@ def find_fdtool(file_path):
             # Create string for functional dependency
             String = "{" + ", ".join(FunctionalDependency[0]) + "} -> {" + str(FunctionalDependency[1]) + "}"
             # Print FD String
-            print(String);
+            print(str(count) + ') ' + String);
             sys.stdout.flush();
             # Write string to TXT file
             file.write(String + "\n")
-
+            count += 1
         # Break while loop if cardinality of C_k is 0
         if not len(C_k) > 0: break;
         # Break while loop if k-level reaches level set in config
         if k is not None and MAX_K_LEVEL == k: break;
+
+    # print('Total No. of Possible Functional Dependencies:', count)
 
     # Print equivalences
     file.write("\n" + "Equivalences: " + "\n")
