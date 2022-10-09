@@ -41,14 +41,8 @@ class RelationalMapping:
 
         turtle.getcanvas().postscript(file="rm.eps")
         self.get_image()
-
         self.screenTk.destroy()
-        # self.screenTk.quit()
-        # del self.screenTk
-        # screenTk = None
-        # self.__yertle = None
         turtle.bye()
-        # del self
 
         # turtle.done()
 
@@ -270,6 +264,11 @@ class RelationalMapping:
         pic.save("RM.png")
 
     def draw_arrows(self, attributes, box_size, keys_level_dic, keyss, single):
+        print("keysss\n\n\n\n",keyss)
+        print("keys level dic \n\n\n",keys_level_dic)
+        print("SIngle\n\n\n\n" , single)
+        print("attributes\n\n\n\n" , attributes)
+
         for key in keyss:
             level = keys_level_dic[key][0]
             self.yertle.color(keys_level_dic[key][1])
@@ -292,18 +291,35 @@ class RelationalMapping:
                 self.yertle.right(135)
                 self.yertle.penup()
                 self.yertle.back(distnce)
-            a = ((attributes.index(key)) * box_size) + (level * 7)
-            # print(attributes.index(key))
+
+            l = list(keyss)
+            dependentent = single[l[0]]
+            print("dependent \n\n\n\n",dependentent)
+            for each in dependentent:
+                l.append(each)
+            print("L ki value", l)
+            small = attributes.index(l[0])
+            big = attributes.index(l[0])
+
+            i = 0
+            while i < len(l):
+                if (small > attributes.index(l[i])):
+                    small = attributes.index(l[i])
+                elif (big < attributes.index(l[i])):
+                    big = attributes.index(l[i])
+
+                i = i + 1
+
+            a = ((small + 1) * box_size) - box_size + (level * 7)
             self.yertle.penup()
             self.yertle.forward(a)
             self.yertle.left(90)
             self.yertle.forward(50 + (level * 10))
             self.yertle.right(90)
-            listofsingle = single[key]
-            agoto = listofsingle[len(listofsingle) - 1]
+            # listofsingle = single[key]
+            # agoto = listofsingle[len(listofsingle) - 1]
 
-            b = ((attributes.index(agoto) - attributes.index(key)) * box_size)
-
+            b = (((big + 1) * box_size) - box_size)
             self.yertle.pendown()
             self.yertle.forward(b)
             self.yertle.back(b)
@@ -312,6 +328,7 @@ class RelationalMapping:
             self.yertle.back(50 + (level * 10))
             self.yertle.right(90)
             self.yertle.back(a)
+
 
     def simple_line(self, attributes, box_size, keys_level_dic, level, single):
         color_counter = 0

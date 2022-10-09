@@ -42,12 +42,7 @@ class RelationalMapping2nf:
         self.get_image()
 
         screenTk.destroy()
-        # screenTk.quit()
-        # del screenTk
-        # screenTk = None
-        # self.__yertle = None
         turtle.bye()
-        # del self
 
     def get_image(self):
         TARGET_BOUNDS = (1600, 800)
@@ -298,7 +293,7 @@ class RelationalMapping2nf:
         self.__yertle.right(90)
         self.__yertle.back(a)
 
-    def oneRelationDrawing(self, relation, name, name_counter, att_List):
+    def oneRelationDrawing(self, relation, name, name_counter, att_List,name_print):
         box_size = 90
         rel = relation
         attibutes = []
@@ -352,7 +347,8 @@ class RelationalMapping2nf:
         self.__yertle.forward(120)
 
         self.__yertle.pendown()
-        self.__yertle.write(name, font=("Verdana", 16, "bold",))
+
+        self.__yertle.write(name_print, font=("Verdana", 16, "bold",))
         self.__yertle.penup()
         self.__yertle.back(120)
         self.__yertle.pendown()
@@ -440,7 +436,7 @@ class RelationalMapping2nf:
         name_counter = 0
         for one in rels:
             attributes[names[name_counter][1]] = []
-            self.oneRelationDrawing(rels[one], names[name_counter][1], name_counter, attributes)
+            self.oneRelationDrawing(rels[one], names[name_counter][1], name_counter, attributes,names[name_counter][0])
             name_counter += 1
             self.__yertle.penup()
 

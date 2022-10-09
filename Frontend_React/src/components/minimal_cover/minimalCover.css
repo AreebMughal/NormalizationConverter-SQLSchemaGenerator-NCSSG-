@@ -48,8 +48,9 @@
 
 .vertical-line {
     position: relative;
-    min-height: 300px;
-    max-height: 740px;
+    /*min-height: 300px;*/
+    height: auto;
+    /*max-height: 740px;*/
     /*top: 50px;*/
     width: 2px;
     padding-bottom: 40px;

@@ -10,7 +10,7 @@ font_size = 14
 
 class RelationalMappingBcnf:
     def __init__(self, relation, relation_name, fks):
-        print("contractor\n", fks, '\n')
+        print("contractor\n\n\n\n\n\n\n\n\n\n", fks)
         if exists('./BCNF.png'):
             os.remove("BCNF.png")
         if exists('./bcnf.eps'):
@@ -35,14 +35,9 @@ class RelationalMappingBcnf:
         self.drawRelations(self.__relations, names, self.__fk)
         turtle.getcanvas().postscript(file="bcnf.eps")
         self.get_image()
-
         screenTk.destroy()
-        # screenTk.quit()
-        # del screenTk
-        # screenTk = None
-        # self.__yertle = None
+
         turtle.bye()
-        # del self
 
     def get_image(self):
         TARGET_BOUNDS = (1600, 800)
@@ -147,8 +142,8 @@ class RelationalMappingBcnf:
 
     def draw_forgin_key(self, fks, attibutes, relnames):
         fk_relations = []
-        # print("Forgin keys", fks)
-        # print("relnames", relnames)
+        print("Forgin keys", fks)
+        print("relnames", relnames)
         for fk in fks:
             fk_rel = []
             for name in relnames:
@@ -159,7 +154,7 @@ class RelationalMappingBcnf:
 
                 for i in rel:
                     fk_rel.append(rel[i])
-                fk_relations.append(fk_rel)
+            fk_relations.append(fk_rel)
 
         keyss = list(attibutes.keys())
         self.__yertle.penup()
@@ -174,8 +169,10 @@ class RelationalMappingBcnf:
         self.__yertle.right(90)
         cololist = ["blue", "indigo", "violet", "orange", "green", "red", "orange"]
         color_counter = 0
-        # print("FKs ", fk_relations)
+        print("FKs ", fk_relations)
+        cc=0
         for rel in fk_relations:
+            print("dadadasdasdsadasd",cc,rel)
             goto_relation = rel[0]
             from_relation = rel[2]
             forgin_keys = rel[1]
@@ -191,7 +188,7 @@ class RelationalMappingBcnf:
             # print("from ", (from_relation[0]))
             # print("attibutes", attibutes)
             from_rel = from_relation[0] if type(from_relation) is list else from_relation
-            print("\n\n\n\n keyss",keyss)
+
             a = ((keyss.index(from_rel) + 1) * 100)
             self.__yertle.forward(a)
             right_dist1 = ((attibutes[from_rel].index(forgin_keys[0]) + 1) * 90) - 25
@@ -232,7 +229,7 @@ class RelationalMappingBcnf:
             color_counter += 1
             if (color_counter > 6):
                 color_counter = 0
-
+            cc=cc+1
     def draw_arrows(self, attributes, box_size, dependentent, pk):
         for element in dependentent:
             distnce = ((attributes.index(element) + 1) * box_size) - (box_size) + 20
@@ -293,7 +290,8 @@ class RelationalMappingBcnf:
         self.__yertle.forward(250)
 
         self.__yertle.pendown()
-        self.__yertle.write(name, font=("Verdana", 16, "bold",))
+
+        self.__yertle.write(name_print, font=("Verdana", 16, "bold",))
         self.__yertle.penup()
         self.__yertle.back(250)
         self.__yertle.pendown()
@@ -328,7 +326,7 @@ class RelationalMappingBcnf:
         attributes = {}
         rels = self.__relations
         names = rels_names
-        # print(names)
+        print(names)
         name_counter = 0
         for one in rels:
             attributes[names[name_counter][1]] = []

@@ -10,17 +10,9 @@ const NfsNetworkCall = (props) => {
     const inputBoxes = my_data.getRawState().inputBoxes;
     const relationName = inputBoxes_data.getRawState().relationName;
 
-    const [generalLoader, setGeneralLoader] = useState(false);
+    const [generalLoader, setGeneralLoader] = useState(true);
     const [visibility, setVisibility] = useState(false);
     const [error, setError] = useState(null);
-    const [isRedirect, setIsRedirect] = useState(false);
-
-
-    useEffect(() => {
-        const isEmptyCells = (inputBoxes.length === 1 && inputBoxes[0].value.trim() === '');
-        const isEmptyRelationName = relationName.trim().length === 0;
-        setIsRedirect(isEmptyRelationName && isEmptyCells);
-    }, []);
 
     function handleError(error) {
         console.log(error);
@@ -44,10 +36,6 @@ const NfsNetworkCall = (props) => {
 
     return (
         <>
-
-            {/*{isRedirect &&*/}
-            {/*    <Navigate replace to={'/NC-SSG/DrawingTool'} />*/}
-            {/*}*/}
             {generalLoader && <GeneralLoader loading={generalLoader} message={<span>Loading...</span>}/>}
             {visibility &&
                 <ErrorModal

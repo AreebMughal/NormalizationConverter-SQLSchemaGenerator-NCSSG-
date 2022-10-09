@@ -12,6 +12,7 @@ import CollapseDiv from "../div_collapse/CollapseDiv";
 import VerticalHorizontalLine from "./VerticalHorizontalLine";
 import {isDataEmpty} from "../../assets/js/emptyDataCheck";
 import {Navigate} from "react-router-dom";
+import GeneralLoader from "../full_page_loader/GeneralLoader";
 
 const MinimalCover = () => {
     const inputBoxes = my_data.getRawState().inputBoxes;
@@ -20,12 +21,8 @@ const MinimalCover = () => {
 
     const [visibility, setVisibility] = useState(false);
     const [error, setError] = useState(null);
+    const [generalLoader, setGeneralLoader] = useState(true);
 
-
-    // const max = document.getElementById('vertical-line').offsetHeight - height + 'px'
-    // console.log(document.getElementById('vertical-line').offsetHeight, height)
-    // console.log(max)
-    // document.getElementById('vertical-line').style.maxHeight = max;
     function handleError(error) {
         console.log(error);
         setError(error.toString() + "\nTry Restarting Server.");
@@ -37,7 +34,9 @@ const MinimalCover = () => {
             .then(res => {
                 console.log('result', res.data);
                 setData(res.data['result']);
+                setGeneralLoader(false);
             }).catch(error => {
+                setGeneralLoader(false);
                 handleError(error);
             });
     }
@@ -70,6 +69,8 @@ const MinimalCover = () => {
     console.log(Object.keys(data).length)
     return (
         <React.Fragment>
+            {generalLoader && <GeneralLoader loading={generalLoader} message={<span>Loading...</span>}/>}
+
             {isDataEmpty(inputBoxes, relationName) ?
                 <Navigate replace to={'/NC-SSG/DrawingTool'}/>
                 :

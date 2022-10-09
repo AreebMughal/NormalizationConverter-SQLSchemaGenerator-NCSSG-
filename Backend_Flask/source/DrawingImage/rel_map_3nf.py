@@ -34,14 +34,8 @@ class RelationalMapping3nf:
         self.drawRelations(self.__relations, names, self.__fk)
         turtle.getcanvas().postscript(file="3nf.eps")
         self.get_image()
-
         screenTk.destroy()
-        # screenTk.quit()
-        # del screenTk
-        # screenTk = None
-        # self.__yertle = None
         turtle.bye()
-        # del self
 
     def get_image(self):
         TARGET_BOUNDS = (1600, 800)
@@ -313,7 +307,7 @@ class RelationalMapping3nf:
         self.__yertle.forward(250)
 
         self.__yertle.pendown()
-        self.__yertle.write(name, font=("Verdana", 16, "bold",))
+        self.__yertle.write(name_print, font=("Verdana", 16, "bold",))
         self.__yertle.penup()
         self.__yertle.back(250)
         self.__yertle.pendown()
