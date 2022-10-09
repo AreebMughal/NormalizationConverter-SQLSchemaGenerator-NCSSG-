@@ -10,7 +10,7 @@ font_size = 14
 
 class RelationalMappingBcnf:
     def __init__(self, relation, relation_name, fks):
-        # print("contractor", fks)
+        print("contractor\n", fks, '\n')
         if exists('./BCNF.png'):
             os.remove("BCNF.png")
         if exists('./bcnf.eps'):
@@ -38,9 +38,9 @@ class RelationalMappingBcnf:
 
         screenTk.destroy()
         # screenTk.quit()
-        del screenTk
-        screenTk = None
-        self.__yertle = None
+        # del screenTk
+        # screenTk = None
+        # self.__yertle = None
         turtle.bye()
         # del self
 
@@ -191,7 +191,7 @@ class RelationalMappingBcnf:
             # print("from ", (from_relation[0]))
             # print("attibutes", attibutes)
             from_rel = from_relation[0] if type(from_relation) is list else from_relation
-
+            print("\n\n\n\n keyss",keyss)
             a = ((keyss.index(from_rel) + 1) * 100)
             self.__yertle.forward(a)
             right_dist1 = ((attibutes[from_rel].index(forgin_keys[0]) + 1) * 90) - 25

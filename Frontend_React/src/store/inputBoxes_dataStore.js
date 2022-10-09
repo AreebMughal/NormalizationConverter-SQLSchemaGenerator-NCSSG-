@@ -26,7 +26,7 @@ export const get_inputBoxes = () => {
         const newInputBox = {...inputBoxes[index]}
         return input.dependency.map((dep, i) => {
                 const list = dep.map(id => inputBoxes.filter(inputBox => id === inputBox.id)[0].value);
-                console.log(list.toString(), '-> ', input.value);
+                // console.log(list.toString(), '-> ', input.value);
                 newInputBox.dependency = [...newInputBox.dependency];
                 newInputBox.dependency[i] = list;
                 return newInputBox;

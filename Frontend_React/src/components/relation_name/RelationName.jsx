@@ -1,4 +1,3 @@
-
 import './relationName.css';
 import {useEffect, useState} from "react";
 
@@ -12,8 +11,11 @@ const RelationName = (props) => {
     }, [props.name]);
 
     const relationNameChangeHandler = (event) => {
-        setRelName(event.target.value)
-        props.setRelationName(event.target.value)
+        const specialChars = /[`!@#$%^&*()+\-=\[\]{};':"\\|,.<>\/?~]/;
+        if (!specialChars.test(event.target.value)) {
+            setRelName(event.target.value)
+            props.setRelationName(event.target.value)
+        }
     }
 
     const relationKeyDownHandler = (event) => {
@@ -42,6 +44,7 @@ const RelationName = (props) => {
                 onKeyDown={relationKeyDownHandler}
                 className="ms-1"
                 value={props.name}
+                maxLength={22}
                 onFocus={relationNameFocusHandler}
             />
         </div>

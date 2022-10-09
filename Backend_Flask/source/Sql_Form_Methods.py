@@ -92,32 +92,32 @@ class SqlFormAttributeConstraints:
                                 self.append_foreign_key(foreign_keys, key, [attr])
                         elif {attr}.issubset(rel[0]):
                             self.append_foreign_key(foreign_keys, key, [attr])
+        if 'primeDependency' not in current:
+            for element in foreign_keys:
+                print('->', element['relationName'])
+                relations = self.get_foreign_relation_of(element['relationName'])
+                print('=>', relations)
+                if 'fully' in relations and len(primary_keys) == 1:
+                    element['relationName'] = 'Fully_dependent'
+                elif 'partial' in relations:
+                    index = relations.index('partial')
+                    element['relationName'] = element['relationName'][index]
+                elif 'fully' in relations:
+                    element['relationName'] = 'Fully_dependent'
+                elif 'primedependency' in relations:
+                    index = relations.index('primedependency')
+                    element['relationName'] = element['relationName'][index]
+                elif 'transitive' in relations:
+                    index = relations.index('transitive')
+                    element['relationName'] = element['relationName'][index]
+                elif 'multi' in relations:
+                    index = relations.index('multi')
+                    element['relationName'] = element['relationName'][index]
 
-        for element in foreign_keys:
-            print('->', element['relationName'])
-            relations = self.get_foreign_relation_of(element['relationName'])
-            print('=>', relations)
-            if 'fully' in relations and len(primary_keys) == 1:
-                element['relationName'] = 'Fully_dependent'
-            elif 'partial' in relations:
-                index = relations.index('partial')
-                element['relationName'] = element['relationName'][index]
-            elif 'fully' in relations:
-                element['relationName'] = 'Fully_dependent'
-            elif 'primedependency' in relations:
-                index = relations.index('primedependency')
-                element['relationName'] = element['relationName'][index]
-            elif 'transitive' in relations:
-                index = relations.index('transitive')
-                element['relationName'] = element['relationName'][index]
-            elif 'multi' in relations:
-                index = relations.index('multi')
-                element['relationName'] = element['relationName'][index]
-
-            # element['attribute'] = list(element['attribute'])
-            # print('.... ', element['attribute'])
-        # print('-->', foreign_keys)
-            print('==', element['relationName'])
+                # element['attribute'] = list(element['attribute'])
+                # print('.... ', element['attribute'])
+            # print('-->', foreign_keys)
+                print('==', element['relationName'])
         return foreign_keys
 
     def append_foreign_key(self, foreign_keys, key, relation_lhs):

@@ -4,13 +4,13 @@ SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION; 
 SET time_zone = "+00:00"; 
 
-CREATE DATABASE `NCSSG_dumped_db_up36`;
+CREATE DATABASE `NCSSG_dumped_db_ao17`;
 
 -- 
 -- Table structure for table `dataset` 
 -- 
 
-CREATE TABLE `NCSSG_dumped_db_up36`.`dataset` ( 
+CREATE TABLE `NCSSG_dumped_db_ao17`.`dataset` ( 
 	`ssn` int(11) NOT NULL, 
  	`pnum` int(11) NOT NULL, 
  	`Name` int(11) NOT NULL, 
@@ -28,10 +28,10 @@ CREATE TABLE `NCSSG_dumped_db_up36`.`dataset` (
 -- --------------------------------------------------------
 
 -- 
--- Table structure for table `dat_name` 
+-- Table structure for table `dataset` 
 -- 
 
-CREATE TABLE `NCSSG_dumped_db_up36`.`dat_name` ( 
+CREATE TABLE `NCSSG_dumped_db_ao17`.`dataset` ( 
 	`Name` int(11) NOT NULL, 
  	`ssn` int(11) NOT NULL 
  ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -45,14 +45,14 @@ CREATE TABLE `NCSSG_dumped_db_up36`.`dat_name` (
 -- 
 -- Indexes for table `dataset` 
 -- 
-ALTER TABLE `NCSSG_dumped_db_up36`.`dataset`
+ALTER TABLE `NCSSG_dumped_db_ao17`.`dataset`
 	ADD PRIMARY KEY (`ssn`),
 	ADD UNIQUE KEY `Name` (`Name`);
 
 -- 
--- Indexes for table `dat_name` 
+-- Indexes for table `dataset` 
 -- 
-ALTER TABLE `NCSSG_dumped_db_up36`.`dat_name`
+ALTER TABLE `NCSSG_dumped_db_ao17`.`dataset`
 	ADD PRIMARY KEY (`Name`),
 	ADD UNIQUE KEY `ssn` (`ssn`);
 -- 
@@ -63,16 +63,16 @@ ALTER TABLE `NCSSG_dumped_db_up36`.`dat_name`
 -- 
 -- Constraint for table `dataset` 
 -- 
-ALTER TABLE `NCSSG_dumped_db_up36`.`dataset`
+ALTER TABLE `NCSSG_dumped_db_ao17`.`dataset`
 	ADD CONSTRAINT `dataset_ibfk_1` 
-	FOREIGN KEY (`ssn`) REFERENCES `dat_name` (`ssn`) 
+	FOREIGN KEY (`ssn`) REFERENCES `dataset` (`ssn`) 
 	ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- 
--- Constraint for table `dat_name` 
+-- Constraint for table `dataset` 
 -- 
-ALTER TABLE `NCSSG_dumped_db_up36`.`dat_name`
-	ADD CONSTRAINT `dat_name_ibfk_1` 
+ALTER TABLE `NCSSG_dumped_db_ao17`.`dataset`
+	ADD CONSTRAINT `dataset_ibfk_1` 
 	FOREIGN KEY (`Name`) REFERENCES `dataset` (`Name`) 
 	ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;

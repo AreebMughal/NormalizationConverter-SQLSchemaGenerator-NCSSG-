@@ -43,10 +43,10 @@ class RelationalMapping:
         self.get_image()
 
         self.screenTk.destroy()
-        del self.screenTk
         # self.screenTk.quit()
-        screenTk = None
-        self.__yertle = None
+        # del self.screenTk
+        # screenTk = None
+        # self.__yertle = None
         turtle.bye()
         # del self
 

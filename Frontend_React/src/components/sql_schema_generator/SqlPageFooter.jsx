@@ -7,8 +7,6 @@ const SqlPageFooter = ({data}) => {
     const setShow = () => setShowModal(false)
 
     const sqlSchemaClickHandler = () => {
-
-        console.log('first')
         for (let i = 0; i < data.length; i++) {
             const rel = data[i]
             if (rel.relationName.trim().length === 0) {
@@ -21,10 +19,8 @@ const SqlPageFooter = ({data}) => {
                     if (attr.value.trim().length === 0) {
                         setShowModal(true);
                         setErrorMsg('Attribute Name Missing')
-
                     }
                     console.log('in map - aff')
-
                     return true;
                 })
             }

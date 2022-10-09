@@ -32,8 +32,8 @@ const TableCell = (props) => {
 
     const removeCellBorder = () => {
         // if (props.list.length === 0)
-            props.inputBoxes.map((input, i) =>
-                document.getElementById(i.toString()).classList.remove('my-border-danger'));
+        props.inputBoxes.map((input, i) =>
+            document.getElementById(i.toString()).classList.remove('my-border-danger'));
     }
     const getClassName = (inputBox) => {
         // let classname = 'inputBox red-border alert-danger mt-3 '
@@ -48,10 +48,13 @@ const TableCell = (props) => {
     }
 
     const cellValueChangeHandler = (event) => {
+        const specialChars = /[`!@#$%^&*()+\-=\[\]{};':"\\|,.<>\/?~]/;
         const target = event.target;
-        setValue(target.value)
-        setCellBorder(target, target.id)
-        props.updateCellValue(target.id, target.value)
+        if (!specialChars.test(target.value)) {
+            setValue(target.value)
+            setCellBorder(target, target.id)
+            props.updateCellValue(target.id, target.value)
+        }
     }
 
     const setCellWidth = (value) => {
@@ -63,7 +66,7 @@ const TableCell = (props) => {
     }
     const setCellBorder = (target, id) => {
         const res = props.inputBoxes.map((input, index) =>
-            index !== parseInt(id) && input.value.trim().length !==0 && input.value === target.value.trim()
+            index !== parseInt(id) && input.value.trim().length !== 0 && input.value === target.value.trim()
         );
         if (res.includes(true)) {
             target.classList.add('my-border-danger');

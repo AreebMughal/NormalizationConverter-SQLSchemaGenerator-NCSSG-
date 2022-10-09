@@ -76,7 +76,7 @@ const AttributeRow = (props) => {
             dataType === "DOUBLE"
         ) {
             if (checkFLOAT === true) {
-                if (inputField.split(",").length-1 == 1) {
+                if (inputField.split(",").length-1 === 1) {
                     console.log("TRUE")
                     event.target.classList.remove("alert_border");
                     props.onChangeHandler("length", event.target.value, event.target.id);

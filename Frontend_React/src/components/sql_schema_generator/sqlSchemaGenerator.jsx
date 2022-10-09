@@ -8,6 +8,8 @@ import SqlForm from "./SqlForm";
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import Form from 'react-bootstrap/Form';
 import ErrorModal from "../modal/ErrorModal";
+import {isDataEmpty} from "../../assets/js/emptyDataCheck";
+import {Navigate} from "react-router-dom";
 
 const SqlSchemaGenerator = () => {
     const inputBoxes = my_data.getRawState().inputBoxes;
@@ -77,15 +79,18 @@ const SqlSchemaGenerator = () => {
     }
 
     const relationChangeHandler = (event, index) => {
-        const newRelationList = [...relationList]
-        newRelationList[index] = {...relationList[index]}
-        newRelationList[index].relationName[0] = event.target.value
-        setRelationList(newRelationList)
-        event.target.classList.remove('alert_border')
+        const specialChars = /[`!@#$%^&*()+\-=\[\]{};':"\\|,.<>\/?~]/;
+        if (!specialChars.test(event.target.value)) {
+            const newRelationList = [...relationList]
+            newRelationList[index] = {...relationList[index]}
+            newRelationList[index].relationName[0] = event.target.value
+            setRelationList(newRelationList)
+            event.target.classList.remove('alert_border')
+        }
     }
 
     const relationKeyDownHandler = (event) => {
-        if (event.key === ' ') {
+        if (event.key === ' ' || event.target.value.length >= 30) {
             event.preventDefault()
         }
     }
@@ -110,6 +115,7 @@ const SqlSchemaGenerator = () => {
                             className='input_rel_name floating-fields' type="text" title="Enter Relation Name"
                             placeholder="name@example.com"
                             onChange={(e) => relationChangeHandler(e, index)}
+                            aria-valuemax={10}
                             onKeyDown={relationKeyDownHandler}
                             value={obj.relationName[0]}
                         />
@@ -129,35 +135,41 @@ const SqlSchemaGenerator = () => {
     console.log(typeof relationList, relationList.length)
     return (
         <>
-            {visibility &&
-            <ErrorModal
-                show={visibility}
-                message={error}
-                setShow={() => setVisibility(false)}
-            />
-            }
-            <div className='mt-4'>
-                <SqlPageHeader
-                    onChange={normalFormChangeHandler}
-                />
-                <SqlForm data={relationList}>
-                    {isDataValid() &&
-                    <>
-                        {relationList.map((obj, index) => {
-                            return renderMainContent(obj, index);
-                        })}
-                        <div className='float-end m-3'>
-                            <input type='submit' className='btn btn-primary' value='Generate SQL Schema'/>
-                        </div>
-                    </>
-                        // : (
-                        // <div>
-                        //     <h4>No Relation Found</h4>
-                        // </div>
+            {isDataEmpty(inputBoxes, relationName) ?
+                <Navigate replace to={'/NC-SSG/DrawingTool'}/>
+                :
+                <>
+                    {visibility &&
+                    <ErrorModal
+                        show={visibility}
+                        message={error}
+                        setShow={() => setVisibility(false)}
+                    />
                     }
+                    <div className='mt-4'>
+                        <SqlPageHeader
+                            onChange={normalFormChangeHandler}
+                        />
+                        <SqlForm data={relationList}>
+                            {isDataValid() &&
+                            <>
+                                {relationList.map((obj, index) => {
+                                    return renderMainContent(obj, index);
+                                })}
+                                <div className='float-end m-3'>
+                                    <input type='submit' className='btn btn-primary' value='Generate SQL Schema'/>
+                                </div>
+                            </>
+                                // : (
+                                // <div>
+                                //     <h4>No Relation Found</h4>
+                                // </div>
+                            }
 
-                </SqlForm>
-            </div>
+                        </SqlForm>
+                    </div>
+                </>
+            }
         </>
     );
 }

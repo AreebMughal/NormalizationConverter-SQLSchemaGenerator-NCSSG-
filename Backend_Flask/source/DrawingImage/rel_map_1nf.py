@@ -42,9 +42,9 @@ class RelationalMapping1nf:
 
         screenTk.destroy()
         # screenTk.quit()
-        del screenTk
-        screenTk = None
-        self.__yertle = None
+        # del screenTk
+        # screenTk = None
+        # self.__yertle = None
         turtle.bye()
         # del self
         # self.upload()

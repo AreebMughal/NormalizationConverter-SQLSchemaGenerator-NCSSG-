@@ -58,6 +58,26 @@ const SqlForm = (props) => {
                 return false;
             }
         }
+        const uniqueNames = new Set(relationNames.map(relname => relname.value.toLowerCase()));
+        console.log('Uniques Names',uniqueNames);
+        const repeatedElements = relationNames.map(relName => {
+            if (uniqueNames.has(relName.value.toLowerCase())) {
+                console.log('if')
+                uniqueNames.delete(relName.value.toLowerCase());
+                return ''
+            }
+            else {
+                console.log(relName.value)
+                return relName;
+            }
+        }).filter(ele => ele !== '');
+        console.log(repeatedElements)
+        if (repeatedElements.length > 0) {
+            const msg = 'Same name cannot be used in other relation name:\n' +
+                '-> "' + repeatedElements[0].value + '"';
+            openAlertPopup(repeatedElements[0], msg);
+            return false;
+        }
         return true;
     }
 
