@@ -21,13 +21,13 @@ const DefaultOptions = (props) => {
                 <option value="NONE">
                     None
                 </option>
-                <option value="USER_DEFINED">
+                <option value="USER_DEFINED" disabled={props.isPrimary}>
                     As defined:
                 </option>
-                <option value="NULL">
+                <option value="NULL" disabled={props.isPrimary}>
                     NULL
                 </option>
-                <option value="CURRENT_TIMESTAMP">
+                <option value="CURRENT_TIMESTAMP" >
                     CURRENT_TIMESTAMP
                 </option>
             </select>

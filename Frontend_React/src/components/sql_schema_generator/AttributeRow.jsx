@@ -24,11 +24,12 @@ const AttributeRow = (props) => {
         setIndex(props.attribute.index)
         ref.current.checked = props.attribute['null'];
         ref2.current.checked = props.attribute['autoIncrement'];
-
     }, [props.attribute])
+
     let ref = React.createRef();
     const ref2 = React.createRef();
-
+    const validAutoIncDataTypes = ['INT', 'BIGINT', 'SMALLINT'];
+    const canAutoIncrement = !validAutoIncDataTypes.includes(dataType);
     // const attributeNameChangeHandler = event => {
     //     setAttributeName(event.target.value)
     //     props.onChangeHandler('value', event.target.value, event.target.id)
@@ -60,33 +61,33 @@ const AttributeRow = (props) => {
         const checkFLOAT = /^[0-9,]+$/.test(inputField);
         if (
             dataType === "INT" ||
-            dataType ==="SMALLINT" ||
+            dataType === "SMALLINT" ||
             dataType === "BIGINT"
         ) {
-            if (checkINT === true) {
+            if (checkINT === true || inputField.length === 0) {
                 event.target.classList.remove("alert_border");
                 props.onChangeHandler("length", event.target.value, event.target.id);
             } else {
                 event.preventDefault();
             }
-        }
-        if (
+        } else if (
             dataType === "FLOAT" ||
             dataType === "DECIMAL" ||
             dataType === "DOUBLE"
         ) {
             if (checkFLOAT === true) {
-                if (inputField.split(",").length-1 === 1) {
+                if (inputField.split(",").length - 1 === 1) {
                     console.log("TRUE")
                     event.target.classList.remove("alert_border");
                     props.onChangeHandler("length", event.target.value, event.target.id);
-                }else {
+                } else {
                     event.preventDefault();
                 }
             } else {
                 event.preventDefault();
-                console.log("FLASE")
             }
+        } else {
+            props.onChangeHandler("length", event.target.value, event.target.id);
         }
         console.log(checkFLOAT);
 
@@ -117,8 +118,8 @@ const AttributeRow = (props) => {
             <th scope="row" width='2%'>{props.index + 1}.</th>
             <td width='10%' className='font-weight-bold'>
                 <input type="text" className='input-box' id={indexes} placeholder='Attribute Name' value={attributeName}
-                       // onChange={attributeNameChangeHandler}
-                    readOnly={true}
+                    // onChange={attributeNameChangeHandler}
+                       readOnly={true}
                 />
             </td>
             <td width='10%'>
@@ -131,12 +132,14 @@ const AttributeRow = (props) => {
             </td>
 
             <td width='10%'>
-                <input type="text" className='input-box input_length ' onChange={lengthChangeHandler} id={indexes} value={length}/>
+                <input type="text" className='input-box input_length' onChange={lengthChangeHandler} id={indexes}
+                       value={length}/>
                 <PopupModal index={indexes} dataType={dataType}/>
 
             </td>
             <td width='10%'>
                 <DefaultOptions
+                    isPrimary={index === 'primary'}
                     selectedDefaultValue={defaultValue}
                     onChangeDefaultValue={defaultValueChangeHandler}
                     id={indexes}
@@ -156,6 +159,7 @@ const AttributeRow = (props) => {
                         className="form-check-input text-center"
                         value={autoIncrement}
                         id={indexes}
+                        disabled={canAutoIncrement}
                         onChange={autoIncrementChangeHandler}
                         ref={ref2}
                     />
@@ -165,10 +169,11 @@ const AttributeRow = (props) => {
                 <div className="text-center">
                     <input
                         type="checkbox"
-                        className="form-check-input text-center"
+                        className="form-check-input text-center null-checkbox"
                         value={nullValue}
                         id={indexes}
                         ref={ref}
+                        disabled={index === 'primary'}
                         onChange={nullValueChangeHandler}
                     />
                 </div>
