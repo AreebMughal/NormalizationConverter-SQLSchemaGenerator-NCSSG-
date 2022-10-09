@@ -6,7 +6,7 @@ class SqlFormAttributeConstraints:
         if nf_result is None:
             nf_result = get_result(object_type=normal_form, input_boxes_dic=data)['result']
         self.nf_result = nf_result
-        print(type(nf_result))
+        # print(type(nf_result))
         self.relation_name = relation_name
         self.relation_names = self.create_relation_names()
         self.all_relations = self.get_all_relations_list()
@@ -27,7 +27,7 @@ class SqlFormAttributeConstraints:
         for rel_name_l in relation_names_list:
             for name_list in rel_name_l:
                 for rel_name in name_list:
-                    print(rel_name, name, rel_name == name)
+                    # print(rel_name, name, rel_name == name)
                     if rel_name == name:
                         count += 1
         return count
@@ -75,6 +75,7 @@ class SqlFormAttributeConstraints:
         foreign_keys = []
         # print(all_relations)
         primary_keys = all_relations['Fully_dependent'][0]
+        print('Current', current)
         # print(current, ':')
         for key, rel in all_relations.items():
             if key != current:
@@ -92,27 +93,27 @@ class SqlFormAttributeConstraints:
                                 self.append_foreign_key(foreign_keys, key, [attr])
                         elif {attr}.issubset(rel[0]):
                             self.append_foreign_key(foreign_keys, key, [attr])
-        if 'primeDependency' not in current:
-            for element in foreign_keys:
-                print('->', element['relationName'])
-                relations = self.get_foreign_relation_of(element['relationName'])
-                print('=>', relations)
-                if 'fully' in relations and len(primary_keys) == 1:
-                    element['relationName'] = 'Fully_dependent'
-                elif 'partial' in relations:
-                    index = relations.index('partial')
-                    element['relationName'] = element['relationName'][index]
-                elif 'fully' in relations:
-                    element['relationName'] = 'Fully_dependent'
-                elif 'primedependency' in relations:
-                    index = relations.index('primedependency')
-                    element['relationName'] = element['relationName'][index]
-                elif 'transitive' in relations:
-                    index = relations.index('transitive')
-                    element['relationName'] = element['relationName'][index]
-                elif 'multi' in relations:
-                    index = relations.index('multi')
-                    element['relationName'] = element['relationName'][index]
+        # if 'primeDependency' not in current:
+        for element in foreign_keys:
+            print('->', element['relationName'])
+            relations = self.get_foreign_relation_of(element['relationName'])
+            print('=>', relations)
+            if 'fully' in relations and len(primary_keys) == 1:
+                element['relationName'] = 'Fully_dependent'
+            elif 'partial' in relations:
+                index = relations.index('partial')
+                element['relationName'] = element['relationName'][index]
+            elif 'fully' in relations:
+                element['relationName'] = 'Fully_dependent'
+            elif 'primedependency' in relations:
+                index = relations.index('primedependency')
+                element['relationName'] = element['relationName'][index]
+            elif 'transitive' in relations:
+                index = relations.index('transitive')
+                element['relationName'] = element['relationName'][index]
+            elif 'multi' in relations:
+                index = relations.index('multi')
+                element['relationName'] = element['relationName'][index]
 
                 # element['attribute'] = list(element['attribute'])
                 # print('.... ', element['attribute'])
@@ -170,7 +171,7 @@ class SqlFormAttributeConstraints:
                         for arr in rel:
                             for attr in arr:
                                 relation["attributes"].append(self.get_attribute_detail(attr, "primary"))
-                    if key.lower() != 'partial':
+                    if key.lower() != 'partial' and key.lower() != 'primedependency':
                         relation['foreignKeys'] = self.get_foreign_keys(rel, all_relations,
                                                                         relation_names[key][index][1])
                     index += 1
@@ -182,11 +183,21 @@ class SqlFormAttributeConstraints:
 
     def get_all_foreign_keys_list(self):
         fk = {}
+        # print('keys', self.nf_result.keys())
+        print('\n' + '-'*20)
+        for key, value in self.nf_result.items():
+            print(key)
+            for val in value:
+                print(val)
+            print()
+        print('\n' + '-' * 20)
+
         for key, value in self.nf_result.items():
             index = 0
             if len(value) > 0:
                 for rel in value:
-                    if key.lower() != 'partial':
+                    # print(key , '->', key.lower() != 'partial' and key.lower() != 'primedependency')
+                    if key.lower() != 'partial' and key.lower() != 'primedependency':
                         name = self.relation_names[key][index][0]
                         fk[name] = self.get_foreign_keys(rel, self.all_relations, self.relation_names[key][index][1])
                         index += 1
