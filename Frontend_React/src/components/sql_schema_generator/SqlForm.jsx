@@ -13,7 +13,7 @@ const SqlForm = (props) => {
     const [path, setPath] = useState(null);
 
     const requiredLength = ['BIT', 'CHAR', 'VARCHAR']
-    const singleLenght = [
+    const singleLength = [
         "SMALLINT",
         "INT",
         "BIGINT",
@@ -24,6 +24,8 @@ const SqlForm = (props) => {
         "BOOLEAN",
         "TIME",
         "YEAR",
+        'CHAR',
+        'VARCHAR'
     ];
     function extractedFormData(formData) {
         let inputFields = {}
@@ -96,7 +98,7 @@ const SqlForm = (props) => {
                     return false;
                 }
             } else {
-                if (singleLenght.includes(inp_dataType)) {
+                if (singleLength.includes(inp_dataType)) {
                     if (
                         !(
                             parseInt(inp_length.value) >
@@ -104,7 +106,6 @@ const SqlForm = (props) => {
                             parseInt(inp_length.value) < parseInt(validRange[inp_dataType][1])
                         )
                     ) {
-                        console.log("phliu");
                         const msg =
                             "Please enter valid range: " +
                             inp_dataType +
@@ -167,7 +168,6 @@ const SqlForm = (props) => {
                     document.body.appendChild(element);
                     element.click();
                 })
-
         }
     }
 

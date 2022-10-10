@@ -5,6 +5,8 @@ from PIL import Image
 from turtle import Turtle, Screen
 from os.path import exists
 
+from source.DrawingImage.test import my_except
+
 font_size = 14
 
 
@@ -20,22 +22,34 @@ class RelationalMapping3nf:
         self.__relations = relation
         self.__relation_names = relation_name
         self.__fk = fks
-        self.preporcessing()
+
+        try:
+            self.preporcessing()
+        except Exception as e:
+            my_except(e)
 
     def preporcessing(self):
+        try:
+            screenTk = self.__screen.getcanvas().winfo_toplevel()
+            screenTk.attributes("-fullscreen", True)
+            turtle.tracer(0)
+            self.__yertle = Turtle(shape="turtle", visible=False)
 
-        screenTk = self.__screen.getcanvas().winfo_toplevel()
-        screenTk.attributes("-fullscreen", True)
-        turtle.tracer(0)
-        self.__yertle = Turtle(shape="turtle", visible=False)
+            names = self.getnames(self.__relation_names)
+            self.set_Tortle()
+            self.drawRelations(self.__relations, names, self.__fk)
+            turtle.getcanvas().postscript(file="3nf.eps")
+            self.get_image()
+            # self.__screen.clear()
+            screenTk.destroy()
+            self.__screen.bye()
 
-        names = self.getnames(self.__relation_names)
-        self.set_Tortle()
-        self.drawRelations(self.__relations, names, self.__fk)
-        turtle.getcanvas().postscript(file="3nf.eps")
-        self.get_image()
-        screenTk.destroy()
-        turtle.bye()
+        except Exception as tcl:
+            print(tcl)
+        # turtle.bye()
+    def m_destroy(self):
+        self.__screen.bye()
+
 
     def get_image(self):
         TARGET_BOUNDS = (1600, 800)
@@ -246,12 +260,12 @@ class RelationalMapping3nf:
             self.__yertle.right(135)
             self.__yertle.penup()
             self.__yertle.back(distnce)
-        print("pk", pk)
-        print("dependent ", dependentent)
+        # print("pk", pk)
+        # print("dependent ", dependentent)
         l = pk
         for each in dependentent:
             l.append(each)
-        print("L ki value", l)
+        # print("L ki value", l)
         small = attributes.index(l[0])
         big = attributes.index(l[0])
         i = 0

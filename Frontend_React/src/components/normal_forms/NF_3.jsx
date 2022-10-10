@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import PrintRelations from "./printRelations";
 import {get3nfReason} from "../../assets/js/nfReasons";
-import DetailReason from "../DetailReason";
+import DetailReason from "../DetailReason/DetailReason";
 import NfsNetworkCall from "./NfsNetworkCall";
 import {isDataEmpty} from "../../assets/js/emptyDataCheck";
 import {Navigate} from "react-router-dom";

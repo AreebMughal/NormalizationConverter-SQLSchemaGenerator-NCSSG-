@@ -1,5 +1,6 @@
 import json
 import sys
+import time
 import traceback
 import os
 
@@ -59,7 +60,7 @@ def primaryKeyCheck(pk, fds):
     # fdPK = []
     countPrimary = 0
     countNonPrimary = 0
-    print("fds  ", fds)
+    # print("fds  ", fds)
     for fd in fds:
         lhs = set(fd[0])
         if lhs.issubset(pk):
@@ -78,14 +79,14 @@ def primaryKeyCheck(pk, fds):
         # fdPK.append("Selected Primary key is not determining any attribute which may lead " \
         #                       "to problem. Please review your primary key selection. ")
         result['countZero'] = fds
-    print(result)
+    # print(result)
     for each in result:
-        print(len(result[each]))
+        # print(len(result[each]))
         for i in range(len(result[each])):
-            print(result[each][i][0])
+            # print(result[each][i][0])
             result[each][i] = [list(result[each][i][0]), list(result[each][i][1])]
 
-    print(result)
+    # print(result)
     return result
 
 
@@ -97,7 +98,7 @@ def my_exception(e):
 def get_result(object_type, input_boxes_dic):
     result = {}
     relation_names = []
-    print('==>', type(input_boxes_dic))
+    # print('==>', type(input_boxes_dic))
     try:
         data = json.loads(input_boxes_dic)
         input_boxes = data['inputBoxes']
@@ -123,7 +124,7 @@ def get_result(object_type, input_boxes_dic):
         if object_type != 'minimal_cover':
             sql_form = SqlFormAttributeConstraints(data, object_type, relation_name, nf_result=result)
             relation_names = sql_form.get_relation_names()
-        print(relation_names)
+        # print(relation_names)
     except Exception as e:
         my_exception(e)
 
@@ -175,6 +176,8 @@ def get_relationalMapping(nf_type, api_data):
     except Exception as e:
         # result = '0'
         my_exception(e)
+
+    # rm.m_destroy()
     # del rm
     if result == '0':
         return result

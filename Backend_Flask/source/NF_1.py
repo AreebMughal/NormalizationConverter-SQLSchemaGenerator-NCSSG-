@@ -15,7 +15,8 @@ class Nf1st(NormalizedRelation):
         my_relation = super().get_relation()
         primary = my_relation.get_attr_info()['primary']
         attributes = my_relation.get_attr_info()['attributes']
-        print(minimal_cover_res)
+        # print(minimal_cover_res)
+
 
         full_dependent_rhs = []
         minimal_cover_res_attr = []
@@ -26,14 +27,14 @@ class Nf1st(NormalizedRelation):
                 if fd[1] not in minimal_cover_res_attr:
                     minimal_cover_res_attr.append(fd[1][0])
 
-        print('Attributes:', attributes)
-        print('Minimal Cover Attributes:', minimal_cover_res_attr)
+        # print('Attributes:', attributes)
+        # print('Minimal Cover Attributes:', minimal_cover_res_attr)
 
         for attr in attributes:
             if attr in minimal_cover_res_attr and attr not in primary:
                 full_dependent_rhs.append(attr)
 
         fully = [[primary, full_dependent_rhs]]
-        print('End Result:', fully)
+        # print('End Result:', fully)
 
         return {'full': fully}

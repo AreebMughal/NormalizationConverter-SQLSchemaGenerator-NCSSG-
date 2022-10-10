@@ -16,6 +16,15 @@ function UploadFile(props) {
     const fileUploaderRef = React.useRef();
     const fileUploaderLabel = 'Upload or drag a CSV file right here - Dataset to Extract Functional Dependencies (CSV File Only)';
 
+    const handleError = (errMsg) => {
+        console.log(errMsg);
+        setError(errMsg);
+        setFile(null);
+        setVisibility(true);
+        props.setIsFdMine(false);
+        props.setLoader(false);
+    }
+
     useEffect(() => {
         if (file !== null) {
             props.setLoader(true);
@@ -29,12 +38,7 @@ function UploadFile(props) {
                         setData(res.data);
                     } else setError('Error! There is some problem in Flask Server.');
                 }).catch(err => {
-                console.log(err);
-                setError(err.toString());
-                setFile(null);
-                setVisibility(true);
-                props.setIsFdMine(false);
-                props.setLoader(false);
+                handleError(err.toString());
                 props.setSuggestion('');
             });
         }
@@ -81,7 +85,14 @@ function UploadFile(props) {
         }
         return '';
     }
-    // getSuggestion();
+
+    const my_error = (err) => {
+        console.log(err.toString().toLowerCase().includes('file type is not supported'));
+        if (err.toString().toLowerCase().includes('file type is not supported')) {
+            console.log('YES');
+            handleError(err + '.\nOnly "CSV" file is supported.');
+        }
+    }
     return (
         <>
             {visibility &&
@@ -97,6 +108,7 @@ function UploadFile(props) {
                               classes='upload-file col-lg-12'
                               label={fileUploaderLabel}
                               hoverTitle='Drop here'
+                              onTypeError={(err) => my_error(err)}
                 />
             </div>
         </>

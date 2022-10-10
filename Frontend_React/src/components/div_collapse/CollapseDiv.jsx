@@ -6,6 +6,12 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
 const CollapseDiv = (props) => {
     const [open, setOpen] = useState(false);
+    const [bodyColor, setBodyColor] = useState('body-white');
+
+    useEffect(() => {
+        if (props.bodyColor !== undefined)
+            setBodyColor(props.bodyColor);
+    }, []);
 
     useEffect(() => {
         setOpen(props.isOpen);
@@ -28,7 +34,7 @@ const CollapseDiv = (props) => {
             </div>
 
             <Fade in={open}>
-                <div className="__my-card">
+                <div className={`__my-card ${bodyColor}`}>
                     <div id="example-fade-text">
                         {props.children}
                     </div>

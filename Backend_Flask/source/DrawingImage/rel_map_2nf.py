@@ -8,6 +8,8 @@ from PIL import Image
 from turtle import Turtle, Screen
 from os.path import exists
 
+from source.DrawingImage.test import my_except
+
 font_size = 14
 
 
@@ -24,25 +26,36 @@ class RelationalMapping2nf:
         self.__relation_names = relation_name
         self.__fk = fks
         self.__minimal_cover = MC
-        self.preporcessing()
+
+        try:
+            self.preporcessing()
+        except Exception as e:
+            my_except(e)
 
     def preporcessing(self):
-        self.__screen = turtle.Screen()
+        try:
+            self.__screen = turtle.Screen()
 
-        screenTk = self.__screen.getcanvas().winfo_toplevel()
-        screenTk.attributes("-fullscreen", True)
-        turtle.tracer(0)
-        self.__yertle = Turtle(shape="turtle", visible=False)
+            screenTk = self.__screen.getcanvas().winfo_toplevel()
+            screenTk.attributes("-fullscreen", True)
+            turtle.tracer(0)
+            self.__yertle = Turtle(shape="turtle", visible=False)
 
-        names = self.getnames(self.__relation_names)
-        self.set_Tortle()
+            names = self.getnames(self.__relation_names)
+            self.set_Tortle()
 
-        self.drawRelations(self.__relations, names, self.__fk)
-        turtle.getcanvas().postscript(file="2nf.eps")
-        self.get_image()
+            self.drawRelations(self.__relations, names, self.__fk)
+            turtle.getcanvas().postscript(file="2nf.eps")
+            self.get_image()
+            # self.__screen.clear()
+            screenTk.destroy()
+            self.__screen.bye()
+        except TclError as tcl:
+            print(tcl)
+        # turtle.bye()
 
-        screenTk.destroy()
-        turtle.bye()
+    def m_destroy(self):
+        self.__screen.bye()
 
     def get_image(self):
         TARGET_BOUNDS = (1600, 800)
@@ -146,8 +159,8 @@ class RelationalMapping2nf:
             self.__yertle.back(distnce)
 
     def draw_forgin_key(self, fks, attibutes, relnames):
-        print("fks", fks)
-        print("rel names", relnames)
+        # print("fks", fks)
+        # print("rel names", relnames)
 
         fk_relations = []
 
@@ -162,8 +175,8 @@ class RelationalMapping2nf:
                 for i in rel:
                     fk_rel.append(rel[i])
                 fk_relations.append(fk_rel)
-        print("fk rela", fk_relations)
-        print("attribute", attibutes)
+        # print("fk rela", fk_relations)
+        # print("attribute", attibutes)
         keyss = list(attibutes.keys())
         self.__yertle.penup()
         self.__yertle.right(90)
@@ -191,12 +204,12 @@ class RelationalMapping2nf:
             #     from_relation = goto_relation
             #     goto_relation = temp
             #     print("gsfdf")
-            print("keys", keyss)
+            # print("keys", keyss)
             a = ((keyss.index(from_relation) + 1) * 100)
 
             self.__yertle.forward(a)
             right_dist1 = ((attibutes[from_relation].index(forgin_keys[0]) + 1) * 90) - 25
-            print("firsr dis", ((attibutes[from_relation].index(forgin_keys[0]) + 1) * 70) - 25)
+            # print("firsr dis", ((attibutes[from_relation].index(forgin_keys[0]) + 1) * 70) - 25)
             self.__yertle.left(90)
             self.__yertle.forward(right_dist1)
             self.__yertle.pendown()
@@ -212,7 +225,7 @@ class RelationalMapping2nf:
             b = ((keyss.index(goto_relation) + 1) * 100) - a
             self.__yertle.forward(b)
             right_dist2 = ((attibutes[goto_relation].index(forgin_keys[0]) + 1) * 90) - 25
-            print("second relation", (attibutes[goto_relation].index(forgin_keys[0])))
+            # print("second relation", (attibutes[goto_relation].index(forgin_keys[0])))
             self.__yertle.left(90)
             self.__yertle.forward(right_dist2 + (color_counter * 6))
             self.__yertle.left(90)
@@ -255,12 +268,12 @@ class RelationalMapping2nf:
             self.__yertle.right(135)
             self.__yertle.penup()
             self.__yertle.back(distnce)
-        print("pk", pk)
-        print("dependent ", dependentent)
+        # print("pk", pk)
+        # print("dependent ", dependentent)
         l = pk
         for each in dependentent:
             l.append(each)
-        print("L ki value", l)
+        # print("L ki value", l)
         small = attributes.index(l[0])
         big = attributes.index(l[0])
         i = 0

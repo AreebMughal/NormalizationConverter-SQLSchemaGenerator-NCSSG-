@@ -1,16 +1,20 @@
+import _tkinter
 import os
+import time
 import turtle
 from tkinter import *
 from PIL import Image
 from turtle import Turtle, Screen
 from os.path import exists
 
+from source.DrawingImage.test import my_except
+
 font_size = 14
 
 
 class RelationalMappingBcnf:
     def __init__(self, relation, relation_name, fks):
-        print("contractor\n\n\n\n\n\n\n\n\n\n", fks)
+        # print("contractor\n\n\n\n\n\n\n\n\n\n", fks)
         if exists('./BCNF.png'):
             os.remove("BCNF.png")
         if exists('./bcnf.eps'):
@@ -21,23 +25,50 @@ class RelationalMappingBcnf:
         self.__relations = relation
         self.__relation_names = relation_name
         self.__fk = fks
-        self.preporcessing()
+
+        try:
+            self.preporcessing()
+        except Exception as e:
+            my_except(e)
 
     def preporcessing(self):
+        try:
+            screenTk = self.__screen.getcanvas().winfo_toplevel()
 
-        screenTk = self.__screen.getcanvas().winfo_toplevel()
-        screenTk.attributes("-fullscreen", True)
-        turtle.tracer(0)
-        self.__yertle = Turtle(shape="turtle", visible=False)
+            screenTk.attributes("-fullscreen", True)
 
-        names = self.getnames(self.__relation_names)
-        self.set_Tortle()
-        self.drawRelations(self.__relations, names, self.__fk)
-        turtle.getcanvas().postscript(file="bcnf.eps")
-        self.get_image()
-        screenTk.destroy()
+            turtle.tracer(0)
+            self.__yertle = Turtle(shape="turtle", visible=False)
+            names = self.getnames(self.__relation_names)
+            self.set_Tortle()
 
-        turtle.bye()
+            self.drawRelations(self.__relations, names, self.__fk)
+            turtle.getcanvas().postscript(file="bcnf.eps")
+            self.get_image()
+            # turtle.done()
+            # time.sleep(5)
+            screenTk.destroy()
+
+            # turtle.bye()
+            # self.__screen.mainloop()
+
+            self.__screen.bye()
+            # self.__screen.clear()
+            # self.__screen.des()
+
+        except Exception as tcl:
+            print('->', tcl)
+
+        # screenTk.destroy()
+        # del screenTk
+        # self.__screen = None
+        # del turtle
+        # screenTk = None
+        # turtle.bye()
+
+    def m_destroy(self):
+        self.__screen.bye()
+        # self.screenTk.destroy()
 
     def get_image(self):
         TARGET_BOUNDS = (1600, 800)
@@ -142,8 +173,8 @@ class RelationalMappingBcnf:
 
     def draw_forgin_key(self, fks, attibutes, relnames):
         fk_relations = []
-        print("Forgin keys", fks)
-        print("relnames", relnames)
+        # print("Forgin keys", fks)
+        # print("relnames", relnames)
         for fk in fks:
             fk_rel = []
             for name in relnames:
@@ -169,10 +200,10 @@ class RelationalMappingBcnf:
         self.__yertle.right(90)
         cololist = ["blue", "indigo", "violet", "orange", "green", "red", "orange"]
         color_counter = 0
-        print("FKs ", fk_relations)
-        cc=0
+        # print("FKs ", fk_relations)
+        cc = 0
         for rel in fk_relations:
-            print("dadadasdasdsadasd",cc,rel)
+            # print("dadadasdasdsadasd",cc,rel)
             goto_relation = rel[0]
             from_relation = rel[2]
             forgin_keys = rel[1]
@@ -229,7 +260,8 @@ class RelationalMappingBcnf:
             color_counter += 1
             if (color_counter > 6):
                 color_counter = 0
-            cc=cc+1
+            cc = cc + 1
+
     def draw_arrows(self, attributes, box_size, dependentent, pk):
         for element in dependentent:
             distnce = ((attributes.index(element) + 1) * box_size) - (box_size) + 20
@@ -326,7 +358,7 @@ class RelationalMappingBcnf:
         attributes = {}
         rels = self.__relations
         names = rels_names
-        print(names)
+        # print(names)
         name_counter = 0
         for one in rels:
             attributes[names[name_counter][1]] = []
