@@ -27,7 +27,7 @@ const DetailReason = (props) => {
     function getfdsList(step) {
         return step !== undefined ? <ol>
             {Object.keys(step).map(i => {
-                return <li key={i}> {step[i][0].toString().replaceAll(',', ', ') + " --> " + step[i][1]} </li>
+                return <li key={i}> {formatArray(step[i][0])} --> {formatArray(step[i][1])} </li>
             })}
         </ol> : "Error";
     }
@@ -57,9 +57,17 @@ const DetailReason = (props) => {
             reason.push(<><br/><span className='round'><Bold>Round {i}: </Bold></span></>);
     }
 
+    const fdLine = (lhs, rhs) => {
+        return <span>
+            The FD <b>{`{${lhs.toString().replaceAll(',', ', ')}}`} </b> --> <b> {`{${rhs}}`}</b>
+        </span>
+    }
+    const formatArray = (array) => {
+        return <span>
+            {`{${array.toString().replaceAll(',', ', ')}}`}
+        </span>
+    }
     function nf_2Reason() {
-        // console.log('Data => ', data)
-
         let reason = [];
         const primaryKey = getPrimaryKeys().toString();
 
@@ -67,23 +75,17 @@ const DetailReason = (props) => {
             for (let i = 1; i <= Object.keys(data['step_3']).length; i++) {
                 for (let j = 0; j < 1; j++) {
                     appendRoundComponent(i, reason);
-                    // string += `Round ${i}`;
                     if (data['step_3'][i][j] === primaryKey || (primaryKey.includes(data['step_3'][i][j][0]) && primaryKey.includes(data['step_3'][i][j][1])) || (data['step_3'][i][j] === primaryKey || ((primaryKey.includes(data['step_3'][i][j][0]) || primaryKey.includes(data['step_3'][i][j][1]))))) {
-                        // string += `The FD ${data['step_3'][i][j]}  --> ${data['step_3'][i][j+1]} is already in 2NF`;
                         reason.push(<span>
-                            The FD <b>{data['step_3'][i][j]} </b> --> <b> {data['step_3'][i][j + 1]}</b> is already in 2NF
+                            {fdLine(data['step_3'][i][j], data['step_3'][i][j + 1])} is already in 2NF.
                             </span>)
-
                     } else {
                         reason.push(
                             <span>
-                              The FD <b>{data['step_3'][i][j]}</b> --> <b>{data['step_3'][i][j + 1]}</b> is a partial dependency As LHS  <b>{data['step_3'][i][j]}</b> is a proper subset of <b>{primaryKey}</b> which is a PK , so we split it
-                                {/*string += `The FD ${data['step_3'][i][j]} --> ${data['step_3'][i][j+1]} is a partial dependency As LHS  ${data['step_3'][i][j]} is a proper subset of ${primaryKey} which is a PK , so we split it`*/}
+                                {fdLine(data['step_3'][i][j], data['step_3'][i][j + 1])} is a partial dependency. As LHS  <b>{formatArray(data['step_3'][i][j])}</b> is a proper subset of <b>{formatArray(primaryKey)}</b> which is a PK, so we split it.
                          </span>
                         )
-
                     }
-
                 }
             }
         }
@@ -94,38 +96,33 @@ const DetailReason = (props) => {
             </div>
 
         );
-
     }
 
     function nf_3Reason() {
         const primaryKey = getPrimaryKeys().toString();
         let reason = []
-        let string = ''
         if (Object.keys(data).length >= 1) {
             for (let i = 1; i < (Object.keys(data['step_3']).length) + 1; i++) {
-                // string += `Round  ${i} `
                 appendRoundComponent(i, reason);
-
                 for (let j = 0; j < 1; j++) {
-                    // console.log(data['step_3'][i][j].toString())
-                    // console.log(primaryKey)
                     if (data['step_3'][i][j] === primaryKey || ((primaryKey.includes(data['step_3'][i][j][0]) || primaryKey.includes(data['step_3'][i][j][1])))) {
                         reason.push(
                             <span>
-                                The FD <b>{data['step_3'][i][j]} </b> --> <b>{data['step_3'][i][j + 1]}</b> is already in 3NF;
+                                {fdLine(data['step_3'][i][j], data['step_3'][i][j + 1])} is already in 3NF.
                             </span>
                         )
                     } else {
                         reason.push(
                             <span>
-                                The FD <b>{data['step_3'][i][j]}</b> --> <b>{data['step_3'][i][j + 1]}</b> is a transitive dependency As LHS <b>{data['step_3'][i][j]}</b> is not PrimaryKey, so we split it into a new relation
+                                {fdLine(data['step_3'][i][j], data['step_3'][i][j + 1])} is a transitive dependency. As LHS <b>{formatArray(data['step_3'][i][j])}</b> is not Primary Key, so we split it into a new relation.
                             </span>
                         )
                     }
                 }
             }
         }
-        return (<div>
+        return (
+            <div>
                 {reason}
             </div>
         );
@@ -134,22 +131,21 @@ const DetailReason = (props) => {
     function bnfReason() {
         const primaryKey = getPrimaryKeys().toString();
         let reason = []
-        let string = ''
         if (Object.keys(data).length >= 1) {
             for (let i = 1; i < (Object.keys(data['step_3']).length) + 1; i++) {
-                // console.log(data['step_3'][i][i])
                 appendRoundComponent(i, reason);
-
                 if ((primaryKey.includes(data['step_3'][i][i])) || (primaryKey.includes(data['step_3'][i][i]))) {
                     reason.push(
                         <span>
-                            BC-NF works on Primary key dependency. As in FD <b>{data['step_3'][i][i - 1]}</b> --> <b>{data['step_3'][i][i]}</b> ,LHS <b>{data['step_3'][i][i - 1]}</b> is Pk so it would be separated as new relation.
+                            BC-NF works on Primary key dependency. As in FD <b>
+                            {formatArray(data['step_3'][i][i - 1])}
+                            </b> --> <b>{formatArray(data['step_3'][i][i])}</b>, LHS <b>{formatArray(data['step_3'][i][i - 1])}</b> is Pk, so it would be separated as new relation.
                         </span>
                     )
                 } else {
                     reason.push(
                         <span>
-                            The FD <b>{data['step_3'][i][0]} </b> --> <b>{data['step_3'][i][1]}</b> is already in BCNF
+                            {fdLine(data['step_3'][i][0], data['step_3'][i][1])} is already in BCNF.
                         </span>
                     )
                 }
@@ -187,25 +183,6 @@ const DetailReason = (props) => {
                         <p className="card-text mt-1"> {getType()}</p>
                     </div>
                 </CollapseDiv>
-                {/*<button className='btn btn-outline-secondary p-2' onClick={() => setToggle(!toggle)}>Show Steps</button>*/}
-                {/*{(toggle) ?*/}
-                {/*    <div className="row mt-2">*/}
-                {/*        <div className="col-12">*/}
-                {/*            <div className="card">*/}
-                {/*                <div className="card-header">*/}
-                {/*                    Reason through Minimal Cover*/}
-                {/*                </div>*/}
-                {/*                <div className="card-body">*/}
-                {/*                    <p className="card-text"> {minimalCover()}</p>*/}
-                {/*                    <h5 className="card-title">Resolving FDs</h5>*/}
-                {/*                    <p className="card-text"> {getType()}</p>*/}
-                {/*                </div>*/}
-                {/*            </div>*/}
-                {/*        </div>*/}
-                {/*    </div>*/}
-
-                {/*    : ''*/}
-                {/*}*/}
             </div>
 
         </React.Fragment>

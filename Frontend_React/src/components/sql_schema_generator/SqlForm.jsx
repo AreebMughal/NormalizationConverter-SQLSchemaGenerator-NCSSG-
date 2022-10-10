@@ -18,13 +18,8 @@ const SqlForm = (props) => {
         "INT",
         "BIGINT",
         "TEXT",
-        "DATE",
-        "DATETIME",
-        "TIMESTAMP",
-        "BOOLEAN",
-        "TIME",
-        "YEAR",
         'CHAR',
+        "BOOLEAN",
         'VARCHAR'
     ];
     function extractedFormData(formData) {
@@ -101,9 +96,9 @@ const SqlForm = (props) => {
                 if (singleLength.includes(inp_dataType)) {
                     if (
                         !(
-                            parseInt(inp_length.value) >
+                            parseInt(inp_length.value) >=
                             parseInt(validRange[inp_dataType][0]) &&
-                            parseInt(inp_length.value) < parseInt(validRange[inp_dataType][1])
+                            parseInt(inp_length.value) <= parseInt(validRange[inp_dataType][1])
                         )
                     ) {
                         const msg =
@@ -131,8 +126,8 @@ const SqlForm = (props) => {
                         const msg =
                             "Please enter valid range: " +
                             inp_dataType +
-                            "\nValid Range is " +
-                            validRange[inp_dataType];
+                            "\nValid Range " +
+                            print_twovalue(validRange[inp_dataType]);
                         openAlertPopup(inp_length, msg);
                         return false;
                     }
@@ -144,6 +139,10 @@ const SqlForm = (props) => {
         }
 
         return true;
+    }
+    function print_twovalue(obj){
+        return 'before decimal point(.) is : "'+obj['before']+'"\nand after decimal point is "'+obj['after'] + '"';
+
     }
     function isValidData(formData) {
         const inputFields = extractedFormData(formData)['inputFields'];

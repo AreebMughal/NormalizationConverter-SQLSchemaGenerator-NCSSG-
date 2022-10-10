@@ -33,13 +33,15 @@ const CollapseDiv = (props) => {
                 </Button>
             </div>
 
-            <Fade in={open}>
+            {/*<Fade in={open}>*/}
+                {open &&
                 <div className={`__my-card ${bodyColor}`}>
                     <div id="example-fade-text">
                         {props.children}
                     </div>
                 </div>
-            </Fade>
+                }
+            {/*</Fade>*/}
         </>
     );
 }

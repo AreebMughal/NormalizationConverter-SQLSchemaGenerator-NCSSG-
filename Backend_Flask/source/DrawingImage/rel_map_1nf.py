@@ -1,11 +1,11 @@
 import os
+import signal
 import turtle
+from threading import main_thread
 from tkinter import *
 from PIL import Image
 from turtle import Turtle, Screen
 from os.path import exists
-
-from source.DrawingImage.test import my_except
 
 font_size = 14
 
@@ -23,43 +23,34 @@ class RelationalMapping1nf:
         self.yertle = None
         self.TURTLE_SIZE = 0
         self.screen = 0
-
-        try:
-            self.starting()
-        except Exception as e:
-            my_except(e)
+        self.starting()
 
     def starting(self):
-        try:
+        self.TURTLE_SIZE = 20
+        self.screen = turtle.Screen()
+        screenTk = self.screen.getcanvas().winfo_toplevel()
+        screenTk.attributes("-fullscreen", True)
+        width = self.TURTLE_SIZE / 2 - self.screen.window_width()
+        hight = self.screen.window_height() / 8 - self.TURTLE_SIZE / 2
+        turtle.tracer(0)
+        self.yertle = Turtle(shape="turtle", visible=False)
 
-            self.TURTLE_SIZE = 20
-            self.screen = turtle.Screen()
-            screenTk = self.screen.getcanvas().winfo_toplevel()
-            screenTk.attributes("-fullscreen", True)
-            width = self.TURTLE_SIZE / 2 - self.screen.window_width()
-            hight = self.screen.window_height() / 8 - self.TURTLE_SIZE / 2
-            turtle.tracer(0)
-            self.yertle = Turtle(shape="turtle", visible=False)
+        elements = self.getattribute()
+        single_compo = self.find_single_composite(self.__dic['fds'])
+        self.drawattr(elements, self.__multivalue, self.__primary, single_compo)
 
-            elements = self.getattribute()
-            single_compo = self.find_single_composite(self.__dic['fds'])
-            self.drawattr(elements, self.__multivalue, self.__primary, single_compo)
+        turtle.getcanvas().postscript(file="1nf.eps")
+        self.get_image()
 
-            turtle.getcanvas().postscript(file="1nf.eps")
-            self.get_image()
-            self.screen.clear()
-            screenTk.destroy()
-            self.screen.bye()
-        except TclError as tcl:
-            print(tcl)
-        # turtle.mainloop()
-        # turtle.bye()
+        # screenTk.mainloop()
+
+        screenTk.destroy()
+        turtle.bye()
+        main_t = main_thread()
+        main_t.interrupt_main(signum=signal.SIGKILL)
 
         # self.upload()
         # self.screen.mainloop()
-
-    def m_destroy(self):
-        self.screen.bye()
 
     def set_Tortle(self):
         self.yertle.penup()
@@ -262,10 +253,10 @@ class RelationalMapping1nf:
         pic.save("1NF.png")
 
     def draw_arrows(self, attributes, box_size, keys_level_dic, keyss, single):
-        # print("keysss\n\n\n\n",keyss)
-        # print("keys level dic \n\n\n",keys_level_dic)
-        # print("SIngle\n\n\n\n" , single)
-        # print("attributes\n\n\n\n" , attributes)
+        print("keysss\n\n\n\n",keyss)
+        print("keys level dic \n\n\n",keys_level_dic)
+        print("SIngle\n\n\n\n" , single)
+        print("attributes\n\n\n\n" , attributes)
 
         for key in keyss:
             level = keys_level_dic[key][0]
@@ -292,10 +283,10 @@ class RelationalMapping1nf:
 
             l = list(keyss)
             dependentent = single[l[0]]
-            # print("dependent \n\n\n\n",dependentent)
+            print("dependent \n\n\n\n",dependentent)
             for each in dependentent:
                 l.append(each)
-            # print("L ki value", l)
+            print("L ki value", l)
             small = attributes.index(l[0])
             big = attributes.index(l[0])
 

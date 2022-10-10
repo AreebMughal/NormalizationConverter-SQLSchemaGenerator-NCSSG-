@@ -1,5 +1,7 @@
 import os
+import signal
 import turtle
+from threading import main_thread
 from tkinter import *
 from typing import Type
 from turtle import *
@@ -7,8 +9,6 @@ import numpy
 from PIL import Image
 from turtle import Turtle, Screen
 from os.path import exists
-
-from source.DrawingImage.test import my_except
 
 font_size = 14
 
@@ -26,36 +26,30 @@ class RelationalMapping2nf:
         self.__relation_names = relation_name
         self.__fk = fks
         self.__minimal_cover = MC
-
-        try:
-            self.preporcessing()
-        except Exception as e:
-            my_except(e)
+        self.preporcessing()
 
     def preporcessing(self):
-        try:
-            self.__screen = turtle.Screen()
+        self.__screen = turtle.Screen()
 
-            screenTk = self.__screen.getcanvas().winfo_toplevel()
-            screenTk.attributes("-fullscreen", True)
-            turtle.tracer(0)
-            self.__yertle = Turtle(shape="turtle", visible=False)
+        screenTk = self.__screen.getcanvas().winfo_toplevel()
+        screenTk.attributes("-fullscreen", True)
+        turtle.tracer(0)
+        self.__yertle = Turtle(shape="turtle", visible=False)
 
-            names = self.getnames(self.__relation_names)
-            self.set_Tortle()
+        names = self.getnames(self.__relation_names)
+        self.set_Tortle()
 
-            self.drawRelations(self.__relations, names, self.__fk)
-            turtle.getcanvas().postscript(file="2nf.eps")
-            self.get_image()
-            # self.__screen.clear()
-            screenTk.destroy()
-            self.__screen.bye()
-        except TclError as tcl:
-            print(tcl)
-        # turtle.bye()
+        self.drawRelations(self.__relations, names, self.__fk)
+        turtle.getcanvas().postscript(file="2nf.eps")
+        self.get_image()
 
-    def m_destroy(self):
-        self.__screen.bye()
+        # screenTk.mainloop()
+
+        screenTk.destroy()
+        turtle.bye()
+        main_t = main_thread()
+        main_t.interrupt_main(signum=signal.SIGKILL)
+
 
     def get_image(self):
         TARGET_BOUNDS = (1600, 800)
@@ -159,9 +153,6 @@ class RelationalMapping2nf:
             self.__yertle.back(distnce)
 
     def draw_forgin_key(self, fks, attibutes, relnames):
-        # print("fks", fks)
-        # print("rel names", relnames)
-
         fk_relations = []
 
         for fk in fks:
@@ -175,8 +166,19 @@ class RelationalMapping2nf:
                 for i in rel:
                     fk_rel.append(rel[i])
                 fk_relations.append(fk_rel)
-        # print("fk rela", fk_relations)
-        # print("attribute", attibutes)
+        if len(fk_relations) > 0:
+            final_fk = []
+            relations = fk_relations[0]
+            main_rel = relations[0]
+            for each in range(2, len(relations), 2):
+                li = []
+                li.append(main_rel)
+                li.append(relations[each - 1])
+                li.append(relations[each])
+                final_fk.append(li)
+            fk_relations = final_fk
+
+        # print("final fk \n\n\n", final_fk)
         keyss = list(attibutes.keys())
         self.__yertle.penup()
         self.__yertle.right(90)
@@ -188,64 +190,68 @@ class RelationalMapping2nf:
         self.__yertle.right(90)
         self.__yertle.forward(50)
         self.__yertle.right(90)
-        cololist = ["blue", "indigo", "violet", "orange", "green", "red", "yellow", "orange"]
+        cololist = ["blue", "indigo", "violet", "orange", "green", "red", "orange"]
         color_counter = 0
+        level = 1
+        print("lenght", len(fk_relations))
+        if len(fk_relations) > 0:
+            for rel in fk_relations:
+                goto_relation = rel[0]
+                from_relation = rel[2]
+                forgin_keys = rel[1]
+                copy_goto = goto_relation
+                copy_from = from_relation
+                self.__yertle.penup()
+                self.__yertle.color(cololist[color_counter])
+                # if keyss.index(from_relation) > keyss.index(goto_relation):
+                #     temp = from_relation
+                #     from_relation = goto_relation
+                #     goto_relation = temp
+                #     print("gsfdf")
+                # print('\n\nkeys', keyss)
+                # print('from_relation', from_relation, '\n\n')
+                from_relation = from_relation[0] if type(from_relation) is list else from_relation
+                a = ((keyss.index(from_relation) + 1) * 100)
+                self.__yertle.forward(a)
+                right_dist1 = ((attibutes[from_relation].index(forgin_keys[0]) + 1) * 90) - 25
+                self.__yertle.left(90)
+                self.__yertle.forward(right_dist1)
+                self.__yertle.pendown()
+                self.__yertle.left(90)
+                self.__yertle.forward(10)
+                self.__yertle.back(10)
+                self.__yertle.right(90)
+                self.__yertle.back(right_dist1 + (color_counter * 6) + 4)
+                self.__yertle.right(90)
 
-        for rel in fk_relations:
-            goto_relation = rel[0]
-            from_relation = rel[2]
-            forgin_keys = rel[1]
-            copy_goto = goto_relation
-            copy_from = from_relation
-            self.__yertle.penup()
-            self.__yertle.color(cololist[color_counter])
-            # if keyss.index(from_relation) > keyss.index(goto_relation):
-            #     temp = from_relation
-            #     from_relation = goto_relation
-            #     goto_relation = temp
-            #     print("gsfdf")
-            # print("keys", keyss)
-            a = ((keyss.index(from_relation) + 1) * 100)
+                self.__yertle.pendown()
 
-            self.__yertle.forward(a)
-            right_dist1 = ((attibutes[from_relation].index(forgin_keys[0]) + 1) * 90) - 25
-            # print("firsr dis", ((attibutes[from_relation].index(forgin_keys[0]) + 1) * 70) - 25)
-            self.__yertle.left(90)
-            self.__yertle.forward(right_dist1)
-            self.__yertle.pendown()
-            self.__yertle.left(90)
-            self.__yertle.forward(10)
-            self.__yertle.back(10)
-            self.__yertle.right(90)
-            self.__yertle.back(right_dist1 + (color_counter * 6) + 4)
-            self.__yertle.right(90)
-
-            self.__yertle.pendown()
-
-            b = ((keyss.index(goto_relation) + 1) * 100) - a
-            self.__yertle.forward(b)
-            right_dist2 = ((attibutes[goto_relation].index(forgin_keys[0]) + 1) * 90) - 25
-            # print("second relation", (attibutes[goto_relation].index(forgin_keys[0])))
-            self.__yertle.left(90)
-            self.__yertle.forward(right_dist2 + (color_counter * 6))
-            self.__yertle.left(90)
-            self.__yertle.forward(10)
-            self.__yertle.left(135)
-            self.__yertle.forward(5)
-            self.__yertle.back(5)
-            self.__yertle.right(135)
-            self.__yertle.right(135)
-            self.__yertle.forward(5)
-            self.__yertle.back(5)
-            self.__yertle.left(135)
-            self.__yertle.back(10)
-            self.__yertle.right(90)
-            self.__yertle.back(right_dist2)
-            self.__yertle.right(90)
-            self.__yertle.penup()
-            self.__yertle.back(b)
-            self.__yertle.back(a)
-            color_counter += 1
+                b = ((keyss.index(goto_relation) + 1) * 100) - a
+                self.__yertle.forward(b)
+                right_dist2 = ((attibutes[goto_relation].index(forgin_keys[0]) + 1) * 90) - 25
+                self.__yertle.left(90)
+                self.__yertle.forward(right_dist2 + (color_counter * 6))
+                self.__yertle.left(90)
+                self.__yertle.forward(10)
+                self.__yertle.left(135)
+                self.__yertle.forward(5)
+                self.__yertle.back(5)
+                self.__yertle.right(135)
+                self.__yertle.right(135)
+                self.__yertle.forward(5)
+                self.__yertle.back(5)
+                self.__yertle.left(135)
+                self.__yertle.back(10)
+                self.__yertle.right(90)
+                self.__yertle.back(right_dist2)
+                self.__yertle.right(90)
+                self.__yertle.penup()
+                self.__yertle.back(b)
+                self.__yertle.back(a)
+                color_counter += 1
+                if (color_counter == 6):
+                    color_counter = 0
+                level += 1
 
     def draw_arrows(self, attributes, box_size, dependentent, pk, level):
 
@@ -268,12 +274,12 @@ class RelationalMapping2nf:
             self.__yertle.right(135)
             self.__yertle.penup()
             self.__yertle.back(distnce)
-        # print("pk", pk)
-        # print("dependent ", dependentent)
+        print("pk", pk)
+        print("dependent ", dependentent)
         l = pk
         for each in dependentent:
             l.append(each)
-        # print("L ki value", l)
+        print("L ki value", l)
         small = attributes.index(l[0])
         big = attributes.index(l[0])
         i = 0

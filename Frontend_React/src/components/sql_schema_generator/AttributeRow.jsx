@@ -29,7 +29,9 @@ const AttributeRow = (props) => {
     let ref = React.createRef();
     const ref2 = React.createRef();
     const validAutoIncDataTypes = ['INT', 'BIGINT', 'SMALLINT'];
+    const disableLenDataTypes = ["DATE", "DATETIME", "TIMESTAMP", "TIME", "YEAR"];
     const canAutoIncrement = !validAutoIncDataTypes.includes(dataType);
+    const disableLength = disableLenDataTypes.includes(dataType);
     // const attributeNameChangeHandler = event => {
     //     setAttributeName(event.target.value)
     //     props.onChangeHandler('value', event.target.value, event.target.id)
@@ -62,7 +64,12 @@ const AttributeRow = (props) => {
         if (
             dataType === "INT" ||
             dataType === "SMALLINT" ||
-            dataType === "BIGINT"
+            dataType === "BIGINT"||
+            dataType === "VARCHAR" ||
+            dataType === "TEXT" ||
+            dataType === "CHAR"||
+            dataType === "BOOLEAN"
+
         ) {
             if (checkINT === true || inputField.length === 0) {
                 event.target.classList.remove("alert_border");
@@ -75,8 +82,8 @@ const AttributeRow = (props) => {
             dataType === "DECIMAL" ||
             dataType === "DOUBLE"
         ) {
-            if (checkFLOAT === true) {
-                if (inputField.split(",").length - 1 === 1) {
+            if (checkFLOAT === true || inputField.length === 0) {
+                if (inputField.split(",").length >= 1) {
                     console.log("TRUE")
                     event.target.classList.remove("alert_border");
                     props.onChangeHandler("length", event.target.value, event.target.id);
@@ -89,9 +96,7 @@ const AttributeRow = (props) => {
         } else {
             props.onChangeHandler("length", event.target.value, event.target.id);
         }
-        console.log(checkFLOAT);
 
-// event.preventDefault();
     }
 
     const autoIncrementChangeHandler = event => {
@@ -133,7 +138,7 @@ const AttributeRow = (props) => {
 
             <td width='10%'>
                 <input type="text" className='input-box input_length' onChange={lengthChangeHandler} id={indexes}
-                       value={length}/>
+                       value={length} disabled={disableLength} />
                 <PopupModal index={indexes} dataType={dataType}/>
 
             </td>

@@ -1,5 +1,7 @@
 import os
+import signal
 import turtle
+from threading import main_thread
 from tkinter import *
 from PIL import Image
 from turtle import Turtle, Screen
@@ -14,7 +16,7 @@ class RelationalMapping:
             os.remove("RM.png")
         if exists('./rm.eps'):
             os.remove('rm.eps')
-
+        print("d")
         self.__dic = dics
         self.__multivalue = self.__dic['multi_value']
         self.__primary = self.__dic['primary']
@@ -41,8 +43,14 @@ class RelationalMapping:
 
         turtle.getcanvas().postscript(file="rm.eps")
         self.get_image()
+
+        # self.screenTk.mainloop()
+
         self.screenTk.destroy()
         turtle.bye()
+        main_t = main_thread()
+        main_t.interrupt_main(signum=signal.SIGKILL)
+
 
         # turtle.done()
 

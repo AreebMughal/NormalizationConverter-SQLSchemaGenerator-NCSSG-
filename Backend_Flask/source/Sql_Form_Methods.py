@@ -98,6 +98,7 @@ class SqlFormAttributeConstraints:
             print('->', element['relationName'])
             relations = self.get_foreign_relation_of(element['relationName'])
             print('=>', relations)
+            print('Con', 'transitive' in relations,  current != 'Fully_dependent', current)
             if 'fully' in relations and len(primary_keys) == 1:
                 element['relationName'] = 'Fully_dependent'
             elif 'partial' in relations:
@@ -108,18 +109,31 @@ class SqlFormAttributeConstraints:
             elif 'primedependency' in relations:
                 index = relations.index('primedependency')
                 element['relationName'] = element['relationName'][index]
-            elif 'transitive' in relations:
+            elif 'transitive' in relations and current != 'Fully_dependent':
+                print('yessss')
                 index = relations.index('transitive')
                 element['relationName'] = element['relationName'][index]
-            elif 'multi' in relations:
+            elif 'multi' in relations and current != 'Fully_dependent':
                 index = relations.index('multi')
                 element['relationName'] = element['relationName'][index]
-
+            else:
+                element['relationName'] = ''
                 # element['attribute'] = list(element['attribute'])
                 # print('.... ', element['attribute'])
             # print('-->', foreign_keys)
                 print('==', element['relationName'])
-        return foreign_keys
+
+        # for index, element in enumerate(foreign_keys):
+        #     print(index, element)
+        #     if element['relationName'] == '':
+        #         del foreign_keys[index]
+
+        # for element in foreign_keys:
+        new = [element for element in foreign_keys if element['relationName'] != '']
+
+        # print('FK', new)
+
+        return new
 
     def append_foreign_key(self, foreign_keys, key, relation_lhs):
         index = self.check_fk_in_relation(foreign_keys, relation_lhs)
@@ -202,7 +216,13 @@ class SqlFormAttributeConstraints:
                         fk[name] = self.get_foreign_keys(rel, self.all_relations, self.relation_names[key][index][1])
                         index += 1
         c = 0
+        new_fk = {}
+        for key, value in fk.items():
+            if len(value) != 0:
+                new_fk[key] = value
+        fk = new_fk
         print('\n\n')
+
         for key, value in fk.items():
             c += 1
             print(str(c) + ') Relation Name:', key)
