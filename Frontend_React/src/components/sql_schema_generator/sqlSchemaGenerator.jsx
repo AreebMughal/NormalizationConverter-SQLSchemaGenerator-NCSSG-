@@ -67,7 +67,7 @@ const SqlSchemaGenerator = () => {
                 rel.attributes.map((attr, attrIndex) => {
                     if (attributeIndex !== attrIndex &&
                         attr.value === relationList[relationIndex].attributes[attributeIndex].value &&
-                        property !== 'index') {
+                        (property === 'type' || property === 'length')) {
                         newRelationList[relIndex].attributes[attrIndex] =
                             getNewAttributeObj({...newRelationList[relIndex].attributes[attrIndex]}, property, value)
                     }
