@@ -1,6 +1,10 @@
 from server import *
 
 
+def contains_number(string):
+    return any(char.isdigit() for char in string)
+
+
 class SqlFormAttributeConstraints:
     def __init__(self, data, normal_form, relation_name, nf_result=None):
         if nf_result is None:
@@ -28,7 +32,10 @@ class SqlFormAttributeConstraints:
             for name_list in rel_name_l:
                 for rel_name in name_list:
                     # print(rel_name, name, rel_name == name)
-                    if rel_name == name:
+
+                    org_rel_name = rel_name if not contains_number(rel_name) else rel_name.rsplit('_', 1)[0]
+                    print('\nName ', org_rel_name, '\n')
+                    if org_rel_name == name:
                         count += 1
         return count
 
@@ -36,8 +43,10 @@ class SqlFormAttributeConstraints:
         relation_name = self.relation_name
         relation_names = {'full': [[relation_name, 'Fully_dependent']]}
         rel_name = relation_name[:3]
+
+        count = 1
+
         for key, value in self.nf_result.items():
-            count = 1
             if key.lower() != 'full' and len(value) > 0:
                 relation_names[key] = []
                 for rel in value:
@@ -98,7 +107,7 @@ class SqlFormAttributeConstraints:
             print('->', element['relationName'])
             relations = self.get_foreign_relation_of(element['relationName'])
             print('=>', relations)
-            print('Con', 'transitive' in relations,  current != 'Fully_dependent', current)
+            print('Con', 'transitive' in relations, current != 'Fully_dependent', current)
             if 'fully' in relations and len(primary_keys) == 1:
                 element['relationName'] = 'Fully_dependent'
             elif 'partial' in relations:
@@ -120,7 +129,7 @@ class SqlFormAttributeConstraints:
                 element['relationName'] = ''
                 # element['attribute'] = list(element['attribute'])
                 # print('.... ', element['attribute'])
-            # print('-->', foreign_keys)
+                # print('-->', foreign_keys)
                 print('==', element['relationName'])
 
         # for index, element in enumerate(foreign_keys):
@@ -198,7 +207,7 @@ class SqlFormAttributeConstraints:
     def get_all_foreign_keys_list(self):
         fk = {}
         # print('keys', self.nf_result.keys())
-        print('\n' + '-'*20)
+        print('\n' + '-' * 20)
         for key, value in self.nf_result.items():
             print(key)
             for val in value:
