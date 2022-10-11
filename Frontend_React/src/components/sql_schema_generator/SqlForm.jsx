@@ -12,7 +12,7 @@ const SqlForm = (props) => {
     const setShowFalse = () => setShowModal(false)
     const [path, setPath] = useState(null);
 
-    const requiredLength = ['BIT', 'CHAR', 'VARCHAR']
+    const requiredLength = ['BIT', 'CHAR', 'VARCHAR', "TEXT"]
     const singleLength = [
         "SMALLINT",
         "INT",

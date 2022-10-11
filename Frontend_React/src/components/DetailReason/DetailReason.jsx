@@ -169,7 +169,7 @@ const DetailReason = (props) => {
 
     return (
         <React.Fragment>
-            <div className="mx-4">
+            <div className="m-4">
                 <hr/>
                 <CollapseDiv
                     cardTitle={'Detail Reason Through Minimal Cover'}

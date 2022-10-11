@@ -34,7 +34,7 @@ class SqlFormAttributeConstraints:
                     # print(rel_name, name, rel_name == name)
 
                     org_rel_name = rel_name if not contains_number(rel_name) else rel_name.rsplit('_', 1)[0]
-                    print('\nName ', org_rel_name, '\n')
+                    # print('\nName ', org_rel_name, '\n')
                     if org_rel_name == name:
                         count += 1
         return count

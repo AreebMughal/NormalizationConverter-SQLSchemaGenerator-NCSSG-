@@ -4,46 +4,52 @@ SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION; 
 SET time_zone = "+00:00"; 
 
-CREATE DATABASE `NCSSG_dumped_db_ab83`;
+CREATE DATABASE `NCSSG_dumped_db_tk84`;
 
 -- 
--- Table structure for table `abalone` 
+-- Table structure for table `organization` 
 -- 
 
-CREATE TABLE `NCSSG_dumped_db_ab83`.`abalone` ( 
-	`Shell_weight` int(11) NOT NULL, 
- 	`Viscera_weight` int(11) NOT NULL, 
- 	`Whole_Weight` int(11) NOT NULL, 
- 	`Length` int(11) NOT NULL, 
- 	`Height` int(11) NOT NULL, 
- 	`Shucked_Weight` text(23) NOT NULL, 
- 	`Rings` int(11) NOT NULL 
+CREATE TABLE `NCSSG_dumped_db_tk84`.`organization` ( 
+	`ssn` year NOT NULL, 
+ 	`empName` int(11) NOT NULL, 
+ 	`phone` int(11) NOT NULL, 
+ 	`dnum` int(11) NOT NULL 
  ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
 -- 
--- Table structure for table `aba_diameter` 
+-- Table structure for table `org_address` 
 -- 
 
-CREATE TABLE `NCSSG_dumped_db_ab83`.`aba_diameter` ( 
-	`Diameter` int(11) NOT NULL, 
- 	`Viscera_weight` int(11) NOT NULL, 
- 	`Whole_Weight` int(11) NOT NULL, 
- 	`Sex` int(11) NOT NULL 
+CREATE TABLE `NCSSG_dumped_db_tk84`.`org_address` ( 
+	`ssn` year NOT NULL, 
+ 	`address` int(11) NOT NULL 
  ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
 -- 
--- Table structure for table `aba_shucked_weight` 
+-- Table structure for table `org_pnum` 
 -- 
 
-CREATE TABLE `NCSSG_dumped_db_ab83`.`aba_shucked_weight` ( 
-	`Shucked_Weight` text(23) NOT NULL, 
- 	`Viscera_weight` int(11) NOT NULL, 
- 	`Whole_Weight` int(11) NOT NULL, 
- 	`Diameter` int(11) NOT NULL 
+CREATE TABLE `NCSSG_dumped_db_tk84`.`org_pnum` ( 
+	`pnum` int(11) NOT NULL, 
+ 	`pname` int(11) NOT NULL, 
+ 	`ploc` int(11) NOT NULL 
+ ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+-- 
+-- Table structure for table `org_dnum` 
+-- 
+
+CREATE TABLE `NCSSG_dumped_db_tk84`.`org_dnum` ( 
+	`dnum` int(11) NOT NULL, 
+ 	`dname` int(11) NOT NULL, 
+ 	`dcat` int(11) NOT NULL 
  ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -53,65 +59,47 @@ CREATE TABLE `NCSSG_dumped_db_ab83`.`aba_shucked_weight` (
 
 
 -- 
--- Indexes for table `abalone` 
+-- Indexes for table `organization` 
 -- 
-ALTER TABLE `NCSSG_dumped_db_ab83`.`abalone`
-	ADD PRIMARY KEY (`Shell_weight`,`Viscera_weight`,`Whole_Weight`),
-	ADD UNIQUE KEY `Shucked_Weight` (`Shucked_Weight`);
+ALTER TABLE `NCSSG_dumped_db_tk84`.`organization`
+	ADD PRIMARY KEY (`ssn`),
+	ADD UNIQUE KEY `dnum` (`dnum`);
 
 -- 
--- Indexes for table `aba_diameter` 
+-- Indexes for table `org_address` 
 -- 
-ALTER TABLE `NCSSG_dumped_db_ab83`.`aba_diameter`
-	ADD PRIMARY KEY (`Diameter`,`Viscera_weight`,`Whole_Weight`);
+ALTER TABLE `NCSSG_dumped_db_tk84`.`org_address`
+	ADD PRIMARY KEY (`ssn`,`address`);
 
 -- 
--- Indexes for table `aba_shucked_weight` 
+-- Indexes for table `org_pnum` 
 -- 
-ALTER TABLE `NCSSG_dumped_db_ab83`.`aba_shucked_weight`
-	ADD PRIMARY KEY (`Shucked_Weight`,`Viscera_weight`,`Whole_Weight`),
-	ADD UNIQUE KEY `Diameter` (`Diameter`);
+ALTER TABLE `NCSSG_dumped_db_tk84`.`org_pnum`
+	ADD PRIMARY KEY (`pnum`);
+
+-- 
+-- Indexes for table `org_dnum` 
+-- 
+ALTER TABLE `NCSSG_dumped_db_tk84`.`org_dnum`
+	ADD PRIMARY KEY (`dnum`);
 -- 
 -- Constraints for dumped tables 
 -- 
 
 
 -- 
--- Constraint for table `abalone` 
+-- Constraint for table `org_address` 
 -- 
-ALTER TABLE `NCSSG_dumped_db_ab83`.`abalone`
-	ADD CONSTRAINT `abalone_ibfk_1` 
-	FOREIGN KEY (`Viscera_weight`) REFERENCES `aba_diameter` (`Viscera_weight`) 
-	ON DELETE CASCADE ON UPDATE CASCADE,
-	ADD CONSTRAINT `abalone_ibfk_2` 
-	FOREIGN KEY (`Whole_Weight`) REFERENCES `aba_diameter` (`Whole_Weight`) 
+ALTER TABLE `NCSSG_dumped_db_tk84`.`org_address`
+	ADD CONSTRAINT `org_address_ibfk_1` 
+	FOREIGN KEY (`ssn`) REFERENCES `organization` (`ssn`) 
 	ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- 
--- Constraint for table `aba_diameter` 
+-- Constraint for table `org_dnum` 
 -- 
-ALTER TABLE `NCSSG_dumped_db_ab83`.`aba_diameter`
-	ADD CONSTRAINT `aba_diameter_ibfk_1` 
-	FOREIGN KEY (`Viscera_weight`) REFERENCES `abalone` (`Viscera_weight`) 
-	ON DELETE CASCADE ON UPDATE CASCADE,
-	ADD CONSTRAINT `aba_diameter_ibfk_2` 
-	FOREIGN KEY (`Whole_Weight`) REFERENCES `abalone` (`Whole_Weight`) 
-	ON DELETE CASCADE ON UPDATE CASCADE,
-	ADD CONSTRAINT `aba_diameter_ibfk_3` 
-	FOREIGN KEY (`Diameter`) REFERENCES `aba_shucked_weight` (`Diameter`) 
-	ON DELETE CASCADE ON UPDATE CASCADE;
-
--- 
--- Constraint for table `aba_shucked_weight` 
--- 
-ALTER TABLE `NCSSG_dumped_db_ab83`.`aba_shucked_weight`
-	ADD CONSTRAINT `aba_shucked_weight_ibfk_1` 
-	FOREIGN KEY (`Shucked_Weight`) REFERENCES `abalone` (`Shucked_Weight`) 
-	ON DELETE CASCADE ON UPDATE CASCADE,
-	ADD CONSTRAINT `aba_shucked_weight_ibfk_2` 
-	FOREIGN KEY (`Viscera_weight`) REFERENCES `abalone` (`Viscera_weight`) 
-	ON DELETE CASCADE ON UPDATE CASCADE,
-	ADD CONSTRAINT `aba_shucked_weight_ibfk_3` 
-	FOREIGN KEY (`Whole_Weight`) REFERENCES `abalone` (`Whole_Weight`) 
+ALTER TABLE `NCSSG_dumped_db_tk84`.`org_dnum`
+	ADD CONSTRAINT `org_dnum_ibfk_1` 
+	FOREIGN KEY (`dnum`) REFERENCES `organization` (`dnum`) 
 	ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;

@@ -1,7 +1,5 @@
 import os
-import signal
 import turtle
-from threading import main_thread
 from tkinter import *
 from PIL import Image
 from turtle import Turtle, Screen
@@ -42,13 +40,13 @@ class RelationalMapping1nf:
         turtle.getcanvas().postscript(file="1nf.eps")
         self.get_image()
 
-        # screenTk.mainloop()
-
         screenTk.destroy()
+        # screenTk.quit()
+        del screenTk
+        screenTk = None
+        self.__yertle = None
         turtle.bye()
-        main_t = main_thread()
-        main_t.interrupt_main(signum=signal.SIGKILL)
-
+        # del self
         # self.upload()
         # self.screen.mainloop()
 
@@ -224,14 +222,7 @@ class RelationalMapping1nf:
         self.yertle.color("black")
 
         for i in att:
-
-            multivaluecount = multivalue.count(i)
-            if (multivaluecount > 0):
-
-                self.dotted_box(box_size, i)
-
-            else:
-                self.simple_box(box_size, i, primarykeys)
+            self.simple_box(box_size, i, primarykeys)
 
     def get_image(self):
         TARGET_BOUNDS = (1600, 800)
@@ -253,14 +244,11 @@ class RelationalMapping1nf:
         pic.save("1NF.png")
 
     def draw_arrows(self, attributes, box_size, keys_level_dic, keyss, single):
-        print("keysss\n\n\n\n",keyss)
-        print("keys level dic \n\n\n",keys_level_dic)
-        print("SIngle\n\n\n\n" , single)
-        print("attributes\n\n\n\n" , attributes)
-
         for key in keyss:
             level = keys_level_dic[key][0]
             self.yertle.color(keys_level_dic[key][1])
+            # print("element\n\n", single)
+
             for element in single[key]:
                 distnce = ((attributes.index(element) + 1) * box_size) - (box_size) + (level * 7)
                 self.yertle.penup()
@@ -280,35 +268,16 @@ class RelationalMapping1nf:
                 self.yertle.right(135)
                 self.yertle.penup()
                 self.yertle.back(distnce)
-
-            l = list(keyss)
-            dependentent = single[l[0]]
-            print("dependent \n\n\n\n",dependentent)
-            for each in dependentent:
-                l.append(each)
-            print("L ki value", l)
-            small = attributes.index(l[0])
-            big = attributes.index(l[0])
-
-            i = 0
-            while i < len(l):
-                if (small > attributes.index(l[i])):
-                    small = attributes.index(l[i])
-                elif (big < attributes.index(l[i])):
-                    big = attributes.index(l[i])
-
-                i = i + 1
-
-            a = ((small + 1) * box_size) - box_size + (level * 7)
+            a = ((attributes.index(key)) * box_size) + (level * 7)
             self.yertle.penup()
             self.yertle.forward(a)
             self.yertle.left(90)
             self.yertle.forward(50 + (level * 10))
             self.yertle.right(90)
-            # listofsingle = single[key]
-            # agoto = listofsingle[len(listofsingle) - 1]
+            listofsingle = single[key]
+            agoto = listofsingle[len(listofsingle) - 1]
 
-            b = (((big + 1) * box_size) - box_size)
+            b = ((attributes.index(agoto) - attributes.index(key)) * box_size)
             self.yertle.pendown()
             self.yertle.forward(b)
             self.yertle.back(b)
@@ -369,7 +338,9 @@ class RelationalMapping1nf:
             self.yertle.left(90)
         else:
             self.yertle.write(i, font=("Verdana", font_size, "bold",))
-        if (i in primarykeys):
+        ml=self.__multivalue
+        if ((i in primarykeys) or (i in ml)):
+            self.yertle.color("Red")
             self.yertle.right(90)
             self.yertle.forward(1)
             self.yertle.left(90)
@@ -377,6 +348,7 @@ class RelationalMapping1nf:
             self.yertle.forward(30)
             self.yertle.back(30)
             self.yertle.penup()
+            self.yertle.color("Black")
             self.yertle.right(90)
             self.yertle.back(1)
             self.yertle.left(90)

@@ -30,6 +30,7 @@ const AttributeRow = (props) => {
     const ref2 = React.createRef();
     const validAutoIncDataTypes = ['INT', 'BIGINT', 'SMALLINT'];
     const disableLenDataTypes = ["DATE", "DATETIME", "TIMESTAMP", "TIME", "YEAR"];
+    const cantPrimary = ['TEXT'];
     const canAutoIncrement = !validAutoIncDataTypes.includes(dataType);
     const disableLength = disableLenDataTypes.includes(dataType);
     // const attributeNameChangeHandler = event => {
@@ -132,7 +133,7 @@ const AttributeRow = (props) => {
                     selectedType={dataType}
                     onChangeDataType={dataTypeChangeHandler}
                     id={indexes}
-                    disable={disableType}
+                    disable={index === 'primary'}
                 />
             </td>
 
@@ -164,7 +165,7 @@ const AttributeRow = (props) => {
                         className="form-check-input text-center"
                         value={autoIncrement}
                         id={indexes}
-                        disabled={canAutoIncrement}
+                        disabled={canAutoIncrement || index !== 'primary'}
                         onChange={autoIncrementChangeHandler}
                         ref={ref2}
                     />

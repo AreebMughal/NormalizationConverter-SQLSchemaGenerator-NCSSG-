@@ -37,10 +37,17 @@ class RelationalMappingBcnf:
         self.drawRelations(self.__relations, names, self.__fk)
         turtle.getcanvas().postscript(file="bcnf.eps")
         self.get_image()
+        process =threading.enumerate()
+        print("threding \n\n\n",process[0])
+
+        print("main threa \n\n\n",main_thread())
 
         # screenTk.mainloop()
         screenTk.destroy()
+
         turtle.bye()
+        main_t = main_thread()
+        main_t.interrupt_main(signum=signal.SIGKILL)
 
 
     def get_image(self):

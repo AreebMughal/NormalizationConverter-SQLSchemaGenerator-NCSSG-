@@ -15,38 +15,38 @@ const DataTypeOptions = (props) => {
             <option
                 title="An 8-byte integer, signed range is -9,223,372,036,854,775,808 to 9,223,372,036,854,775,807, unsigned range is 0 to 18,446,744,073,709,551,615">BIGINT
             </option>
-            <option disabled={props.disable}
+            <option
                     title="A fixed-length (0-255, default 1) string that is always right-padded with spaces to the specified length when stored">CHAR
             </option>
-            <option disabled={props.disable}
+            <option
                 title="A variable-length (0-65,535) string, the effective maximum length is subject to the maximum row size">VARCHAR
             </option>
             <option disabled={props.disable}
                 title="A TEXT column with a maximum length of 65,535 (2^16 - 1) characters, stored with a two-byte prefix indicating the length of the value in bytes">TEXT
             </option>
-            <option disabled={props.disable}
+            <option
                 title="A date, supported range is 1000-01-01 to 9999-12-31">DATE
             </option>
-            <option disabled={props.disable}
+            <option
                     title="A fixed-point number (M, D) - the maximum number of digits (M) is 65 (default 10), the maximum number of decimals (D) is 30 (default 0)">DECIMAL
             </option>
-            <option disabled={props.disable}
+            <option
                     title="A small floating-point number, allowable values are -3.402823466E+38 to -1.175494351E-38, 0, and 1.175494351E-38 to 3.402823466E+38">FLOAT
             </option>
-            <option disabled={props.disable}
+            <option
                     title="A double-precision floating-point number, allowable values are -1.7976931348623157E+308 to -2.2250738585072014E-308, 0, and 2.2250738585072014E-308 to 1.7976931348623157E+308">DOUBLE
             </option>
-            <option disabled={props.disable}
+            <option
                     title="A synonym for TINYINT(1), a value of zero is considered false, nonzero values are considered true">BOOLEAN
             </option>
-            <option disabled={props.disable}
+            <option
                     title="A date and time combination, supported range is 1000-01-01 00:00:00 to 9999-12-31 23:59:59">DATETIME
             </option>
-            <option disabled={props.disable}
+            <option
                     title="A timestamp, range is 1970-01-01 00:00:01 UTC to 2038-01-09 03:14:07 UTC, stored as the number of seconds since the epoch (1970-01-01 00:00:00 UTC)">TIMESTAMP
             </option>
-            <option disabled={props.disable} title="A time, range is -838:59:59 to 838:59:59">TIME</option>
-            <option disabled={props.disable}
+            <option title="A time, range is -838:59:59 to 838:59:59">TIME</option>
+            <option
                     title="A year in four-digit (4, default) or two-digit (2) format, the allowable values are 70 (1970) to 69 (2069) or 1901 to 2155 and 0000">YEAR
             </option>
            {/* <optgroup label="Numeric">
